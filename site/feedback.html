@@ -19,7 +19,7 @@
     </span>
     <span class="ody-appbar__name">Odyssey UI</span>
   </a>
-  <span class="ody-tag ody-tag--accent ody-mono doc-appbar__ver">v1.0.0</span>
+  <span class="ody-tag ody-tag--accent ody-mono doc-appbar__ver">v1.1.0</span>
   <span class="ody-appbar__spacer"></span>
   <div class="ody-appbar__right">
     <a class="ody-iconbtn" href="#" aria-label="GitHub 仓库（占位）" title="GitHub">
@@ -83,7 +83,7 @@
         </div>
         <div class="ody-alert ody-alert--info">
           <svg class="ody-alert__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg>
-          <div class="ody-alert__body">新版本 v1.0.0 已发布，查看更新日志了解详情。</div>
+          <div class="ody-alert__body">新版本 v1.1.0 已发布，查看更新日志了解详情。</div>
         </div>
       </div>
       <div class="doc-code"><pre><code>&lt;div class="ody-alert ody-alert--ok"&gt;
@@ -263,7 +263,7 @@
       <div class="doc-demo doc-demo--stack">
         <div class="ody-banner">
           <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg>
-          <span>新版本 v1.0.0 已发布 —— 查看更新内容。</span>
+          <span>新版本 v1.1.0 已发布 —— 查看更新内容。</span>
           <span class="ody-banner__spacer"></span>
           <a class="ody-btn ody-btn--sm ody-btn--secondary" href="#banner">查看</a>
           <button class="ody-iconbtn ody-iconbtn--sm" type="button" aria-label="关闭横幅" onclick="this.closest('.ody-banner').hidden=true">
@@ -281,7 +281,7 @@
       </div>
       <div class="doc-code"><pre><code>&lt;div class="ody-banner"&gt;
   &lt;svg width="18" height="18" ...&gt;&lt;/svg&gt;
-  &lt;span&gt;新版本 v1.0.0 已发布 —— 查看更新内容。&lt;/span&gt;
+  &lt;span&gt;新版本 v1.1.0 已发布 —— 查看更新内容。&lt;/span&gt;
   &lt;span class="ody-banner__spacer"&gt;&lt;/span&gt;
   &lt;a class="ody-btn ody-btn--sm ody-btn--secondary" href="#"&gt;查看&lt;/a&gt;
   &lt;button class="ody-iconbtn ody-iconbtn--sm" aria-label="关闭横幅"
@@ -322,6 +322,438 @@
   &lt;/div&gt;
 &lt;/span&gt;</code></pre></div>
     </div>
+
+    <!-- ==================== Advanced (v1.1) · overlay-ext ==================== -->
+    <h2 id="advanced-v11">进阶浮层组件 · overlay-ext <span class="ody-badge ody-badge--accent">v1.1</span></h2>
+    <p>以下为 v1.1 新增的进阶浮层与反馈组件，由 <code>odyssey.js</code> 的 <code>data-ody-*</code> 属性与命令式 API（<code>Odyssey.openCmdk / notify / confirm / loading</code> 等）驱动，键盘可及、亮暗双主题成立。</p>
+
+<!-- ============================================================ COMMAND PALETTE -->
+<h2 id="cmdk">Command palette</h2>
+<p>⌘K / Ctrl+K 浮层命令面板：搜索框实时过滤 <code>.ody-cmdk__item</code>，↑/↓ 切换高亮、Enter 选中、Esc 关闭。全局快捷键作用于带 <code>data-ody-cmdk-default</code> 的面板；也可用 <code>data-ody-cmdk-open="#id"</code> 按钮或 <code>Odyssey.openCmdk('#id')</code> 打开。项上加 <code>data-ody-keywords</code> 可扩展匹配词。</p>
+<div class="doc-example">
+  <div class="doc-demo">
+    <button class="ody-btn ody-btn--secondary" data-ody-cmdk-open="#demoCmdk">
+      打开命令面板 <kbd class="ody-kbd">⌘</kbd><kbd class="ody-kbd">K</kbd>
+    </button>
+    <div class="ody-cmdk" id="demoCmdk" data-ody-cmdk-default hidden>
+      <div class="ody-cmdk__backdrop"></div>
+      <div class="ody-cmdk__panel" role="dialog" aria-modal="true" aria-label="命令面板">
+        <div class="ody-cmdk__search">
+          <svg class="ody-cmdk__search-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          <input class="ody-cmdk__input" type="text" placeholder="输入命令或搜索…" aria-label="搜索命令" data-ody-keywords>
+          <kbd class="ody-kbd">Esc</kbd>
+        </div>
+        <div class="ody-cmdk__list" role="listbox">
+          <div class="ody-cmdk__group">
+            <div class="ody-cmdk__group-label">导航</div>
+            <button class="ody-cmdk__item" role="option" data-ody-keywords="dashboard 仪表盘 首页">
+              <span class="ody-cmdk__item-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg></span>
+              <span class="ody-cmdk__item-label">前往仪表盘</span>
+              <kbd class="ody-cmdk__item-hint">G D</kbd>
+            </button>
+            <button class="ody-cmdk__item" role="option" data-ody-keywords="settings 设置 偏好">
+              <span class="ody-cmdk__item-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-2.7 1.1 2 2 0 0 1-4 0 1.6 1.6 0 0 0-2.7-1.1l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1A1.6 1.6 0 0 0 4.6 15"/></svg></span>
+              <span class="ody-cmdk__item-label">打开设置</span>
+              <kbd class="ody-cmdk__item-hint">G S</kbd>
+            </button>
+          </div>
+          <div class="ody-cmdk__group">
+            <div class="ody-cmdk__group-label">操作</div>
+            <button class="ody-cmdk__item" role="option" data-ody-keywords="new create 新建 文档">
+              <span class="ody-cmdk__item-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span>
+              <span class="ody-cmdk__item-label">新建文档</span>
+              <kbd class="ody-cmdk__item-hint">⌘ N</kbd>
+            </button>
+            <button class="ody-cmdk__item" role="option" data-ody-keywords="theme dark 暗色 主题">
+              <span class="ody-cmdk__item-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg></span>
+              <span class="ody-cmdk__item-label">切换深色模式</span>
+            </button>
+          </div>
+          <div class="ody-cmdk__empty" hidden>没有匹配的命令</div>
+        </div>
+        <div class="ody-cmdk__foot">
+          <span class="ody-cmdk__foot-hint"><kbd class="ody-kbd">↑</kbd><kbd class="ody-kbd">↓</kbd> 移动</span>
+          <span class="ody-cmdk__foot-hint"><kbd class="ody-kbd">↵</kbd> 选择</span>
+          <span class="ody-cmdk__foot-hint"><kbd class="ody-kbd">Esc</kbd> 关闭</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="doc-code"><pre><code>&lt;button class="ody-btn ody-btn--secondary" data-ody-cmdk-open="#pal"&gt;⌘K&lt;/button&gt;
+
+&lt;div class="ody-cmdk" id="pal" data-ody-cmdk-default hidden&gt;
+  &lt;div class="ody-cmdk__backdrop"&gt;&lt;/div&gt;
+  &lt;div class="ody-cmdk__panel" role="dialog" aria-modal="true"&gt;
+    &lt;div class="ody-cmdk__search"&gt;
+      &lt;svg class="ody-cmdk__search-ico" ...&gt;&lt;/svg&gt;
+      &lt;input class="ody-cmdk__input" placeholder="搜索…"&gt;
+      &lt;kbd class="ody-kbd"&gt;Esc&lt;/kbd&gt;
+    &lt;/div&gt;
+    &lt;div class="ody-cmdk__list" role="listbox"&gt;
+      &lt;div class="ody-cmdk__group"&gt;
+        &lt;div class="ody-cmdk__group-label"&gt;导航&lt;/div&gt;
+        &lt;button class="ody-cmdk__item" role="option" data-ody-keywords="dashboard 仪表盘"&gt;
+          &lt;span class="ody-cmdk__item-ico"&gt;&lt;svg .../&gt;&lt;/span&gt;
+          &lt;span class="ody-cmdk__item-label"&gt;前往仪表盘&lt;/span&gt;
+          &lt;kbd class="ody-cmdk__item-hint"&gt;G D&lt;/kbd&gt;
+        &lt;/button&gt;
+      &lt;/div&gt;
+      &lt;div class="ody-cmdk__empty" hidden&gt;没有匹配的命令&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- 或用 API：Odyssey.openCmdk('#pal') · 全局 ⌘K 打开 data-ody-cmdk-default --&gt;</code></pre></div>
+</div>
+
+<!-- ============================================================ NOTIFICATION CENTER -->
+<h2 id="notif">Notification center</h2>
+<p>右侧堆叠通知面板 <code>.ody-notif</code>：<code>data-ody-notif-toggle="#id"</code> 开合，<code>Odyssey.notify({title, message, tone, time, unread, actions, timeout})</code> 插入一条（<code>tone</code>=ok/warn/down/info）。带 <code>data-ody-notif-count</code> 的触发器会自动更新 <code>.ody-notif-badge</code> 未读数；<code>data-ody-notif-clear</code> 一键清空。</p>
+<div class="doc-example">
+  <div class="doc-demo doc-demo--stack">
+    <div class="ody-flex ody-gap-2 ody-flex-wrap">
+      <button class="ody-btn ody-btn--secondary" data-ody-notif-toggle="#demoNotif">
+        通知中心 <span class="ody-notif-badge is-empty" data-ody-notif-count="#demoNotif">0</span>
+      </button>
+      <button class="ody-btn ody-btn--ghost" onclick="Odyssey.notify({target:'#demoNotif',tone:'ok',title:'部署成功',message:'web-app v1.1 已上线至生产环境。',time:'刚刚',unread:true})">推送成功</button>
+      <button class="ody-btn ody-btn--ghost" onclick="Odyssey.notify({target:'#demoNotif',tone:'warn',title:'证书即将过期',message:'api.w33d.xyz 的 TLS 证书 7 天后到期。',time:'2 分钟前',unread:true})">推送告警</button>
+    </div>
+    <div class="ody-notif" id="demoNotif" aria-label="通知中心">
+      <div class="ody-notif__head">
+        <h2 class="ody-notif__title">通知</h2>
+        <button class="ody-notif__clear" type="button" data-ody-notif-clear="#demoNotif">全部清除</button>
+        <button class="ody-iconbtn ody-iconbtn--sm" type="button" data-ody-notif-close="#demoNotif" aria-label="关闭">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+      <div class="ody-notif__list">
+        <div class="ody-notif__item ody-notif__item--info">
+          <span class="ody-notif__item-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg></span>
+          <div class="ody-notif__item-main">
+            <div class="ody-notif__item-title">欢迎回来</div>
+            <div class="ody-notif__item-msg">你有 3 个待处理的审阅请求。</div>
+            <div class="ody-notif__item-time">今天 09:12</div>
+          </div>
+          <button class="ody-notif__item-close" type="button" aria-label="移除" onclick="this.closest('.ody-notif__item').remove()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="ody-notif__empty" hidden>暂无通知</div>
+    </div>
+  </div>
+  <div class="doc-code"><pre><code>&lt;button class="ody-btn ody-btn--secondary" data-ody-notif-toggle="#nc"&gt;
+  通知 &lt;span class="ody-notif-badge" data-ody-notif-count="#nc"&gt;0&lt;/span&gt;
+&lt;/button&gt;
+
+&lt;div class="ody-notif" id="nc"&gt;
+  &lt;div class="ody-notif__head"&gt;
+    &lt;h2 class="ody-notif__title"&gt;通知&lt;/h2&gt;
+    &lt;button class="ody-notif__clear" data-ody-notif-clear="#nc"&gt;全部清除&lt;/button&gt;
+    &lt;button class="ody-iconbtn ody-iconbtn--sm" data-ody-notif-close="#nc"&gt;✕&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div class="ody-notif__list"&gt;&lt;!-- 由 Odyssey.notify() 填充 --&gt;&lt;/div&gt;
+  &lt;div class="ody-notif__empty" hidden&gt;暂无通知&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+Odyssey.notify({
+  target:'#nc', tone:'ok', title:'部署成功',
+  message:'web-app v1.1 已上线。', time:'刚刚', unread:true,
+  actions:[{ label:'查看', onClick(){ /* ... */ } }],
+  timeout:0            // &gt;0 则自动消失（毫秒）
+});
+&lt;/script&gt;</code></pre></div>
+</div>
+
+<!-- ============================================================ CONTEXT MENU -->
+<h2 id="context-menu">Context menu</h2>
+<p>右键菜单 <code>.ody-ctx</code>：在触发区加 <code>data-ody-ctx="#menuId"</code>，右键即在光标处弹出（自动贴边裁剪）。菜单项 <code>.ody-ctx__item</code>，<code>--danger</code> 修饰危险项，<code>.ody-ctx__sep</code> 分隔线，选中/点击外部/Esc 自动关闭。</p>
+<div class="doc-example">
+  <div class="doc-demo">
+    <div data-ody-ctx="#demoCtx" style="display:grid;place-items:center;min-height:120px;border:1px dashed var(--ody-border-2);border-radius:var(--ody-r-sm);color:var(--ody-ink-3);">
+      在此区域内右键唤出菜单
+    </div>
+    <div class="ody-ctx" id="demoCtx" role="menu" hidden>
+      <button class="ody-ctx__item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg><span class="ody-ctx__item-label">在新标签打开</span></button>
+      <button class="ody-ctx__item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span class="ody-ctx__item-label">复制</span><span class="ody-ctx__item-hint">⌘C</span></button>
+      <button class="ody-ctx__item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg><span class="ody-ctx__item-label">重命名</span></button>
+      <hr class="ody-ctx__sep">
+      <button class="ody-ctx__item ody-ctx__item--danger" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg><span class="ody-ctx__item-label">删除</span><span class="ody-ctx__item-hint">⌫</span></button>
+    </div>
+  </div>
+  <div class="doc-code"><pre><code>&lt;div data-ody-ctx="#menu"&gt;右键此区域&lt;/div&gt;
+
+&lt;div class="ody-ctx" id="menu" role="menu" hidden&gt;
+  &lt;button class="ody-ctx__item" role="menuitem"&gt;
+    &lt;svg .../&gt;&lt;span class="ody-ctx__item-label"&gt;复制&lt;/span&gt;
+    &lt;span class="ody-ctx__item-hint"&gt;⌘C&lt;/span&gt;
+  &lt;/button&gt;
+  &lt;hr class="ody-ctx__sep"&gt;
+  &lt;button class="ody-ctx__item ody-ctx__item--danger" role="menuitem"&gt;
+    &lt;svg .../&gt;&lt;span class="ody-ctx__item-label"&gt;删除&lt;/span&gt;
+  &lt;/button&gt;
+&lt;/div&gt;</code></pre></div>
+</div>
+
+<!-- ============================================================ BOTTOM SHEET -->
+<h2 id="bottom-sheet">Bottom sheet</h2>
+<p>移动端底部抽屉 <code>.ody-sheet</code>：<code>data-ody-sheet-open="#id"</code> 打开，从底部滑入；顶部 <code>.ody-sheet__handle</code> 支持向下拖拽关闭（拖动超过阈值即收起），点背景 / <code>data-ody-ext-dismiss</code> / Esc 关闭。</p>
+<div class="doc-example">
+  <div class="doc-demo">
+    <button class="ody-btn ody-btn--primary" data-ody-sheet-open="#demoSheet">打开底部抽屉</button>
+    <div class="ody-sheet" id="demoSheet" hidden>
+      <div class="ody-sheet__backdrop"></div>
+      <div class="ody-sheet__panel" role="dialog" aria-modal="true" aria-label="分享">
+        <button class="ody-sheet__handle" type="button" aria-label="拖拽关闭"></button>
+        <div class="ody-sheet__head">
+          <h2 class="ody-sheet__title">分享文档</h2>
+        </div>
+        <div class="ody-sheet__body">
+          <p style="margin:0 0 var(--ody-sp-3)">选择一个渠道把当前文档发送出去。所有链接默认 7 天后失效。</p>
+          <div class="ody-stack ody-stack--sm">
+            <button class="ody-btn ody-btn--secondary ody-btn--block">复制链接</button>
+            <button class="ody-btn ody-btn--secondary ody-btn--block">通过邮件发送</button>
+            <button class="ody-btn ody-btn--secondary ody-btn--block">生成二维码</button>
+          </div>
+        </div>
+        <div class="ody-sheet__foot">
+          <button class="ody-btn ody-btn--subtle" data-ody-ext-dismiss>取消</button>
+          <button class="ody-btn ody-btn--primary" data-ody-ext-dismiss>完成</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="doc-code"><pre><code>&lt;button class="ody-btn ody-btn--primary" data-ody-sheet-open="#s"&gt;打开&lt;/button&gt;
+
+&lt;div class="ody-sheet" id="s" hidden&gt;
+  &lt;div class="ody-sheet__backdrop"&gt;&lt;/div&gt;
+  &lt;div class="ody-sheet__panel" role="dialog" aria-modal="true"&gt;
+    &lt;button class="ody-sheet__handle" aria-label="拖拽关闭"&gt;&lt;/button&gt;
+    &lt;div class="ody-sheet__head"&gt;&lt;h2 class="ody-sheet__title"&gt;分享&lt;/h2&gt;&lt;/div&gt;
+    &lt;div class="ody-sheet__body"&gt;…&lt;/div&gt;
+    &lt;div class="ody-sheet__foot"&gt;
+      &lt;button class="ody-btn ody-btn--subtle" data-ody-ext-dismiss&gt;取消&lt;/button&gt;
+      &lt;button class="ody-btn ody-btn--primary" data-ody-ext-dismiss&gt;完成&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;!-- API：Odyssey.openSheet('#s') / Odyssey.closeSheet('#s') --&gt;</code></pre></div>
+</div>
+
+<!-- ============================================================ SPLIT PANE -->
+<h2 id="split-pane">Split pane</h2>
+<p>可拖拽分隔的两栏 <code>.ody-split-pane</code>：中缝 <code>.ody-split-pane__gutter</code> 拖动即调整左栏宽度（键盘 ←/→ 也可，Shift 加大步长）。加 <code>--vert</code> 变竖向拆分，<code>data-ody-min</code> 设最小尺寸（默认 80px）。</p>
+<div class="doc-example">
+  <div class="doc-demo">
+    <div class="ody-split-pane" data-ody-min="100" style="height:200px">
+      <div class="ody-split-pane__panel" style="flex:0 0 220px">
+        <div style="padding:var(--ody-sp-4)">
+          <p class="ody-eyebrow" style="margin:0 0 var(--ody-sp-2)">侧栏</p>
+          <div class="ody-stack ody-stack--sm">
+            <div class="ody-truncate">项目 Alpha</div>
+            <div class="ody-truncate">项目 Bravo</div>
+            <div class="ody-truncate">项目 Charlie</div>
+          </div>
+        </div>
+      </div>
+      <div class="ody-split-pane__gutter" aria-label="调整栏宽"></div>
+      <div class="ody-split-pane__panel">
+        <div style="padding:var(--ody-sp-4)">
+          <h3 class="ody-h3" style="margin:0 0 var(--ody-sp-2)">主内容</h3>
+          <p class="ody-muted" style="margin:0">拖动中间的分隔条即可改变左右比例，双栏内容各自独立滚动。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="doc-code"><pre><code>&lt;div class="ody-split-pane" data-ody-min="100" style="height:200px"&gt;
+  &lt;div class="ody-split-pane__panel" style="flex:0 0 220px"&gt;侧栏&lt;/div&gt;
+  &lt;div class="ody-split-pane__gutter" aria-label="调整栏宽"&gt;&lt;/div&gt;
+  &lt;div class="ody-split-pane__panel"&gt;主内容&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- 竖向：&lt;div class="ody-split-pane ody-split-pane--vert"&gt; --&gt;</code></pre></div>
+</div>
+
+<!-- ============================================================ CAROUSEL -->
+<h2 id="carousel">Carousel</h2>
+<p>轮播 <code>.ody-carousel</code>：<code>data-ody-carousel</code> 自动接管，圆点 <code>.ody-carousel__dots</code> 留空时按幻灯片数生成，前后 <code>.ody-carousel__btn--prev/--next</code>，焦点内 ←/→ 翻页。<code>data-ody-carousel-loop</code> 循环、<code>data-ody-carousel-autoplay="4000"</code> 自动播放（悬停暂停）。</p>
+<div class="doc-example">
+  <div class="doc-demo">
+    <div class="ody-carousel" data-ody-carousel data-ody-carousel-loop tabindex="0" aria-roledescription="carousel" aria-label="特性介绍">
+      <div class="ody-carousel__viewport">
+        <div class="ody-carousel__track">
+          <div class="ody-carousel__slide"><div class="ody-carousel__caption" style="background:var(--ody-accent-soft)"><p class="ody-eyebrow" style="margin:0 0 var(--ody-sp-2)">01 / 快速</p><h3 class="ody-h2" style="margin:0 0 var(--ody-sp-2)">零依赖交付</h3><p class="ody-muted" style="margin:0">单文件 CSS + JS，无外链、无第三方，直接 link 即用。</p></div></div>
+          <div class="ody-carousel__slide"><div class="ody-carousel__caption" style="background:var(--ody-ok-soft)"><p class="ody-eyebrow" style="margin:0 0 var(--ody-sp-2)">02 / 一致</p><h3 class="ody-h2" style="margin:0 0 var(--ody-sp-2)">语义化 token</h3><p class="ody-muted" style="margin:0">亮暗双主题只改变量，组件规则零改动。</p></div></div>
+          <div class="ody-carousel__slide"><div class="ody-carousel__caption" style="background:var(--ody-info-soft)"><p class="ody-eyebrow" style="margin:0 0 var(--ody-sp-2)">03 / 无障碍</p><h3 class="ody-h2" style="margin:0 0 var(--ody-sp-2)">键盘可达</h3><p class="ody-muted" style="margin:0">焦点环、ARIA、方向键导航开箱即用。</p></div></div>
+        </div>
+      </div>
+      <button class="ody-carousel__btn ody-carousel__btn--prev" type="button" aria-label="上一张"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+      <button class="ody-carousel__btn ody-carousel__btn--next" type="button" aria-label="下一张"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
+      <div class="ody-carousel__dots" aria-hidden="true"></div>
+    </div>
+  </div>
+  <div class="doc-code"><pre><code>&lt;div class="ody-carousel" data-ody-carousel data-ody-carousel-loop tabindex="0"&gt;
+  &lt;div class="ody-carousel__viewport"&gt;
+    &lt;div class="ody-carousel__track"&gt;
+      &lt;div class="ody-carousel__slide"&gt;…&lt;/div&gt;
+      &lt;div class="ody-carousel__slide"&gt;…&lt;/div&gt;
+      &lt;div class="ody-carousel__slide"&gt;…&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;button class="ody-carousel__btn ody-carousel__btn--prev" aria-label="上一张"&gt;‹&lt;/button&gt;
+  &lt;button class="ody-carousel__btn ody-carousel__btn--next" aria-label="下一张"&gt;›&lt;/button&gt;
+  &lt;div class="ody-carousel__dots"&gt;&lt;!-- 自动生成圆点 --&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- 可选：data-ody-carousel-autoplay="4000" 自动播放（毫秒） --&gt;</code></pre></div>
+</div>
+
+<!-- ============================================================ SKELETON COMPOSITES -->
+<h2 id="skeleton-ext">Skeleton 组合</h2>
+<p>在既有单行骨架 <code>.ody-skeleton</code> 之上提供预设组合：<code>--avatar</code>（头像 + 文本行）、<code>--card</code>（卡片）、<code>--table</code>（表格行，含 <code>__row</code>/<code>__cell</code>）、<code>--paragraph</code>（多行段落）。组合类只是布局容器，内部骨条仍复用 <code>.ody-skeleton</code> 拿到微光动画。</p>
+<div class="doc-example">
+  <div class="doc-demo doc-demo--stack">
+    <div class="ody-skeleton--avatar">
+      <span class="ody-skeleton ody-skeleton--circle"></span>
+      <div class="ody-skeleton-lines">
+        <span class="ody-skeleton ody-skeleton--text" style="width:40%"></span>
+        <span class="ody-skeleton ody-skeleton--text" style="width:70%"></span>
+      </div>
+    </div>
+    <div class="ody-skeleton--card" style="max-width:320px">
+      <span class="ody-skeleton ody-skeleton--block"></span>
+      <span class="ody-skeleton ody-skeleton--title"></span>
+      <div class="ody-skeleton--paragraph">
+        <span class="ody-skeleton ody-skeleton--text"></span>
+        <span class="ody-skeleton ody-skeleton--text" style="width:85%"></span>
+        <span class="ody-skeleton ody-skeleton--text" style="width:60%"></span>
+      </div>
+    </div>
+    <div class="ody-skeleton--table">
+      <div class="ody-skeleton__row"><span class="ody-skeleton__cell--sm"><span class="ody-skeleton ody-skeleton--circle" style="width:24px;height:24px"></span></span><span class="ody-skeleton__cell ody-skeleton__cell--grow"><span class="ody-skeleton ody-skeleton--text" style="margin:0"></span></span><span class="ody-skeleton__cell"><span class="ody-skeleton ody-skeleton--text" style="margin:0;width:60%"></span></span></div>
+      <div class="ody-skeleton__row"><span class="ody-skeleton__cell--sm"><span class="ody-skeleton ody-skeleton--circle" style="width:24px;height:24px"></span></span><span class="ody-skeleton__cell ody-skeleton__cell--grow"><span class="ody-skeleton ody-skeleton--text" style="margin:0;width:80%"></span></span><span class="ody-skeleton__cell"><span class="ody-skeleton ody-skeleton--text" style="margin:0;width:40%"></span></span></div>
+      <div class="ody-skeleton__row"><span class="ody-skeleton__cell--sm"><span class="ody-skeleton ody-skeleton--circle" style="width:24px;height:24px"></span></span><span class="ody-skeleton__cell ody-skeleton__cell--grow"><span class="ody-skeleton ody-skeleton--text" style="margin:0;width:65%"></span></span><span class="ody-skeleton__cell"><span class="ody-skeleton ody-skeleton--text" style="margin:0;width:50%"></span></span></div>
+    </div>
+  </div>
+  <div class="doc-code"><pre><code>&lt;!-- 头像行 --&gt;
+&lt;div class="ody-skeleton--avatar"&gt;
+  &lt;span class="ody-skeleton ody-skeleton--circle"&gt;&lt;/span&gt;
+  &lt;div class="ody-skeleton-lines"&gt;
+    &lt;span class="ody-skeleton ody-skeleton--text" style="width:40%"&gt;&lt;/span&gt;
+    &lt;span class="ody-skeleton ody-skeleton--text" style="width:70%"&gt;&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- 卡片 --&gt;
+&lt;div class="ody-skeleton--card"&gt;
+  &lt;span class="ody-skeleton ody-skeleton--block"&gt;&lt;/span&gt;
+  &lt;span class="ody-skeleton ody-skeleton--title"&gt;&lt;/span&gt;
+  &lt;div class="ody-skeleton--paragraph"&gt;
+    &lt;span class="ody-skeleton ody-skeleton--text"&gt;&lt;/span&gt;
+    &lt;span class="ody-skeleton ody-skeleton--text" style="width:60%"&gt;&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- 表格 --&gt;
+&lt;div class="ody-skeleton--table"&gt;
+  &lt;div class="ody-skeleton__row"&gt;
+    &lt;span class="ody-skeleton__cell--sm"&gt;…&lt;/span&gt;
+    &lt;span class="ody-skeleton__cell ody-skeleton__cell--grow"&gt;…&lt;/span&gt;
+    &lt;span class="ody-skeleton__cell"&gt;…&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre></div>
+</div>
+
+<!-- ============================================================ LOADING OVERLAY -->
+<h2 id="loading-overlay">Loading overlay</h2>
+<p>遮罩加载层 <code>.ody-loading</code>：覆盖任意 <code>.ody-loading-host</code> 容器（含半透明背景 + <code>.ody-spinner</code>）。命令式 <code>Odyssey.loading(target, on, {label, fixed})</code> 自动建层并切换 <code>.is-active</code>；<code>fixed:true</code> 铺满整屏。也可直接在标记里放 <code>.ody-loading.is-active</code>。</p>
+<div class="doc-example">
+  <div class="doc-demo doc-demo--stack">
+    <div class="ody-loading-host" style="position:relative;border:1px solid var(--ody-border);border-radius:var(--ody-r-sm);min-height:130px">
+      <div style="padding:var(--ody-sp-5)">
+        <h3 class="ody-h3" style="margin:0 0 var(--ody-sp-2)">月度用量</h3>
+        <p class="ody-muted" style="margin:0">数据加载完成后将替换此处内容。</p>
+      </div>
+      <div class="ody-loading is-active" role="status" aria-live="polite">
+        <span class="ody-spinner ody-spinner--lg" aria-hidden="true"></span>
+        <div class="ody-loading__label">加载中…</div>
+      </div>
+    </div>
+    <div class="ody-flex ody-gap-2">
+      <button class="ody-btn ody-btn--secondary" onclick="Odyssey.loading('#demoLoadCard', true, {label:'处理中…'})">显示遮罩</button>
+      <button class="ody-btn ody-btn--ghost" onclick="Odyssey.loading('#demoLoadCard', false)">隐藏遮罩</button>
+    </div>
+    <div id="demoLoadCard" style="border:1px solid var(--ody-border);border-radius:var(--ody-r-sm);padding:var(--ody-sp-5);min-height:80px">
+      <p class="ody-muted" style="margin:0">点上方按钮，对本卡片叠加 / 移除遮罩层。</p>
+    </div>
+  </div>
+  <div class="doc-code"><pre><code>&lt;!-- 声明式 --&gt;
+&lt;div class="ody-loading-host" style="position:relative"&gt;
+  …内容…
+  &lt;div class="ody-loading is-active" role="status"&gt;
+    &lt;span class="ody-spinner ody-spinner--lg"&gt;&lt;/span&gt;
+    &lt;div class="ody-loading__label"&gt;加载中…&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- 命令式 --&gt;
+Odyssey.loading('#card', true,  { label:'处理中…' });  // 显示
+Odyssey.loading('#card', false);                       // 隐藏
+Odyssey.loading(document.body, true, { fixed:true });  // 全屏</code></pre></div>
+</div>
+
+<!-- ============================================================ CONFIRM DIALOG -->
+<h2 id="confirm">Confirm dialog</h2>
+<p>Promise 版确认框：<code>Odyssey.confirm({title, message, confirmText, cancelText, tone})</code> 返回 <code>Promise&lt;boolean&gt;</code> —— 确认 <code>true</code>，取消 / 背景 / Esc <code>false</code>。<code>tone</code> 取 <code>info</code>（默认）/ <code>warn</code> / <code>danger</code>，危险场景自动换红色图标与主按钮。</p>
+<div class="doc-example">
+  <div class="doc-demo">
+    <div class="ody-flex ody-gap-2 ody-flex-wrap">
+      <button class="ody-btn ody-btn--secondary" onclick="Odyssey.confirm({title:'保存更改？',message:'离开前是否保存对文档的修改。',confirmText:'保存',cancelText:'放弃'}).then(function(ok){Odyssey.toast({title:ok?'已保存':'已放弃',tone:ok?'ok':'info'})})">普通确认</button>
+      <button class="ody-btn ody-btn--danger" onclick="Odyssey.confirm({tone:'danger',title:'删除项目？',message:'此操作不可撤销，项目及其全部数据将被永久移除。',confirmText:'删除',cancelText:'取消'}).then(function(ok){if(ok)Odyssey.toast({title:'项目已删除',tone:'down'})})">危险确认</button>
+    </div>
+  </div>
+  <div class="doc-code"><pre><code>const ok = await Odyssey.confirm({
+  tone: 'danger',
+  title: '删除项目？',
+  message: '此操作不可撤销，项目及其全部数据将被永久移除。',
+  confirmText: '删除',
+  cancelText: '取消'
+});
+if (ok) {
+  // 用户点了「删除」
+}
+
+// 也支持 .then()：
+Odyssey.confirm({ title:'保存更改？' }).then(ok =&gt; { … });</code></pre></div>
+</div>
+
+<!-- ============================================================ INLINE EDITABLE -->
+<h2 id="inline-editable">Inline editable</h2>
+<p>点击变输入 <code>.ody-editable</code>：加 <code>data-ody-editable</code>，点击文本即就地转为输入框（自动全选），Enter 提交、Esc 取消、失焦提交。提交且值有变化时派发 <code>ody:change</code> 事件（<code>detail.value</code>）。<code>data-ody-editable-placeholder</code> 设空值占位。</p>
+<div class="doc-example">
+  <div class="doc-demo doc-demo--stack">
+    <div class="ody-flex-center ody-gap-2">
+      <span class="ody-muted">项目名称：</span>
+      <span class="ody-editable" data-ody-editable style="font-weight:var(--ody-fw-semibold)">HOLDFAST 迁移</span>
+    </div>
+    <div class="ody-flex-center ody-gap-2">
+      <span class="ody-muted">负责人：</span>
+      <span class="ody-editable" data-ody-editable data-ody-editable-placeholder="点击指派…"></span>
+    </div>
+  </div>
+  <div class="doc-code"><pre><code>&lt;span class="ody-editable" data-ody-editable&gt;HOLDFAST 迁移&lt;/span&gt;
+
+&lt;!-- 空值占位 --&gt;
+&lt;span class="ody-editable" data-ody-editable
+      data-ody-editable-placeholder="点击指派…"&gt;&lt;/span&gt;
+
+&lt;script&gt;
+document.querySelector('.ody-editable')
+  .addEventListener('ody:change', e =&gt; console.log(e.detail.value));
+&lt;/script&gt;</code></pre></div>
+</div>
+
   </main>
 </div>
 

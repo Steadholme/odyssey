@@ -19,7 +19,7 @@
     </span>
     <span class="ody-appbar__name">Odyssey UI</span>
   </a>
-  <span class="ody-tag ody-tag--accent ody-mono doc-appbar__ver">v1.0.0</span>
+  <span class="ody-tag ody-tag--accent ody-mono doc-appbar__ver">v1.1.0</span>
   <span class="ody-appbar__spacer"></span>
   <div class="ody-appbar__right">
     <a class="ody-iconbtn" href="#" aria-label="GitHub 仓库（占位）" title="GitHub">
@@ -434,6 +434,240 @@
   &lt;/div&gt;
 &lt;/form&gt;</code></pre></div>
     </div>
+
+
+    <!-- ==================== Advanced (v1.1) · forms-ext ==================== -->
+    <h2 id="advanced-v11">进阶控件 · forms-ext <span class="ody-badge ody-badge--accent">v1.1</span></h2>
+    <p>以下为 v1.1 新增的进阶交互控件，全部由 <code>odyssey.js</code> 的 <code>data-ody-*</code> 属性驱动，键盘可及、亮暗双主题成立。</p>
+
+<!-- ============================== Combobox ============================== -->
+<h2 id="combobox">Combobox · 可过滤自动补全</h2>
+<p><code>.ody-combobox</code> 是一个把原生 <code>input</code> 与浮层 <code>listbox</code> 组合的自动补全控件。输入即过滤（子串匹配，命中片段用 <code>&lt;mark&gt;</code> 高亮），<kbd>↑</kbd>/<kbd>↓</kbd> 在候选间移动、<kbd>Enter</kbd> 选中、<kbd>Esc</kbd> 收起，点选或选中后派发原生 <code>change</code> 事件。需要 <code>odyssey.js</code>。</p>
+<div class="doc-example">
+  <div class="doc-demo doc-demo--stack">
+    <div class="ody-combobox" data-ody-combobox style="max-width:320px">
+      <input class="ody-input ody-combobox__input" type="text" placeholder="搜索框架…" autocomplete="off">
+      <div class="ody-combobox__list" role="listbox">
+        <div class="ody-combobox__opt" role="option">React</div>
+        <div class="ody-combobox__opt" role="option">Vue</div>
+        <div class="ody-combobox__opt" role="option">Svelte</div>
+        <div class="ody-combobox__opt" role="option">Angular</div>
+        <div class="ody-combobox__opt" role="option">SolidJS</div>
+        <div class="ody-combobox__opt" role="option">Preact</div>
+      </div>
+    </div>
+  </div>
+  <div class="doc-code"><pre><code>&lt;div class="ody-combobox" data-ody-combobox&gt;
+  &lt;input class="ody-input ody-combobox__input" type="text" placeholder="搜索框架…" autocomplete="off"&gt;
+  &lt;div class="ody-combobox__list" role="listbox"&gt;
+    &lt;div class="ody-combobox__opt" role="option"&gt;React&lt;/div&gt;
+    &lt;div class="ody-combobox__opt" role="option"&gt;Vue&lt;/div&gt;
+    &lt;div class="ody-combobox__opt" role="option"&gt;Svelte&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre></div>
+</div>
+
+<!-- ============================== Multi-select ============================== -->
+<h2 id="multiselect">Multi-select · Chips 多选</h2>
+<p><code>.ody-multiselect</code> 点击控件展开选项浮层，点选项在 <code>.is-selected</code> 间切换并把已选项渲染成可删除的 chip；点 chip 上的 ✕ 或再次点选项即取消。已选值通过 <code>Odyssey.multiselectValue(el)</code> 读取，变更派发 <code>ody:change</code>（<code>detail.value</code> 为数组）。初始已选项加 <code>.is-selected</code> 即可。</p>
+<div class="doc-example">
+  <div class="doc-demo doc-demo--stack">
+    <div class="ody-multiselect" data-ody-multiselect data-placeholder="选择技术栈…" style="max-width:340px">
+      <div class="ody-multiselect__control" tabindex="0" role="button" aria-haspopup="listbox">
+        <div class="ody-multiselect__values"></div>
+        <svg class="ody-multiselect__caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+      </div>
+      <div class="ody-multiselect__menu" role="listbox" aria-multiselectable="true">
+        <div class="ody-multiselect__opt is-selected" role="option" aria-selected="true">TypeScript</div>
+        <div class="ody-multiselect__opt is-selected" role="option" aria-selected="true">Rust</div>
+        <div class="ody-multiselect__opt" role="option">Go</div>
+        <div class="ody-multiselect__opt" role="option">Python</div>
+        <div class="ody-multiselect__opt" role="option">Zig</div>
+      </div>
+    </div>
+  </div>
+  <div class="doc-code"><pre><code>&lt;div class="ody-multiselect" data-ody-multiselect data-placeholder="选择技术栈…"&gt;
+  &lt;div class="ody-multiselect__control" tabindex="0" role="button"&gt;
+    &lt;div class="ody-multiselect__values"&gt;&lt;/div&gt;
+    &lt;svg class="ody-multiselect__caret" …&gt;&lt;/svg&gt;
+  &lt;/div&gt;
+  &lt;div class="ody-multiselect__menu" role="listbox" aria-multiselectable="true"&gt;
+    &lt;div class="ody-multiselect__opt is-selected" role="option"&gt;TypeScript&lt;/div&gt;
+    &lt;div class="ody-multiselect__opt" role="option"&gt;Go&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre></div>
+</div>
+
+<!-- ============================== Tag input ============================== -->
+<h2 id="taginput">Tag input · 回车成 Chip</h2>
+<p><code>.ody-taginput</code> 在输入框敲 <kbd>Enter</kbd> 或 <kbd>,</kbd> 把当前文本转成 chip，空输入时按 <kbd>Backspace</kbd> 删除最后一个 chip；点 chip 上的 ✕ 单独删除。默认去重（加 <code>data-allow-dupes</code> 允许重复）。当前值经 <code>Odyssey.tagValues(el)</code> 读取，变更派发 <code>ody:change</code>。</p>
+<div class="doc-example">
+  <div class="doc-demo doc-demo--stack">
+    <div class="ody-taginput" data-ody-taginput style="max-width:380px">
+      <span class="ody-taginput__chip" data-value="infra">infra<button type="button" class="ody-taginput__chip-x" aria-label="删除"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></span>
+      <span class="ody-taginput__chip" data-value="holdfast">holdfast<button type="button" class="ody-taginput__chip-x" aria-label="删除"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></span>
+      <input class="ody-taginput__field" type="text" placeholder="回车添加标签…">
+    </div>
+  </div>
+  <div class="doc-code"><pre><code>&lt;div class="ody-taginput" data-ody-taginput&gt;
+  &lt;span class="ody-taginput__chip" data-value="infra"&gt;infra
+    &lt;button type="button" class="ody-taginput__chip-x" aria-label="删除"&gt;✕&lt;/button&gt;
+  &lt;/span&gt;
+  &lt;input class="ody-taginput__field" type="text" placeholder="回车添加标签…"&gt;
+&lt;/div&gt;</code></pre></div>
+</div>
+
+<!-- ============================== Date picker ============================== -->
+<h2 id="datepicker">Date picker · 日历浮层</h2>
+<p><code>.ody-datepicker</code> 点只读输入框展开日历浮层，左右箭头翻月，点日期回填 <code>YYYY-MM-DD</code> 并派发 <code>change</code>；<code>&lt;input&gt;</code> 的初值若为 <code>YYYY-MM-DD</code> 会作为选中项。当日有描边标记、周一为一周起始。</p>
+<div class="doc-example">
+  <div class="doc-demo doc-demo--stack">
+    <div class="ody-datepicker" data-ody-datepicker>
+      <input class="ody-input ody-datepicker__input" type="text" readonly placeholder="选择日期" value="2026-07-05">
+      <div class="ody-datepicker__panel"></div>
+    </div>
+  </div>
+  <div class="doc-code"><pre><code>&lt;div class="ody-datepicker" data-ody-datepicker&gt;
+  &lt;input class="ody-input ody-datepicker__input" type="text" readonly
+         placeholder="选择日期" value="2026-07-05"&gt;
+  &lt;div class="ody-datepicker__panel"&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre></div>
+</div>
+
+<!-- ============================== Time picker ============================== -->
+<h2 id="timepicker">Time picker · 时/分浮层</h2>
+<p><code>.ody-timepicker</code> 展开小时（00–23）与分钟两列，点选即回填 <code>HH:MM</code> 并派发 <code>change</code>。分钟粒度用 <code>data-minute-step</code>（默认 5）控制。</p>
+<div class="doc-example">
+  <div class="doc-demo doc-demo--stack">
+    <div class="ody-timepicker" data-ody-timepicker data-minute-step="5">
+      <input class="ody-input ody-timepicker__input" type="text" readonly placeholder="选择时间" value="09:30">
+      <div class="ody-timepicker__panel"></div>
+    </div>
+  </div>
+  <div class="doc-code"><pre><code>&lt;div class="ody-timepicker" data-ody-timepicker data-minute-step="5"&gt;
+  &lt;input class="ody-input ody-timepicker__input" type="text" readonly
+         placeholder="选择时间" value="09:30"&gt;
+  &lt;div class="ody-timepicker__panel"&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre></div>
+</div>
+
+<!-- ============================== Dual-range ============================== -->
+<h2 id="dualrange">Dual-range · 双滑块区间</h2>
+<p><code>.ody-dualrange</code> 由 <code>data-min/max/step/low/high</code> 声明，JS 自动构建轨道、区间填充与两个滑块（指针拖拽 + <kbd>←</kbd>/<kbd>→</kbd>/<kbd>Home</kbd>/<kbd>End</kbd> 键盘调节，带 <code>role=slider</code> 与 aria 值）。父级内的 <code>[data-ody-dr-low]</code> / <code>[data-ody-dr-high]</code> 会实时回填当前值；变更派发 <code>ody:change</code>（<code>detail.low/high</code>）。</p>
+<div class="doc-example">
+  <div class="doc-demo doc-demo--stack">
+    <div style="max-width:380px">
+      <div class="ody-dualrange" data-ody-dualrange data-min="0" data-max="1000" data-low="200" data-high="800" data-step="10"></div>
+      <div class="ody-flex-between ody-mt-2">
+        <span class="ody-muted ody-num">¥<span data-ody-dr-low></span></span>
+        <span class="ody-muted ody-num">¥<span data-ody-dr-high></span></span>
+      </div>
+    </div>
+  </div>
+  <div class="doc-code"><pre><code>&lt;div class="ody-dualrange" data-ody-dualrange
+     data-min="0" data-max="1000" data-low="200" data-high="800" data-step="10"&gt;&lt;/div&gt;
+&lt;div class="ody-flex-between ody-mt-2"&gt;
+  &lt;span class="ody-muted ody-num"&gt;¥&lt;span data-ody-dr-low&gt;&lt;/span&gt;&lt;/span&gt;
+  &lt;span class="ody-muted ody-num"&gt;¥&lt;span data-ody-dr-high&gt;&lt;/span&gt;&lt;/span&gt;
+&lt;/div&gt;</code></pre></div>
+</div>
+
+<!-- ============================== Dropzone ============================== -->
+<h2 id="dropzone">File dropzone · 拖拽上传区</h2>
+<p><code>.ody-dropzone</code> 是包住隐藏 <code>&lt;input type="file"&gt;</code> 的 <code>&lt;label&gt;</code>：拖拽悬停加 <code>.is-dragover</code> 高亮，放下或点选后把文件写回 input（用 <code>DataTransfer</code> 管理，支持逐条删除）并渲染到兄弟节点 <code>[data-ody-dropzone-files]</code>。<code>multiple</code> 决定单/多文件。</p>
+<div class="doc-example">
+  <div class="doc-demo doc-demo--stack">
+    <label class="ody-dropzone" data-ody-dropzone>
+      <input type="file" multiple>
+      <svg class="ody-dropzone__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v13"/></svg>
+      <div class="ody-dropzone__title">拖拽文件到此处</div>
+      <div class="ody-dropzone__hint">或点击浏览 · 支持多文件</div>
+    </label>
+    <div class="ody-dropzone__files" data-ody-dropzone-files></div>
+  </div>
+  <div class="doc-code"><pre><code>&lt;label class="ody-dropzone" data-ody-dropzone&gt;
+  &lt;input type="file" multiple&gt;
+  &lt;svg class="ody-dropzone__ico" …&gt;&lt;/svg&gt;
+  &lt;div class="ody-dropzone__title"&gt;拖拽文件到此处&lt;/div&gt;
+  &lt;div class="ody-dropzone__hint"&gt;或点击浏览 · 支持多文件&lt;/div&gt;
+&lt;/label&gt;
+&lt;div class="ody-dropzone__files" data-ody-dropzone-files&gt;&lt;/div&gt;</code></pre></div>
+</div>
+
+<!-- ============================== Rating ============================== -->
+<h2 id="rating">Rating · 星级评分</h2>
+<p><code>.ody-rating</code> 由 <code>data-max</code>（默认 5）/ <code>data-value</code> 声明，JS 生成星按钮：悬停预览、点击设值、<kbd>←</kbd>/<kbd>→</kbd> 键盘调节，变更派发 <code>ody:change</code>。加 <code>data-readonly</code> 只读展示；尺寸 <code>--sm</code> / <code>--lg</code>。星色走 <code>--ody-warn</code>，亮暗自适应。</p>
+<div class="doc-example">
+  <div class="doc-demo">
+    <div class="ody-flex-center ody-gap-4 ody-flex-wrap">
+      <div class="ody-rating" data-ody-rating data-value="3" data-max="5"></div>
+      <div class="ody-rating ody-rating--sm" data-ody-rating data-value="4" data-max="5" data-readonly></div>
+      <div class="ody-rating ody-rating--lg" data-ody-rating data-value="2" data-max="5"></div>
+    </div>
+  </div>
+  <div class="doc-code"><pre><code>&lt;div class="ody-rating" data-ody-rating data-value="3" data-max="5"&gt;&lt;/div&gt;
+&lt;div class="ody-rating ody-rating--sm" data-ody-rating data-value="4" data-readonly&gt;&lt;/div&gt;
+&lt;div class="ody-rating ody-rating--lg" data-ody-rating data-value="2"&gt;&lt;/div&gt;</code></pre></div>
+</div>
+
+<!-- ============================== Segmented ============================== -->
+<h2 id="segment">Segmented control · 分段选择</h2>
+<p><code>.ody-segment</code> 用一组 <code>.ody-segment__item</code> 按钮做互斥选择：点选把 <code>.is-active</code> 移到目标、<kbd>←</kbd>/<kbd>→</kbd> 键盘切换，变更派发 <code>ody:change</code>（<code>detail.value</code> 取 <code>data-value</code> 或文本）。<code>--full</code> 撑满宽度，<code>--lg</code> 加大。</p>
+<div class="doc-example">
+  <div class="doc-demo">
+    <div class="ody-flex-center ody-gap-4 ody-flex-wrap">
+      <div class="ody-segment" data-ody-segment role="radiogroup" aria-label="视图">
+        <button type="button" class="ody-segment__item is-active" data-value="day" role="radio" aria-checked="true">日</button>
+        <button type="button" class="ody-segment__item" data-value="week" role="radio" aria-checked="false">周</button>
+        <button type="button" class="ody-segment__item" data-value="month" role="radio" aria-checked="false">月</button>
+      </div>
+      <div class="ody-segment" data-ody-segment role="radiogroup" aria-label="布局">
+        <button type="button" class="ody-segment__item is-active" data-value="grid" role="radio" aria-checked="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>网格</button>
+        <button type="button" class="ody-segment__item" data-value="list" role="radio" aria-checked="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>列表</button>
+      </div>
+    </div>
+  </div>
+  <div class="doc-code"><pre><code>&lt;div class="ody-segment" data-ody-segment role="radiogroup" aria-label="视图"&gt;
+  &lt;button type="button" class="ody-segment__item is-active" data-value="day" role="radio"&gt;日&lt;/button&gt;
+  &lt;button type="button" class="ody-segment__item" data-value="week" role="radio"&gt;周&lt;/button&gt;
+  &lt;button type="button" class="ody-segment__item" data-value="month" role="radio"&gt;月&lt;/button&gt;
+&lt;/div&gt;</code></pre></div>
+</div>
+
+<!-- ============================== OTP ============================== -->
+<h2 id="otp">OTP / PIN · 分格验证码</h2>
+<p><code>.ody-otp</code> 由 <code>data-len</code>（默认 6）声明格数，JS 生成单字符输入格：填字自动前进、<kbd>Backspace</kbd> 回退、<kbd>←</kbd>/<kbd>→</kbd> 移动、整段粘贴自动分发。默认只收数字（<code>data-mode="text"</code> 允许字母）。取值 <code>Odyssey.otpValue(el)</code>，变更派发 <code>ody:change</code>；错误态加 <code>.is-invalid</code>。</p>
+<div class="doc-example">
+  <div class="doc-demo doc-demo--stack">
+    <div class="ody-otp" data-ody-otp data-len="6"></div>
+    <div class="ody-otp ody-otp--sm" data-ody-otp data-len="4"></div>
+  </div>
+  <div class="doc-code"><pre><code>&lt;div class="ody-otp" data-ody-otp data-len="6"&gt;&lt;/div&gt;
+&lt;div class="ody-otp ody-otp--sm" data-ody-otp data-len="4"&gt;&lt;/div&gt;
+&lt;!-- 取值：Odyssey.otpValue(el) --&gt;</code></pre></div>
+</div>
+
+<!-- ============================== Swatches ============================== -->
+<h2 id="swatches">Color swatch picker · 色板选择</h2>
+<p><code>.ody-swatches</code> 里每个 <code>.ody-swatch</code> 通过 <code>--ody-sw</code> 设颜色（可用语义 token 或任意色值），点选把 <code>.is-active</code> 环高亮移到目标，变更派发 <code>ody:change</code>（<code>detail.value</code> 取 <code>data-value</code>）。形状 <code>--pill</code> / 尺寸 <code>--lg</code>。</p>
+<div class="doc-example">
+  <div class="doc-demo">
+    <div class="ody-swatches" data-ody-swatches role="radiogroup" aria-label="主题色">
+      <button type="button" class="ody-swatch is-active" data-value="accent" role="radio" aria-checked="true" style="--ody-sw:var(--ody-accent)" aria-label="靛蓝"></button>
+      <button type="button" class="ody-swatch" data-value="ok" role="radio" aria-checked="false" style="--ody-sw:var(--ody-ok)" aria-label="绿色"></button>
+      <button type="button" class="ody-swatch" data-value="warn" role="radio" aria-checked="false" style="--ody-sw:var(--ody-warn)" aria-label="琥珀"></button>
+      <button type="button" class="ody-swatch" data-value="down" role="radio" aria-checked="false" style="--ody-sw:var(--ody-down)" aria-label="玫红"></button>
+      <button type="button" class="ody-swatch" data-value="info" role="radio" aria-checked="false" style="--ody-sw:var(--ody-info)" aria-label="青色"></button>
+      <button type="button" class="ody-swatch" data-value="ink" role="radio" aria-checked="false" style="--ody-sw:var(--ody-ink-2)" aria-label="墨色"></button>
+    </div>
+  </div>
+  <div class="doc-code"><pre><code>&lt;div class="ody-swatches" data-ody-swatches role="radiogroup"&gt;
+  &lt;button type="button" class="ody-swatch is-active" data-value="accent"
+          role="radio" style="--ody-sw:var(--ody-accent)" aria-label="靛蓝"&gt;&lt;/button&gt;
+  &lt;button type="button" class="ody-swatch" data-value="ok"
+          role="radio" style="--ody-sw:var(--ody-ok)" aria-label="绿色"&gt;&lt;/button&gt;
+&lt;/div&gt;</code></pre></div>
+</div>
 
   </main>
 </div>

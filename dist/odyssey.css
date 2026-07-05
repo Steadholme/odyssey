@@ -5,7 +5,7 @@
    "Odyssey" design language. A single, self-contained, CDN-ready stylesheet:
    pure CSS, zero dependencies, zero external requests, Element-UI-class breadth.
 
-   Version : v1.0.0
+   Version : v1.1.0
    License : MIT (placeholder — replace with project license)
    Usage   : <link rel="stylesheet" href=".../dist/odyssey.css">
              optional Inter webfont: <link rel="stylesheet" href=".../dist/odyssey-font.css">
@@ -809,4 +809,1106 @@
 }
 @media (prefers-reduced-motion:reduce){
   *{ transition:none !important; animation:none !important; }
+}
+
+
+/* ============================================================================
+   === v1.1 forms-ext ===
+   ============================================================================ */
+/* ============================================================================
+   Odyssey UI · _ext_forms.css  ——  BATCH: forms-ext (v1.1, additive)
+   ----------------------------------------------------------------------------
+   Advanced form controls layered on top of odyssey.css. ADDITIVE ONLY — no
+   existing component or token is modified. Every rule references the semantic
+   --ody-* token layer exclusively (no raw hex; color-mix base colours are all
+   tokens), so light + [data-theme="dark"] both hold automatically.
+
+   Components in this batch
+   ------------------------
+     .ody-combobox     — filterable autocomplete input
+     .ody-multiselect  — chips multi-select
+     .ody-taginput     — Enter-to-chip free tag input
+     .ody-datepicker   — calendar popover input
+     .ody-timepicker   — hour/minute column popover
+     .ody-dualrange    — two-thumb range interval
+     .ody-dropzone     — drag-and-drop upload area
+     .ody-rating       — star rating
+     .ody-segment      — segmented control
+     .ody-otp          — OTP / PIN cell input
+     .ody-swatches / .ody-swatch — colour swatch picker
+
+   Conventions — BEM (.ody-block / __element / --modifier / .is-state);
+   focus rings = 4px var(--ody-ring); floating panels reuse the .ody-menu look
+   (surface + border + --ody-sh-pop + translateY reveal).
+   ============================================================================ */
+
+/* ============================================================================
+   Shared floating panel (combobox / multiselect / datepicker / timepicker)
+   ============================================================================ */
+.ody-combobox__list,.ody-multiselect__menu,.ody-datepicker__panel,.ody-timepicker__panel{
+  position:absolute; z-index:60;
+  background:var(--ody-surface); border:1px solid var(--ody-border); border-radius:var(--ody-r);
+  box-shadow:var(--ody-sh-pop);
+  opacity:0; visibility:hidden; transform:translateY(-4px);
+  transition:opacity var(--ody-dur) var(--ody-ease), transform var(--ody-dur) var(--ody-ease), visibility var(--ody-dur);
+}
+.ody-combobox.is-open .ody-combobox__list,
+.ody-multiselect.is-open .ody-multiselect__menu,
+.ody-datepicker.is-open .ody-datepicker__panel,
+.ody-timepicker.is-open .ody-timepicker__panel{ opacity:1; visibility:visible; transform:translateY(0); }
+
+/* shared chip close button (multiselect / taginput) */
+.ody-multiselect__chip-x,.ody-taginput__chip-x{
+  display:inline-grid; place-items:center; width:15px; height:15px; margin:0; padding:0;
+  border:0; background:transparent; color:currentColor; opacity:.7; cursor:pointer; border-radius:50%;
+}
+.ody-multiselect__chip-x:hover,.ody-taginput__chip-x:hover{ opacity:1; background:color-mix(in srgb,currentColor 18%,transparent); }
+.ody-multiselect__chip-x svg,.ody-taginput__chip-x svg{ width:10px; height:10px; }
+.ody-multiselect__chip-x:focus-visible,.ody-taginput__chip-x:focus-visible{ outline:none; box-shadow:0 0 0 3px var(--ody-ring); }
+
+/* ============================================================================
+   1 · COMBOBOX / AUTOCOMPLETE
+   ============================================================================ */
+.ody-combobox{ position:relative; display:block; width:100%; }
+.ody-combobox__list{ top:calc(100% + var(--ody-sp-1)); left:0; right:0; max-height:246px; overflow:auto; padding:6px; }
+.ody-combobox__opt{
+  display:flex; align-items:center; gap:var(--ody-sp-2);
+  padding:var(--ody-sp-2) var(--ody-sp-3); border-radius:var(--ody-r-sm);
+  color:var(--ody-ink-2); font-size:var(--ody-fs-body); cursor:pointer;
+}
+.ody-combobox__opt:hover,.ody-combobox__opt.is-active{ background:var(--ody-surface-3); color:var(--ody-ink); }
+.ody-combobox__opt[hidden]{ display:none; }
+.ody-combobox__opt mark{ background:transparent; color:var(--ody-accent-ink); font-weight:var(--ody-fw-semibold); }
+.ody-combobox__empty{ padding:var(--ody-sp-3); color:var(--ody-ink-3); font-size:var(--ody-fs-sm); text-align:center; }
+
+/* ============================================================================
+   2 · MULTI-SELECT (chips)
+   ============================================================================ */
+.ody-multiselect{ position:relative; display:block; width:100%; }
+.ody-multiselect__control{
+  display:flex; flex-wrap:wrap; align-items:center; gap:6px; min-height:var(--ody-tap); width:100%;
+  padding:5px var(--ody-sp-3); background:var(--ody-surface);
+  border:1px solid var(--ody-border-2); border-radius:var(--ody-r-sm); cursor:pointer;
+  transition:border-color var(--ody-dur) var(--ody-ease), box-shadow var(--ody-dur) var(--ody-ease);
+}
+.ody-multiselect.is-open .ody-multiselect__control{ border-color:var(--ody-accent); box-shadow:0 0 0 4px var(--ody-ring); }
+.ody-multiselect__values{ display:flex; flex-wrap:wrap; align-items:center; gap:6px; flex:1 1 auto; min-width:0; }
+.ody-multiselect__ph{ color:var(--ody-ink-4); font-size:var(--ody-fs-body); }
+.ody-multiselect__chip{
+  display:inline-flex; align-items:center; gap:4px; padding:2px 4px 2px 8px;
+  background:var(--ody-accent-soft); color:var(--ody-accent-ink); border:1px solid var(--ody-accent-soft-2);
+  border-radius:var(--ody-r-xs); font-size:var(--ody-fs-sm); font-weight:var(--ody-fw-medium);
+}
+.ody-multiselect__caret{ flex:0 0 auto; width:16px; height:16px; color:var(--ody-ink-4); transition:transform var(--ody-dur) var(--ody-ease); }
+.ody-multiselect.is-open .ody-multiselect__caret{ transform:rotate(180deg); }
+.ody-multiselect__menu{ top:calc(100% + var(--ody-sp-1)); left:0; right:0; max-height:246px; overflow:auto; padding:6px; }
+.ody-multiselect__opt{
+  display:flex; align-items:center; gap:var(--ody-sp-2);
+  padding:var(--ody-sp-2) var(--ody-sp-3); border-radius:var(--ody-r-sm);
+  color:var(--ody-ink-2); font-size:var(--ody-fs-body); cursor:pointer;
+}
+.ody-multiselect__opt:hover,.ody-multiselect__opt.is-active{ background:var(--ody-surface-3); color:var(--ody-ink); }
+.ody-multiselect__opt.is-selected{ color:var(--ody-ink); font-weight:var(--ody-fw-medium); }
+.ody-multiselect__opt.is-selected::after{ content:"✓"; margin-left:auto; color:var(--ody-accent); font-weight:var(--ody-fw-semibold); }
+.ody-multiselect__opt[hidden]{ display:none; }
+
+/* ============================================================================
+   3 · TAG INPUT (Enter → chip)
+   ============================================================================ */
+.ody-taginput{
+  display:flex; flex-wrap:wrap; align-items:center; gap:6px; width:100%; min-height:var(--ody-tap);
+  padding:5px var(--ody-sp-2); background:var(--ody-surface);
+  border:1px solid var(--ody-border-2); border-radius:var(--ody-r-sm); cursor:text;
+  transition:border-color var(--ody-dur) var(--ody-ease), box-shadow var(--ody-dur) var(--ody-ease);
+}
+.ody-taginput.is-focus{ border-color:var(--ody-accent); box-shadow:0 0 0 4px var(--ody-ring); }
+.ody-taginput.is-disabled{ opacity:.6; cursor:not-allowed; background:var(--ody-surface-2); }
+.ody-taginput__chip{
+  display:inline-flex; align-items:center; gap:4px; padding:2px 4px 2px 8px;
+  background:var(--ody-surface-3); color:var(--ody-ink); border:1px solid var(--ody-border);
+  border-radius:var(--ody-r-xs); font-size:var(--ody-fs-sm); font-weight:var(--ody-fw-medium);
+}
+.ody-taginput__field{
+  flex:1 1 60px; min-width:60px; height:26px; padding:0 2px;
+  border:0; outline:0; background:transparent; color:var(--ody-ink);
+  font-family:inherit; font-size:var(--ody-fs-body);
+}
+.ody-taginput__field::placeholder{ color:var(--ody-ink-4); }
+
+/* ============================================================================
+   4 · DATE PICKER
+   ============================================================================ */
+.ody-datepicker{ position:relative; display:block; width:100%; max-width:280px; }
+.ody-datepicker__panel{ top:calc(100% + var(--ody-sp-1)); left:0; width:266px; padding:var(--ody-sp-3); }
+.ody-datepicker__head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:var(--ody-sp-2); }
+.ody-datepicker__title{ font-size:var(--ody-fs-body); font-weight:var(--ody-fw-semibold); color:var(--ody-ink); }
+.ody-datepicker__nav{
+  display:inline-grid; place-items:center; width:28px; height:28px; padding:0;
+  border:0; background:transparent; color:var(--ody-ink-2); border-radius:var(--ody-r-xs); cursor:pointer;
+}
+.ody-datepicker__nav:hover{ background:var(--ody-surface-3); color:var(--ody-ink); }
+.ody-datepicker__nav:focus-visible{ outline:none; box-shadow:0 0 0 3px var(--ody-ring); }
+.ody-datepicker__nav svg{ width:16px; height:16px; }
+.ody-datepicker__grid{ display:grid; grid-template-columns:repeat(7,1fr); gap:2px; }
+.ody-datepicker__dow{
+  display:grid; place-items:center; height:26px;
+  font-size:var(--ody-fs-micro); font-weight:var(--ody-fw-semibold); color:var(--ody-ink-3); text-transform:uppercase;
+}
+.ody-datepicker__day{
+  display:grid; place-items:center; height:32px; padding:0;
+  border:0; background:transparent; color:var(--ody-ink-2);
+  font-family:inherit; font-size:var(--ody-fs-sm); font-variant-numeric:tabular-nums;
+  border-radius:var(--ody-r-xs); cursor:pointer;
+  transition:background var(--ody-dur) var(--ody-ease), color var(--ody-dur) var(--ody-ease);
+}
+.ody-datepicker__day:hover{ background:var(--ody-surface-3); color:var(--ody-ink); }
+.ody-datepicker__day.is-muted{ color:var(--ody-ink-4); }
+.ody-datepicker__day.is-today{ box-shadow:inset 0 0 0 1px var(--ody-border-2); font-weight:var(--ody-fw-semibold); }
+.ody-datepicker__day.is-selected{ background:var(--ody-accent); color:var(--ody-surface); font-weight:var(--ody-fw-semibold); }
+.ody-datepicker__day.is-selected:hover{ background:var(--ody-accent-ink); color:var(--ody-surface); }
+.ody-datepicker__day:focus-visible{ outline:none; box-shadow:0 0 0 3px var(--ody-ring); }
+.ody-datepicker__day:disabled{ color:var(--ody-ink-4); opacity:.5; cursor:not-allowed; }
+
+/* ============================================================================
+   5 · TIME PICKER
+   ============================================================================ */
+.ody-timepicker{ position:relative; display:block; width:100%; max-width:200px; }
+.ody-timepicker__panel{ top:calc(100% + var(--ody-sp-1)); left:0; display:flex; gap:4px; padding:6px; }
+.ody-timepicker__col{ display:flex; flex-direction:column; gap:2px; width:58px; max-height:206px; overflow:auto; scrollbar-width:thin; }
+.ody-timepicker__col + .ody-timepicker__col{ border-left:1px solid var(--ody-hairline); padding-left:4px; }
+.ody-timepicker__opt{
+  padding:6px var(--ody-sp-2); text-align:center;
+  border:0; background:transparent; color:var(--ody-ink-2);
+  font-family:var(--ody-mono); font-size:var(--ody-fs-sm); font-variant-numeric:tabular-nums;
+  border-radius:var(--ody-r-xs); cursor:pointer;
+  transition:background var(--ody-dur) var(--ody-ease), color var(--ody-dur) var(--ody-ease);
+}
+.ody-timepicker__opt:hover{ background:var(--ody-surface-3); color:var(--ody-ink); }
+.ody-timepicker__opt.is-active{ background:var(--ody-accent); color:var(--ody-surface); font-weight:var(--ody-fw-semibold); }
+.ody-timepicker__opt:focus-visible{ outline:none; box-shadow:0 0 0 3px var(--ody-ring); }
+
+/* ============================================================================
+   6 · DUAL-RANGE SLIDER
+   ============================================================================ */
+.ody-dualrange{ position:relative; display:flex; align-items:center; width:100%; height:22px; touch-action:none; user-select:none; }
+.ody-dualrange__track{ position:relative; width:100%; height:5px; background:var(--ody-border-2); border-radius:var(--ody-r-pill); }
+.ody-dualrange__fill{ position:absolute; top:0; bottom:0; background:var(--ody-accent); border-radius:var(--ody-r-pill); }
+.ody-dualrange__thumb{
+  position:absolute; top:50%; width:18px; height:18px; margin:0 0 0 -9px; padding:0;
+  transform:translateY(-50%); background:var(--ody-surface); border:2px solid var(--ody-accent);
+  border-radius:50%; box-shadow:var(--ody-sh-sm); cursor:grab;
+  transition:box-shadow var(--ody-dur) var(--ody-ease);
+}
+.ody-dualrange__thumb:hover{ box-shadow:var(--ody-sh-md); }
+.ody-dualrange__thumb.is-drag{ cursor:grabbing; }
+.ody-dualrange__thumb:focus-visible{ outline:none; box-shadow:0 0 0 4px var(--ody-ring); }
+.ody-dualrange.is-disabled{ opacity:.55; pointer-events:none; }
+.ody-dualrange.is-disabled .ody-dualrange__fill{ background:var(--ody-ink-4); }
+
+/* ============================================================================
+   7 · FILE DROPZONE
+   ============================================================================ */
+.ody-dropzone{
+  position:relative; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:var(--ody-sp-2); width:100%; min-height:132px; padding:var(--ody-sp-6); text-align:center;
+  background:var(--ody-surface-2); border:1.5px dashed var(--ody-border-2); border-radius:var(--ody-r);
+  color:var(--ody-ink-3); cursor:pointer;
+  transition:border-color var(--ody-dur) var(--ody-ease), background var(--ody-dur) var(--ody-ease), color var(--ody-dur) var(--ody-ease);
+}
+.ody-dropzone:hover{ border-color:var(--ody-accent); }
+.ody-dropzone.is-dragover{ border-color:var(--ody-accent); background:var(--ody-accent-soft); color:var(--ody-accent-ink); }
+.ody-dropzone:focus-within{ outline:none; box-shadow:0 0 0 4px var(--ody-ring); }
+.ody-dropzone input[type="file"]{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); border:0; }
+.ody-dropzone__ico{ width:32px; height:32px; color:var(--ody-ink-4); }
+.ody-dropzone.is-dragover .ody-dropzone__ico{ color:var(--ody-accent); }
+.ody-dropzone__title{ font-size:var(--ody-fs-body); font-weight:var(--ody-fw-semibold); color:var(--ody-ink); }
+.ody-dropzone.is-dragover .ody-dropzone__title{ color:var(--ody-accent-ink); }
+.ody-dropzone__hint{ font-size:var(--ody-fs-sm); color:var(--ody-ink-3); }
+.ody-dropzone__files{ display:flex; flex-direction:column; gap:6px; width:100%; margin-top:var(--ody-sp-2); }
+.ody-dropzone__file{
+  display:flex; align-items:center; gap:var(--ody-sp-2);
+  padding:var(--ody-sp-2) var(--ody-sp-3); background:var(--ody-surface);
+  border:1px solid var(--ody-border); border-radius:var(--ody-r-sm);
+  font-size:var(--ody-fs-sm); color:var(--ody-ink-2); text-align:left;
+}
+.ody-dropzone__file svg{ width:16px; height:16px; color:var(--ody-ink-3); flex:0 0 auto; }
+.ody-dropzone__file-name{ flex:1 1 auto; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.ody-dropzone__file-size{ flex:0 0 auto; color:var(--ody-ink-3); font-variant-numeric:tabular-nums; }
+.ody-dropzone__file-x{
+  display:inline-grid; place-items:center; width:18px; height:18px; flex:0 0 auto; padding:0;
+  border:0; background:transparent; color:var(--ody-ink-3); cursor:pointer; border-radius:var(--ody-r-xs);
+}
+.ody-dropzone__file-x:hover{ color:var(--ody-down); background:var(--ody-surface-2); }
+.ody-dropzone__file-x svg{ width:13px; height:13px; color:inherit; }
+
+/* ============================================================================
+   8 · RATING (stars)
+   ============================================================================ */
+.ody-rating{ display:inline-flex; align-items:center; gap:2px; }
+.ody-rating__star{
+  display:inline-grid; place-items:center; width:26px; height:26px; padding:0;
+  border:0; background:transparent; color:var(--ody-border-2); cursor:pointer;
+  transition:color var(--ody-dur) var(--ody-ease), transform var(--ody-dur) var(--ody-ease);
+}
+.ody-rating__star svg{ width:22px; height:22px; fill:currentColor; stroke:none; }
+.ody-rating__star.is-on{ color:var(--ody-warn); }
+.ody-rating__star:hover{ transform:scale(1.12); }
+.ody-rating__star:focus-visible{ outline:none; box-shadow:0 0 0 4px var(--ody-ring); border-radius:var(--ody-r-xs); }
+.ody-rating--sm .ody-rating__star{ width:20px; height:20px; }
+.ody-rating--sm .ody-rating__star svg{ width:16px; height:16px; }
+.ody-rating--lg .ody-rating__star{ width:34px; height:34px; }
+.ody-rating--lg .ody-rating__star svg{ width:30px; height:30px; }
+.ody-rating.is-readonly .ody-rating__star{ cursor:default; }
+.ody-rating.is-readonly .ody-rating__star:hover{ transform:none; }
+
+/* ============================================================================
+   9 · SEGMENTED CONTROL
+   ============================================================================ */
+.ody-segment{
+  display:inline-flex; align-items:center; gap:2px; padding:3px;
+  background:var(--ody-surface-2); border:1px solid var(--ody-border); border-radius:var(--ody-r-sm);
+}
+.ody-segment__item{
+  display:inline-flex; align-items:center; justify-content:center; gap:6px; height:30px; padding:0 var(--ody-sp-3);
+  border:0; background:transparent; color:var(--ody-ink-2);
+  font-family:inherit; font-size:var(--ody-fs-sm); font-weight:var(--ody-fw-medium); white-space:nowrap;
+  border-radius:calc(var(--ody-r-sm) - 3px); cursor:pointer;
+  transition:background var(--ody-dur) var(--ody-ease), color var(--ody-dur) var(--ody-ease);
+}
+.ody-segment__item svg{ width:15px; height:15px; flex:0 0 auto; }
+.ody-segment__item:hover{ color:var(--ody-ink); }
+.ody-segment__item.is-active{ background:var(--ody-surface); color:var(--ody-ink); box-shadow:var(--ody-sh-xs); font-weight:var(--ody-fw-semibold); }
+.ody-segment__item:disabled{ opacity:.5; cursor:not-allowed; }
+.ody-segment__item:focus-visible{ outline:none; box-shadow:0 0 0 4px var(--ody-ring); }
+.ody-segment--full{ display:flex; width:100%; }
+.ody-segment--full .ody-segment__item{ flex:1 1 0; }
+.ody-segment--lg .ody-segment__item{ height:38px; font-size:var(--ody-fs-body); padding:0 var(--ody-sp-4); }
+
+/* ============================================================================
+   10 · OTP / PIN INPUT
+   ============================================================================ */
+.ody-otp{ display:inline-flex; align-items:center; gap:var(--ody-sp-2); }
+.ody-otp__cell{
+  width:44px; height:52px; padding:0; text-align:center;
+  font-family:var(--ody-mono); font-size:var(--ody-fs-h2); font-weight:var(--ody-fw-semibold); color:var(--ody-ink);
+  background:var(--ody-surface); border:1px solid var(--ody-border-2); border-radius:var(--ody-r-sm);
+  outline:none; caret-color:var(--ody-accent);
+  transition:border-color var(--ody-dur) var(--ody-ease), box-shadow var(--ody-dur) var(--ody-ease);
+}
+.ody-otp__cell::placeholder{ color:var(--ody-ink-4); }
+.ody-otp__cell:focus{ border-color:var(--ody-accent); box-shadow:0 0 0 4px var(--ody-ring); }
+.ody-otp__cell.is-filled{ border-color:var(--ody-accent); }
+.ody-otp__cell:disabled{ opacity:.6; cursor:not-allowed; background:var(--ody-surface-2); }
+.ody-otp__sep{ color:var(--ody-ink-4); font-weight:var(--ody-fw-semibold); }
+.ody-otp--sm .ody-otp__cell{ width:38px; height:44px; font-size:var(--ody-fs-h3); }
+.ody-otp.is-invalid .ody-otp__cell{ border-color:var(--ody-down); }
+.ody-otp.is-invalid .ody-otp__cell:focus{ box-shadow:0 0 0 4px color-mix(in srgb,var(--ody-down) 22%,transparent); }
+
+/* ============================================================================
+   11 · COLOUR SWATCH PICKER
+   ============================================================================ */
+.ody-swatches{ display:flex; flex-wrap:wrap; gap:var(--ody-sp-2); }
+.ody-swatch{
+  position:relative; width:28px; height:28px; padding:0;
+  border:1px solid color-mix(in srgb,var(--ody-ink) 16%,transparent); border-radius:var(--ody-r-xs);
+  background:var(--ody-sw,var(--ody-accent)); cursor:pointer;
+  transition:transform var(--ody-dur) var(--ody-ease);
+}
+.ody-swatch:hover{ transform:scale(1.08); }
+.ody-swatch:focus-visible{ outline:none; box-shadow:0 0 0 4px var(--ody-ring); }
+.ody-swatch.is-active{ box-shadow:0 0 0 2px var(--ody-surface),0 0 0 4px var(--ody-accent); }
+.ody-swatch--lg{ width:36px; height:36px; border-radius:var(--ody-r-sm); }
+.ody-swatch--pill{ border-radius:var(--ody-r-pill); }
+.ody-swatches--lg .ody-swatch{ width:36px; height:36px; }
+
+
+/* ============================================================================
+   === v1.1 data-ext ===
+   ============================================================================ */
+/* ============================================================================
+   Odyssey UI · _ext_data.css  —  BATCH: data-ext (advanced data components)
+   ----------------------------------------------------------------------------
+   Additive advanced components for Odyssey UI. Merged into dist/odyssey.css at
+   assembly time — do NOT edit the core stylesheet here.
+
+   Scope of this batch
+     · Data table advanced  — sortable headers (.is-asc/.is-desc), row-select
+                              checkboxes, sticky, filter row, toolbar + footer
+     · Tree view            — .ody-tree caret expand/collapse + indent guides
+     · Stat charts          — .ody-chart--bar / --line / --donut / --spark
+                              (pure inline-SVG, coloured only by tokens)
+     · Stepper / Wizard      — .ody-stepper with connector lines, .is-active/.is-done
+     · Calendar             — .ody-cal month grid, today / selected / dot
+     · Kanban board         — .ody-kanban columns + draggable cards + drop zone
+     · Comparison table     — .ody-compare feature check / cross grid
+
+   Contract
+     · Namespace  — every class prefixed .ody-  (BEM + state .is-*).
+     · Tokens     — semantic --ody-* only; NO raw hex. Translucency via
+                    color-mix(in srgb, var(--ody-token) N%, transparent).
+     · Themes     — light + dark hold automatically (semantic tokens only).
+   ============================================================================ */
+
+/* ============================================================================
+   1 · DATA TABLE — ADVANCED
+   Layered on the existing .ody-table / .ody-table-wrap. Additive only.
+   ============================================================================ */
+
+/* ---- toolbar above / footer below the scroll area ---- */
+.ody-table__toolbar,
+.ody-table__foot{
+  display:flex; align-items:center; gap:var(--ody-sp-3); flex-wrap:wrap;
+  padding:var(--ody-sp-3) var(--ody-sp-4);
+  font-size:var(--ody-fs-sm); color:var(--ody-ink-3);
+}
+.ody-table__toolbar{ border-bottom:1px solid var(--ody-hairline); }
+.ody-table__foot{ border-top:1px solid var(--ody-hairline); }
+.ody-table__foot .ody-pager{ margin-left:auto; }
+.ody-table__spacer{ margin-left:auto; }
+.ody-table__count{ color:var(--ody-ink-3); font-variant-numeric:tabular-nums; }
+.ody-table__count strong{ color:var(--ody-ink); font-weight:var(--ody-fw-semibold); }
+
+/* ---- sortable header cell ---- */
+.ody-table th.ody-th--sort{ cursor:pointer; user-select:none; white-space:nowrap; }
+.ody-table th.ody-th--sort:hover{ color:var(--ody-ink); background:var(--ody-surface-2); }
+.ody-th--sort .ody-th__label{ display:inline-flex; align-items:center; gap:var(--ody-sp-2); }
+.ody-th--sort.ody-num .ody-th__label{ flex-direction:row-reverse; }
+
+/* stacked up/down chevron built from token-coloured triangles (no hex) */
+.ody-th__arrow{ display:inline-flex; flex-direction:column; gap:2px; flex:0 0 auto; }
+.ody-th__arrow::before,
+.ody-th__arrow::after{
+  content:""; width:0; height:0;
+  border-left:4px solid transparent; border-right:4px solid transparent;
+}
+.ody-th__arrow::before{ border-bottom:5px solid var(--ody-ink-4); }
+.ody-th__arrow::after{ border-top:5px solid var(--ody-ink-4); }
+.ody-th--sort.is-asc .ody-th__arrow::before{ border-bottom-color:var(--ody-accent); }
+.ody-th--sort.is-asc .ody-th__arrow::after{ border-top-color:color-mix(in srgb,var(--ody-ink-4) 45%,transparent); }
+.ody-th--sort.is-desc .ody-th__arrow::after{ border-top-color:var(--ody-accent); }
+.ody-th--sort.is-desc .ody-th__arrow::before{ border-bottom-color:color-mix(in srgb,var(--ody-ink-4) 45%,transparent); }
+.ody-table th.ody-th--sort.is-sorted{ color:var(--ody-ink); }
+
+/* ---- row-select checkbox column ---- */
+.ody-table th.ody-th--check,
+.ody-table td.ody-td--check{ width:1%; padding-left:var(--ody-sp-4); padding-right:0; text-align:center; }
+.ody-td--check input,
+.ody-th--check input{ width:16px; height:16px; margin:0; accent-color:var(--ody-accent); cursor:pointer; vertical-align:middle; }
+.ody-td--check input:focus-visible,
+.ody-th--check input:focus-visible{ outline:none; box-shadow:0 0 0 4px var(--ody-ring); border-radius:var(--ody-r-xs); }
+.ody-table tbody tr.is-selected{ background:var(--ody-accent-soft); }
+.ody-table tbody tr.is-selected td{ color:var(--ody-ink); }
+.ody-table.ody-table--hover tbody tr.is-selected:hover{ background:color-mix(in srgb,var(--ody-accent-soft) 70%,var(--ody-surface-2)); }
+
+/* ---- filter row (inputs under the header) ---- */
+.ody-table tr.ody-table__filter th{
+  padding:var(--ody-sp-2) var(--ody-sp-3);
+  background:var(--ody-surface); border-bottom:1px solid var(--ody-border);
+  position:static; font-weight:var(--ody-fw-medium);
+}
+.ody-table__filter .ody-input{ height:30px; padding:0 var(--ody-sp-2); font-size:var(--ody-fs-sm); }
+.ody-table__filter-field{
+  width:100%; height:30px; padding:0 var(--ody-sp-2);
+  font-family:inherit; font-size:var(--ody-fs-sm); color:var(--ody-ink);
+  background:var(--ody-surface-2); border:1px solid var(--ody-border);
+  border-radius:var(--ody-r-xs); outline:none;
+  transition:border-color var(--ody-dur) var(--ody-ease), box-shadow var(--ody-dur) var(--ody-ease);
+}
+.ody-table__filter-field::placeholder{ color:var(--ody-ink-4); }
+.ody-table__filter-field:focus-visible{ border-color:var(--ody-accent); box-shadow:0 0 0 3px var(--ody-ring); }
+
+/* sticky header cooperation: keep sortable header background opaque when stuck */
+.ody-table--sticky thead th{ background:var(--ody-surface-3); }
+
+/* empty state row */
+.ody-table__empty td{
+  text-align:center; color:var(--ody-ink-3); padding:var(--ody-sp-8) var(--ody-sp-4);
+}
+.ody-table tbody tr.is-hidden{ display:none; }
+
+/* ============================================================================
+   2 · TREE VIEW
+   ============================================================================ */
+.ody-tree{
+  list-style:none; margin:0; padding:0;
+  font-size:var(--ody-fs-body); color:var(--ody-ink-2);
+}
+.ody-tree ul{ list-style:none; margin:0; padding:0; }
+.ody-tree__children{
+  margin-left:calc(var(--ody-sp-3) + 1px);
+  padding-left:var(--ody-sp-3);
+  border-left:1px solid var(--ody-hairline);
+}
+.ody-tree__item.is-leaf > .ody-tree__children,
+.ody-tree__item:not(.is-open) > .ody-tree__children{ display:none; }
+
+.ody-tree__row{
+  display:flex; align-items:center; gap:var(--ody-sp-1);
+  min-height:30px; padding:2px var(--ody-sp-2);
+  border-radius:var(--ody-r-xs); cursor:pointer; color:var(--ody-ink-2);
+  transition:background var(--ody-dur) var(--ody-ease), color var(--ody-dur) var(--ody-ease);
+}
+.ody-tree__row:hover{ background:var(--ody-surface-2); color:var(--ody-ink); }
+.ody-tree__row.is-active{ background:var(--ody-accent-soft); color:var(--ody-accent-ink); font-weight:var(--ody-fw-medium); }
+.ody-tree__row:focus-visible{ outline:none; box-shadow:0 0 0 3px var(--ody-ring); }
+
+.ody-tree__caret{
+  width:16px; height:16px; flex:0 0 auto;
+  display:inline-grid; place-items:center; color:var(--ody-ink-3);
+  transition:transform var(--ody-dur) var(--ody-ease);
+}
+.ody-tree__caret svg{ width:11px; height:11px; }
+.ody-tree__item.is-open > .ody-tree__row > .ody-tree__caret{ transform:rotate(90deg); }
+.ody-tree__item.is-leaf > .ody-tree__row > .ody-tree__caret{ visibility:hidden; }
+
+.ody-tree__ico{
+  width:16px; height:16px; flex:0 0 auto;
+  display:inline-grid; place-items:center; color:var(--ody-ink-3);
+}
+.ody-tree__ico svg{ width:15px; height:15px; }
+.ody-tree__row.is-active .ody-tree__ico{ color:var(--ody-accent); }
+.ody-tree__label{ flex:1 1 auto; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.ody-tree__meta{ margin-left:auto; padding-left:var(--ody-sp-2); color:var(--ody-ink-4); font-size:var(--ody-fs-micro); font-variant-numeric:tabular-nums; }
+
+/* ============================================================================
+   3 · STAT CHARTS  (inline SVG — coloured exclusively by tokens)
+   ============================================================================ */
+.ody-chart{ display:block; width:100%; color:var(--ody-accent); }
+.ody-chart svg{ display:block; width:100%; height:auto; overflow:visible; }
+.ody-chart__grid{ stroke:var(--ody-hairline); stroke-width:1; }
+.ody-chart__axis{ stroke:var(--ody-border); stroke-width:1; }
+.ody-chart__lbl{ fill:var(--ody-ink-4); font-family:var(--ody-font); font-size:11px; }
+.ody-chart__val{ fill:var(--ody-ink-3); font-family:var(--ody-font); font-size:10.5px; font-weight:var(--ody-fw-semibold); }
+
+/* --- bar --- */
+.ody-chart__bar{ fill:var(--ody-accent); rx:3; transition:fill var(--ody-dur) var(--ody-ease); }
+.ody-chart__bar:hover{ fill:var(--ody-accent-ink); }
+
+/* --- line + area --- */
+.ody-chart__area{ fill:var(--ody-accent); opacity:.13; stroke:none; }
+.ody-chart__line{ fill:none; stroke:var(--ody-accent); stroke-width:2; stroke-linejoin:round; stroke-linecap:round; }
+.ody-chart__dot{ fill:var(--ody-surface); stroke:var(--ody-accent); stroke-width:2; transition:r var(--ody-dur) var(--ody-ease); }
+.ody-chart__dot:hover{ fill:var(--ody-accent); }
+
+/* --- donut --- */
+.ody-chart--donut{ position:relative; }
+.ody-chart__track{ fill:none; stroke:var(--ody-surface-3); }
+.ody-chart__seg{ fill:none; stroke:var(--ody-accent); stroke-linecap:round; transition:stroke-width var(--ody-dur) var(--ody-ease); }
+.ody-chart__seg--ok{ stroke:var(--ody-ok); }
+.ody-chart__seg--warn{ stroke:var(--ody-warn); }
+.ody-chart__seg--down{ stroke:var(--ody-down); }
+.ody-chart__seg--info{ stroke:var(--ody-info); }
+.ody-chart__center{ fill:var(--ody-ink); font-family:var(--ody-font); font-weight:var(--ody-fw-semibold); }
+.ody-chart__center--sub{ fill:var(--ody-ink-3); font-weight:var(--ody-fw-medium); }
+
+/* --- sparkline --- */
+.ody-chart--spark{ width:auto; display:inline-block; vertical-align:middle; }
+.ody-chart--spark svg{ width:auto; }
+.ody-chart__spark-line{ fill:none; stroke:var(--ody-accent); stroke-width:1.75; stroke-linejoin:round; stroke-linecap:round; }
+.ody-chart__spark-area{ fill:var(--ody-accent); opacity:.12; stroke:none; }
+.ody-chart__spark-end{ fill:var(--ody-accent); }
+
+/* tone modifiers recolour the whole chart via currentColor-less token swap */
+.ody-chart--ok{ --oc:var(--ody-ok); }
+.ody-chart--ok .ody-chart__bar,
+.ody-chart--ok .ody-chart__area,
+.ody-chart--ok .ody-chart__spark-area,
+.ody-chart--ok .ody-chart__spark-end{ fill:var(--ody-ok); }
+.ody-chart--ok .ody-chart__line,
+.ody-chart--ok .ody-chart__spark-line,
+.ody-chart--ok .ody-chart__dot{ stroke:var(--ody-ok); }
+.ody-chart--warn .ody-chart__bar,
+.ody-chart--warn .ody-chart__area,
+.ody-chart--warn .ody-chart__spark-area,
+.ody-chart--warn .ody-chart__spark-end{ fill:var(--ody-warn); }
+.ody-chart--warn .ody-chart__line,
+.ody-chart--warn .ody-chart__spark-line,
+.ody-chart--warn .ody-chart__dot{ stroke:var(--ody-warn); }
+.ody-chart--down .ody-chart__bar,
+.ody-chart--down .ody-chart__area,
+.ody-chart--down .ody-chart__spark-area,
+.ody-chart--down .ody-chart__spark-end{ fill:var(--ody-down); }
+.ody-chart--down .ody-chart__line,
+.ody-chart--down .ody-chart__spark-line,
+.ody-chart--down .ody-chart__dot{ stroke:var(--ody-down); }
+
+/* chart legend */
+.ody-chart-legend{ display:flex; flex-wrap:wrap; gap:var(--ody-sp-3); margin-top:var(--ody-sp-3); font-size:var(--ody-fs-sm); color:var(--ody-ink-3); }
+.ody-chart-legend__item{ display:inline-flex; align-items:center; gap:var(--ody-sp-2); }
+.ody-chart-legend__swatch{ width:10px; height:10px; border-radius:3px; background:var(--ody-accent); flex:0 0 auto; }
+.ody-chart-legend__swatch--ok{ background:var(--ody-ok); }
+.ody-chart-legend__swatch--warn{ background:var(--ody-warn); }
+.ody-chart-legend__swatch--down{ background:var(--ody-down); }
+.ody-chart-legend__swatch--info{ background:var(--ody-info); }
+
+/* ============================================================================
+   4 · STEPPER / WIZARD
+   ============================================================================ */
+.ody-stepper{ display:flex; align-items:flex-start; width:100%; }
+.ody-step{
+  flex:1 1 0; min-width:0; position:relative;
+  display:flex; flex-direction:column; align-items:center; text-align:center;
+  padding:0 var(--ody-sp-2);
+}
+.ody-step__dot{
+  position:relative; z-index:1;
+  width:32px; height:32px; border-radius:50%;
+  display:grid; place-items:center;
+  background:var(--ody-surface); border:2px solid var(--ody-border-2); color:var(--ody-ink-3);
+  font-size:var(--ody-fs-sm); font-weight:var(--ody-fw-semibold);
+  transition:background var(--ody-dur) var(--ody-ease), border-color var(--ody-dur) var(--ody-ease), color var(--ody-dur) var(--ody-ease), box-shadow var(--ody-dur) var(--ody-ease);
+}
+.ody-step__dot svg{ width:16px; height:16px; }
+.ody-step__label{ margin-top:var(--ody-sp-2); font-size:var(--ody-fs-sm); font-weight:var(--ody-fw-medium); color:var(--ody-ink-3); }
+.ody-step__sub{ margin-top:2px; font-size:var(--ody-fs-micro); color:var(--ody-ink-4); }
+
+/* horizontal connector — sits behind the dot, joins to previous step */
+.ody-step::before{
+  content:""; position:absolute; top:15px; right:50%; width:100%; height:2px;
+  background:var(--ody-border); z-index:0;
+}
+.ody-step:first-child::before{ display:none; }
+
+.ody-step.is-active .ody-step__dot{ border-color:var(--ody-accent); color:var(--ody-accent-ink); box-shadow:0 0 0 4px var(--ody-ring); }
+.ody-step.is-active .ody-step__label{ color:var(--ody-ink); font-weight:var(--ody-fw-semibold); }
+.ody-step.is-done .ody-step__dot{ background:var(--ody-accent); border-color:var(--ody-accent); color:var(--ody-surface); }
+.ody-step.is-done .ody-step__label{ color:var(--ody-ink-2); }
+.ody-step.is-done::before,
+.ody-step.is-active::before{ background:var(--ody-accent); }
+.ody-step.is-clickable{ cursor:pointer; }
+.ody-step.is-clickable:hover .ody-step__dot{ border-color:var(--ody-accent); }
+
+/* vertical variant */
+.ody-stepper--vert{ flex-direction:column; align-items:stretch; }
+.ody-stepper--vert .ody-step{
+  flex:0 0 auto; flex-direction:row; align-items:flex-start; text-align:left;
+  gap:var(--ody-sp-3); padding:0 0 var(--ody-sp-5) 0;
+}
+.ody-stepper--vert .ody-step__body{ padding-top:var(--ody-sp-1); }
+.ody-stepper--vert .ody-step__label{ margin-top:0; }
+.ody-stepper--vert .ody-step::before{
+  top:32px; left:15px; right:auto; bottom:0;
+  width:2px; height:auto;
+}
+.ody-stepper--vert .ody-step:last-child::before{ display:none; }
+.ody-stepper--vert .ody-step:first-child::before{ display:block; }
+
+/* ============================================================================
+   5 · CALENDAR
+   ============================================================================ */
+.ody-cal{
+  width:100%; max-width:320px;
+  background:var(--ody-surface); border:1px solid var(--ody-border);
+  border-radius:var(--ody-r); box-shadow:var(--ody-sh-sm);
+  padding:var(--ody-sp-3); color:var(--ody-ink-2);
+}
+.ody-cal__head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:var(--ody-sp-2); }
+.ody-cal__title{ font-size:var(--ody-fs-h3); font-weight:var(--ody-fw-semibold); color:var(--ody-ink); }
+.ody-cal__nav{
+  width:30px; height:30px; display:inline-grid; place-items:center;
+  border:1px solid var(--ody-border); border-radius:var(--ody-r-sm);
+  background:var(--ody-surface); color:var(--ody-ink-2); cursor:pointer;
+  transition:background var(--ody-dur) var(--ody-ease), color var(--ody-dur) var(--ody-ease);
+}
+.ody-cal__nav:hover{ background:var(--ody-surface-2); color:var(--ody-ink); }
+.ody-cal__nav:focus-visible{ outline:none; box-shadow:0 0 0 3px var(--ody-ring); }
+.ody-cal__nav svg{ width:15px; height:15px; }
+.ody-cal__grid{ display:grid; grid-template-columns:repeat(7,1fr); gap:2px; }
+.ody-cal__dow{
+  text-align:center; padding:var(--ody-sp-1) 0;
+  font-size:var(--ody-fs-micro); font-weight:var(--ody-fw-semibold);
+  letter-spacing:.04em; text-transform:uppercase; color:var(--ody-ink-4);
+}
+.ody-cal__day{
+  aspect-ratio:1; display:grid; place-items:center;
+  font-size:var(--ody-fs-sm); color:var(--ody-ink-2);
+  border-radius:var(--ody-r-sm); border:1px solid transparent; cursor:pointer;
+  font-variant-numeric:tabular-nums;
+  transition:background var(--ody-dur) var(--ody-ease), color var(--ody-dur) var(--ody-ease), border-color var(--ody-dur) var(--ody-ease);
+}
+.ody-cal__day:hover{ background:var(--ody-surface-2); color:var(--ody-ink); }
+.ody-cal__day:focus-visible{ outline:none; box-shadow:0 0 0 3px var(--ody-ring); }
+.ody-cal__day--out{ color:var(--ody-ink-4); opacity:.55; }
+.ody-cal__day.is-today{ border-color:var(--ody-accent); color:var(--ody-accent-ink); font-weight:var(--ody-fw-semibold); }
+.ody-cal__day.is-selected{ background:var(--ody-accent); color:var(--ody-surface); border-color:var(--ody-accent); font-weight:var(--ody-fw-semibold); }
+.ody-cal__day.is-selected:hover{ background:var(--ody-accent-ink); color:var(--ody-surface); }
+.ody-cal__day.is-disabled{ opacity:.35; pointer-events:none; }
+.ody-cal__day--range{ background:var(--ody-accent-soft); border-radius:0; }
+.ody-cal__day.is-dot{ position:relative; }
+.ody-cal__day.is-dot::after{
+  content:""; position:absolute; bottom:4px; left:50%; transform:translateX(-50%);
+  width:4px; height:4px; border-radius:50%; background:var(--ody-accent);
+}
+.ody-cal__day.is-selected.is-dot::after{ background:var(--ody-surface); }
+
+/* ============================================================================
+   6 · KANBAN BOARD
+   ============================================================================ */
+.ody-kanban{
+  display:flex; gap:var(--ody-sp-4);
+  align-items:flex-start; overflow-x:auto;
+  padding-bottom:var(--ody-sp-2);
+}
+.ody-kanban__col{
+  flex:0 0 288px; width:288px;
+  display:flex; flex-direction:column;
+  background:var(--ody-bg-2); border:1px solid var(--ody-border);
+  border-radius:var(--ody-r);
+}
+.ody-kanban__head{
+  display:flex; align-items:center; gap:var(--ody-sp-2);
+  padding:var(--ody-sp-3) var(--ody-sp-4);
+  border-bottom:1px solid var(--ody-hairline);
+  font-size:var(--ody-fs-sm); font-weight:var(--ody-fw-semibold); color:var(--ody-ink);
+}
+.ody-kanban__head-dot{ width:8px; height:8px; border-radius:50%; background:var(--ody-accent); flex:0 0 auto; }
+.ody-kanban__head-dot--ok{ background:var(--ody-ok); }
+.ody-kanban__head-dot--warn{ background:var(--ody-warn); }
+.ody-kanban__head-dot--info{ background:var(--ody-info); }
+.ody-kanban__count{
+  margin-left:auto; min-width:20px; height:20px; padding:0 6px;
+  display:inline-grid; place-items:center;
+  background:var(--ody-surface-3); color:var(--ody-ink-3);
+  border-radius:var(--ody-r-pill); font-size:var(--ody-fs-micro);
+  font-weight:var(--ody-fw-semibold); font-variant-numeric:tabular-nums;
+}
+.ody-kanban__list{
+  display:flex; flex-direction:column; gap:var(--ody-sp-2);
+  padding:var(--ody-sp-3); min-height:56px;
+  border-radius:0 0 var(--ody-r) var(--ody-r);
+  transition:background var(--ody-dur) var(--ody-ease), box-shadow var(--ody-dur) var(--ody-ease);
+}
+.ody-kanban__list.is-over{
+  background:var(--ody-accent-soft);
+  box-shadow:inset 0 0 0 2px color-mix(in srgb,var(--ody-accent) 45%,transparent);
+}
+.ody-kanban__card{
+  background:var(--ody-surface); border:1px solid var(--ody-border);
+  border-radius:var(--ody-r-sm); box-shadow:var(--ody-sh-xs);
+  padding:var(--ody-sp-3); cursor:grab;
+  transition:box-shadow var(--ody-dur) var(--ody-ease), border-color var(--ody-dur) var(--ody-ease), transform var(--ody-dur) var(--ody-ease);
+}
+.ody-kanban__card:hover{ box-shadow:var(--ody-sh-sm); border-color:var(--ody-border-2); }
+.ody-kanban__card:active{ cursor:grabbing; }
+.ody-kanban__card.is-dragging{ opacity:.45; box-shadow:var(--ody-sh-lg); }
+.ody-kanban__card--accent{ border-left:3px solid var(--ody-accent); }
+.ody-kanban__card--ok{ border-left:3px solid var(--ody-ok); }
+.ody-kanban__card--warn{ border-left:3px solid var(--ody-warn); }
+.ody-kanban__card--down{ border-left:3px solid var(--ody-down); }
+.ody-kanban__card-title{ font-size:var(--ody-fs-body); font-weight:var(--ody-fw-medium); color:var(--ody-ink); }
+.ody-kanban__card-meta{ display:flex; align-items:center; gap:var(--ody-sp-2); margin-top:var(--ody-sp-2); font-size:var(--ody-fs-micro); color:var(--ody-ink-3); }
+.ody-kanban__placeholder{
+  height:52px; border:2px dashed var(--ody-border-2); border-radius:var(--ody-r-sm);
+  background:color-mix(in srgb,var(--ody-accent) 6%,transparent);
+}
+.ody-kanban__add{
+  display:flex; align-items:center; gap:var(--ody-sp-2);
+  padding:var(--ody-sp-2) var(--ody-sp-3); margin:0 var(--ody-sp-3) var(--ody-sp-3);
+  border:1px dashed var(--ody-border-2); border-radius:var(--ody-r-sm);
+  background:transparent; color:var(--ody-ink-3); font-size:var(--ody-fs-sm);
+  font-family:inherit; cursor:pointer; width:calc(100% - var(--ody-sp-6));
+  transition:background var(--ody-dur) var(--ody-ease), color var(--ody-dur) var(--ody-ease);
+}
+.ody-kanban__add:hover{ background:var(--ody-surface-2); color:var(--ody-ink); }
+
+/* ============================================================================
+   7 · COMPARISON TABLE
+   ============================================================================ */
+.ody-compare-wrap{
+  background:var(--ody-surface); border:1px solid var(--ody-border);
+  border-radius:var(--ody-r); box-shadow:var(--ody-sh-sm); overflow:auto;
+}
+.ody-compare{ width:100%; border-collapse:collapse; font-size:var(--ody-fs-body); color:var(--ody-ink-2); }
+.ody-compare th,
+.ody-compare td{
+  padding:var(--ody-sp-3) var(--ody-sp-4);
+  border-bottom:1px solid var(--ody-hairline); text-align:center; vertical-align:middle;
+}
+.ody-compare thead th{
+  font-size:var(--ody-fs-sm); font-weight:var(--ody-fw-semibold); color:var(--ody-ink);
+  background:var(--ody-surface-2); border-bottom:1px solid var(--ody-border);
+  position:sticky; top:0;
+}
+.ody-compare tbody tr:last-child td{ border-bottom:0; }
+.ody-compare__feature{ text-align:left; color:var(--ody-ink); font-weight:var(--ody-fw-medium); white-space:nowrap; }
+.ody-compare__feature .ody-compare__hint{ display:block; font-size:var(--ody-fs-micro); font-weight:var(--ody-fw-medium); color:var(--ody-ink-4); }
+.ody-compare__group td{
+  text-align:left; background:var(--ody-surface-3); color:var(--ody-ink-3);
+  font-size:var(--ody-fs-sm); font-weight:var(--ody-fw-semibold);
+  letter-spacing:.02em; text-transform:uppercase;
+}
+
+/* featured column highlight */
+.ody-compare__col--featured{ background:var(--ody-accent-soft); }
+.ody-compare thead th.ody-compare__col--featured{ background:var(--ody-accent-soft-2); color:var(--ody-accent-ink); }
+.ody-compare__plan{ font-size:var(--ody-fs-h3); font-weight:var(--ody-fw-semibold); color:var(--ody-ink); }
+.ody-compare__price{ display:block; margin-top:2px; font-size:var(--ody-fs-micro); font-weight:var(--ody-fw-medium); color:var(--ody-ink-3); }
+
+/* yes / no / partial marks */
+.ody-compare__yes,
+.ody-compare__no,
+.ody-compare__partial{ display:inline-grid; place-items:center; width:22px; height:22px; border-radius:50%; }
+.ody-compare__yes{ color:var(--ody-ok-ink); background:var(--ody-ok-soft); }
+.ody-compare__no{ color:var(--ody-ink-4); }
+.ody-compare__partial{ color:var(--ody-warn-ink); background:var(--ody-warn-soft); }
+.ody-compare__yes svg,
+.ody-compare__no svg,
+.ody-compare__partial svg{ width:13px; height:13px; }
+.ody-compare__txt{ color:var(--ody-ink); font-weight:var(--ody-fw-medium); }
+.ody-compare__txt--muted{ color:var(--ody-ink-3); font-weight:var(--ody-fw-medium); }
+
+
+/* ============================================================================
+   === v1.1 overlay-ext ===
+   ============================================================================ */
+/* ============================================================================
+   Odyssey UI · _ext_overlay.css  —  BATCH: overlay-ext  (additive, v1.1)
+   ----------------------------------------------------------------------------
+   Advanced overlay / interaction components. ADDITIVE ONLY — introduces no new
+   tokens and overrides nothing in odyssey.css. Every rule references the
+   existing semantic --ody-* layer, so light/dark themes are inherited for free.
+   Merge target: append to dist/odyssey.css at assembly time.
+
+   Blocks
+     · .ody-cmdk        Command palette (⌘K overlay + filtered list + kbd nav)
+     · .ody-notif       Notification center (stacked right-side panel)
+     · .ody-ctx         Context menu (right-click)
+     · .ody-sheet       Bottom sheet (mobile bottom drawer)
+     · .ody-split-pane  Draggable two-pane splitter
+     · .ody-carousel    Carousel (track + dots + prev/next)
+     · .ody-skeleton--card/--table/--avatar/--paragraph   Skeleton composites
+     · .ody-loading     Loading overlay (scrim + spinner)
+     · .ody-confirm     Confirm dialog (Odyssey.confirm() promise UI)
+     · .ody-editable    Inline editable (click-to-edit)
+
+   Conventions — namespace .ody- · BEM · semantic tokens only · no raw hex
+   (translucent values via color-mix(in srgb, var(--ody-*) N%, transparent)).
+   ============================================================================ */
+
+/* body scroll-lock helper (shared by ext overlays; harmless if already set) */
+.ody-scroll-lock{ overflow:hidden; }
+
+/* shared focus ring for this batch's interactive controls */
+.ody-cmdk__item:focus-visible,.ody-ctx__item:focus-visible,.ody-carousel__btn:focus-visible,
+.ody-carousel__dot:focus-visible,.ody-notif__item-close:focus-visible,.ody-notif__action:focus-visible,
+.ody-sheet__handle:focus-visible,.ody-editable:focus-visible,.ody-editable__input:focus-visible,
+.ody-split-pane__gutter:focus-visible,.ody-notif__clear:focus-visible{
+  outline:none; box-shadow:0 0 0 4px var(--ody-ring);
+}
+
+/* ============================================================================
+   1 · COMMAND PALETTE — .ody-cmdk
+   ============================================================================ */
+.ody-cmdk{ position:fixed; inset:0; z-index:120; display:none; }
+.ody-cmdk[hidden]{ display:none; }
+.ody-cmdk.is-open{ display:block; }
+.ody-cmdk__backdrop{ position:absolute; inset:0; background:var(--ody-scrim); backdrop-filter:blur(2px); }
+.ody-cmdk__panel{
+  position:relative; z-index:1; width:min(600px,calc(100% - var(--ody-sp-6)));
+  margin:11vh auto 0; max-height:70vh; display:flex; flex-direction:column;
+  background:var(--ody-surface); border:1px solid var(--ody-border); border-radius:var(--ody-r-lg);
+  box-shadow:var(--ody-sh-pop); overflow:hidden;
+  animation:ody-pop-in var(--ody-dur) var(--ody-ease);
+}
+.ody-cmdk__search{ display:flex; align-items:center; gap:var(--ody-sp-3); padding:var(--ody-sp-3) var(--ody-sp-4); border-bottom:1px solid var(--ody-hairline); }
+.ody-cmdk__search-ico{ flex:0 0 auto; width:18px; height:18px; color:var(--ody-ink-3); }
+.ody-cmdk__input{
+  flex:1 1 auto; min-width:0; height:28px; border:0; background:transparent; outline:none;
+  font-family:var(--ody-font); font-size:var(--ody-fs-h3); color:var(--ody-ink); letter-spacing:-.01em;
+}
+.ody-cmdk__input::placeholder{ color:var(--ody-ink-4); }
+.ody-cmdk__list{ flex:1 1 auto; overflow:auto; padding:var(--ody-sp-2); }
+.ody-cmdk__group + .ody-cmdk__group{ margin-top:var(--ody-sp-2); }
+.ody-cmdk__group-label{ padding:var(--ody-sp-2) var(--ody-sp-3) var(--ody-sp-1); font-size:var(--ody-fs-eyebrow); font-weight:var(--ody-fw-semibold); letter-spacing:var(--ody-track-eyebrow); text-transform:uppercase; color:var(--ody-ink-4); }
+.ody-cmdk__item{
+  display:flex; align-items:center; gap:var(--ody-sp-3); width:100%; padding:var(--ody-sp-2) var(--ody-sp-3);
+  border:0; border-radius:var(--ody-r-sm); background:transparent; cursor:pointer; text-align:left;
+  font-family:var(--ody-font); font-size:var(--ody-fs-body); color:var(--ody-ink); text-decoration:none;
+  transition:background var(--ody-dur) var(--ody-ease), color var(--ody-dur) var(--ody-ease);
+}
+.ody-cmdk__item-ico{ flex:0 0 auto; width:18px; height:18px; color:var(--ody-ink-3); display:grid; place-items:center; }
+.ody-cmdk__item-ico svg{ width:18px; height:18px; }
+.ody-cmdk__item-label{ flex:1 1 auto; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.ody-cmdk__item-sub{ color:var(--ody-ink-3); font-size:var(--ody-fs-sm); }
+.ody-cmdk__item-hint{
+  flex:0 0 auto; font-family:var(--ody-mono); font-size:var(--ody-fs-micro); font-weight:var(--ody-fw-semibold);
+  color:var(--ody-ink-3); background:var(--ody-surface-2); border:1px solid var(--ody-border); border-radius:var(--ody-r-xs); padding:1px 6px;
+}
+.ody-cmdk__item:hover,.ody-cmdk__item.is-active{ background:var(--ody-accent-soft); color:var(--ody-accent-ink); }
+.ody-cmdk__item.is-active .ody-cmdk__item-ico,.ody-cmdk__item:hover .ody-cmdk__item-ico{ color:var(--ody-accent-ink); }
+.ody-cmdk__empty{ padding:var(--ody-sp-6) var(--ody-sp-4); text-align:center; color:var(--ody-ink-3); font-size:var(--ody-fs-body); }
+.ody-cmdk__empty[hidden]{ display:none; }
+.ody-cmdk__foot{
+  display:flex; align-items:center; gap:var(--ody-sp-4); padding:var(--ody-sp-2) var(--ody-sp-4);
+  border-top:1px solid var(--ody-hairline); background:var(--ody-surface-2); color:var(--ody-ink-3); font-size:var(--ody-fs-micro);
+}
+.ody-cmdk__foot-hint{ display:inline-flex; align-items:center; gap:var(--ody-sp-1); }
+.ody-cmdk__foot .ody-kbd{ font-size:var(--ody-fs-micro); }
+
+/* ============================================================================
+   2 · NOTIFICATION CENTER — .ody-notif
+   ============================================================================ */
+.ody-notif{
+  position:fixed; top:0; right:0; z-index:95; width:min(380px,100%); height:100%;
+  display:flex; flex-direction:column; background:var(--ody-surface);
+  border-left:1px solid var(--ody-border); box-shadow:var(--ody-sh-lg);
+  transform:translateX(100%); visibility:hidden;
+  transition:transform var(--ody-dur) var(--ody-ease), visibility var(--ody-dur);
+}
+.ody-notif.is-open{ transform:translateX(0); visibility:visible; }
+.ody-notif__head{ display:flex; align-items:center; gap:var(--ody-sp-3); padding:var(--ody-sp-4) var(--ody-sp-5); border-bottom:1px solid var(--ody-hairline); }
+.ody-notif__title{ margin:0; flex:1 1 auto; font-size:var(--ody-fs-h2); font-weight:var(--ody-fw-semibold); color:var(--ody-ink); }
+.ody-notif__clear{
+  flex:0 0 auto; height:28px; padding:0 var(--ody-sp-3); border:1px solid var(--ody-border); border-radius:var(--ody-r-xs);
+  background:var(--ody-surface); color:var(--ody-ink-2); font-family:var(--ody-font); font-size:var(--ody-fs-sm); font-weight:var(--ody-fw-medium); cursor:pointer;
+  transition:background var(--ody-dur) var(--ody-ease), color var(--ody-dur) var(--ody-ease);
+}
+.ody-notif__clear:hover{ background:var(--ody-surface-2); color:var(--ody-ink); }
+.ody-notif__list{ flex:1 1 auto; overflow:auto; padding:var(--ody-sp-3); display:flex; flex-direction:column; gap:var(--ody-sp-2); }
+.ody-notif__item{
+  position:relative; display:flex; gap:var(--ody-sp-3); padding:var(--ody-sp-3) var(--ody-sp-4); padding-left:var(--ody-sp-4);
+  background:var(--ody-surface-2); border:1px solid var(--ody-hairline); border-left:3px solid var(--ody-border-2); border-radius:var(--ody-r-sm);
+  animation:ody-notif-in var(--ody-dur) var(--ody-ease);
+}
+.ody-notif__item.is-leaving{ opacity:0; transform:translateX(12px); transition:opacity var(--ody-dur) var(--ody-ease), transform var(--ody-dur) var(--ody-ease); }
+.ody-notif__item.is-unread{ background:var(--ody-accent-soft); }
+.ody-notif__item--ok{ border-left-color:var(--ody-ok); }
+.ody-notif__item--warn{ border-left-color:var(--ody-warn); }
+.ody-notif__item--down{ border-left-color:var(--ody-down); }
+.ody-notif__item--info{ border-left-color:var(--ody-info); }
+.ody-notif__item-ico{ flex:0 0 auto; width:20px; height:20px; display:grid; place-items:center; color:var(--ody-ink-3); margin-top:1px; }
+.ody-notif__item-ico svg{ width:18px; height:18px; }
+.ody-notif__item--ok .ody-notif__item-ico{ color:var(--ody-ok); }
+.ody-notif__item--warn .ody-notif__item-ico{ color:var(--ody-warn); }
+.ody-notif__item--down .ody-notif__item-ico{ color:var(--ody-down); }
+.ody-notif__item--info .ody-notif__item-ico{ color:var(--ody-info); }
+.ody-notif__item-main{ flex:1 1 auto; min-width:0; }
+.ody-notif__item-title{ font-size:var(--ody-fs-body); font-weight:var(--ody-fw-semibold); color:var(--ody-ink); }
+.ody-notif__item-msg{ margin-top:2px; font-size:var(--ody-fs-sm); color:var(--ody-ink-2); line-height:1.45; }
+.ody-notif__item-time{ margin-top:var(--ody-sp-1); font-size:var(--ody-fs-micro); color:var(--ody-ink-4); }
+.ody-notif__actions{ display:flex; gap:var(--ody-sp-2); margin-top:var(--ody-sp-2); }
+.ody-notif__action{
+  height:26px; padding:0 var(--ody-sp-3); border:1px solid var(--ody-border); border-radius:var(--ody-r-xs);
+  background:var(--ody-surface); color:var(--ody-accent-ink); font-family:var(--ody-font); font-size:var(--ody-fs-sm); font-weight:var(--ody-fw-semibold); cursor:pointer;
+  transition:background var(--ody-dur) var(--ody-ease);
+}
+.ody-notif__action:hover{ background:var(--ody-accent-soft); }
+.ody-notif__item-close{
+  flex:0 0 auto; width:22px; height:22px; margin:-2px -4px 0 0; display:grid; place-items:center;
+  border:0; background:transparent; color:var(--ody-ink-4); cursor:pointer; border-radius:var(--ody-r-xs);
+  transition:background var(--ody-dur) var(--ody-ease), color var(--ody-dur) var(--ody-ease);
+}
+.ody-notif__item-close svg{ width:14px; height:14px; }
+.ody-notif__item-close:hover{ background:color-mix(in srgb,var(--ody-ink) 8%,transparent); color:var(--ody-ink-2); }
+.ody-notif__empty{ margin:auto; padding:var(--ody-sp-6); text-align:center; color:var(--ody-ink-3); font-size:var(--ody-fs-body); }
+.ody-notif__empty[hidden]{ display:none; }
+/* count badge for the toggle trigger */
+.ody-notif-badge{
+  display:inline-grid; place-items:center; min-width:18px; height:18px; padding:0 5px; border-radius:var(--ody-r-pill);
+  background:var(--ody-down); color:var(--ody-surface); font-size:var(--ody-fs-micro); font-weight:var(--ody-fw-semibold); line-height:1;
+}
+.ody-notif-badge[hidden],.ody-notif-badge.is-empty{ display:none; }
+
+/* ============================================================================
+   3 · CONTEXT MENU — .ody-ctx
+   ============================================================================ */
+.ody-ctx{
+  position:fixed; z-index:140; min-width:190px; max-width:280px; padding:6px;
+  background:var(--ody-surface); border:1px solid var(--ody-border); border-radius:var(--ody-r); box-shadow:var(--ody-sh-pop);
+  opacity:0; visibility:hidden; transform:scale(.97); transform-origin:top left;
+  transition:opacity var(--ody-dur) var(--ody-ease), transform var(--ody-dur) var(--ody-ease), visibility var(--ody-dur);
+}
+.ody-ctx.is-open{ opacity:1; visibility:visible; transform:scale(1); }
+.ody-ctx__label{ padding:var(--ody-sp-2) var(--ody-sp-3) var(--ody-sp-1); font-size:var(--ody-fs-eyebrow); font-weight:var(--ody-fw-semibold); letter-spacing:var(--ody-track-eyebrow); text-transform:uppercase; color:var(--ody-ink-4); }
+.ody-ctx__item{
+  display:flex; align-items:center; gap:var(--ody-sp-3); width:100%; padding:7px var(--ody-sp-3);
+  border:0; border-radius:var(--ody-r-xs); background:transparent; cursor:pointer; text-align:left; text-decoration:none;
+  font-family:var(--ody-font); font-size:var(--ody-fs-body); color:var(--ody-ink);
+  transition:background var(--ody-dur) var(--ody-ease), color var(--ody-dur) var(--ody-ease);
+}
+.ody-ctx__item svg{ flex:0 0 auto; width:16px; height:16px; color:var(--ody-ink-3); }
+.ody-ctx__item-label{ flex:1 1 auto; min-width:0; }
+.ody-ctx__item-hint{ flex:0 0 auto; font-family:var(--ody-mono); font-size:var(--ody-fs-micro); color:var(--ody-ink-4); }
+.ody-ctx__item:hover,.ody-ctx__item.is-active{ background:var(--ody-accent-soft); color:var(--ody-accent-ink); }
+.ody-ctx__item:hover svg,.ody-ctx__item.is-active svg{ color:var(--ody-accent-ink); }
+.ody-ctx__item[disabled],.ody-ctx__item.is-disabled{ opacity:.45; pointer-events:none; }
+.ody-ctx__item--danger{ color:var(--ody-down-ink); }
+.ody-ctx__item--danger svg{ color:var(--ody-down); }
+.ody-ctx__item--danger:hover{ background:var(--ody-down-soft); color:var(--ody-down-ink); }
+.ody-ctx__item--danger:hover svg{ color:var(--ody-down); }
+.ody-ctx__sep{ height:1px; margin:var(--ody-sp-1) 4px; background:var(--ody-hairline); border:0; }
+
+/* ============================================================================
+   4 · BOTTOM SHEET — .ody-sheet
+   ============================================================================ */
+.ody-sheet{ position:fixed; inset:0; z-index:115; display:none; }
+.ody-sheet[hidden]{ display:none; }
+.ody-sheet.is-open{ display:block; }
+.ody-sheet__backdrop{ position:absolute; inset:0; background:var(--ody-scrim); opacity:0; transition:opacity var(--ody-dur) var(--ody-ease); }
+.ody-sheet.is-open .ody-sheet__backdrop{ opacity:1; }
+.ody-sheet__panel{
+  position:absolute; left:0; right:0; bottom:0; max-height:88vh; display:flex; flex-direction:column;
+  background:var(--ody-surface); border-top:1px solid var(--ody-border);
+  border-radius:var(--ody-r-lg) var(--ody-r-lg) 0 0; box-shadow:var(--ody-sh-pop);
+  transform:translateY(100%); transition:transform var(--ody-dur) var(--ody-ease); touch-action:none;
+}
+.ody-sheet.is-open .ody-sheet__panel{ transform:translateY(0); }
+.ody-sheet__handle{
+  flex:0 0 auto; align-self:center; width:40px; height:5px; margin:var(--ody-sp-3) 0 var(--ody-sp-1);
+  border:0; padding:0; border-radius:var(--ody-r-pill); background:var(--ody-border-2); cursor:grab;
+}
+.ody-sheet__handle:active{ cursor:grabbing; }
+.ody-sheet__head{ display:flex; align-items:center; gap:var(--ody-sp-3); padding:var(--ody-sp-2) var(--ody-sp-5) var(--ody-sp-3); border-bottom:1px solid var(--ody-hairline); }
+.ody-sheet__title{ margin:0; flex:1 1 auto; font-size:var(--ody-fs-h2); font-weight:var(--ody-fw-semibold); color:var(--ody-ink); }
+.ody-sheet__body{ flex:1 1 auto; overflow:auto; padding:var(--ody-sp-5); color:var(--ody-ink-2); }
+.ody-sheet__foot{ padding:var(--ody-sp-3) var(--ody-sp-5); border-top:1px solid var(--ody-hairline); background:var(--ody-surface-2); display:flex; gap:var(--ody-sp-2); }
+.ody-sheet__foot .ody-btn{ flex:1 1 auto; }
+
+/* ============================================================================
+   5 · SPLIT PANE — .ody-split-pane
+   ============================================================================ */
+.ody-split-pane{ display:flex; width:100%; min-height:160px; border:1px solid var(--ody-border); border-radius:var(--ody-r-sm); overflow:hidden; background:var(--ody-surface); }
+.ody-split-pane__panel{ overflow:auto; min-width:0; min-height:0; }
+.ody-split-pane__panel:first-child{ flex:0 0 auto; }
+.ody-split-pane__panel:last-child{ flex:1 1 auto; }
+.ody-split-pane__gutter{
+  flex:0 0 auto; width:9px; align-self:stretch; border:0; padding:0; position:relative; cursor:col-resize;
+  background:var(--ody-surface-2); border-left:1px solid var(--ody-border); border-right:1px solid var(--ody-border);
+  transition:background var(--ody-dur) var(--ody-ease);
+}
+.ody-split-pane__gutter::before{ content:""; position:absolute; top:50%; left:50%; width:2px; height:26px; transform:translate(-50%,-50%); border-radius:var(--ody-r-pill); background:var(--ody-border-2); }
+.ody-split-pane__gutter:hover,.ody-split-pane__gutter.is-dragging{ background:var(--ody-accent-soft); }
+.ody-split-pane__gutter:hover::before,.ody-split-pane__gutter.is-dragging::before{ background:var(--ody-accent); }
+.ody-split-pane.is-dragging{ user-select:none; cursor:col-resize; }
+/* vertical (stacked) variant */
+.ody-split-pane--vert{ flex-direction:column; }
+.ody-split-pane--vert .ody-split-pane__gutter{ width:auto; height:9px; cursor:row-resize; border-left:0; border-right:0; border-top:1px solid var(--ody-border); border-bottom:1px solid var(--ody-border); }
+.ody-split-pane--vert .ody-split-pane__gutter::before{ width:26px; height:2px; }
+.ody-split-pane--vert.is-dragging{ cursor:row-resize; }
+
+/* ============================================================================
+   6 · CAROUSEL — .ody-carousel
+   ============================================================================ */
+.ody-carousel{ position:relative; }
+.ody-carousel__viewport{ overflow:hidden; border-radius:var(--ody-r-lg); border:1px solid var(--ody-border); background:var(--ody-surface); }
+.ody-carousel__track{ display:flex; transition:transform 320ms var(--ody-ease); will-change:transform; }
+.ody-carousel__slide{ flex:0 0 100%; min-width:0; }
+.ody-carousel__slide > img,.ody-carousel__slide > picture > img{ display:block; width:100%; height:100%; object-fit:cover; }
+.ody-carousel__caption{ padding:var(--ody-sp-5); }
+.ody-carousel__btn{
+  position:absolute; top:50%; transform:translateY(-50%); z-index:2; width:38px; height:38px; display:grid; place-items:center;
+  border:1px solid var(--ody-border); border-radius:var(--ody-r-pill); cursor:pointer; color:var(--ody-ink);
+  background:color-mix(in srgb,var(--ody-surface) 88%,transparent); backdrop-filter:blur(4px); box-shadow:var(--ody-sh-sm);
+  transition:background var(--ody-dur) var(--ody-ease), color var(--ody-dur) var(--ody-ease), box-shadow var(--ody-dur) var(--ody-ease);
+}
+.ody-carousel__btn svg{ width:18px; height:18px; }
+.ody-carousel__btn:hover{ background:var(--ody-surface); box-shadow:var(--ody-sh-md); }
+.ody-carousel__btn--prev{ left:var(--ody-sp-3); }
+.ody-carousel__btn--next{ right:var(--ody-sp-3); }
+.ody-carousel__btn[disabled],.ody-carousel__btn.is-disabled{ opacity:.4; pointer-events:none; }
+.ody-carousel__dots{ display:flex; justify-content:center; gap:var(--ody-sp-2); margin-top:var(--ody-sp-3); }
+.ody-carousel__dot{
+  width:8px; height:8px; padding:0; border:0; border-radius:var(--ody-r-pill); cursor:pointer;
+  background:var(--ody-border-2); transition:background var(--ody-dur) var(--ody-ease), width var(--ody-dur) var(--ody-ease);
+}
+.ody-carousel__dot:hover{ background:var(--ody-ink-4); }
+.ody-carousel__dot.is-active{ width:22px; background:var(--ody-accent); }
+
+/* ============================================================================
+   7 · SKELETON COMPOSITES — .ody-skeleton--card / --table / --avatar / --paragraph
+   (standalone layout containers; inner bones reuse the existing .ody-skeleton)
+   ============================================================================ */
+.ody-skeleton--avatar{ display:flex; align-items:center; gap:var(--ody-sp-3); }
+.ody-skeleton--avatar > .ody-skeleton--circle{ flex:0 0 auto; }
+.ody-skeleton--avatar .ody-skeleton-lines{ flex:1 1 auto; min-width:0; }
+.ody-skeleton-lines{ display:flex; flex-direction:column; gap:var(--ody-sp-2); }
+.ody-skeleton--paragraph{ display:flex; flex-direction:column; gap:var(--ody-sp-2); }
+.ody-skeleton--paragraph > .ody-skeleton{ margin:0; }
+.ody-skeleton--card{
+  display:flex; flex-direction:column; gap:var(--ody-sp-3); padding:var(--ody-sp-5);
+  background:var(--ody-surface); border:1px solid var(--ody-border); border-radius:var(--ody-r-lg);
+}
+.ody-skeleton--card > .ody-skeleton{ margin:0; }
+.ody-skeleton--table{ display:flex; flex-direction:column; gap:1px; background:var(--ody-surface); border:1px solid var(--ody-border); border-radius:var(--ody-r-sm); overflow:hidden; }
+.ody-skeleton__row{ display:flex; align-items:center; gap:var(--ody-sp-4); padding:var(--ody-sp-3) var(--ody-sp-4); background:var(--ody-surface); border-bottom:1px solid var(--ody-hairline); }
+.ody-skeleton__row:last-child{ border-bottom:0; }
+.ody-skeleton__cell{ flex:1 1 0; }
+.ody-skeleton__cell--sm{ flex:0 0 60px; }
+.ody-skeleton__cell--grow{ flex:2 1 0; }
+
+/* ============================================================================
+   8 · LOADING OVERLAY — .ody-loading
+   ============================================================================ */
+.ody-loading-host{ position:relative; }
+.ody-loading{
+  position:absolute; inset:0; z-index:10; display:none; flex-direction:column; align-items:center; justify-content:center; gap:var(--ody-sp-3);
+  background:color-mix(in srgb,var(--ody-surface) 66%,transparent); backdrop-filter:blur(1px); border-radius:inherit;
+}
+.ody-loading.is-active{ display:flex; animation:ody-fade-in var(--ody-dur) var(--ody-ease); }
+.ody-loading__label{ font-size:var(--ody-fs-sm); font-weight:var(--ody-fw-medium); color:var(--ody-ink-2); }
+.ody-loading--fixed{ position:fixed; z-index:110; background:color-mix(in srgb,var(--ody-bg) 72%,transparent); }
+
+/* ============================================================================
+   9 · CONFIRM DIALOG — .ody-confirm  (built by Odyssey.confirm())
+   ============================================================================ */
+.ody-confirm{ position:fixed; inset:0; z-index:130; display:none; padding:var(--ody-sp-5); }
+.ody-confirm[hidden]{ display:none; }
+.ody-confirm.is-open{ display:grid; place-items:center; }
+.ody-confirm__backdrop{ position:absolute; inset:0; background:var(--ody-scrim); backdrop-filter:blur(1px); }
+.ody-confirm__panel{
+  position:relative; z-index:1; width:min(420px,100%); background:var(--ody-surface); border:1px solid var(--ody-border);
+  border-radius:var(--ody-r-lg); box-shadow:var(--ody-sh-pop); overflow:hidden;
+  animation:ody-pop-in var(--ody-dur) var(--ody-ease);
+}
+.ody-confirm__body{ display:flex; gap:var(--ody-sp-4); padding:var(--ody-sp-5); }
+.ody-confirm__ico{ flex:0 0 auto; width:40px; height:40px; border-radius:var(--ody-r-pill); display:grid; place-items:center; background:var(--ody-accent-soft); color:var(--ody-accent-ink); }
+.ody-confirm__ico svg{ width:22px; height:22px; }
+.ody-confirm--danger .ody-confirm__ico{ background:var(--ody-down-soft); color:var(--ody-down-ink); }
+.ody-confirm--warn .ody-confirm__ico{ background:var(--ody-warn-soft); color:var(--ody-warn-ink); }
+.ody-confirm__main{ flex:1 1 auto; min-width:0; padding-top:2px; }
+.ody-confirm__title{ font-size:var(--ody-fs-h2); font-weight:var(--ody-fw-semibold); color:var(--ody-ink); }
+.ody-confirm__msg{ margin:var(--ody-sp-2) 0 0; color:var(--ody-ink-2); line-height:1.55; }
+.ody-confirm__foot{ display:flex; justify-content:flex-end; gap:var(--ody-sp-2); padding:var(--ody-sp-3) var(--ody-sp-5); border-top:1px solid var(--ody-hairline); background:var(--ody-surface-2); }
+
+/* ============================================================================
+   10 · INLINE EDITABLE — .ody-editable
+   ============================================================================ */
+.ody-editable{
+  display:inline-flex; align-items:center; gap:var(--ody-sp-2); max-width:100%; padding:3px var(--ody-sp-2); margin:-3px calc(-1 * var(--ody-sp-2));
+  border:1px solid transparent; border-radius:var(--ody-r-xs); cursor:text; color:var(--ody-ink);
+  transition:background var(--ody-dur) var(--ody-ease), border-color var(--ody-dur) var(--ody-ease);
+}
+.ody-editable:hover{ background:var(--ody-surface-2); border-color:var(--ody-border); }
+.ody-editable__text{ min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.ody-editable__ico{ flex:0 0 auto; width:14px; height:14px; color:var(--ody-ink-4); opacity:0; transition:opacity var(--ody-dur) var(--ody-ease); }
+.ody-editable:hover .ody-editable__ico{ opacity:1; }
+.ody-editable.is-empty .ody-editable__text{ color:var(--ody-ink-4); }
+.ody-editable__input{
+  min-width:120px; max-width:100%; height:auto; padding:2px var(--ody-sp-2); margin:-3px 0;
+  font-family:inherit; font-size:inherit; font-weight:inherit; color:var(--ody-ink); letter-spacing:inherit;
+  background:var(--ody-surface); border:1px solid var(--ody-accent); border-radius:var(--ody-r-xs); outline:none;
+  box-shadow:0 0 0 4px var(--ody-ring);
+}
+
+/* ============================================================================
+   11 · KEYFRAMES (batch-local; distinct names)
+   ============================================================================ */
+@keyframes ody-notif-in{ from{ opacity:0; transform:translateX(16px); } to{ opacity:1; transform:none; } }
+@keyframes ody-fade-in{ from{ opacity:0; } to{ opacity:1; } }
+
+/* ============================================================================
+   12 · RESPONSIVE
+   ============================================================================ */
+@media (max-width:640px){
+  .ody-cmdk__panel{ margin-top:var(--ody-sp-6); max-height:80vh; width:calc(100% - var(--ody-sp-5)); }
+  .ody-notif{ width:100%; }
+  .ody-carousel__btn{ width:32px; height:32px; }
+}
+
+/* ============================================================================
+   13 · REDUCED MOTION
+   ============================================================================ */
+@media (prefers-reduced-motion:reduce){
+  .ody-cmdk__panel,.ody-confirm__panel,.ody-notif,.ody-notif__item,.ody-sheet__panel,
+  .ody-sheet__backdrop,.ody-carousel__track,.ody-ctx,.ody-loading{ animation:none !important; transition:none !important; }
 }
