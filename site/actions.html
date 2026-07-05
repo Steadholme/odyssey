@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Actions · Odyssey UI</title>
+<meta name="description" content="Odyssey UI 动作类组件参考：按钮全变体/尺寸/状态/loading/block、图标按钮、按钮组、下拉菜单、复制按钮与链接，附实时预览与源码。">
+<link rel="stylesheet" href="../dist/odyssey.css">
+<link rel="stylesheet" href="../dist/odyssey-font.css">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body class="ody-scope">
+
+<!-- ===== appbar ===== -->
+<header class="ody-appbar">
+  <a class="ody-appbar__brand" href="index.html">
+    <span class="ody-appbar__tile" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 14.2 9.8 22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2Z"/></svg>
+    </span>
+    <span class="ody-appbar__name">Odyssey UI</span>
+  </a>
+  <span class="ody-tag ody-tag--accent ody-mono doc-appbar__ver">v1.0.0</span>
+  <span class="ody-appbar__spacer"></span>
+  <div class="ody-appbar__right">
+    <a class="ody-iconbtn" href="#" aria-label="GitHub 仓库（占位）" title="GitHub">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 4.6 18 4.9 18 4.9c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5Z"/></svg>
+    </a>
+    <button class="ody-iconbtn doc-theme" type="button" data-ody-theme-toggle aria-label="切换深色模式" aria-pressed="false">
+      <svg class="doc-ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+      <svg class="doc-ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    </button>
+    <button class="ody-iconbtn doc-navtoggle" type="button" data-doc-nav-toggle aria-label="打开导航" aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="doc-layout">
+  <!-- ===== sidebar (site.js adds .is-active by URL) ===== -->
+  <aside class="doc-sidebar">
+    <nav class="ody-nav" aria-label="文档导航">
+      <div class="ody-nav__label">Guide</div>
+      <a class="ody-nav__item" href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12 12 3l9 9"/><path d="M5 10v10h14V10"/></svg><span>Overview</span></a>
+      <a class="ody-nav__item" href="getting-started.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 10-12h-7Z"/></svg><span>Getting started</span></a>
+      <a class="ody-nav__item" href="tokens.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="6.5" cy="12" r="2.5"/><circle cx="15" cy="17" r="2.5"/></svg><span>Design tokens</span></a>
+      <div class="ody-nav__label">Components</div>
+      <a class="ody-nav__item" href="actions.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="8" rx="4"/></svg><span>Actions</span></a>
+      <a class="ody-nav__item" href="forms.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9h6M7 13h10"/></svg><span>Forms</span></a>
+      <a class="ody-nav__item" href="data-display.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M8 15v3M13 10v8M18 6v12"/></svg><span>Data display</span></a>
+      <a class="ody-nav__item" href="feedback.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/></svg><span>Feedback</span></a>
+      <a class="ody-nav__item" href="navigation.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h10M4 18h16"/></svg><span>Navigation</span></a>
+    </nav>
+  </aside>
+
+  <!-- ===== main ===== -->
+  <main class="doc-main">
+    <header class="doc-header">
+      <p class="doc-eyebrow">Components</p>
+      <h1 class="doc-title">Actions</h1>
+      <p class="doc-lead">触发动作的一组核心控件：<code>.ody-btn</code> 按钮及其全部变体、尺寸与状态，图标按钮、按钮组、下拉菜单、复制按钮与链接。交互组件由 <code>dist/odyssey.js</code> 的 <code>data-ody-*</code> 属性零配置驱动。</p>
+    </header>
+
+    <div class="ody-alert ody-alert--info">
+      <svg class="ody-alert__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg>
+      <div class="ody-alert__body">下方每个预览框都是<em>真实渲染</em>的 <code>.ody-</code> 组件，右上角切换深色即可对照两套主题。下拉、复制等交互直接可点。</div>
+    </div>
+
+    <!-- ============================ BUTTON ============================ -->
+    <h2 id="button">Button</h2>
+    <p>基础类 <code>.ody-btn</code> 搭配一个变体修饰符使用。变体覆盖 <code>--primary</code> / <code>--secondary</code> / <code>--ghost</code> / <code>--subtle</code> / <code>--danger</code> / <code>--link</code>。</p>
+    <div class="doc-example">
+      <div class="doc-demo">
+        <button class="ody-btn ody-btn--primary">Primary</button>
+        <button class="ody-btn ody-btn--secondary">Secondary</button>
+        <button class="ody-btn ody-btn--ghost">Ghost</button>
+        <button class="ody-btn ody-btn--subtle">Subtle</button>
+        <button class="ody-btn ody-btn--danger">Danger</button>
+        <button class="ody-btn ody-btn--link">Link</button>
+      </div>
+      <div class="doc-code"><pre><code>&lt;button class="ody-btn ody-btn--primary"&gt;Primary&lt;/button&gt;
+&lt;button class="ody-btn ody-btn--secondary"&gt;Secondary&lt;/button&gt;
+&lt;button class="ody-btn ody-btn--ghost"&gt;Ghost&lt;/button&gt;
+&lt;button class="ody-btn ody-btn--subtle"&gt;Subtle&lt;/button&gt;
+&lt;button class="ody-btn ody-btn--danger"&gt;Danger&lt;/button&gt;
+&lt;button class="ody-btn ody-btn--link"&gt;Link&lt;/button&gt;</code></pre></div>
+    </div>
+
+    <h3 id="button-sizes">尺寸</h3>
+    <p>默认高 40px；<code>--sm</code> 收窄到 32px，<code>--lg</code> 放大到 46px。修饰符可与任意变体叠加。</p>
+    <div class="doc-example">
+      <div class="doc-demo">
+        <button class="ody-btn ody-btn--primary ody-btn--sm">Small</button>
+        <button class="ody-btn ody-btn--primary">Default</button>
+        <button class="ody-btn ody-btn--primary ody-btn--lg">Large</button>
+      </div>
+      <div class="doc-code"><pre><code>&lt;button class="ody-btn ody-btn--primary ody-btn--sm"&gt;Small&lt;/button&gt;
+&lt;button class="ody-btn ody-btn--primary"&gt;Default&lt;/button&gt;
+&lt;button class="ody-btn ody-btn--primary ody-btn--lg"&gt;Large&lt;/button&gt;</code></pre></div>
+    </div>
+
+    <h3 id="button-icons">带图标</h3>
+    <p>直接在 <code>.ody-btn</code> 内内联 <code>&lt;svg&gt;</code>；图标会被自动约束到 16px 并与文本以 <code>--ody-sp-2</code> 间距对齐，图标可置于文本前或后。</p>
+    <div class="doc-example">
+      <div class="doc-demo">
+        <button class="ody-btn ody-btn--primary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+          New file
+        </button>
+        <button class="ody-btn ody-btn--secondary">
+          Download
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>
+        </button>
+        <button class="ody-btn ody-btn--danger">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V5h6v2M6 7l1 13h10l1-13"/></svg>
+          Delete
+        </button>
+      </div>
+      <div class="doc-code"><pre><code>&lt;button class="ody-btn ody-btn--primary"&gt;
+  &lt;svg viewBox="0 0 24 24"&gt;…&lt;/svg&gt;
+  New file
+&lt;/button&gt;
+
+&lt;button class="ody-btn ody-btn--secondary"&gt;
+  Download
+  &lt;svg viewBox="0 0 24 24"&gt;…&lt;/svg&gt;
+&lt;/button&gt;</code></pre></div>
+    </div>
+
+    <h3 id="button-states">状态：禁用与加载</h3>
+    <p>原生 <code>disabled</code>（或 <code>.is-disabled</code> / <code>aria-disabled="true"</code>）置灰并拦截交互；<code>.is-loading</code> 隐藏文本并叠加旋转 spinner，同时锁定点击。</p>
+    <div class="doc-example">
+      <div class="doc-demo">
+        <button class="ody-btn ody-btn--primary" disabled>Disabled</button>
+        <button class="ody-btn ody-btn--secondary" disabled>Disabled</button>
+        <button class="ody-btn ody-btn--primary is-loading">Loading</button>
+        <button class="ody-btn ody-btn--secondary is-loading">Loading</button>
+      </div>
+      <div class="doc-code"><pre><code>&lt;button class="ody-btn ody-btn--primary" disabled&gt;Disabled&lt;/button&gt;
+&lt;button class="ody-btn ody-btn--secondary" disabled&gt;Disabled&lt;/button&gt;
+&lt;button class="ody-btn ody-btn--primary is-loading"&gt;Loading&lt;/button&gt;
+&lt;button class="ody-btn ody-btn--secondary is-loading"&gt;Loading&lt;/button&gt;</code></pre></div>
+    </div>
+
+    <h3 id="button-block">块级按钮</h3>
+    <p><code>--block</code> 让按钮撑满容器宽度，常用于表单提交或窄侧栏。</p>
+    <div class="doc-example">
+      <div class="doc-demo doc-demo--stack">
+        <button class="ody-btn ody-btn--primary ody-btn--block">Block button</button>
+        <button class="ody-btn ody-btn--secondary ody-btn--block">Block secondary</button>
+      </div>
+      <div class="doc-code"><pre><code>&lt;button class="ody-btn ody-btn--primary ody-btn--block"&gt;Block button&lt;/button&gt;
+&lt;button class="ody-btn ody-btn--secondary ody-btn--block"&gt;Block secondary&lt;/button&gt;</code></pre></div>
+    </div>
+
+    <!-- ========================= ICON BUTTON ========================= -->
+    <h2 id="iconbtn">Icon button</h2>
+    <p><code>.ody-iconbtn</code> 是等宽等高的纯图标按钮，务必提供 <code>aria-label</code>。变体 <code>--outline</code> 加描边表面，<code>--sm</code> 缩到 32px。</p>
+    <div class="doc-example">
+      <div class="doc-demo">
+        <button class="ody-iconbtn" aria-label="Search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        </button>
+        <button class="ody-iconbtn ody-iconbtn--outline" aria-label="Settings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-2.7 1.1V21a2 2 0 1 1-4 0v-.1a1.6 1.6 0 0 0-2.7-1.1l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1A1.6 1.6 0 0 0 4.6 15a2 2 0 1 1 0-4 1.6 1.6 0 0 0 1.1-2.7l-.1-.1A2 2 0 1 1 8.4 5.4l.1.1a1.6 1.6 0 0 0 2.7-1.1V4a2 2 0 1 1 4 0v.1a1.6 1.6 0 0 0 2.7 1.1l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0-.3 1.8 2 2 0 1 1 0 4Z"/></svg>
+        </button>
+        <button class="ody-iconbtn ody-iconbtn--sm" aria-label="More">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg>
+        </button>
+        <button class="ody-iconbtn" aria-label="Delete" disabled>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V5h6v2M6 7l1 13h10l1-13"/></svg>
+        </button>
+      </div>
+      <div class="doc-code"><pre><code>&lt;button class="ody-iconbtn" aria-label="Search"&gt;
+  &lt;svg viewBox="0 0 24 24"&gt;…&lt;/svg&gt;
+&lt;/button&gt;
+&lt;button class="ody-iconbtn ody-iconbtn--outline" aria-label="Settings"&gt;…&lt;/button&gt;
+&lt;button class="ody-iconbtn ody-iconbtn--sm" aria-label="More"&gt;…&lt;/button&gt;
+&lt;button class="ody-iconbtn" aria-label="Delete" disabled&gt;…&lt;/button&gt;</code></pre></div>
+    </div>
+
+    <!-- ========================= BUTTON GROUP ======================== -->
+    <h2 id="btn-group">Button group</h2>
+    <p><code>.ody-btn-group</code> 把相邻按钮拼接成一段，自动处理圆角与边框合并。给某个成员加 <code>.is-active</code> 即可当作单选式分段控件。</p>
+    <div class="doc-example">
+      <div class="doc-demo">
+        <div class="ody-btn-group">
+          <button class="ody-btn ody-btn--secondary">Left</button>
+          <button class="ody-btn ody-btn--secondary">Center</button>
+          <button class="ody-btn ody-btn--secondary">Right</button>
+        </div>
+        <div class="ody-btn-group">
+          <button class="ody-btn ody-btn--secondary is-active">Day</button>
+          <button class="ody-btn ody-btn--secondary">Week</button>
+          <button class="ody-btn ody-btn--secondary">Month</button>
+        </div>
+      </div>
+      <div class="doc-code"><pre><code>&lt;div class="ody-btn-group"&gt;
+  &lt;button class="ody-btn ody-btn--secondary"&gt;Left&lt;/button&gt;
+  &lt;button class="ody-btn ody-btn--secondary"&gt;Center&lt;/button&gt;
+  &lt;button class="ody-btn ody-btn--secondary"&gt;Right&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;div class="ody-btn-group"&gt;
+  &lt;button class="ody-btn ody-btn--secondary is-active"&gt;Day&lt;/button&gt;
+  &lt;button class="ody-btn ody-btn--secondary"&gt;Week&lt;/button&gt;
+  &lt;button class="ody-btn ody-btn--secondary"&gt;Month&lt;/button&gt;
+&lt;/div&gt;</code></pre></div>
+    </div>
+
+    <!-- ======================= DROPDOWN / MENU ======================= -->
+    <h2 id="dropdown">Dropdown &amp; Menu</h2>
+    <p>容器 <code>.ody-dropdown</code> 内放一个带 <code>data-ody-toggle</code> 的触发器和一个 <code>.ody-menu</code>。点击切换、点外部或按 <kbd>Esc</kbd> 关闭，方向键在项间移动 —— 全部由 <code>odyssey.js</code> 托管，<code>aria-expanded</code> / <code>aria-haspopup</code> 自动补齐。菜单项支持 <code>.ody-menu__label</code> 分组、<code>.ody-menu__sep</code> 分隔与 <code>--danger</code> 危险项。</p>
+    <div class="doc-example">
+      <div class="doc-demo">
+        <div class="ody-dropdown">
+          <button class="ody-btn ody-btn--secondary" data-ody-toggle>
+            Options
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="ody-menu">
+            <div class="ody-menu__label">Account</div>
+            <button class="ody-menu__item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+              Profile
+            </button>
+            <button class="ody-menu__item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1l2-1.5-2-3.4-2.3.9a7 7 0 0 0-1.7-1l-.4-2.5H9.5L9.1 5a7 7 0 0 0-1.7 1L5.1 5.1l-2 3.4 2 1.5a7 7 0 0 0 0 2l-2 1.5 2 3.4 2.3-.9a7 7 0 0 0 1.7 1l.4 2.5h4.9l.4-2.5a7 7 0 0 0 1.7-1l2.3.9 2-3.4-2-1.5c.1-.3.1-.7.1-1Z"/></svg>
+              Settings
+            </button>
+            <div class="ody-menu__sep"></div>
+            <button class="ody-menu__item ody-menu__item--danger">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 17l5-5-5-5M21 12H9M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/></svg>
+              Sign out
+            </button>
+          </div>
+        </div>
+
+        <div class="ody-dropdown">
+          <button class="ody-iconbtn ody-iconbtn--outline" data-ody-toggle aria-label="Row actions">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+          </button>
+          <div class="ody-menu ody-menu--right">
+            <button class="ody-menu__item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+              Rename
+            </button>
+            <button class="ody-menu__item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+              Duplicate
+            </button>
+            <div class="ody-menu__sep"></div>
+            <button class="ody-menu__item ody-menu__item--danger">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V5h6v2M6 7l1 13h10l1-13"/></svg>
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="doc-code"><pre><code>&lt;div class="ody-dropdown"&gt;
+  &lt;button class="ody-btn ody-btn--secondary" data-ody-toggle&gt;
+    Options
+    &lt;svg viewBox="0 0 24 24"&gt;…&lt;/svg&gt;
+  &lt;/button&gt;
+  &lt;div class="ody-menu"&gt;
+    &lt;div class="ody-menu__label"&gt;Account&lt;/div&gt;
+    &lt;button class="ody-menu__item"&gt;&lt;svg&gt;…&lt;/svg&gt;Profile&lt;/button&gt;
+    &lt;button class="ody-menu__item"&gt;&lt;svg&gt;…&lt;/svg&gt;Settings&lt;/button&gt;
+    &lt;div class="ody-menu__sep"&gt;&lt;/div&gt;
+    &lt;button class="ody-menu__item ody-menu__item--danger"&gt;&lt;svg&gt;…&lt;/svg&gt;Sign out&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- 右对齐菜单：给 .ody-menu 加 --right --&gt;
+&lt;div class="ody-dropdown"&gt;
+  &lt;button class="ody-iconbtn ody-iconbtn--outline" data-ody-toggle aria-label="Row actions"&gt;…&lt;/button&gt;
+  &lt;div class="ody-menu ody-menu--right"&gt;…&lt;/div&gt;
+&lt;/div&gt;</code></pre></div>
+    </div>
+
+    <!-- ========================= COPY BUTTON ========================= -->
+    <h2 id="copy-btn">Copy button</h2>
+    <p><code>.ody-copy-btn</code> 配 <code>data-ody-copy-text="字面值"</code> 直接复制字符串，或 <code>data-ody-copy="#selector"</code> 复制目标元素的 <code>value</code> / 文本。成功后短暂加 <code>.is-copied</code> 反馈（变绿），由 <code>odyssey.js</code> 处理，无需自写 JS。</p>
+    <div class="doc-example">
+      <div class="doc-demo">
+        <button class="ody-copy-btn" data-ody-copy-text="npm i odyssey-ui" aria-label="复制安装命令">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+          <span>npm i odyssey-ui</span>
+        </button>
+
+        <code class="ody-code" id="copy-token">--ody-accent: #4f46e5;</code>
+        <button class="ody-copy-btn" data-ody-copy="#copy-token" aria-label="复制 token 值">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <div class="doc-code"><pre><code>&lt;!-- 复制字面值 --&gt;
+&lt;button class="ody-copy-btn" data-ody-copy-text="npm i odyssey-ui" aria-label="复制安装命令"&gt;
+  &lt;svg viewBox="0 0 24 24"&gt;…&lt;/svg&gt;
+  &lt;span&gt;npm i odyssey-ui&lt;/span&gt;
+&lt;/button&gt;
+
+&lt;!-- 复制目标元素文本 --&gt;
+&lt;code class="ody-code" id="copy-token"&gt;--ody-accent: #4f46e5;&lt;/code&gt;
+&lt;button class="ody-copy-btn" data-ody-copy="#copy-token" aria-label="复制 token 值"&gt;
+  &lt;svg viewBox="0 0 24 24"&gt;…&lt;/svg&gt;
+  &lt;span&gt;Copy&lt;/span&gt;
+&lt;/button&gt;</code></pre></div>
+    </div>
+
+    <!-- ============================= LINK ============================ -->
+    <h2 id="link">Link</h2>
+    <p><code>.ody-link</code> 是文本链接：默认无下划线，hover 才出现，配 <code>--ody-accent-ink</code> 色。行内使用时也成立。若需按钮语义但外观像链接，用 <code>.ody-btn--link</code>。</p>
+    <div class="doc-example">
+      <div class="doc-demo doc-demo--stack">
+        <p style="margin:0;color:var(--ody-ink-2)">阅读 <a class="ody-link" href="getting-started.html">快速上手指南</a>，或直接跳到 <a class="ody-link" href="tokens.html">设计 token 参考</a>。</p>
+        <div class="ody-flex ody-gap-3" style="align-items:center">
+          <a class="ody-link" href="#link">Standalone link</a>
+          <button class="ody-btn ody-btn--link" type="button">Button-styled link</button>
+        </div>
+      </div>
+      <div class="doc-code"><pre><code>&lt;a class="ody-link" href="getting-started.html"&gt;快速上手指南&lt;/a&gt;
+
+&lt;!-- 需要按钮语义、外观像链接时 --&gt;
+&lt;button class="ody-btn ody-btn--link" type="button"&gt;Button-styled link&lt;/button&gt;</code></pre></div>
+    </div>
+
+  </main>
+</div>
+
+<script src="../dist/odyssey.js"></script>
+<script src="assets/site.js"></script>
+</body>
+</html>

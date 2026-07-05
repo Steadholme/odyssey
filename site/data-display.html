@@ -1,0 +1,568 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Data display · Odyssey UI</title>
+<meta name="description" content="Odyssey UI 数据展示组件：卡片、表格、统计、标签、徽章、头像、列表、进度、时间线、骨架屏、工具提示等，全部走语义 token，亮暗自适应。">
+<link rel="stylesheet" href="../dist/odyssey.css">
+<link rel="stylesheet" href="../dist/odyssey-font.css">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body class="ody-scope">
+
+<!-- ===== appbar ===== -->
+<header class="ody-appbar">
+  <a class="ody-appbar__brand" href="index.html">
+    <span class="ody-appbar__tile" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 14.2 9.8 22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2Z"/></svg>
+    </span>
+    <span class="ody-appbar__name">Odyssey UI</span>
+  </a>
+  <span class="ody-tag ody-tag--accent ody-mono doc-appbar__ver">v1.0.0</span>
+  <span class="ody-appbar__spacer"></span>
+  <div class="ody-appbar__right">
+    <a class="ody-iconbtn" href="#" aria-label="GitHub 仓库（占位）" title="GitHub">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 4.6 18 4.9 18 4.9c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5Z"/></svg>
+    </a>
+    <button class="ody-iconbtn doc-theme" type="button" data-ody-theme-toggle aria-label="切换深色模式" aria-pressed="false">
+      <svg class="doc-ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+      <svg class="doc-ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    </button>
+    <button class="ody-iconbtn doc-navtoggle" type="button" data-doc-nav-toggle aria-label="打开导航" aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="doc-layout">
+  <!-- ===== sidebar (site.js adds .is-active by URL) ===== -->
+  <aside class="doc-sidebar">
+    <nav class="ody-nav" aria-label="文档导航">
+      <div class="ody-nav__label">Guide</div>
+      <a class="ody-nav__item" href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12 12 3l9 9"/><path d="M5 10v10h14V10"/></svg><span>Overview</span></a>
+      <a class="ody-nav__item" href="getting-started.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 10-12h-7Z"/></svg><span>Getting started</span></a>
+      <a class="ody-nav__item" href="tokens.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="6.5" cy="12" r="2.5"/><circle cx="15" cy="17" r="2.5"/></svg><span>Design tokens</span></a>
+      <div class="ody-nav__label">Components</div>
+      <a class="ody-nav__item" href="actions.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="8" rx="4"/></svg><span>Actions</span></a>
+      <a class="ody-nav__item" href="forms.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9h6M7 13h10"/></svg><span>Forms</span></a>
+      <a class="ody-nav__item" href="data-display.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M8 15v3M13 10v8M18 6v12"/></svg><span>Data display</span></a>
+      <a class="ody-nav__item" href="feedback.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/></svg><span>Feedback</span></a>
+      <a class="ody-nav__item" href="navigation.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h10M4 18h16"/></svg><span>Navigation</span></a>
+    </nav>
+  </aside>
+
+  <!-- ===== main ===== -->
+  <main class="doc-main">
+    <header class="doc-header">
+      <p class="doc-eyebrow">Components</p>
+      <h1 class="doc-title">Data display</h1>
+      <p class="doc-lead">呈现信息的静态与半交互组件：从卡片、表格、统计到标签、进度、时间线与骨架屏。全部只引用语义 <code>--ody-*</code> token，因此每个示例都在亮 / 暗两色下自动成立 —— 点右上角月亮图标即可切换预览。</p>
+    </header>
+
+    <div class="ody-alert ody-alert--info">
+      <svg class="ody-alert__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg>
+      <div class="ody-alert__body">下方每个 <em>demo</em> 都是真实的 <code>.ody-*</code> 组件，实时渲染；紧随其后的代码块可一键复制。</div>
+    </div>
+
+    <!-- ==================================================== Card -->
+    <h2 id="card">Card 卡片</h2>
+    <p><code>.ody-card</code> 是内容容器：可拆 <code>__head</code> / <code>__body</code> / <code>__foot</code> 三段；<code>--hover</code> 悬停抬升阴影，<code>--list</code> 让 body 无内边距以嵌 <code>.ody-list</code>。</p>
+    <div class="doc-example">
+      <div class="doc-demo doc-demo--stack">
+        <div class="ody-card" style="max-width:420px">
+          <div class="ody-card__head">
+            <span class="ody-card__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M8 15v3M13 10v8M18 6v12"/></svg></span>
+            <div class="ody-flex-1">
+              <h3 class="ody-card__title">月度请求量</h3>
+              <p class="ody-card__sub">过去 30 天聚合</p>
+            </div>
+            <span class="ody-pill ody-pill--ok"><span class="ody-dot ody-dot--ok"></span>正常</span>
+          </div>
+          <div class="ody-card__body">
+            <p class="ody-muted" style="margin:0">卡片主体承载任意内容：文本、表格、图表或表单。边框与阴影随主题自动调整。</p>
+          </div>
+          <div class="ody-card__foot">
+            <button class="ody-btn ody-btn--primary ody-btn--sm" type="button">查看详情</button>
+            <button class="ody-btn ody-btn--subtle ody-btn--sm" type="button">导出</button>
+          </div>
+        </div>
+      </div>
+      <div class="doc-code"><pre><code>&lt;div class="ody-card"&gt;
+  &lt;div class="ody-card__head"&gt;
+    &lt;span class="ody-card__ico"&gt;&lt;svg …&gt;&lt;/svg&gt;&lt;/span&gt;
+    &lt;div class="ody-flex-1"&gt;
+      &lt;h3 class="ody-card__title"&gt;月度请求量&lt;/h3&gt;
+      &lt;p class="ody-card__sub"&gt;过去 30 天聚合&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;span class="ody-pill ody-pill--ok"&gt;&lt;span class="ody-dot ody-dot--ok"&gt;&lt;/span&gt;正常&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class="ody-card__body"&gt;…&lt;/div&gt;
+  &lt;div class="ody-card__foot"&gt;
+    &lt;button class="ody-btn ody-btn--primary ody-btn--sm"&gt;查看详情&lt;/button&gt;
+    &lt;button class="ody-btn ody-btn--subtle ody-btn--sm"&gt;导出&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre></div>
+    </div>
+
+    <h3 id="card-hover">悬停卡片与列表卡片</h3>
+    <div class="doc-example">
+      <div class="doc-demo">
+        <div class="ody-card ody-card--hover" style="width:220px">
+          <div class="ody-card__body">
+            <h3 class="ody-h3">Hover 抬升</h3>
+            <p class="ody-muted" style="margin:6px 0 0;font-size:var(--ody-fs-sm)">悬停时阴影加深，用于可点击入口。</p>
+          </div>
+        </div>
+        <div class="ody-card ody-card--list" style="width:220px">
+          <ul class="ody-list">
+            <li class="ody-list__item">Alpha 节点</li>
+            <li class="ody-list__item">Bravo 节点</li>
+            <li class="ody-list__item">Charlie 节点</li>
+          </ul>
+        </div>
+      </div>
+      <div class="doc-code"><pre><code>&lt;div class="ody-card ody-card--hover"&gt;
+  &lt;div class="ody-card__body"&gt;…&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="ody-card ody-card--list"&gt;
+  &lt;ul class="ody-list"&gt;
+    &lt;li class="ody-list__item"&gt;Alpha 节点&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;</code></pre></div>
+    </div>
+
+    <!-- ==================================================== Table -->
+    <h2 id="table">Table 表格</h2>
+    <p>用 <code>.ody-table-wrap</code> 包裹 <code>.ody-table</code> 获得圆角、边框与横向滚动。数字列加 <code>.ody-num</code> 右对齐并启用等宽数字；主键单元格用 <code>.ody-table__strong</code>。</p>
+    <div class="doc-example">
+      <div class="doc-demo doc-demo--stack">
+        <div class="ody-table-wrap">
+          <table class="ody-table ody-table--hover">
+            <thead>
+              <tr><th>服务</th><th>状态</th><th class="ody-num">P95 延迟</th><th class="ody-num">请求数</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="ody-table__strong">gateway</td><td><span class="ody-pill ody-pill--ok"><span class="ody-dot ody-dot--ok"></span>健康</span></td><td class="ody-num">42 ms</td><td class="ody-num">1,284,933</td></tr>
+              <tr><td class="ody-table__strong">relay</td><td><span class="ody-pill ody-pill--warn"><span class="ody-dot ody-dot--warn"></span>降级</span></td><td class="ody-num">318 ms</td><td class="ody-num">402,118</td></tr>
+              <tr><td class="ody-table__strong">cortex</td><td><span class="ody-pill ody-pill--down"><span class="ody-dot ody-dot--down"></span>故障</span></td><td class="ody-num">—</td><td class="ody-num">0</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="doc-code"><pre><code>&lt;div class="ody-table-wrap"&gt;
+  &lt;table class="ody-table ody-table--hover"&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;&lt;th&gt;服务&lt;/th&gt;&lt;th&gt;状态&lt;/th&gt;
+        &lt;th class="ody-num"&gt;P95 延迟&lt;/th&gt;&lt;th class="ody-num"&gt;请求数&lt;/th&gt;&lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;
+        &lt;td class="ody-table__strong"&gt;gateway&lt;/td&gt;
+        &lt;td&gt;&lt;span class="ody-pill ody-pill--ok"&gt;&lt;span class="ody-dot ody-dot--ok"&gt;&lt;/span&gt;健康&lt;/span&gt;&lt;/td&gt;
+        &lt;td class="ody-num"&gt;42 ms&lt;/td&gt;&lt;td class="ody-num"&gt;1,284,933&lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;</code></pre></div>
+    </div>
+
+    <h3 id="table-variants">变体：striped · bordered · compact</h3>
+    <p>修饰类可叠加：<code>--striped</code> 斑马纹、<code>--bordered</code> 全网格线、<code>--compact</code> 紧凑行高。</p>
+    <div class="doc-example">
+      <div class="doc-demo doc-demo--stack">
+        <div class="ody-table-wrap">
+          <table class="ody-table ody-table--striped ody-table--bordered ody-table--compact">
+            <thead>
+              <tr><th>区域</th><th class="ody-num">配额</th><th class="ody-num">已用</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>us-east</td><td class="ody-num">500</td><td class="ody-num">418</td></tr>
+              <tr><td>eu-west</td><td class="ody-num">500</td><td class="ody-num">205</td></tr>
+              <tr><td>ap-south</td><td class="ody-num">300</td><td class="ody-num">96</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="doc-code"><pre><code>&lt;table class="ody-table ody-table--striped ody-table--bordered ody-table--compact"&gt;
+  …
+&lt;/table&gt;</code></pre></div>
+    </div>
+
+    <h3 id="table-sticky">粘性表头（sticky）</h3>
+    <p><code>--sticky</code> 让 <code>thead th</code> 在容器滚动时吸顶；给包裹层限高即可看到效果。</p>
+    <div class="doc-example">
+      <div class="doc-demo doc-demo--stack">
+        <div class="ody-table-wrap" style="max-height:180px">
+          <table class="ody-table ody-table--sticky ody-table--hover">
+            <thead>
+              <tr><th>#</th><th>事件</th><th class="ody-num">耗时</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="ody-num">01</td><td>DNS 解析</td><td class="ody-num">12 ms</td></tr>
+              <tr><td class="ody-num">02</td><td>TLS 握手</td><td class="ody-num">34 ms</td></tr>
+              <tr><td class="ody-num">03</td><td>首字节</td><td class="ody-num">58 ms</td></tr>
+              <tr><td class="ody-num">04</td><td>内容下载</td><td class="ody-num">91 ms</td></tr>
+              <tr><td class="ody-num">05</td><td>DOM 解析</td><td class="ody-num">140 ms</td></tr>
+              <tr><td class="ody-num">06</td><td>首次绘制</td><td class="ody-num">176 ms</td></tr>
+              <tr><td class="ody-num">07</td><td>可交互</td><td class="ody-num">220 ms</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="doc-code"><pre><code>&lt;div class="ody-table-wrap" style="max-height:180px"&gt;
+  &lt;table class="ody-table ody-table--sticky ody-table--hover"&gt;…&lt;/table&gt;
+&lt;/div&gt;</code></pre></div>
+    </div>
+
+    <!-- ==================================================== Stat -->
+    <h2 id="stat">Stat / KPI 统计</h2>
+    <p><code>.ody-stat</code> 拼装单个指标：<code>__label</code> / <code>__value</code> / <code>__meta</code>，可选 <code>__meter</code> 进度条。值可加 <code>--ok</code> / <code>--warn</code> / <code>--down</code> 着色。用 <code>.ody-stat-grid</code> 自动铺排一排 KPI。</p>
+    <div class="doc-example">
+      <div class="doc-demo doc-demo--stack">
+        <div class="ody-stat-grid">
+          <div class="ody-stat">
+            <div class="ody-stat__label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>可用性</div>
+            <div class="ody-stat__value ody-stat__value--ok">99.98%</div>
+            <div class="ody-stat__meta">近 30 天 SLA</div>
+          </div>
+          <div class="ody-stat">
+            <div class="ody-stat__label">活跃会话</div>
+            <div class="ody-stat__value">1,204</div>
+            <div class="ody-stat__meta">较昨日 +8.2%</div>
+            <div class="ody-stat__meter"><i style="width:72%"></i></div>
+          </div>
+          <div class="ody-stat">
+            <div class="ody-stat__label">错误率</div>
+            <div class="ody-stat__value ody-stat__value--down">2.4%</div>
+            <div class="ody-stat__meta">超出阈值 1.0%</div>
+          </div>
+        </div>
+      </div>
+      <div class="doc-code"><pre><code>&lt;div class="ody-stat-grid"&gt;
+  &lt;div class="ody-stat"&gt;
+    &lt;div class="ody-stat__label"&gt;&lt;svg …&gt;&lt;/svg&gt;可用性&lt;/div&gt;
+    &lt;div class="ody-stat__value ody-stat__value--ok"&gt;99.98%&lt;/div&gt;
+    &lt;div class="ody-stat__meta"&gt;近 30 天 SLA&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="ody-stat"&gt;
+    &lt;div class="ody-stat__label"&gt;活跃会话&lt;/div&gt;
+    &lt;div class="ody-stat__value"&gt;1,204&lt;/div&gt;
+    &lt;div class="ody-stat__meta"&gt;较昨日 +8.2%&lt;/div&gt;
+    &lt;div class="ody-stat__meter"&gt;&lt;i style="width:72%"&gt;&lt;/i&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre></div>
+    </div>
+
+    <!-- ==================================================== Tag / Pill -->
+    <h2 id="tag">Tag / Pill 标签</h2>
+    <p><code>.ody-tag</code> 与 <code>.ody-pill</code> 共享全部色调修饰：<code>--ok</code> / <code>--warn</code> / <code>--down</code> / <code>--info</code> / <code>--accent</code> / <code>--neutral</code>。Pill 常配 <code>.ody-dot</code> 状态点，Tag 可带 <code>__close</code> 关闭按钮。</p>
+    <div class="doc-example">
+      <div class="doc-demo">
+        <span class="ody-tag">默认</span>
+        <span class="ody-tag ody-tag--ok">成功</span>
+        <span class="ody-tag ody-tag--warn">警告</span>
+        <span class="ody-tag ody-tag--down">危险</span>
+        <span class="ody-tag ody-tag--info">信息</span>
+        <span class="ody-tag ody-tag--accent">强调</span>
+        <span class="ody-tag ody-tag--neutral">中性</span>
+      </div>
+      <div class="doc-code"><pre><code>&lt;span class="ody-tag"&gt;默认&lt;/span&gt;
+&lt;span class="ody-tag ody-tag--ok"&gt;成功&lt;/span&gt;
+&lt;span class="ody-tag ody-tag--warn"&gt;警告&lt;/span&gt;
+&lt;span class="ody-tag ody-tag--down"&gt;危险&lt;/span&gt;
+&lt;span class="ody-tag ody-tag--info"&gt;信息&lt;/span&gt;
+&lt;span class="ody-tag ody-tag--accent"&gt;强调&lt;/span&gt;
+&lt;span class="ody-tag ody-tag--neutral"&gt;中性&lt;/span&gt;</code></pre></div>
+    </div>
+
+    <h3 id="pill-dot">Pill 状态点与可关闭 Tag</h3>
+    <div class="doc-example">
+      <div class="doc-demo">
+        <span class="ody-pill ody-pill--ok"><span class="ody-dot ody-dot--ok"></span>运行中</span>
+        <span class="ody-pill ody-pill--warn"><span class="ody-dot ody-dot--warn"></span>降级</span>
+        <span class="ody-pill ody-pill--down"><span class="ody-dot ody-dot--down"></span>宕机</span>
+        <span class="ody-tag ody-tag--accent">env: prod
+          <button class="ody-tag__close" type="button" aria-label="移除标签"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+        </span>
+      </div>
+      <div class="doc-code"><pre><code>&lt;span class="ody-pill ody-pill--ok"&gt;
+  &lt;span class="ody-dot ody-dot--ok"&gt;&lt;/span&gt;运行中
+&lt;/span&gt;
+
+&lt;span class="ody-tag ody-tag--accent"&gt;env: prod
+  &lt;button class="ody-tag__close" type="button" aria-label="移除标签"&gt;
+    &lt;svg …&gt;&lt;/svg&gt;
+  &lt;/button&gt;
+&lt;/span&gt;</code></pre></div>
+    </div>
+
+    <!-- ==================================================== Badge -->
+    <h2 id="badge">Badge 徽章</h2>
+    <p><code>.ody-badge</code> 是计数徽章，<code>--dot</code> 变为小圆点，<code>--accent</code> / <code>--neutral</code> 换色。用 <code>.ody-badge-wrap</code> 把徽章绝对定位到图标 / 头像右上角。</p>
+    <div class="doc-example">
+      <div class="doc-demo">
+        <span class="ody-badge">3</span>
+        <span class="ody-badge ody-badge--accent">12</span>
+        <span class="ody-badge ody-badge--neutral">99+</span>
+        <span class="ody-badge ody-badge--dot" aria-label="有新消息"></span>
+        <span class="ody-badge-wrap">
+          <button class="ody-iconbtn ody-iconbtn--outline" type="button" aria-label="通知"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></button>
+          <span class="ody-badge">5</span>
+        </span>
+        <span class="ody-badge-wrap">
+          <span class="ody-avatar">OD</span>
+          <span class="ody-badge ody-badge--dot"></span>
+        </span>
+      </div>
+      <div class="doc-code"><pre><code>&lt;span class="ody-badge"&gt;3&lt;/span&gt;
+&lt;span class="ody-badge ody-badge--accent"&gt;12&lt;/span&gt;
+&lt;span class="ody-badge ody-badge--dot"&gt;&lt;/span&gt;
+
+&lt;span class="ody-badge-wrap"&gt;
+  &lt;button class="ody-iconbtn ody-iconbtn--outline"&gt;&lt;svg …&gt;&lt;/svg&gt;&lt;/button&gt;
+  &lt;span class="ody-badge"&gt;5&lt;/span&gt;
+&lt;/span&gt;</code></pre></div>
+    </div>
+
+    <!-- ==================================================== Avatar -->
+    <h2 id="avatar">Avatar 头像</h2>
+    <p><code>.ody-avatar</code> 支持文字缩写或 <code>&lt;img&gt;</code>；尺寸 <code>--sm</code> / <code>--lg</code>，<code>--square</code> 方角。<code>.ody-avatar__group</code> 让多个头像叠压成组。</p>
+    <div class="doc-example">
+      <div class="doc-demo">
+        <span class="ody-avatar ody-avatar--sm">A</span>
+        <span class="ody-avatar">OD</span>
+        <span class="ody-avatar ody-avatar--lg">W3</span>
+        <span class="ody-avatar ody-avatar--square">SQ</span>
+        <span class="ody-avatar__group">
+          <span class="ody-avatar">AL</span>
+          <span class="ody-avatar">BR</span>
+          <span class="ody-avatar">CH</span>
+          <span class="ody-avatar">+4</span>
+        </span>
+      </div>
+      <div class="doc-code"><pre><code>&lt;span class="ody-avatar ody-avatar--sm"&gt;A&lt;/span&gt;
+&lt;span class="ody-avatar"&gt;OD&lt;/span&gt;
+&lt;span class="ody-avatar ody-avatar--lg"&gt;W3&lt;/span&gt;
+&lt;span class="ody-avatar ody-avatar--square"&gt;SQ&lt;/span&gt;
+
+&lt;span class="ody-avatar__group"&gt;
+  &lt;span class="ody-avatar"&gt;AL&lt;/span&gt;
+  &lt;span class="ody-avatar"&gt;BR&lt;/span&gt;
+  &lt;span class="ody-avatar"&gt;CH&lt;/span&gt;
+  &lt;span class="ody-avatar"&gt;+4&lt;/span&gt;
+&lt;/span&gt;</code></pre></div>
+    </div>
+
+    <!-- ==================================================== List / Description -->
+    <h2 id="list">List / Description 列表与描述</h2>
+    <p><code>.ody-list</code> 是无样式列表容器，<code>__item</code> 提供分隔线与悬停底色；<code>.ody-desc</code> 是键值对描述列表（术语 <code>__term</code> / 值 <code>__val</code>）。</p>
+    <div class="doc-example">
+      <div class="doc-demo">
+        <ul class="ody-list ody-card" style="width:240px">
+          <li class="ody-list__item"><span class="ody-dot ody-dot--ok"></span><span class="ody-flex-1">API 网关</span><span class="ody-muted" style="font-size:var(--ody-fs-sm)">42ms</span></li>
+          <li class="ody-list__item"><span class="ody-dot ody-dot--warn"></span><span class="ody-flex-1">对象存储</span><span class="ody-muted" style="font-size:var(--ody-fs-sm)">318ms</span></li>
+          <li class="ody-list__item"><span class="ody-dot ody-dot--down"></span><span class="ody-flex-1">推理服务</span><span class="ody-muted" style="font-size:var(--ody-fs-sm)">—</span></li>
+        </ul>
+        <dl class="ody-desc ody-card" style="width:280px;padding:var(--ody-sp-4) var(--ody-sp-5)">
+          <dt class="ody-desc__term">区域</dt><dd class="ody-desc__val">us-east-1</dd>
+          <dt class="ody-desc__term">实例</dt><dd class="ody-desc__val">c7g.2xlarge</dd>
+          <dt class="ody-desc__term">运行时长</dt><dd class="ody-desc__val">14 天 6 小时</dd>
+        </dl>
+      </div>
+      <div class="doc-code"><pre><code>&lt;ul class="ody-list ody-card"&gt;
+  &lt;li class="ody-list__item"&gt;
+    &lt;span class="ody-dot ody-dot--ok"&gt;&lt;/span&gt;
+    &lt;span class="ody-flex-1"&gt;API 网关&lt;/span&gt;
+    &lt;span class="ody-muted"&gt;42ms&lt;/span&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;dl class="ody-desc"&gt;
+  &lt;dt class="ody-desc__term"&gt;区域&lt;/dt&gt;&lt;dd class="ody-desc__val"&gt;us-east-1&lt;/dd&gt;
+  &lt;dt class="ody-desc__term"&gt;实例&lt;/dt&gt;&lt;dd class="ody-desc__val"&gt;c7g.2xlarge&lt;/dd&gt;
+&lt;/dl&gt;</code></pre></div>
+    </div>
+
+    <!-- ==================================================== Progress -->
+    <h2 id="progress">Progress 进度条</h2>
+    <p><code>.ody-progress</code> 内嵌 <code>__bar</code>，用 <code>width</code> 表示百分比；色调 <code>--ok</code> / <code>--warn</code> / <code>--down</code>，<code>--striped</code> 加斜纹。</p>
+    <div class="doc-example">
+      <div class="doc-demo doc-demo--stack">
+        <div class="ody-progress"><div class="ody-progress__bar" style="width:64%"></div></div>
+        <div class="ody-progress ody-progress--ok"><div class="ody-progress__bar" style="width:88%"></div></div>
+        <div class="ody-progress ody-progress--warn"><div class="ody-progress__bar" style="width:46%"></div></div>
+        <div class="ody-progress ody-progress--down ody-progress--striped"><div class="ody-progress__bar" style="width:22%"></div></div>
+      </div>
+      <div class="doc-code"><pre><code>&lt;div class="ody-progress"&gt;
+  &lt;div class="ody-progress__bar" style="width:64%"&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="ody-progress ody-progress--ok"&gt;
+  &lt;div class="ody-progress__bar" style="width:88%"&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="ody-progress ody-progress--down ody-progress--striped"&gt;
+  &lt;div class="ody-progress__bar" style="width:22%"&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre></div>
+    </div>
+
+    <h3 id="progress-circle">环形进度（circle）</h3>
+    <p><code>.ody-progress--circle</code> 用 <code>--ody-val</code> 自定义属性（0–100）驱动 conic 扇形，中心可放 <code>__val</code> 文本。</p>
+    <div class="doc-example">
+      <div class="doc-demo">
+        <div class="ody-progress--circle" style="--ody-val:25"><span class="ody-progress__val">25%</span></div>
+        <div class="ody-progress--circle" style="--ody-val:60"><span class="ody-progress__val">60%</span></div>
+        <div class="ody-progress--circle" style="--ody-val:92"><span class="ody-progress__val">92%</span></div>
+      </div>
+      <div class="doc-code"><pre><code>&lt;div class="ody-progress--circle" style="--ody-val:60"&gt;
+  &lt;span class="ody-progress__val"&gt;60%&lt;/span&gt;
+&lt;/div&gt;</code></pre></div>
+    </div>
+
+    <!-- ==================================================== Meter -->
+    <h2 id="meter">Meter 度量条</h2>
+    <p><code>.ody-meter</code> 表示静态度量（如磁盘 / 配额占用），<code>__fill</code> 默认绿色，<code>--warn</code> / <code>--down</code> 表示接近或超限。</p>
+    <div class="doc-example">
+      <div class="doc-demo doc-demo--stack">
+        <span class="ody-meter"><span class="ody-meter__fill" style="width:34%"></span></span>
+        <span class="ody-meter ody-meter--warn"><span class="ody-meter__fill" style="width:71%"></span></span>
+        <span class="ody-meter ody-meter--down"><span class="ody-meter__fill" style="width:95%"></span></span>
+      </div>
+      <div class="doc-code"><pre><code>&lt;span class="ody-meter"&gt;
+  &lt;span class="ody-meter__fill" style="width:34%"&gt;&lt;/span&gt;
+&lt;/span&gt;
+
+&lt;span class="ody-meter ody-meter--warn"&gt;
+  &lt;span class="ody-meter__fill" style="width:71%"&gt;&lt;/span&gt;
+&lt;/span&gt;</code></pre></div>
+    </div>
+
+    <!-- ==================================================== Skeleton -->
+    <h2 id="skeleton">Skeleton 骨架屏</h2>
+    <p><code>.ody-skeleton</code> 是加载占位，带 shimmer 动画；变体 <code>--text</code> / <code>--title</code> / <code>--circle</code> / <code>--block</code> 对应不同形状。</p>
+    <div class="doc-example">
+      <div class="doc-demo doc-demo--stack">
+        <div class="ody-card" style="max-width:360px">
+          <div class="ody-card__body ody-flex ody-gap-3">
+            <span class="ody-skeleton ody-skeleton--circle"></span>
+            <div class="ody-flex-1">
+              <span class="ody-skeleton ody-skeleton--title"></span>
+              <span class="ody-skeleton ody-skeleton--text"></span>
+              <span class="ody-skeleton ody-skeleton--text" style="width:80%"></span>
+            </div>
+          </div>
+          <div class="ody-card__body" style="padding-top:0"><span class="ody-skeleton ody-skeleton--block"></span></div>
+        </div>
+      </div>
+      <div class="doc-code"><pre><code>&lt;span class="ody-skeleton ody-skeleton--circle"&gt;&lt;/span&gt;
+&lt;span class="ody-skeleton ody-skeleton--title"&gt;&lt;/span&gt;
+&lt;span class="ody-skeleton ody-skeleton--text"&gt;&lt;/span&gt;
+&lt;span class="ody-skeleton ody-skeleton--text" style="width:80%"&gt;&lt;/span&gt;
+&lt;span class="ody-skeleton ody-skeleton--block"&gt;&lt;/span&gt;</code></pre></div>
+    </div>
+
+    <!-- ==================================================== Divider -->
+    <h2 id="divider">Divider 分隔线</h2>
+    <p><code>.ody-divider</code> 是水平分隔；<code>--vert</code> 竖向；<code>.ody-divider__label</code> 在中间嵌入文字。</p>
+    <div class="doc-example">
+      <div class="doc-demo doc-demo--stack">
+        <div style="width:100%">
+          <p class="ody-muted" style="margin:0">上半部分内容</p>
+          <hr class="ody-divider">
+          <p class="ody-muted" style="margin:0">下半部分内容</p>
+          <div class="ody-divider__label">或者</div>
+          <div class="ody-flex ody-flex-center ody-gap-3">
+            <span>左</span>
+            <span class="ody-divider--vert" style="height:20px"></span>
+            <span>右</span>
+          </div>
+        </div>
+      </div>
+      <div class="doc-code"><pre><code>&lt;hr class="ody-divider"&gt;
+
+&lt;div class="ody-divider__label"&gt;或者&lt;/div&gt;
+
+&lt;span class="ody-divider--vert"&gt;&lt;/span&gt;</code></pre></div>
+    </div>
+
+    <!-- ==================================================== Timeline -->
+    <h2 id="timeline">Timeline 时间线</h2>
+    <p><code>.ody-timeline</code> 竖向事件流，每个 <code>__item</code> 带一个 <code>__dot</code>（可着色 <code>--ok</code> / <code>--warn</code> / <code>--down</code>），配 <code>__time</code> / <code>__title</code> / <code>__body</code>。</p>
+    <div class="doc-example">
+      <div class="doc-demo doc-demo--stack">
+        <ul class="ody-timeline">
+          <li class="ody-timeline__item">
+            <span class="ody-timeline__dot ody-timeline__dot--ok"></span>
+            <div class="ody-timeline__time">09:41</div>
+            <p class="ody-timeline__title">部署成功</p>
+            <p class="ody-timeline__body">v1.0.0 已推送到 3 个区域。</p>
+          </li>
+          <li class="ody-timeline__item">
+            <span class="ody-timeline__dot ody-timeline__dot--warn"></span>
+            <div class="ody-timeline__time">09:52</div>
+            <p class="ody-timeline__title">延迟升高</p>
+            <p class="ody-timeline__body">relay P95 突破 300ms 阈值。</p>
+          </li>
+          <li class="ody-timeline__item">
+            <span class="ody-timeline__dot ody-timeline__dot--down"></span>
+            <div class="ody-timeline__time">10:03</div>
+            <p class="ody-timeline__title">节点隔离</p>
+            <p class="ody-timeline__body">cortex-2 已从负载均衡摘除。</p>
+          </li>
+        </ul>
+      </div>
+      <div class="doc-code"><pre><code>&lt;ul class="ody-timeline"&gt;
+  &lt;li class="ody-timeline__item"&gt;
+    &lt;span class="ody-timeline__dot ody-timeline__dot--ok"&gt;&lt;/span&gt;
+    &lt;div class="ody-timeline__time"&gt;09:41&lt;/div&gt;
+    &lt;p class="ody-timeline__title"&gt;部署成功&lt;/p&gt;
+    &lt;p class="ody-timeline__body"&gt;v1.0.0 已推送到 3 个区域。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;</code></pre></div>
+    </div>
+
+    <!-- ==================================================== Tooltip -->
+    <h2 id="tooltip">Tooltip 工具提示</h2>
+    <p>任意元素加 <code>data-ody-tooltip="文本"</code> 即可 hover / focus 显示气泡（纯 CSS 兜底），<code>odyssey.js</code> 会升级为可定位浮层，<code>data-ody-placement</code> 指定方向（top / bottom / left / right）。</p>
+    <div class="doc-example">
+      <div class="doc-demo doc-demo--center">
+        <button class="ody-btn ody-btn--secondary" type="button" data-ody-tooltip="默认在上方弹出" data-ody-placement="top">上方</button>
+        <button class="ody-btn ody-btn--secondary" type="button" data-ody-tooltip="显示在下方" data-ody-placement="bottom">下方</button>
+        <span class="ody-iconbtn ody-iconbtn--outline" tabindex="0" role="button" data-ody-tooltip="也可用于图标按钮" data-ody-placement="right"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg></span>
+      </div>
+      <div class="doc-code"><pre><code>&lt;button class="ody-btn ody-btn--secondary"
+        data-ody-tooltip="默认在上方弹出" data-ody-placement="top"&gt;
+  上方
+&lt;/button&gt;
+
+&lt;span class="ody-iconbtn ody-iconbtn--outline" tabindex="0" role="button"
+      data-ody-tooltip="也可用于图标按钮" data-ody-placement="right"&gt;
+  &lt;svg …&gt;&lt;/svg&gt;
+&lt;/span&gt;</code></pre></div>
+    </div>
+
+    <!-- ==================================================== Code / Kbd -->
+    <h2 id="code">Code / Kbd 代码与按键</h2>
+    <p>行内 <code>.ody-code</code> 标记代码片段，<code>.ody-kbd</code> 表示键盘按键，多行代码用 <code>.ody-pre</code> 代码块。</p>
+    <div class="doc-example">
+      <div class="doc-demo doc-demo--stack">
+        <p style="margin:0">运行 <code class="ody-code">npm run build</code> 后按 <kbd class="ody-kbd">Ctrl</kbd> + <kbd class="ody-kbd">C</kbd> 终止。</p>
+        <pre class="ody-pre" style="width:100%">curl -sSL https://holdfast.local/odyssey.css \
+  -o dist/odyssey.css</pre>
+      </div>
+      <div class="doc-code"><pre><code>&lt;code class="ody-code"&gt;npm run build&lt;/code&gt;
+
+&lt;kbd class="ody-kbd"&gt;Ctrl&lt;/kbd&gt; + &lt;kbd class="ody-kbd"&gt;C&lt;/kbd&gt;
+
+&lt;pre class="ody-pre"&gt;curl -sSL … -o dist/odyssey.css&lt;/pre&gt;</code></pre></div>
+    </div>
+
+  </main>
+</div>
+
+<script src="../dist/odyssey.js"></script>
+<script src="assets/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Forms · Odyssey UI</title>
+<meta name="description" content="Odyssey UI 表单组件参考：Field、Input、Textarea、Select、Checkbox、Radio、Switch、Range、Input group、File 与内联/堆叠表单布局。">
+<link rel="stylesheet" href="../dist/odyssey.css">
+<link rel="stylesheet" href="../dist/odyssey-font.css">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body class="ody-scope">
+
+<!-- ===== appbar ===== -->
+<header class="ody-appbar">
+  <a class="ody-appbar__brand" href="index.html">
+    <span class="ody-appbar__tile" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 14.2 9.8 22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2Z"/></svg>
+    </span>
+    <span class="ody-appbar__name">Odyssey UI</span>
+  </a>
+  <span class="ody-tag ody-tag--accent ody-mono doc-appbar__ver">v1.0.0</span>
+  <span class="ody-appbar__spacer"></span>
+  <div class="ody-appbar__right">
+    <a class="ody-iconbtn" href="#" aria-label="GitHub 仓库（占位）" title="GitHub">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 4.6 18 4.9 18 4.9c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5Z"/></svg>
+    </a>
+    <button class="ody-iconbtn doc-theme" type="button" data-ody-theme-toggle aria-label="切换深色模式" aria-pressed="false">
+      <svg class="doc-ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+      <svg class="doc-ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    </button>
+    <button class="ody-iconbtn doc-navtoggle" type="button" data-doc-nav-toggle aria-label="打开导航" aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="doc-layout">
+  <!-- ===== sidebar (site.js adds .is-active by URL) ===== -->
+  <aside class="doc-sidebar">
+    <nav class="ody-nav" aria-label="文档导航">
+      <div class="ody-nav__label">Guide</div>
+      <a class="ody-nav__item" href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12 12 3l9 9"/><path d="M5 10v10h14V10"/></svg><span>Overview</span></a>
+      <a class="ody-nav__item" href="getting-started.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 10-12h-7Z"/></svg><span>Getting started</span></a>
+      <a class="ody-nav__item" href="tokens.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="6.5" cy="12" r="2.5"/><circle cx="15" cy="17" r="2.5"/></svg><span>Design tokens</span></a>
+      <div class="ody-nav__label">Components</div>
+      <a class="ody-nav__item" href="actions.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="8" rx="4"/></svg><span>Actions</span></a>
+      <a class="ody-nav__item" href="forms.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9h6M7 13h10"/></svg><span>Forms</span></a>
+      <a class="ody-nav__item" href="data-display.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M8 15v3M13 10v8M18 6v12"/></svg><span>Data display</span></a>
+      <a class="ody-nav__item" href="feedback.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/></svg><span>Feedback</span></a>
+      <a class="ody-nav__item" href="navigation.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h10M4 18h16"/></svg><span>Navigation</span></a>
+    </nav>
+  </aside>
+
+  <!-- ===== main ===== -->
+  <main class="doc-main">
+    <header class="doc-header">
+      <p class="doc-eyebrow">Components</p>
+      <h1 class="doc-title">Forms</h1>
+      <p class="doc-lead">采集用户输入的整套控件：语义化的 <code>.ody-field</code> 包裹层，配合原生 <code>input</code> / <code>select</code> / <code>textarea</code> 的轻量皮肤。所有控件的强调色、焦点环与状态色都走 <code>--ody-*</code> token，亮暗主题自动对齐；点右上角图标可即时预览暗色。</p>
+    </header>
+
+    <div class="ody-alert ody-alert--info">
+      <svg class="ody-alert__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg>
+      <div class="ody-alert__body">表单控件是<strong>渐进增强</strong>的原生元素 —— 不需要 <code>odyssey.js</code> 即可工作。焦点环由 <code>:focus-visible</code> 触发（4px <code>--ody-ring</code>），校验态用 <code>.is-invalid</code> / <code>aria-invalid</code> 或字段级 <code>.has-error</code> 表达。</div>
+    </div>
+
+    <!-- ============================== Field ============================== -->
+    <h2 id="field">Field · 字段容器</h2>
+    <p><code>.ody-field</code> 把标签、控件、提示、错误竖直组织成一组。<code>.ody-label</code> 为标签；<code>.ody-hint</code> 为辅助说明；<code>.ody-error</code> 为错误文案。必填标记有两种写法：字段级 <code>.ody-field--required</code> 或标签级 <code>.ody-label--required</code>，都会在标签后追加红色 <code>*</code>。校验失败时给字段加 <code>.has-error</code>（标签变红）并给控件加 <code>.is-invalid</code>（描边变红）。</p>
+    <div class="doc-example">
+      <div class="doc-demo doc-demo--stack">
+        <div class="ody-field">
+          <label class="ody-label">邮箱</label>
+          <input class="ody-input" type="email" placeholder="you@example.com">
+          <span class="ody-hint">我们不会公开你的邮箱地址。</span>
+        </div>
+        <div class="ody-field ody-field--required">
+          <label class="ody-label">用户名</label>
+          <input class="ody-input" type="text" placeholder="必填">
+        </div>
+        <div class="ody-field has-error">
+          <label class="ody-label">密码</label>
+          <input class="ody-input is-invalid" type="password" value="123" aria-invalid="true">
+          <span class="ody-error">密码至少需要 8 位字符。</span>
+        </div>
+      </div>
+      <div class="doc-code"><pre><code>&lt;!-- 带提示 --&gt;
+&lt;div class="ody-field"&gt;
+  &lt;label class="ody-label"&gt;邮箱&lt;/label&gt;
+  &lt;input class="ody-input" type="email" placeholder="you@example.com"&gt;
+  &lt;span class="ody-hint"&gt;我们不会公开你的邮箱地址。&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;!-- 必填（字段级标记） --&gt;
+&lt;div class="ody-field ody-field--required"&gt;
+  &lt;label class="ody-label"&gt;用户名&lt;/label&gt;
+  &lt;input class="ody-input" type="text" placeholder="必填"&gt;
+&lt;/div&gt;
+
+&lt;!-- 校验失败 --&gt;
+&lt;div class="ody-field has-error"&gt;
+  &lt;label class="ody-label"&gt;密码&lt;/label&gt;
+  &lt;input class="ody-input is-invalid" type="password" value="123" aria-invalid="true"&gt;
+  &lt;span class="ody-error"&gt;密码至少需要 8 位字符。&lt;/span&gt;
+&lt;/div&gt;</code></pre></div>
+    </div>
+
+    <!-- ============================== Input ============================== -->
+    <h2 id="input">Input · 文本输入</h2>
+    <p><code>.ody-input</code> 适配 <code>text</code> / <code>number</code> / <code>password</code> / <code>search</code> 等原生类型。尺寸用 <code>--sm</code> / <code>--lg</code>；禁用用原生 <code>disabled</code>；校验失败用 <code>.is-invalid</code>（或 <code>aria-invalid="true"</code>）。</p>
+
+    <h3 id="input-types">类型</h3>
+    <div class="doc-example">
+      <div class="doc-demo doc-demo--stack">
+        <input class="ody-input" type="text" placeholder="文本 · text">
+        <input class="ody-input" type="number" value="42">
+        <input class="ody-input" type="password" value="secret">
+        <input class="ody-input" type="search" placeholder="搜索 · search">
+      </div>
+      <div class="doc-code"><pre><code>&lt;input class="ody-input" type="text" placeholder="文本 · text"&gt;
+&lt;input class="ody-input" type="number" value="42"&gt;
+&lt;input class="ody-input" type="password" value="secret"&gt;
+&lt;input class="ody-input" type="search" placeholder="搜索 · search"&gt;</code></pre></div>
+    </div>
+
+    <h3 id="input-sizes">尺寸</h3>
+    <div class="doc-example">
+      <div class="doc-demo doc-demo--stack">
+        <input class="ody-input ody-input--sm" placeholder="Small · --sm">
+        <input class="ody-input" placeholder="Default">
+        <input class="ody-input ody-input--lg" placeholder="Large · --lg">
+      </div>
+      <div class="doc-code"><pre><code>&lt;input class="ody-input ody-input--sm" placeholder="Small · --sm"&gt;
+&lt;input class="ody-input" placeholder="Default"&gt;
+&lt;input class="ody-input ody-input--lg" placeholder="Large · --lg"&gt;</code></pre></div>
+    </div>
+
+    <h3 id="input-states">状态</h3>
+    <div class="doc-example">
+      <div class="doc-demo doc-demo--stack">
+        <input class="ody-input" placeholder="禁用 · disabled" disabled>
+        <input class="ody-input is-invalid" value="非法输入" aria-invalid="true">
+      </div>
+      <div class="doc-code"><pre><code>&lt;input class="ody-input" placeholder="禁用 · disabled" disabled&gt;
+&lt;input class="ody-input is-invalid" value="非法输入" aria-invalid="true"&gt;</code></pre></div>
+    </div>
+
+    <!-- ============================== Textarea ============================== -->
+    <h2 id="textarea">Textarea · 多行文本</h2>
+    <p><code>.ody-textarea</code> 与 <code>.ody-input</code> 同源，默认最小高度 96px、可竖直拉伸；同样支持 <code>disabled</code> 与 <code>.is-invalid</code>。</p>
+    <div class="doc-example">
+      <div class="doc-demo doc-demo--stack">
+        <textarea class="ody-textarea" placeholder="写点什么…"></textarea>
+        <textarea class="ody-textarea is-invalid" aria-invalid="true">内容过短</textarea>
+        <textarea class="ody-textarea" placeholder="禁用" disabled></textarea>
+      </div>
+      <div class="doc-code"><pre><code>&lt;textarea class="ody-textarea" placeholder="写点什么…"&gt;&lt;/textarea&gt;
+&lt;textarea class="ody-textarea is-invalid" aria-invalid="true"&gt;内容过短&lt;/textarea&gt;
+&lt;textarea class="ody-textarea" placeholder="禁用" disabled&gt;&lt;/textarea&gt;</code></pre></div>
+    </div>
+
+    <!-- ============================== Select ============================== -->
+    <h2 id="select">Select · 下拉选择</h2>
+    <p><code>.ody-select</code> 抹掉原生箭头，用内联 SVG 重绘统一的下拉指示符（data-URI，无外链）。支持 <code>disabled</code> 与 <code>.is-invalid</code>。</p>
+    <div class="doc-example">
+      <div class="doc-demo doc-demo--stack">
+        <select class="ody-select">
+          <option value="">选择区域…</option>
+          <option>华北 · Beijing</option>
+          <option>华东 · Shanghai</option>
+          <option>华南 · Shenzhen</option>
+        </select>
+        <select class="ody-select is-invalid" aria-invalid="true">
+          <option>请选择一项</option>
+        </select>
+        <select class="ody-select" disabled>
+          <option>已锁定</option>
+        </select>
+      </div>
+      <div class="doc-code"><pre><code>&lt;select class="ody-select"&gt;
+  &lt;option value=""&gt;选择区域…&lt;/option&gt;
+  &lt;option&gt;华北 · Beijing&lt;/option&gt;
+  &lt;option&gt;华东 · Shanghai&lt;/option&gt;
+  &lt;option&gt;华南 · Shenzhen&lt;/option&gt;
+&lt;/select&gt;
+
+&lt;select class="ody-select is-invalid" aria-invalid="true"&gt;…&lt;/select&gt;
+&lt;select class="ody-select" disabled&gt;…&lt;/select&gt;</code></pre></div>
+    </div>
+
+    <!-- ============================== Checkbox ============================== -->
+    <h2 id="checkbox">Checkbox · 复选框</h2>
+    <p><code>.ody-checkbox</code> 包裹原生 <code>&lt;input type="checkbox"&gt;</code>，用 <code>accent-color</code> 上强调色、并附带 <code>:focus-visible</code> 焦点环。禁用时给包裹层加 <code>.is-disabled</code> 并给 input 加 <code>disabled</code>。</p>
+    <div class="doc-example">
+      <div class="doc-demo">
+        <label class="ody-checkbox"><input type="checkbox" checked> 记住我</label>
+        <label class="ody-checkbox"><input type="checkbox"> 订阅产品更新</label>
+        <label class="ody-checkbox is-disabled"><input type="checkbox" disabled> 已锁定选项</label>
+      </div>
+      <div class="doc-code"><pre><code>&lt;label class="ody-checkbox"&gt;&lt;input type="checkbox" checked&gt; 记住我&lt;/label&gt;
+&lt;label class="ody-checkbox"&gt;&lt;input type="checkbox"&gt; 订阅产品更新&lt;/label&gt;
+&lt;label class="ody-checkbox is-disabled"&gt;&lt;input type="checkbox" disabled&gt; 已锁定选项&lt;/label&gt;</code></pre></div>
+    </div>
+
+    <!-- ============================== Radio ============================== -->
+    <h2 id="radio">Radio · 单选框</h2>
+    <p><code>.ody-radio</code> 与复选框同构，用同一 <code>name</code> 分组即互斥。禁用同样用 <code>.is-disabled</code> + <code>disabled</code>。</p>
+    <div class="doc-example">
+      <div class="doc-demo">
+        <label class="ody-radio"><input type="radio" name="plan" checked> 月付</label>
+        <label class="ody-radio"><input type="radio" name="plan"> 年付</label>
+        <label class="ody-radio is-disabled"><input type="radio" name="plan" disabled> 企业版（暂不可选）</label>
+      </div>
+      <div class="doc-code"><pre><code>&lt;label class="ody-radio"&gt;&lt;input type="radio" name="plan" checked&gt; 月付&lt;/label&gt;
+&lt;label class="ody-radio"&gt;&lt;input type="radio" name="plan"&gt; 年付&lt;/label&gt;
+&lt;label class="ody-radio is-disabled"&gt;&lt;input type="radio" name="plan" disabled&gt; 企业版（暂不可选）&lt;/label&gt;</code></pre></div>
+    </div>
+
+    <!-- ============================== Switch ============================== -->
+    <h2 id="switch">Switch · 开关</h2>
+    <p>开关是一个 <code>.ody-switch</code> 标签，内含 <code>.ody-switch__control</code>（包住原生 checkbox 与 <code>.ody-switch__track</code> 轨道）与可选的文字。勾选时轨道染上强调色、滑块右移；禁用给 input 加 <code>disabled</code>。</p>
+    <div class="doc-example">
+      <div class="doc-demo doc-demo--stack">
+        <label class="ody-switch">
+          <span class="ody-switch__control">
+            <input type="checkbox" checked>
+            <span class="ody-switch__track"></span>
+          </span>
+          <span>启用桌面通知</span>
+        </label>
+        <label class="ody-switch">
+          <span class="ody-switch__control">
+            <input type="checkbox">
+            <span class="ody-switch__track"></span>
+          </span>
+          <span>自动同步</span>
+        </label>
+        <label class="ody-switch">
+          <span class="ody-switch__control">
+            <input type="checkbox" checked disabled>
+            <span class="ody-switch__track"></span>
+          </span>
+          <span>强制开启（禁用）</span>
+        </label>
+      </div>
+      <div class="doc-code"><pre><code>&lt;label class="ody-switch"&gt;
+  &lt;span class="ody-switch__control"&gt;
+    &lt;input type="checkbox" checked&gt;
+    &lt;span class="ody-switch__track"&gt;&lt;/span&gt;
+  &lt;/span&gt;
+  &lt;span&gt;启用桌面通知&lt;/span&gt;
+&lt;/label&gt;
+
+&lt;!-- 禁用：给 input 加 disabled --&gt;
+&lt;label class="ody-switch"&gt;
+  &lt;span class="ody-switch__control"&gt;
+    &lt;input type="checkbox" checked disabled&gt;
+    &lt;span class="ody-switch__track"&gt;&lt;/span&gt;
+  &lt;/span&gt;
+  &lt;span&gt;强制开启（禁用）&lt;/span&gt;
+&lt;/label&gt;</code></pre></div>
+    </div>
+
+    <!-- ============================== Range ============================== -->
+    <h2 id="range">Range · 滑块（带徽章）</h2>
+    <p><code>.ody-range</code> 是皮肤化的原生 <code>type="range"</code>。用 <code>.ody-field__row</code> 把滑块与 <code>.ody-field__out</code> 数值徽章横排；徽章的实时数值用一小段内联 <code>oninput</code> 同步（纯原生，无需 odyssey.js）。</p>
+    <div class="doc-example">
+      <div class="doc-demo doc-demo--stack">
+        <div class="ody-field">
+          <label class="ody-label">音量</label>
+          <div class="ody-field__row">
+            <input class="ody-range" type="range" min="0" max="100" value="60" oninput="this.parentNode.querySelector('.ody-field__out').textContent=this.value">
+            <span class="ody-field__out">60</span>
+          </div>
+        </div>
+        <div class="ody-field">
+          <label class="ody-label">质量</label>
+          <div class="ody-field__row">
+            <input class="ody-range" type="range" min="0" max="10" value="8" oninput="this.parentNode.querySelector('.ody-field__out').textContent=this.value">
+            <span class="ody-field__out">8</span>
+          </div>
+        </div>
+      </div>
+      <div class="doc-code"><pre><code>&lt;div class="ody-field"&gt;
+  &lt;label class="ody-label"&gt;音量&lt;/label&gt;
+  &lt;div class="ody-field__row"&gt;
+    &lt;input class="ody-range" type="range" min="0" max="100" value="60"
+           oninput="this.parentNode.querySelector('.ody-field__out').textContent=this.value"&gt;
+    &lt;span class="ody-field__out"&gt;60&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre></div>
+    </div>
+
+    <!-- ============================== Input group ============================== -->
+    <h2 id="input-group">Input group · 输入组（前后缀）</h2>
+    <p><code>.ody-input-group</code> 把 <code>.ody-input</code> 与一或两个 <code>.ody-input-group__addon</code> 拼成一体：首个 addon 为前缀、末尾 addon 为后缀，圆角与描边自动接缝。加 <code>--icon</code> 修饰并把 <code>&lt;svg&gt;</code> 作为首个子元素，可在框内嵌一个前置图标。</p>
+    <div class="doc-example">
+      <div class="doc-demo doc-demo--stack">
+        <div class="ody-input-group">
+          <span class="ody-input-group__addon">https://</span>
+          <input class="ody-input" placeholder="your-site">
+          <span class="ody-input-group__addon">.w33d.xyz</span>
+        </div>
+        <div class="ody-input-group">
+          <span class="ody-input-group__addon">¥</span>
+          <input class="ody-input" type="number" value="99">
+        </div>
+        <div class="ody-input-group ody-input-group--icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input class="ody-input" type="search" placeholder="搜索…">
+        </div>
+      </div>
+      <div class="doc-code"><pre><code>&lt;!-- 前缀 + 后缀 --&gt;
+&lt;div class="ody-input-group"&gt;
+  &lt;span class="ody-input-group__addon"&gt;https://&lt;/span&gt;
+  &lt;input class="ody-input" placeholder="your-site"&gt;
+  &lt;span class="ody-input-group__addon"&gt;.w33d.xyz&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;!-- 仅前缀 --&gt;
+&lt;div class="ody-input-group"&gt;
+  &lt;span class="ody-input-group__addon"&gt;¥&lt;/span&gt;
+  &lt;input class="ody-input" type="number" value="99"&gt;
+&lt;/div&gt;
+
+&lt;!-- 框内前置图标 --&gt;
+&lt;div class="ody-input-group ody-input-group--icon"&gt;
+  &lt;svg viewBox="0 0 24 24" …&gt;&lt;circle cx="11" cy="11" r="7"/&gt;&lt;path d="m20 20-3.5-3.5"/&gt;&lt;/svg&gt;
+  &lt;input class="ody-input" type="search" placeholder="搜索…"&gt;
+&lt;/div&gt;</code></pre></div>
+    </div>
+
+    <!-- ============================== File ============================== -->
+    <h2 id="file">File · 文件选择</h2>
+    <p><code>.ody-file</code> 皮肤化原生 <code>type="file"</code> 的 <code>::file-selector-button</code>，让「选择文件」按钮与库内其它控件同风格。支持 <code>multiple</code> 与 <code>disabled</code>。</p>
+    <div class="doc-example">
+      <div class="doc-demo doc-demo--stack">
+        <input class="ody-file" type="file">
+        <input class="ody-file" type="file" multiple>
+        <input class="ody-file" type="file" disabled>
+      </div>
+      <div class="doc-code"><pre><code>&lt;input class="ody-file" type="file"&gt;
+&lt;input class="ody-file" type="file" multiple&gt;
+&lt;input class="ody-file" type="file" disabled&gt;</code></pre></div>
+    </div>
+
+    <!-- ============================== Form layouts ============================== -->
+    <h2 id="layouts">Form layouts · 表单布局</h2>
+    <p>默认布局为<strong>堆叠式</strong>：字段用 <code>.ody-field</code> 竖直排列，操作区用 <code>.ody-form__actions</code> 归拢按钮。<strong>内联式</strong>用 <code>.ody-form--inline</code>：字段横向流式排列、底部对齐，适合筛选条与工具栏。</p>
+
+    <h3 id="layout-inline">内联 · inline</h3>
+    <div class="doc-example">
+      <div class="doc-demo doc-demo--stack">
+        <form class="ody-form--inline" onsubmit="return false">
+          <div class="ody-field">
+            <label class="ody-label">关键词</label>
+            <input class="ody-input" placeholder="搜索…">
+          </div>
+          <div class="ody-field">
+            <label class="ody-label">状态</label>
+            <select class="ody-select">
+              <option>全部</option>
+              <option>启用</option>
+              <option>停用</option>
+            </select>
+          </div>
+          <button class="ody-btn ody-btn--primary" type="submit">筛选</button>
+        </form>
+      </div>
+      <div class="doc-code"><pre><code>&lt;form class="ody-form--inline"&gt;
+  &lt;div class="ody-field"&gt;
+    &lt;label class="ody-label"&gt;关键词&lt;/label&gt;
+    &lt;input class="ody-input" placeholder="搜索…"&gt;
+  &lt;/div&gt;
+  &lt;div class="ody-field"&gt;
+    &lt;label class="ody-label"&gt;状态&lt;/label&gt;
+    &lt;select class="ody-select"&gt;
+      &lt;option&gt;全部&lt;/option&gt;
+      &lt;option&gt;启用&lt;/option&gt;
+      &lt;option&gt;停用&lt;/option&gt;
+    &lt;/select&gt;
+  &lt;/div&gt;
+  &lt;button class="ody-btn ody-btn--primary" type="submit"&gt;筛选&lt;/button&gt;
+&lt;/form&gt;</code></pre></div>
+    </div>
+
+    <h3 id="layout-stacked">堆叠 · stacked</h3>
+    <div class="doc-example">
+      <div class="doc-demo doc-demo--stack">
+        <form onsubmit="return false">
+          <div class="ody-field ody-field--required">
+            <label class="ody-label">项目名称</label>
+            <input class="ody-input" placeholder="例如 holdfast-web">
+          </div>
+          <div class="ody-field">
+            <label class="ody-label">描述</label>
+            <textarea class="ody-textarea" placeholder="一句话说明…"></textarea>
+            <span class="ody-hint">可选，最多 140 字。</span>
+          </div>
+          <label class="ody-switch">
+            <span class="ody-switch__control">
+              <input type="checkbox" checked>
+              <span class="ody-switch__track"></span>
+            </span>
+            <span>创建后立即部署</span>
+          </label>
+          <div class="ody-form__actions">
+            <button class="ody-btn ody-btn--primary" type="submit">创建项目</button>
+            <button class="ody-btn ody-btn--subtle" type="button">取消</button>
+          </div>
+        </form>
+      </div>
+      <div class="doc-code"><pre><code>&lt;form&gt;
+  &lt;div class="ody-field ody-field--required"&gt;
+    &lt;label class="ody-label"&gt;项目名称&lt;/label&gt;
+    &lt;input class="ody-input" placeholder="例如 holdfast-web"&gt;
+  &lt;/div&gt;
+  &lt;div class="ody-field"&gt;
+    &lt;label class="ody-label"&gt;描述&lt;/label&gt;
+    &lt;textarea class="ody-textarea" placeholder="一句话说明…"&gt;&lt;/textarea&gt;
+    &lt;span class="ody-hint"&gt;可选，最多 140 字。&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;label class="ody-switch"&gt;
+    &lt;span class="ody-switch__control"&gt;
+      &lt;input type="checkbox" checked&gt;
+      &lt;span class="ody-switch__track"&gt;&lt;/span&gt;
+    &lt;/span&gt;
+    &lt;span&gt;创建后立即部署&lt;/span&gt;
+  &lt;/label&gt;
+  &lt;div class="ody-form__actions"&gt;
+    &lt;button class="ody-btn ody-btn--primary" type="submit"&gt;创建项目&lt;/button&gt;
+    &lt;button class="ody-btn ody-btn--subtle" type="button"&gt;取消&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/form&gt;</code></pre></div>
+    </div>
+
+  </main>
+</div>
+
+<script src="../dist/odyssey.js"></script>
+<script src="assets/site.js"></script>
+</body>
+</html>

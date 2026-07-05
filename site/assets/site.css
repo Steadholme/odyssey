@@ -1,0 +1,184 @@
+/* ============================================================================
+   Odyssey UI · docs site chrome — site.css
+   ----------------------------------------------------------------------------
+   Styles the documentation site itself. Dogfoods the .ody-* component library
+   (linked from ../dist/odyssey.css) and adds only doc-specific chrome under the
+   .doc-* prefix. Every value references an --ody-* token so the docs track the
+   library's light/dark themes automatically.
+   Owns: layout shell (.doc-layout/.doc-sidebar/.doc-main), demo preview boxes
+   (.doc-example/.doc-demo/.doc-code), content prose typography, token swatches.
+   ============================================================================ */
+
+/* ---- appbar extras --------------------------------------------------------- */
+.doc-appbar__ver{ margin-left:2px; }
+.doc-navtoggle{ display:none; }
+
+/* theme-toggle icon swap (moon in light → click to dark; sun in dark) */
+.doc-theme .doc-ico-sun{ display:none; }
+.doc-theme .doc-ico-moon{ display:block; }
+:root[data-theme="dark"] .doc-theme .doc-ico-sun{ display:block; }
+:root[data-theme="dark"] .doc-theme .doc-ico-moon{ display:none; }
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .doc-theme .doc-ico-sun{ display:block; }
+  :root:not([data-theme="light"]) .doc-theme .doc-ico-moon{ display:none; }
+}
+
+/* ---- layout shell ---------------------------------------------------------- */
+.doc-layout{
+  display:grid; grid-template-columns:264px minmax(0,1fr);
+  max-width:1400px; margin:0 auto; align-items:start;
+}
+.doc-sidebar{
+  position:sticky; top:56px; height:calc(100vh - 56px); overflow-y:auto;
+  background:var(--ody-surface); border-right:1px solid var(--ody-border);
+  padding:var(--ody-sp-2) var(--ody-sp-3) var(--ody-sp-6);
+}
+.doc-sidebar__title{
+  margin:var(--ody-sp-4) var(--ody-sp-2) var(--ody-sp-1);
+  font-size:var(--ody-fs-micro); font-weight:var(--ody-fw-semibold);
+  letter-spacing:var(--ody-track-eyebrow); text-transform:uppercase; color:var(--ody-ink-3);
+}
+.doc-main{
+  min-width:0; width:100%; margin:0 auto;
+  max-width:920px; padding:var(--ody-sp-8) clamp(20px,5vw,56px) calc(var(--ody-sp-8) * 2);
+}
+.doc-backdrop{ display:none; }
+
+/* ---- page header ----------------------------------------------------------- */
+.doc-header{ margin-bottom:var(--ody-sp-6); }
+.doc-eyebrow{
+  font-size:var(--ody-fs-eyebrow); font-weight:var(--ody-fw-semibold);
+  letter-spacing:var(--ody-track-eyebrow); text-transform:uppercase; color:var(--ody-accent-ink);
+  margin:0 0 var(--ody-sp-2);
+}
+.doc-title{
+  margin:0; font-size:var(--ody-fs-h1); line-height:var(--ody-lh-h1);
+  font-weight:var(--ody-fw-semibold); letter-spacing:-.02em; color:var(--ody-ink);
+}
+.doc-lead{
+  margin:var(--ody-sp-3) 0 0; font-size:var(--ody-fs-h3); line-height:1.6;
+  color:var(--ody-ink-2); max-width:64ch;
+}
+
+/* ---- content prose (component pages write plain markup) -------------------- */
+.doc-main h2{
+  margin:calc(var(--ody-sp-8) + var(--ody-sp-1)) 0 var(--ody-sp-3);
+  font-size:var(--ody-fs-h2); line-height:var(--ody-lh-h2);
+  font-weight:var(--ody-fw-semibold); letter-spacing:-.02em; color:var(--ody-ink);
+  scroll-margin-top:72px;
+}
+.doc-main h3{
+  margin:var(--ody-sp-6) 0 var(--ody-sp-2); font-size:var(--ody-fs-h3);
+  font-weight:var(--ody-fw-semibold); letter-spacing:-.01em; color:var(--ody-ink);
+  scroll-margin-top:72px;
+}
+.doc-main p{ margin:var(--ody-sp-3) 0; color:var(--ody-ink-2); line-height:var(--ody-lh-body); }
+.doc-main ul,.doc-main ol{ margin:var(--ody-sp-3) 0; padding-left:var(--ody-sp-6); color:var(--ody-ink-2); }
+.doc-main li{ margin:var(--ody-sp-1) 0; line-height:var(--ody-lh-body); }
+.doc-main a:not(.ody-btn):not(.ody-iconbtn):not(.ody-nav__item):not(.ody-link){
+  color:var(--ody-accent-ink); text-decoration:none;
+}
+.doc-main a:not(.ody-btn):not(.ody-iconbtn):not(.ody-nav__item):hover{
+  text-decoration:underline; text-underline-offset:2px;
+}
+.doc-main :not(pre) > code{
+  font-family:var(--ody-mono); font-size:var(--ody-fs-sm); color:var(--ody-accent-ink);
+  background:var(--ody-surface-2); border:1px solid var(--ody-border);
+  border-radius:var(--ody-r-xs); padding:1px 6px;
+}
+
+/* auto-anchor beside headings (added by site.js) */
+.doc-anchor{
+  margin-left:var(--ody-sp-2); color:var(--ody-ink-4); text-decoration:none;
+  opacity:0; font-weight:var(--ody-fw-medium); transition:opacity var(--ody-dur) var(--ody-ease);
+}
+.doc-main h2:hover .doc-anchor,.doc-main h3:hover .doc-anchor,.doc-anchor:focus-visible{ opacity:1; }
+
+/* ---- example: demo preview + code ------------------------------------------ */
+.doc-example{
+  margin:var(--ody-sp-5) 0 var(--ody-sp-6);
+  border:1px solid var(--ody-border); border-radius:var(--ody-r);
+  background:var(--ody-surface); box-shadow:var(--ody-sh-xs); overflow:hidden;
+}
+.doc-demo{
+  padding:var(--ody-sp-6);
+  display:flex; flex-wrap:wrap; gap:var(--ody-sp-3); align-items:center;
+  background:var(--ody-bg);
+  background-image:radial-gradient(var(--ody-hairline) 1px,transparent 1px);
+  background-size:14px 14px;
+}
+.doc-demo--stack{ flex-direction:column; align-items:stretch; }
+.doc-demo--center{ justify-content:center; }
+.doc-example .doc-code{ border-top:1px solid var(--ody-border); }
+
+/* code block (+ injected copy button) */
+.doc-code{ position:relative; }
+.doc-code > pre{
+  margin:0; border-radius:0; border:0; background:var(--ody-surface-2);
+  padding:var(--ody-sp-4) var(--ody-sp-5); padding-right:calc(var(--ody-sp-8) * 2);
+  overflow:auto; font-family:var(--ody-mono); font-size:var(--ody-fs-sm);
+  line-height:1.55; color:var(--ody-ink);
+}
+.doc-code > pre code{ font:inherit; color:inherit; background:none; border:0; padding:0; }
+.doc-code--stand{ border:1px solid var(--ody-border); border-radius:var(--ody-r-sm); overflow:hidden; }
+.doc-copy{ position:absolute; top:var(--ody-sp-3); right:var(--ody-sp-3); z-index:1; }
+
+/* ---- landing hero ---------------------------------------------------------- */
+.doc-hero{
+  padding:calc(var(--ody-sp-8) * 1.6) clamp(20px,5vw,56px) var(--ody-sp-8);
+  border-bottom:1px solid var(--ody-hairline);
+}
+.doc-hero__title{
+  margin:var(--ody-sp-3) 0 0; font-size:clamp(30px,6vw,48px); line-height:1.05;
+  font-weight:var(--ody-fw-semibold); letter-spacing:-.03em; color:var(--ody-ink);
+}
+.doc-hero__lead{
+  margin:var(--ody-sp-4) 0 var(--ody-sp-6); font-size:var(--ody-fs-h2); line-height:1.5;
+  color:var(--ody-ink-2); max-width:60ch;
+}
+.doc-hero__cta{ display:flex; flex-wrap:wrap; gap:var(--ody-sp-3); }
+
+/* feature / entry cards */
+.doc-feature{ height:100%; }
+.doc-feature__ico{
+  width:38px; height:38px; border-radius:var(--ody-r-sm); display:grid; place-items:center;
+  background:var(--ody-accent-soft); color:var(--ody-accent-ink); margin-bottom:var(--ody-sp-3);
+}
+.doc-feature__ico svg{ width:20px; height:20px; }
+.doc-feature h3{ margin:0 0 var(--ody-sp-1); }
+.doc-feature p{ margin:0; font-size:var(--ody-fs-sm); color:var(--ody-ink-3); }
+a.doc-entry{ text-decoration:none; color:inherit; display:block; }
+a.doc-entry:hover{ text-decoration:none; }
+a.doc-entry .ody-card{ height:100%; transition:box-shadow var(--ody-dur) var(--ody-ease), border-color var(--ody-dur); }
+a.doc-entry:hover .ody-card{ box-shadow:var(--ody-sh-md); border-color:var(--ody-border-2); }
+
+/* ---- token reference swatches ---------------------------------------------- */
+.doc-swatches{ display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:var(--ody-sp-3); margin:var(--ody-sp-4) 0 var(--ody-sp-6); }
+.doc-swatch{ border:1px solid var(--ody-border); border-radius:var(--ody-r-sm); overflow:hidden; background:var(--ody-surface); }
+.doc-swatch__chip{ height:60px; border-bottom:1px solid var(--ody-hairline); }
+.doc-swatch__meta{ padding:var(--ody-sp-2) var(--ody-sp-3); }
+.doc-swatch__name{ font-family:var(--ody-mono); font-size:var(--ody-fs-micro); color:var(--ody-ink); font-weight:var(--ody-fw-semibold); }
+.doc-swatch__val{ font-family:var(--ody-mono); font-size:var(--ody-fs-micro); color:var(--ody-ink-3); margin-top:1px; }
+
+/* scale rows (radius / spacing) */
+.doc-scale{ display:flex; flex-direction:column; gap:var(--ody-sp-2); margin:var(--ody-sp-4) 0 var(--ody-sp-6); }
+.doc-scale__row{ display:flex; align-items:center; gap:var(--ody-sp-4); }
+.doc-scale__key{ flex:0 0 132px; font-family:var(--ody-mono); font-size:var(--ody-fs-sm); color:var(--ody-ink-2); }
+.doc-scale__bar{ height:24px; background:var(--ody-accent-soft); border:1px solid var(--ody-accent-soft-2); }
+.doc-scale__demo{ background:var(--ody-accent); }
+.doc-scale__val{ font-family:var(--ody-mono); font-size:var(--ody-fs-sm); color:var(--ody-ink-3); }
+
+/* ---- responsive ------------------------------------------------------------ */
+@media (max-width:900px){
+  .doc-layout{ grid-template-columns:1fr; }
+  .doc-navtoggle{ display:inline-grid; }
+  .doc-sidebar{
+    position:fixed; top:56px; left:0; bottom:0; height:auto; width:284px; z-index:60;
+    transform:translateX(-100%); transition:transform var(--ody-dur) var(--ody-ease);
+    box-shadow:var(--ody-sh-lg);
+  }
+  .doc-sidebar.is-open{ transform:translateX(0); }
+  .doc-backdrop.is-open{
+    display:block; position:fixed; inset:56px 0 0; z-index:55; background:var(--ody-scrim);
+  }
+}
