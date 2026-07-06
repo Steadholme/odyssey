@@ -30,6 +30,7 @@
    1 · TOKENS — L0 primitives (the only place raw hex is allowed)
    ============================================================================ */
 :root{
+  color-scheme:light;
   /* neutral / surface ramp */
   --ody-c-white:#ffffff; --ody-c-slate-25:#f7f8fa; --ody-c-slate-50:#f6f7f9; --ody-c-slate-75:#f0f2f6;
   --ody-c-slate-100:#eef0f4; --ody-c-slate-200:#e5e7ec; --ody-c-slate-300:#d3d7e0;
@@ -106,6 +107,7 @@
    ============================================================================ */
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
+    color-scheme:dark;
     --ody-bg:#0d0f15; --ody-bg-2:#151822;
     --ody-surface:#171a22; --ody-surface-2:#1d2029; --ody-surface-3:#252a35;
     --ody-border:#2a2f3a; --ody-border-2:#3a414f; --ody-hairline:#20242d;
@@ -126,6 +128,7 @@
   }
 }
 :root[data-theme="dark"]{
+  color-scheme:dark;
   --ody-bg:#0d0f15; --ody-bg-2:#151822;
   --ody-surface:#171a22; --ody-surface-2:#1d2029; --ody-surface-3:#252a35;
   --ody-border:#2a2f3a; --ody-border-2:#3a414f; --ody-hairline:#20242d;
@@ -778,16 +781,20 @@
 .ody-pager .is-current{ background:var(--ody-accent-soft); color:var(--ody-accent-ink); border-color:var(--ody-accent-soft-2); }
 .ody-pager .is-disabled,.ody-pager [aria-disabled="true"]{ opacity:.5; pointer-events:none; }
 
-/* steps */
+/* steps — compact row flavor. Scoped under .ody-steps so it coexists with the
+   stepper/wizard flavor of .ody-step defined later (column layout + ::before
+   connectors); without the scope the later rules override this one and the
+   row markup renders mangled. */
 .ody-steps{ display:flex; align-items:center; gap:var(--ody-sp-2); }
-.ody-step{ display:flex; align-items:center; gap:var(--ody-sp-2); flex:0 0 auto; }
-.ody-step__index{ width:24px; height:24px; flex:0 0 auto; border-radius:50%; display:grid; place-items:center; border:1px solid var(--ody-border-2); background:var(--ody-surface); color:var(--ody-ink-3); font-size:var(--ody-fs-sm); font-weight:var(--ody-fw-semibold); }
-.ody-step__label{ font-size:var(--ody-fs-body); font-weight:var(--ody-fw-medium); color:var(--ody-ink-3); }
-.ody-step__line{ flex:1 1 auto; min-width:24px; height:1px; background:var(--ody-border); }
-.ody-step.is-active .ody-step__index{ background:var(--ody-accent); color:var(--ody-surface); border-color:transparent; }
-.ody-step.is-active .ody-step__label{ color:var(--ody-ink); }
-.ody-step.is-done .ody-step__index{ background:var(--ody-accent-soft); color:var(--ody-accent-ink); border-color:transparent; }
-.ody-step.is-done .ody-step__label{ color:var(--ody-ink-2); }
+.ody-steps .ody-step{ position:static; display:flex; flex-direction:row; align-items:center; text-align:left; gap:var(--ody-sp-2); flex:0 0 auto; min-width:auto; padding:0; }
+.ody-steps .ody-step::before{ display:none; }
+.ody-steps .ody-step__index{ width:24px; height:24px; flex:0 0 auto; border-radius:50%; display:grid; place-items:center; border:1px solid var(--ody-border-2); background:var(--ody-surface); color:var(--ody-ink-3); font-size:var(--ody-fs-sm); font-weight:var(--ody-fw-semibold); }
+.ody-steps .ody-step__label{ margin-top:0; font-size:var(--ody-fs-body); font-weight:var(--ody-fw-medium); color:var(--ody-ink-3); }
+.ody-steps .ody-step__line{ flex:1 1 auto; min-width:24px; height:1px; background:var(--ody-border); }
+.ody-steps .ody-step.is-active .ody-step__index{ background:var(--ody-accent); color:var(--ody-surface); border-color:transparent; }
+.ody-steps .ody-step.is-active .ody-step__label{ color:var(--ody-ink); }
+.ody-steps .ody-step.is-done .ody-step__index{ background:var(--ody-accent-soft); color:var(--ody-accent-ink); border-color:transparent; }
+.ody-steps .ody-step.is-done .ody-step__label{ color:var(--ody-ink-2); }
 
 /* ============================================================================
    10 · KEYFRAMES + RESPONSIVE + MOTION-SAFE
@@ -1420,6 +1427,7 @@
   letter-spacing:.04em; text-transform:uppercase; color:var(--ody-ink-4);
 }
 .ody-cal__day{
+  appearance:none; background:transparent; font:inherit;
   aspect-ratio:1; display:grid; place-items:center;
   font-size:var(--ody-fs-sm); color:var(--ody-ink-2);
   border-radius:var(--ody-r-sm); border:1px solid transparent; cursor:pointer;
@@ -1794,7 +1802,7 @@
 .ody-carousel__track{ display:flex; transition:transform 320ms var(--ody-ease); will-change:transform; }
 .ody-carousel__slide{ flex:0 0 100%; min-width:0; }
 .ody-carousel__slide > img,.ody-carousel__slide > picture > img{ display:block; width:100%; height:100%; object-fit:cover; }
-.ody-carousel__caption{ padding:var(--ody-sp-5); }
+.ody-carousel__caption{ padding:var(--ody-sp-5) calc(38px + var(--ody-sp-3) * 2); }
 .ody-carousel__btn{
   position:absolute; top:50%; transform:translateY(-50%); z-index:2; width:38px; height:38px; display:grid; place-items:center;
   border:1px solid var(--ody-border); border-radius:var(--ody-r-pill); cursor:pointer; color:var(--ody-ink);

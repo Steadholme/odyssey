@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Layout · Odyssey UI</title>
+<meta name="description" content="Odyssey UI 布局与工具类参考：container 容器、stack/cluster/center/spread 排布原语、grid/flex 栅格、divider 分割线、aspect 比例盒，以及 gap/margin/padding 间距工具，附实时预览与源码。">
+<link rel="stylesheet" href="../dist/odyssey.css">
+<link rel="stylesheet" href="../dist/odyssey-font.css">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body class="ody-scope">
+
+<!-- ===== appbar ===== -->
+<header class="ody-appbar">
+  <a class="ody-appbar__brand" href="index.html">
+    <span class="ody-appbar__tile" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 14.2 9.8 22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2Z"/></svg>
+    </span>
+    <span class="ody-appbar__name">Odyssey UI</span>
+  </a>
+  <span class="ody-tag ody-tag--accent ody-mono doc-appbar__ver">v1.1.0</span>
+  <span class="ody-appbar__spacer"></span>
+  <div class="ody-appbar__right">
+    <a class="ody-iconbtn" href="https://git.w33d.xyz/holdfast/odyssey" aria-label="源码仓库" title="源码仓库">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 4.6 18 4.9 18 4.9c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5Z"/></svg>
+    </a>
+    <button class="ody-iconbtn doc-theme" type="button" data-ody-theme-toggle aria-label="切换深色模式" aria-pressed="false">
+      <svg class="doc-ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+      <svg class="doc-ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    </button>
+    <button class="ody-iconbtn doc-navtoggle" type="button" data-doc-nav-toggle aria-label="打开导航" aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="doc-layout">
+  <!-- ===== sidebar (site.js adds .is-active by URL) ===== -->
+  <aside class="doc-sidebar">
+    <nav class="ody-nav" aria-label="文档导航">
+      <div class="ody-nav__label">Guide</div>
+      <a class="ody-nav__item" href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12 12 3l9 9"/><path d="M5 10v10h14V10"/></svg><span>Overview</span></a>
+      <a class="ody-nav__item" href="getting-started.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 10-12h-7Z"/></svg><span>Getting started</span></a>
+      <a class="ody-nav__item" href="tokens.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="6.5" cy="12" r="2.5"/><circle cx="15" cy="17" r="2.5"/></svg><span>Design tokens</span></a>
+      <div class="ody-nav__label">Components</div>
+      <a class="ody-nav__item" href="actions.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="8" rx="4"/></svg><span>Actions</span></a>
+      <a class="ody-nav__item" href="forms.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9h6M7 13h10"/></svg><span>Forms</span></a>
+      <a class="ody-nav__item" href="data-display.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M8 15v3M13 10v8M18 6v12"/></svg><span>Data display</span></a>
+      <a class="ody-nav__item" href="feedback.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/></svg><span>Feedback</span></a>
+      <a class="ody-nav__item" href="navigation.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h10M4 18h16"/></svg><span>Navigation</span></a>
+      <a class="ody-nav__item" href="typography.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V5h16v2M9 19h6M12 5v14"/></svg><span>Typography</span></a>
+      <a class="ody-nav__item" href="layout.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg><span>Layout</span></a>
+      <a class="ody-nav__item" href="overlays.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><rect x="11" y="10" width="8" height="7" rx="1"/></svg><span>Overlays</span></a>
+    </nav>
+  </aside>
+
+  <!-- ===== main ===== -->
+  <main class="doc-main">
+    <header class="doc-header">
+      <p class="doc-eyebrow">Components</p>
+      <h1 class="doc-title">Layout</h1>
+      <p class="doc-lead">页面骨架与排布原语：<code>.ody-container</code> 容器、<code>.ody-stack</code> / <code>.ody-cluster</code> / <code>.ody-center</code> / <code>.ody-spread</code> 排布语义、<code>.ody-grid</code> 与 <code>.ody-flex-*</code> 栅格、<code>.ody-divider</code> 分割线、<code>.ody-aspect</code> 比例盒，以及一套键控 <code>--ody-sp-*</code> 的间距工具类。全部零依赖，仅用语义 token，深色主题自动适配。</p>
+    </header>
+
+    <div class="ody-alert ody-alert--info">
+      <svg class="ody-alert__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg>
+      <div class="ody-alert__body">下方每个预览框都是<em>真实渲染</em>的 <code>.ody-</code> 布局，示例中的编号方块只是为了让栅格与排布可见。所有间距与半径都取自 <code>--ody-sp-*</code> / <code>--ody-r-*</code> token，切换深色即可对照。</div>
+    </div>
+
+    <!-- ============================ CONTAINER ============================ -->
+    <h2 id="container">Container</h2>
+    <p><code>.ody-container</code> 是居中定宽的页面包裹层，默认 max-width 1120px 并带左右 <code>--ody-sp-6</code> 内边距。修饰符 <code>--narrow</code>（760px，正文/表单）与 <code>--wide</code>（1320px，仪表盘）切换阅读宽度。</p>
+    <div class="doc-example">
+      <div class="doc-demo doc-demo--stack">
+        <div class="ody-container ody-p-3" style="background:var(--ody-surface-3);border-radius:var(--ody-r-sm)">default · 1120px</div>
+        <div class="ody-container ody-container--narrow ody-p-3" style="background:var(--ody-surface-3);border-radius:var(--ody-r-sm)">--narrow · 760px</div>
+      </div>
+      <div class="doc-code"><pre><code>&lt;div class="ody-container"&gt;…&lt;/div&gt;
+&lt;div class="ody-container ody-container--narrow"&gt;…&lt;/div&gt;
+&lt;div class="ody-container ody-container--wide"&gt;…&lt;/div&gt;</code></pre></div>
+    </div>
+
+    <!-- ============================ STACK ============================ -->
+    <h2 id="stack">Stack</h2>
+    <p><code>.ody-stack</code> 用 flex 纵向堆叠子元素，靠 <code>gap</code> 维持垂直节奏（默认 <code>--ody-sp-4</code>），无需给子项加 margin。<code>--sm</code> 收紧到 <code>--ody-sp-2</code>，<code>--lg</code> 放宽到 <code>--ody-sp-6</code>。</p>
+    <div class="doc-example">
+      <div class="doc-demo">
+        <div class="ody-stack ody-stack--sm ody-w-full">
+          <div class="ody-card"><div class="ody-card__body">Row 1</div></div>
+          <div class="ody-card"><div class="ody-card__body">Row 2</div></div>
+          <div class="ody-card"><div class="ody-card__body">Row 3</div></div>
+        </div>
+      </div>
+      <div class="doc-code"><pre><code>&lt;div class="ody-stack"&gt;         &lt;!-- gap 16px --&gt;
+  &lt;div class="ody-card"&gt;…&lt;/div&gt;
+  &lt;div class="ody-card"&gt;…&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="ody-stack ody-stack--sm"&gt;…&lt;/div&gt;  &lt;!-- gap 8px --&gt;
+&lt;div class="ody-stack ody-stack--lg"&gt;…&lt;/div&gt;  &lt;!-- gap 24px --&gt;</code></pre></div>
+    </div>
+
+    <!-- ============================ CLUSTER ============================ -->
+    <h2 id="cluster">Cluster</h2>
+    <p><code>.ody-cluster</code> 是横向成组原语：<code>flex-wrap</code> + <code>gap</code> + 垂直居中对齐，专门放按钮、标签这类不定数量、需要换行的行内元素。<code>--sm</code> / <code>--lg</code> 调整间距。</p>
+    <div class="doc-example">
+      <div class="doc-demo">
+        <div class="ody-cluster">
+          <button class="ody-btn ody-btn--primary">Save</button>
+          <button class="ody-btn ody-btn--secondary">Cancel</button>
+          <span class="ody-tag ody-tag--accent">draft</span>
+          <span class="ody-tag">v1.1.0</span>
+        </div>
+      </div>
+      <div class="doc-code"><pre><code>&lt;div class="ody-cluster"&gt;
+  &lt;button class="ody-btn ody-btn--primary"&gt;Save&lt;/button&gt;
+  &lt;button class="ody-btn ody-btn--secondary"&gt;Cancel&lt;/button&gt;
+  &lt;span class="ody-tag ody-tag--accent"&gt;draft&lt;/span&gt;
+&lt;/div&gt;</code></pre></div>
+    </div>
+
+    <!-- ============================ SPREAD ============================ -->
+    <h2 id="spread">Spread &amp; Center</h2>
+    <p><code>.ody-spread</code> 把两侧内容推到行的两端（<code>space-between</code>），常用于卡片头/工具栏；<code>.ody-center</code> 则把单个子元素在两轴居中。行内两端对齐并需垂直居中时，也可用既有的 <code>.ody-flex-between</code>。</p>
+    <div class="doc-example">
+      <div class="doc-demo doc-demo--stack">
+        <div class="ody-spread ody-w-full ody-p-3" style="background:var(--ody-surface-3);border-radius:var(--ody-r-sm)">
+          <strong>标题</strong>
+          <button class="ody-btn ody-btn--secondary ody-btn--sm">操作</button>
+        </div>
+        <div class="ody-center ody-w-full ody-p-6" style="background:var(--ody-surface-3);border-radius:var(--ody-r-sm)">
+          <span class="ody-tag ody-tag--accent">居中内容</span>
+        </div>
+      </div>
+      <div class="doc-code"><pre><code>&lt;div class="ody-spread"&gt;
+  &lt;strong&gt;标题&lt;/strong&gt;
+  &lt;button class="ody-btn ody-btn--secondary ody-btn--sm"&gt;操作&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;div class="ody-center"&gt;&lt;span&gt;居中内容&lt;/span&gt;&lt;/div&gt;</code></pre></div>
+    </div>
+
+    <!-- ============================ GRID ============================ -->
+    <h2 id="grid">Grid</h2>
+    <p><code>.ody-grid</code> 是等宽栅格，配 <code>--2</code> / <code>--3</code> / <code>--4</code> 指定列数，<code>gap</code> 默认 <code>--ody-sp-4</code>。窄屏自动降列（4/3 列先降 2 列、再降 1 列）。需要按内容自适应列数时用 <code>.ody-cols</code>（<code>auto-fit minmax</code>）。</p>
+    <div class="doc-example">
+      <div class="doc-demo">
+        <div class="ody-grid ody-grid--3 ody-w-full">
+          <div class="ody-card"><div class="ody-card__body">1</div></div>
+          <div class="ody-card"><div class="ody-card__body">2</div></div>
+          <div class="ody-card"><div class="ody-card__body">3</div></div>
+          <div class="ody-card"><div class="ody-card__body">4</div></div>
+          <div class="ody-card"><div class="ody-card__body">5</div></div>
+          <div class="ody-card"><div class="ody-card__body">6</div></div>
+        </div>
+      </div>
+      <div class="doc-code"><pre><code>&lt;div class="ody-grid ody-grid--3"&gt;
+  &lt;div class="ody-card"&gt;…&lt;/div&gt;
+  &lt;div class="ody-card"&gt;…&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- 内容自适应列数 --&gt;
+&lt;div class="ody-cols"&gt;…&lt;/div&gt;</code></pre></div>
+    </div>
+
+    <!-- ============================ FLEX ============================ -->
+    <h2 id="flex">Flex utilities</h2>
+    <p>克制的一组 flex 工具：<code>.ody-flex</code> 起手，<code>.ody-flex-center</code> 垂直居中一行，<code>.ody-flex-between</code> 两端对齐并居中，<code>.ody-flex-wrap</code> 允许换行，<code>.ody-flex-1</code> 让某项吃掉剩余空间。间距用 <code>.ody-gap-*</code> 叠加。</p>
+    <div class="doc-example">
+      <div class="doc-demo">
+        <div class="ody-flex ody-flex-center ody-gap-3 ody-w-full ody-p-3" style="background:var(--ody-surface-3);border-radius:var(--ody-r-sm)">
+          <span class="ody-tag ody-tag--accent">fixed</span>
+          <div class="ody-flex-1" style="height:8px;background:var(--ody-border-2);border-radius:var(--ody-r-pill)"></div>
+          <button class="ody-btn ody-btn--secondary ody-btn--sm">end</button>
+        </div>
+      </div>
+      <div class="doc-code"><pre><code>&lt;div class="ody-flex ody-flex-center ody-gap-3"&gt;
+  &lt;span class="ody-tag"&gt;fixed&lt;/span&gt;
+  &lt;div class="ody-flex-1"&gt;…&lt;/div&gt;   &lt;!-- 吃掉剩余空间 --&gt;
+  &lt;button class="ody-btn ody-btn--sm"&gt;end&lt;/button&gt;
+&lt;/div&gt;</code></pre></div>
+    </div>
+
+    <!-- ============================ DIVIDER ============================ -->
+    <h2 id="divider">Divider</h2>
+    <p><code>.ody-divider</code> 是取自 <code>--ody-border</code> 的水平分割线；<code>.ody-divider--vert</code> 是竖向分隔（需在 flex 行内、有高度约束时使用）；带文案时用 <code>.ody-divider__label</code>，两侧自动补线。</p>
+    <div class="doc-example">
+      <div class="doc-demo doc-demo--stack">
+        <div class="ody-w-full">
+          <p class="ody-m-0">上段内容</p>
+          <hr class="ody-divider">
+          <p class="ody-m-0">下段内容</p>
+          <div class="ody-divider__label">OR</div>
+          <div class="ody-flex ody-flex-center" style="height:24px">
+            <span>左</span>
+            <span class="ody-divider--vert"></span>
+            <span>右</span>
+          </div>
+        </div>
+      </div>
+      <div class="doc-code"><pre><code>&lt;hr class="ody-divider"&gt;
+&lt;div class="ody-divider__label"&gt;OR&lt;/div&gt;
+&lt;span class="ody-divider--vert"&gt;&lt;/span&gt;   &lt;!-- flex 行内竖分隔 --&gt;</code></pre></div>
+    </div>
+
+    <!-- ============================ ASPECT ============================ -->
+    <h2 id="aspect">Aspect box</h2>
+    <p><code>.ody-aspect</code> 是固定宽高比的盒子，子元素（图片/视频/占位）自动铺满并 <code>object-fit:cover</code>。比例修饰符 <code>--16x9</code>（默认）、<code>--4x3</code>、<code>--1x1</code>。</p>
+    <div class="doc-example">
+      <div class="doc-demo">
+        <div class="ody-grid ody-grid--3 ody-w-full">
+          <div class="ody-aspect ody-aspect--16x9 ody-center" style="background:var(--ody-accent-soft);color:var(--ody-accent-ink)">16 : 9</div>
+          <div class="ody-aspect ody-aspect--4x3 ody-center" style="background:var(--ody-accent-soft);color:var(--ody-accent-ink)">4 : 3</div>
+          <div class="ody-aspect ody-aspect--1x1 ody-center" style="background:var(--ody-accent-soft);color:var(--ody-accent-ink)">1 : 1</div>
+        </div>
+      </div>
+      <div class="doc-code"><pre><code>&lt;div class="ody-aspect ody-aspect--16x9"&gt;
+  &lt;img src="cover.jpg" alt=""&gt;
+&lt;/div&gt;
+&lt;div class="ody-aspect ody-aspect--1x1"&gt;…&lt;/div&gt;</code></pre></div>
+    </div>
+
+    <!-- ============================ SPACING ============================ -->
+    <h2 id="spacing">Spacing utilities</h2>
+    <p>间距工具类全部键控 <code>--ody-sp-1..8</code>（4/8/12/16/20/24/32px）。方向性 <code>.ody-mt-*</code> / <code>.ody-mb-*</code> 调外边距，全边 <code>.ody-m-*</code> / <code>.ody-p-*</code> 调外/内边距，<code>.ody-gap-1..8</code> 调 flex/grid 间隙。<code>0</code> 表示归零。</p>
+    <div class="doc-example">
+      <div class="doc-demo">
+        <div class="ody-w-full">
+          <div class="ody-p-4" style="background:var(--ody-accent-soft);border-radius:var(--ody-r-sm)">
+            <span class="ody-tag ody-tag--accent">.ody-p-4 · 16px 内边距</span>
+          </div>
+          <div class="ody-mt-3 ody-p-2" style="background:var(--ody-surface-3);border-radius:var(--ody-r-sm)">
+            <span class="ody-tag">.ody-mt-3 · 12px 上外边距 + .ody-p-2</span>
+          </div>
+        </div>
+      </div>
+      <div class="doc-code"><pre><code>&lt;div class="ody-p-4"&gt;…&lt;/div&gt;          &lt;!-- padding 16px --&gt;
+&lt;div class="ody-mt-3"&gt;…&lt;/div&gt;         &lt;!-- margin-top 12px --&gt;
+&lt;div class="ody-flex ody-gap-6"&gt;…&lt;/div&gt;&lt;!-- gap 24px --&gt;
+
+&lt;!-- 可用刻度：1=4 2=8 3=12 4=16 5=20 6=24 8=32 (px) --&gt;</code></pre></div>
+    </div>
+
+    <!-- ============================ DISPLAY ============================ -->
+    <h2 id="display">Display helpers</h2>
+    <p>切换显示方式的小工具：<code>.ody-hidden</code> 彻底隐藏（<code>display:none</code>），<code>.ody-block</code> 转块级，<code>.ody-inline-flex</code> 行内 flex（自带垂直居中与 <code>--ody-sp-2</code> 间距，适合图标+文字徽标），<code>.ody-w-full</code> 撑满宽度。文本对齐用 <code>.ody-text-center</code> / <code>.ody-text-right</code>，单行省略用 <code>.ody-truncate</code>。</p>
+    <div class="doc-example">
+      <div class="doc-demo doc-demo--stack">
+        <span class="ody-inline-flex" style="background:var(--ody-surface-3);padding:var(--ody-sp-1) var(--ody-sp-3);border-radius:var(--ody-r-pill)">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+          inline-flex 徽标
+        </span>
+        <div class="ody-truncate ody-w-full" style="max-width:220px;background:var(--ody-surface-3);padding:var(--ody-sp-2);border-radius:var(--ody-r-sm)">这是一段很长很长很长很长很长会被截断的文本</div>
+      </div>
+      <div class="doc-code"><pre><code>&lt;span class="ody-inline-flex"&gt;&lt;svg&gt;…&lt;/svg&gt;标签&lt;/span&gt;
+&lt;div class="ody-truncate"&gt;很长的会被截断的文本…&lt;/div&gt;
+&lt;div class="ody-hidden"&gt;不显示&lt;/div&gt;</code></pre></div>
+    </div>
+
+
+    <footer class="doc-footer">
+      <svg class="doc-footer__star" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2 14.2 9.8 22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2Z"/></svg>
+      <span>Odyssey UI · HOLDFAST 主权自持设计语言</span>
+      <span class="doc-footer__sep"></span>
+      <a href="index.html">Overview</a>
+      <a href="tokens.html">Design tokens</a>
+      <a href="https://git.w33d.xyz/holdfast/odyssey">源码</a>
+    </footer>
+  </main>
+</div>
+
+<script src="../dist/odyssey.js"></script>
+<script src="assets/site.js"></script>
+</body>
+</html>

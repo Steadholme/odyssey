@@ -22,7 +22,7 @@
   <span class="ody-tag ody-tag--accent ody-mono doc-appbar__ver">v1.1.0</span>
   <span class="ody-appbar__spacer"></span>
   <div class="ody-appbar__right">
-    <a class="ody-iconbtn" href="#" aria-label="GitHub 仓库（占位）" title="GitHub">
+    <a class="ody-iconbtn" href="https://git.w33d.xyz/holdfast/odyssey" aria-label="源码仓库" title="源码仓库">
       <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 4.6 18 4.9 18 4.9c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5Z"/></svg>
     </a>
     <button class="ody-iconbtn doc-theme" type="button" data-ody-theme-toggle aria-label="切换深色模式" aria-pressed="false">
@@ -49,46 +49,80 @@
       <a class="ody-nav__item" href="data-display.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M8 15v3M13 10v8M18 6v12"/></svg><span>Data display</span></a>
       <a class="ody-nav__item" href="feedback.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/></svg><span>Feedback</span></a>
       <a class="ody-nav__item" href="navigation.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h10M4 18h16"/></svg><span>Navigation</span></a>
+      <a class="ody-nav__item" href="typography.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V5h16v2M9 19h6M12 5v14"/></svg><span>Typography</span></a>
+      <a class="ody-nav__item" href="layout.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg><span>Layout</span></a>
+      <a class="ody-nav__item" href="overlays.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><rect x="11" y="10" width="8" height="7" rx="1"/></svg><span>Overlays</span></a>
     </nav>
   </aside>
 
   <!-- ===== main ===== -->
-  <main class="doc-main">
+  <main class="doc-main doc-main--landing">
     <section class="doc-hero">
-      <p class="doc-eyebrow">HOLDFAST · Odyssey 设计语言</p>
-      <h1 class="doc-hero__title">主权自持的<br>框架无关组件库</h1>
-      <p class="doc-hero__lead">Odyssey UI 是 HOLDFAST 内部 Odyssey 设计语言的公开发行版：纯 CSS + vanilla JS，零依赖、零 CDN 外链、自包含。一个 <code>&lt;link&gt;</code>、一个 <code>&lt;script&gt;</code>，即得 Element-UI 级的完整组件与亮暗主题。</p>
-      <div class="doc-hero__cta">
-        <a class="ody-btn ody-btn--primary ody-btn--lg" href="getting-started.html">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          快速开始
-        </a>
-        <a class="ody-btn ody-btn--secondary ody-btn--lg" href="actions.html">浏览组件</a>
-        <a class="ody-btn ody-btn--ghost ody-btn--lg" href="#">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 4.6 18 4.9 18 4.9c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5Z"/></svg>
-          GitHub
-        </a>
+      <div class="doc-constellation" aria-hidden="true">
+        <svg viewBox="0 0 1200 420" preserveAspectRatio="xMidYMid slice" fill="none">
+          <path data-line d="M60 330 210 246 380 288 520 178 700 214 862 118 1010 158 1142 66" stroke-width="1" stroke-dasharray="3 6"/>
+          <circle data-star cx="60" cy="330" r="2.4" style="--tw:.2"/>
+          <path data-star d="M210 236l2.4 7.6 7.6 2.4-7.6 2.4-2.4 7.6-2.4-7.6-7.6-2.4 7.6-2.4Z" style="--tw:1.1"/>
+          <circle data-star cx="380" cy="288" r="2.6" style="--tw:2.3"/>
+          <circle data-star cx="520" cy="178" r="2.2" style="--tw:.7"/>
+          <path data-star d="M700 204l2.4 7.6 7.6 2.4-7.6 2.4-2.4 7.6-2.4-7.6-7.6-2.4 7.6-2.4Z" style="--tw:3.1"/>
+          <circle data-star cx="862" cy="118" r="2.4" style="--tw:1.7"/>
+          <circle data-star cx="1010" cy="158" r="2.2" style="--tw:2.8"/>
+          <path data-star d="M1142 54l2.6 8.4 8.4 2.6-8.4 2.6-2.6 8.4-2.6-8.4-8.4-2.6 8.4-2.6Z" style="--tw:.4"/>
+          <circle data-star cx="150" cy="96" r="1.3" opacity=".55" style="--tw:1.9"/>
+          <circle data-star cx="300" cy="60" r="1.2" opacity=".5" style="--tw:.9"/>
+          <circle data-star cx="452" cy="120" r="1.4" opacity=".5" style="--tw:2.6"/>
+          <circle data-star cx="600" cy="52" r="1.2" opacity=".55" style="--tw:3.4"/>
+          <circle data-star cx="775" cy="330" r="1.3" opacity=".5" style="--tw:1.4"/>
+          <circle data-star cx="930" cy="270" r="1.4" opacity=".5" style="--tw:2.1"/>
+          <circle data-star cx="1080" cy="300" r="1.2" opacity=".55" style="--tw:.5"/>
+          <circle data-star cx="1160" cy="210" r="1.3" opacity=".5" style="--tw:3.8"/>
+          <circle data-star cx="80" cy="180" r="1.2" opacity=".5" style="--tw:2.9"/>
+          <circle data-star cx="660" cy="360" r="1.2" opacity=".5" style="--tw:1.2"/>
+        </svg>
       </div>
-      <div class="ody-flex ody-flex-wrap ody-gap-2 ody-mt-6">
-        <span class="ody-pill ody-pill--ok"><span class="ody-dot ody-dot--ok"></span> Zero dependency</span>
-        <span class="ody-pill ody-pill--accent">Token-driven</span>
-        <span class="ody-pill ody-pill--info">Light &amp; Dark</span>
-        <span class="ody-pill ody-pill--neutral">MIT (placeholder)</span>
+      <div class="doc-hero__inner">
+        <p class="doc-eyebrow">HOLDFAST · Odyssey 设计语言</p>
+        <h1 class="doc-hero__title">主权自持的<br><span class="doc-grad">框架无关组件库</span></h1>
+        <p class="doc-hero__lead">Odyssey UI 是 HOLDFAST 内部 Odyssey 设计语言的公开发行版：纯 CSS + vanilla JS，零依赖、零 CDN 外链、自包含。一个 <code>&lt;link&gt;</code>、一个 <code>&lt;script&gt;</code>，即得 Element-UI 级的完整组件与亮暗主题。</p>
+        <div class="doc-hero__cta">
+          <a class="ody-btn ody-btn--primary ody-btn--lg" href="getting-started.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            快速开始
+          </a>
+          <a class="ody-btn ody-btn--secondary ody-btn--lg" href="actions.html">浏览组件</a>
+          <a class="ody-btn ody-btn--ghost ody-btn--lg" href="https://git.w33d.xyz/holdfast/odyssey">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 4.6 18 4.9 18 4.9c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5Z"/></svg>
+            源码
+          </a>
+        </div>
+        <div class="ody-flex ody-flex-wrap ody-gap-2 doc-hero__pills">
+          <span class="ody-pill ody-pill--ok"><span class="ody-dot ody-dot--ok"></span> Zero dependency</span>
+          <span class="ody-pill ody-pill--accent">Token-driven</span>
+          <span class="ody-pill ody-pill--info">Light &amp; Dark</span>
+          <span class="ody-pill ody-pill--neutral">Self-hosted</span>
+        </div>
+        <div class="doc-stats">
+          <div class="doc-stat"><div class="doc-stat__num"><span class="doc-grad">258</span></div><div class="doc-stat__label">组件类 · 8 大类目</div></div>
+          <div class="doc-stat"><div class="doc-stat__num"><span class="doc-grad">0</span></div><div class="doc-stat__label">外部依赖 / 外链</div></div>
+          <div class="doc-stat"><div class="doc-stat__num"><span class="doc-grad">2</span></div><div class="doc-stat__label">主题 · 亮 / 暗</div></div>
+          <div class="doc-stat"><div class="doc-stat__num"><span class="doc-grad">1+1</span></div><div class="doc-stat__label">link + script 即用</div></div>
+        </div>
       </div>
     </section>
 
     <h2 id="why">为什么选 Odyssey UI</h2>
     <div class="ody-grid ody-grid--3 ody-mt-4">
       <div class="ody-card doc-feature"><div class="ody-card__body">
-        <div class="doc-feature__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6Z"/></svg></div>
+        <div class="doc-feature__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg></div>
         <h3>主权自持</h3><p>无 npm、无构建、无第三方运行时。图标为内联 SVG，字体可选内嵌，交付物完全自包含。</p>
       </div></div>
       <div class="ody-card doc-feature"><div class="ody-card__body">
-        <div class="doc-feature__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8 12 3 3 8l9 5Z"/><path d="M3 8v8l9 5 9-5V8"/></svg></div>
+        <div class="doc-feature__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="M3.3 7 12 12l8.7-5M12 22V12"/></svg></div>
         <h3>零依赖</h3><p>一份 CSS + 一份 JS，无外链、无 CDN 调用、无网络请求。放进任何页面即可运行。</p>
       </div></div>
       <div class="ody-card doc-feature"><div class="ody-card__body">
-        <div class="doc-feature__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v18" fill="currentColor"/></svg></div>
+        <div class="doc-feature__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg></div>
         <h3>亮暗主题</h3><p>默认亮色，暗色同时支持系统偏好与显式 <code>[data-theme]</code>，一次点击即切换并记忆。</p>
       </div></div>
       <div class="ody-card doc-feature"><div class="ody-card__body">
@@ -101,7 +135,7 @@
       </div></div>
       <div class="ody-card doc-feature"><div class="ody-card__body">
         <div class="doc-feature__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></div>
-        <h3>Element 级广度</h3><p>Actions、Forms、Data display、Feedback、Navigation 五大类，覆盖数十个组件与状态。</p>
+        <h3>Element 级广度</h3><p>Actions、Forms、Data display、Feedback、Navigation、Typography、Layout、Overlays 八大类，覆盖上百个组件与状态。</p>
       </div></div>
     </div>
 
@@ -132,10 +166,28 @@
       <a class="doc-entry" href="navigation.html"><div class="ody-card ody-card--hover"><div class="ody-card__body">
         <h3 class="ody-h3">Navigation</h3><p class="ody-muted ody-mt-1">顶栏、侧栏、标签页、面包屑、分页、步骤条、手风琴。</p>
       </div></div></a>
+      <a class="doc-entry" href="typography.html"><div class="ody-card ody-card--hover"><div class="ody-card__body">
+        <h3 class="ody-h3">Typography</h3><p class="ody-muted ody-mt-1">Prose 富文本、引用、描述列表、列表变体，字号/字重/色调/截断工具类。</p>
+      </div></div></a>
+      <a class="doc-entry" href="layout.html"><div class="ody-card ody-card--hover"><div class="ody-card__body">
+        <h3 class="ody-h3">Layout</h3><p class="ody-muted ody-mt-1">容器、栈、栅格、弹性、cluster/center/spread、分隔线、宽高比与间距工具。</p>
+      </div></div></a>
+      <a class="doc-entry" href="overlays.html"><div class="ody-card ody-card--hover"><div class="ody-card__body">
+        <h3 class="ody-h3">Overlays</h3><p class="ody-muted ody-mt-1">Tooltip 文字提示、Popover 气泡卡片、Hover card 悬浮卡，零配置 data-* 驱动。</p>
+      </div></div></a>
       <a class="doc-entry" href="tokens.html"><div class="ody-card ody-card--hover"><div class="ody-card__body">
         <h3 class="ody-h3">Design tokens</h3><p class="ody-muted ody-mt-1">色板、间距、圆角、阴影、字号、字重 — 亮暗对照参考。</p>
       </div></div></a>
     </div>
+
+    <footer class="doc-footer">
+      <svg class="doc-footer__star" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2 14.2 9.8 22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2Z"/></svg>
+      <span>Odyssey UI · HOLDFAST 主权自持设计语言</span>
+      <span class="doc-footer__sep"></span>
+      <a href="getting-started.html">快速开始</a>
+      <a href="tokens.html">Design tokens</a>
+      <a href="https://git.w33d.xyz/holdfast/odyssey">源码</a>
+    </footer>
   </main>
 </div>
 

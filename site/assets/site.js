@@ -128,10 +128,49 @@
     });
   }
 
+  /* ------------------------------------------------- 5. appbar scroll shadow */
+  function wireAppbarShadow() {
+    var bar = document.querySelector('.ody-appbar');
+    if (!bar) return;
+    function sync() { bar.classList.toggle('is-scrolled', window.scrollY > 4); }
+    window.addEventListener('scroll', sync, { passive: true });
+    sync();
+  }
+
+  /* -------------------------------------------------- 6. reveal on scroll
+     Classes are only ever added here, so the site renders fully visible
+     without JS; prefers-reduced-motion is honoured in CSS. */
+  function wireReveal() {
+    if (!('IntersectionObserver' in window)) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var targets = document.querySelectorAll(
+      '.doc-example, .doc-feature, .doc-entry, .doc-stats, .doc-main h2'
+    );
+    if (!targets.length) return;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+    var fold = window.innerHeight * 0.92;
+    targets.forEach(function (t) {
+      // Only animate elements that start below the fold — above-the-fold
+      // content must render instantly (no first-paint ghosting).
+      if (t.getBoundingClientRect().top <= fold) return;
+      t.classList.add('doc-reveal');
+      io.observe(t);
+    });
+  }
+
   ready(function () {
     highlightNav();
     wireCopyButtons();
     addAnchors();
     wireSidebar();
+    wireAppbarShadow();
+    wireReveal();
   });
 })();
