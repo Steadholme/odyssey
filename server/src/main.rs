@@ -33,6 +33,9 @@ const SITE_FORMS: &str = include_str!("../../site/forms.html");
 const SITE_DATA_DISPLAY: &str = include_str!("../../site/data-display.html");
 const SITE_FEEDBACK: &str = include_str!("../../site/feedback.html");
 const SITE_NAVIGATION: &str = include_str!("../../site/navigation.html");
+const SITE_TYPOGRAPHY: &str = include_str!("../../site/typography.html");
+const SITE_LAYOUT: &str = include_str!("../../site/layout.html");
+const SITE_OVERLAYS: &str = include_str!("../../site/overlays.html");
 const SITE_ASSET_CSS: &str = include_str!("../../site/assets/site.css");
 const SITE_ASSET_JS: &str = include_str!("../../site/assets/site.js");
 
@@ -87,6 +90,9 @@ fn route_static(path: &str) -> Response {
         "/data-display.html" => site_html(SITE_DATA_DISPLAY),
         "/feedback.html" => site_html(SITE_FEEDBACK),
         "/navigation.html" => site_html(SITE_NAVIGATION),
+        "/typography.html" => site_html(SITE_TYPOGRAPHY),
+        "/layout.html" => site_html(SITE_LAYOUT),
+        "/overlays.html" => site_html(SITE_OVERLAYS),
         "/assets/site.css" => static_response(
             StatusCode::OK,
             CONTENT_TYPE_CSS,

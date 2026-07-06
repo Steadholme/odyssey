@@ -1912,3 +1912,314 @@
   .ody-cmdk__panel,.ody-confirm__panel,.ody-notif,.ody-notif__item,.ody-sheet__panel,
   .ody-sheet__backdrop,.ody-carousel__track,.ody-ctx,.ody-loading{ animation:none !important; transition:none !important; }
 }
+
+
+/* ============================================================================
+   BATCH 4 · EXTENSION — Typography · Layout & Utilities · Overlays
+   ----------------------------------------------------------------------------
+   Added components. Semantic --ody-* tokens only; light/dark inherited.
+   ============================================================================ */
+
+/* ============================================================================
+   === Typography ===
+   ----------------------------------------------------------------------------
+   Extension section for Odyssey UI. Rich-text container, standalone quote,
+   description list, list variants, and a full set of text utilities.
+
+   Conventions (mirrors dist/odyssey.css):
+   · Every class prefixed .ody- ; BEM block/element/modifier.
+   · Colors reference the semantic --ody-* token layer ONLY — never raw hex —
+     so light/dark themes are inherited automatically.
+   · Bare-element rules are scoped under an .ody-* class (host page untouched).
+
+   ALREADY IN dist (documented, NOT redefined here):
+     .ody-mono  .ody-code  .ody-kbd  .ody-pre  .ody-link
+     .ody-truncate  .ody-text-center  .ody-text-right  .ody-muted  .ody-num
+     .ody-h1 .ody-h2 .ody-h3  .ody-eyebrow  .ody-lead
+   ============================================================================ */
+
+/* ----------------------------------------------------------------------------
+   Prose — a rich-text container. Styles nested bare elements with vertical
+   rhythm built on --ody-sp-*. Scoped to .ody-prose so the host page's own
+   <h1>/<p>/<ul> outside this container are never touched.
+   ---------------------------------------------------------------------------- */
+.ody-prose{
+  color:var(--ody-ink-2); font-size:var(--ody-fs-body); line-height:var(--ody-lh-body);
+  letter-spacing:-.006em;
+}
+.ody-prose > :first-child{ margin-top:0; }
+.ody-prose > :last-child{ margin-bottom:0; }
+
+.ody-prose h1,.ody-prose h2,.ody-prose h3,.ody-prose h4{
+  color:var(--ody-ink); font-weight:var(--ody-fw-semibold); letter-spacing:-.02em;
+  margin:var(--ody-sp-6) 0 var(--ody-sp-3);
+}
+.ody-prose h1{ font-size:var(--ody-fs-h1); line-height:var(--ody-lh-h1); }
+.ody-prose h2{ font-size:var(--ody-fs-h2); line-height:var(--ody-lh-h2); padding-bottom:var(--ody-sp-2); border-bottom:1px solid var(--ody-hairline); }
+.ody-prose h3{ font-size:var(--ody-fs-h3); letter-spacing:-.01em; }
+.ody-prose h4{ font-size:var(--ody-fs-body); letter-spacing:-.01em; }
+
+.ody-prose p{ margin:var(--ody-sp-3) 0; }
+.ody-prose a{ color:var(--ody-accent-ink); text-decoration:underline; text-underline-offset:2px; text-decoration-color:color-mix(in srgb,var(--ody-accent-ink) 40%,transparent); }
+.ody-prose a:hover{ text-decoration-color:var(--ody-accent-ink); }
+.ody-prose strong{ color:var(--ody-ink); font-weight:var(--ody-fw-semibold); }
+.ody-prose em{ font-style:italic; }
+.ody-prose small{ font-size:var(--ody-fs-sm); color:var(--ody-ink-3); }
+
+.ody-prose ul,.ody-prose ol{ margin:var(--ody-sp-3) 0; padding-left:var(--ody-sp-6); }
+.ody-prose li{ margin:var(--ody-sp-1) 0; }
+.ody-prose li::marker{ color:var(--ody-ink-4); }
+.ody-prose ul ul,.ody-prose ol ol,.ody-prose ul ol,.ody-prose ol ul{ margin:var(--ody-sp-1) 0; }
+
+/* inline code inside prose (mirrors .ody-code look without requiring the class) */
+.ody-prose code{
+  font-family:var(--ody-mono); font-size:var(--ody-fs-sm); color:var(--ody-accent-ink);
+  background:var(--ody-surface-2); border:1px solid var(--ody-border);
+  border-radius:var(--ody-r-xs); padding:1px 6px;
+}
+.ody-prose pre{
+  font-family:var(--ody-mono); font-size:var(--ody-fs-sm); line-height:1.55;
+  margin:var(--ody-sp-4) 0; padding:var(--ody-sp-4); overflow:auto; color:var(--ody-ink);
+  background:var(--ody-surface-2); border:1px solid var(--ody-border); border-radius:var(--ody-r-sm);
+}
+.ody-prose pre code{ background:none; border:0; padding:0; color:inherit; font-size:inherit; }
+
+.ody-prose blockquote{
+  margin:var(--ody-sp-4) 0; padding:var(--ody-sp-1) var(--ody-sp-4);
+  border-left:3px solid var(--ody-border-2); color:var(--ody-ink-3);
+}
+.ody-prose hr{ border:0; border-top:1px solid var(--ody-border); margin:var(--ody-sp-6) 0; height:0; }
+
+.ody-prose table{ width:100%; border-collapse:collapse; margin:var(--ody-sp-4) 0; font-size:var(--ody-fs-sm); }
+.ody-prose th,.ody-prose td{ padding:var(--ody-sp-2) var(--ody-sp-3); text-align:left; border-bottom:1px solid var(--ody-hairline); }
+.ody-prose th{ color:var(--ody-ink); font-weight:var(--ody-fw-semibold); border-bottom-color:var(--ody-border); }
+.ody-prose tbody tr:last-child td{ border-bottom:0; }
+
+/* ----------------------------------------------------------------------------
+   Blockquote — standalone (does not require the .ody-prose wrapper).
+   ---------------------------------------------------------------------------- */
+.ody-blockquote{
+  margin:0; padding:var(--ody-sp-2) var(--ody-sp-5);
+  border-left:3px solid var(--ody-accent); color:var(--ody-ink-2);
+  font-size:var(--ody-fs-h3); line-height:1.6;
+}
+.ody-blockquote__cite{
+  display:block; margin-top:var(--ody-sp-2);
+  font-size:var(--ody-fs-sm); font-weight:var(--ody-fw-medium); color:var(--ody-ink-3); font-style:normal;
+}
+.ody-blockquote__cite::before{ content:"— "; }
+
+/* ----------------------------------------------------------------------------
+   Description list — term / description pairs.
+   ---------------------------------------------------------------------------- */
+.ody-dl{ margin:0; display:grid; grid-template-columns:minmax(120px,auto) 1fr; gap:var(--ody-sp-2) var(--ody-sp-5); }
+.ody-dl__term{ color:var(--ody-ink-3); font-size:var(--ody-fs-sm); font-weight:var(--ody-fw-medium); }
+.ody-dl__desc{ margin:0; color:var(--ody-ink); font-size:var(--ody-fs-body); }
+/* stacked variant — term above description, single column */
+.ody-dl--stack{ display:block; }
+.ody-dl--stack .ody-dl__term{ margin-top:var(--ody-sp-3); }
+.ody-dl--stack .ody-dl__term:first-child{ margin-top:0; }
+.ody-dl--stack .ody-dl__desc{ margin-top:2px; }
+
+/* ----------------------------------------------------------------------------
+   List variants — modifiers layered on the existing .ody-list reset
+   (.ody-list = margin:0; padding:0; list-style:none). These style the direct
+   <li> children of a bare list, distinct from the .ody-list__item row API.
+   ---------------------------------------------------------------------------- */
+.ody-list--plain{ display:flex; flex-direction:column; gap:var(--ody-sp-2); color:var(--ody-ink-2); font-size:var(--ody-fs-body); }
+.ody-list--plain > li{ padding-left:var(--ody-sp-4); position:relative; }
+.ody-list--plain > li::before{ content:""; position:absolute; left:2px; top:.62em; width:4px; height:4px; border-radius:50%; background:var(--ody-ink-4); }
+
+.ody-list--check{ display:flex; flex-direction:column; gap:var(--ody-sp-2); color:var(--ody-ink-2); font-size:var(--ody-fs-body); }
+.ody-list--check > li{ padding-left:var(--ody-sp-6); position:relative; }
+.ody-list--check > li::before{
+  content:""; position:absolute; left:0; top:.14em; width:16px; height:16px;
+  background:var(--ody-ok); border-radius:50%;
+  -webkit-mask:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg>') center/11px no-repeat;
+          mask:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg>') center/11px no-repeat;
+}
+
+/* ----------------------------------------------------------------------------
+   Text utilities — size, weight, color, transform, wrapping.
+   Sizes/weights complement the dist .ody-text-center / .ody-text-right / .ody-num.
+   ---------------------------------------------------------------------------- */
+/* size */
+.ody-text-lg{ font-size:var(--ody-fs-h3); line-height:1.55; }
+.ody-text-sm{ font-size:var(--ody-fs-sm); }
+.ody-text-micro{ font-size:var(--ody-fs-micro); }
+
+/* tone */
+.ody-text-muted{ color:var(--ody-ink-3); }
+.ody-text-subtle{ color:var(--ody-ink-4); }
+.ody-text-accent{ color:var(--ody-accent-ink); }
+.ody-text-ok{ color:var(--ody-ok-ink); }
+.ody-text-warn{ color:var(--ody-warn-ink); }
+.ody-text-danger{ color:var(--ody-down-ink); }
+
+/* weight */
+.ody-fw-medium{ font-weight:var(--ody-fw-medium); }
+.ody-fw-semibold{ font-weight:var(--ody-fw-semibold); }
+.ody-fw-bold{ font-weight:750; }
+
+/* transform / eyebrow-overline */
+.ody-caps{ text-transform:uppercase; letter-spacing:var(--ody-track-eyebrow); font-size:var(--ody-fs-eyebrow); font-weight:var(--ody-fw-semibold); color:var(--ody-ink-3); }
+
+/* wrapping */
+.ody-nowrap{ white-space:nowrap; }
+.ody-line-clamp-2,.ody-line-clamp-3{ display:-webkit-box; -webkit-box-orient:vertical; overflow:hidden; }
+.ody-line-clamp-2{ -webkit-line-clamp:2; line-clamp:2; }
+.ody-line-clamp-3{ -webkit-line-clamp:3; line-clamp:3; }
+
+
+/* === Layout & Utilities === */
+/* NEW primitives only — everything else in this category (container / stack /
+   grid / flex-* / gap-1..4 / mt-* / mb-* / w-full / divider*) already ships in
+   dist and is merely DOCUMENTED, not redefined. Splice these into section 4
+   ("layout" / "restrained utilities") of dist/odyssey.css, after the existing
+   rules. Colors via semantic --ody-* tokens; spacing via --ody-sp-* only. */
+
+/* ---- cluster: wrap + gap horizontal group (align baseline of buttons/tags) ---- */
+.ody-cluster{ display:flex; flex-wrap:wrap; align-items:center; gap:var(--ody-sp-3); }
+.ody-cluster--sm{ gap:var(--ody-sp-2); }
+.ody-cluster--lg{ gap:var(--ody-sp-4); }
+
+/* ---- center: center a single child both axes ---- */
+.ody-center{ display:flex; align-items:center; justify-content:center; }
+
+/* ---- spread: push children to the two ends of a row (no forced v-align) ---- */
+.ody-spread{ display:flex; justify-content:space-between; gap:var(--ody-sp-4); }
+
+/* ---- aspect: intrinsic ratio box; child fills it ---- */
+.ody-aspect{ position:relative; width:100%; overflow:hidden; border-radius:var(--ody-r-sm); aspect-ratio:16/9; }
+.ody-aspect--16x9{ aspect-ratio:16/9; }
+.ody-aspect--4x3{ aspect-ratio:4/3; }
+.ody-aspect--1x1{ aspect-ratio:1/1; }
+.ody-aspect>*{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+
+/* ---- display helpers (missing counterparts to .ody-hidden) ---- */
+.ody-block{ display:block; }
+.ody-inline-flex{ display:inline-flex; align-items:center; gap:var(--ody-sp-2); }
+
+/* ---- gap scale — extend existing gap-1..4 up the spacing ramp ---- */
+.ody-gap-5{ gap:var(--ody-sp-5); } .ody-gap-6{ gap:var(--ody-sp-6); } .ody-gap-8{ gap:var(--ody-sp-8); }
+
+/* ---- all-sides margin / padding scale keyed to --ody-sp-* (new; complements
+       the partial directional mt-*/mb-* helpers already in dist) ---- */
+.ody-m-0{ margin:0; }
+.ody-m-1{ margin:var(--ody-sp-1); } .ody-m-2{ margin:var(--ody-sp-2); } .ody-m-3{ margin:var(--ody-sp-3); }
+.ody-m-4{ margin:var(--ody-sp-4); } .ody-m-5{ margin:var(--ody-sp-5); } .ody-m-6{ margin:var(--ody-sp-6); }
+.ody-m-8{ margin:var(--ody-sp-8); }
+.ody-p-0{ padding:0; }
+.ody-p-1{ padding:var(--ody-sp-1); } .ody-p-2{ padding:var(--ody-sp-2); } .ody-p-3{ padding:var(--ody-sp-3); }
+.ody-p-4{ padding:var(--ody-sp-4); } .ody-p-5{ padding:var(--ody-sp-5); } .ody-p-6{ padding:var(--ody-sp-6); }
+.ody-p-8{ padding:var(--ody-sp-8); }
+
+
+/* === Overlays ===
+   Delta for dist/odyssey.css — splice after the existing "popover" block
+   (dist line ~693, end of section 8 · FEEDBACK).
+
+   INVENTORY RESULT (what already exists in dist, DO NOT re-add):
+     .ody-tooltip / [data-ody-tooltip]   position:relative                (line 565)
+     [data-ody-tooltip]:hover::after      pure-CSS bubble (top only)       (line 566)
+     .ody-tooltip__pop / .is-open         legacy floating bubble (unused)  (line 572)
+     .ody-popover / .is-open / __title    surface card + open transition   (line 685)
+
+   GAP being filled here:
+     1. The JS (showTooltip) appends a body-level <div class="ody-tooltip
+        ody-tooltip--{placement}"> with NO visual style of its own — only the
+        legacy .ody-tooltip__pop had a bubble. Give the *floating* .ody-tooltip
+        a real bubble + per-placement arrow + .is-open transition.
+     2. Popover: add an optional arrow + structural __head/__body/__foot
+        (dist only ships __title).
+     3. .ody-hovercard — NEW rich hover surface (CSS-only reveal, host-safe).
+   ============================================================================ */
+
+/* ---- Tooltip: visual for the JS-driven floating node -------------------- */
+/* Scoped to the body-level node the JS builds (it carries BOTH .ody-tooltip
+   AND a .ody-tooltip--{placement} modifier); the bare trigger only ever has
+   [data-ody-tooltip], so this never restyles triggers. */
+.ody-tooltip[class*="ody-tooltip--"]{
+  position:absolute; z-index:80; max-width:220px; padding:5px var(--ody-sp-2);
+  border-radius:var(--ody-r-xs); background:var(--ody-ink); color:var(--ody-surface);
+  font-size:var(--ody-fs-micro); font-weight:var(--ody-fw-medium); line-height:1.3;
+  box-shadow:var(--ody-sh-md); pointer-events:none; opacity:0; transform:translateY(2px);
+  transition:opacity var(--ody-dur) var(--ody-ease), transform var(--ody-dur) var(--ody-ease);
+}
+.ody-tooltip[class*="ody-tooltip--"].is-open{ opacity:1; transform:translateY(0); }
+
+/* arrow — a rotated square tinted to the bubble ink */
+.ody-tooltip[class*="ody-tooltip--"]::after{
+  content:""; position:absolute; width:8px; height:8px; background:var(--ody-ink);
+  border-radius:1px;
+}
+.ody-tooltip--top::after{ bottom:-3px; left:50%; transform:translateX(-50%) rotate(45deg); }
+.ody-tooltip--bottom::after{ top:-3px; left:50%; transform:translateX(-50%) rotate(45deg); }
+.ody-tooltip--left::after{ right:-3px; top:50%; transform:translateY(-50%) rotate(45deg); }
+.ody-tooltip--right::after{ left:-3px; top:50%; transform:translateY(-50%) rotate(45deg); }
+
+/* ---- Popover: optional arrow + structural head/body/foot ---------------- */
+.ody-popover__head{
+  display:flex; align-items:center; gap:var(--ody-sp-2);
+  margin:calc(var(--ody-sp-4) * -1) calc(var(--ody-sp-4) * -1) var(--ody-sp-3);
+  padding:var(--ody-sp-3) var(--ody-sp-4); border-bottom:1px solid var(--ody-hairline);
+  font-weight:var(--ody-fw-semibold); color:var(--ody-ink);
+}
+.ody-popover__body{ color:var(--ody-ink-2); font-size:var(--ody-fs-body); }
+.ody-popover__body > p{ margin:0 0 var(--ody-sp-2); }
+.ody-popover__body > p:last-child{ margin-bottom:0; }
+.ody-popover__foot{
+  display:flex; justify-content:flex-end; gap:var(--ody-sp-2);
+  margin:var(--ody-sp-3) calc(var(--ody-sp-4) * -1) calc(var(--ody-sp-4) * -1);
+  padding:var(--ody-sp-3) var(--ody-sp-4); border-top:1px solid var(--ody-hairline);
+  background:var(--ody-surface-2);
+}
+/* opt-in arrow via .ody-popover--arrow (top-anchored / placement=bottom) */
+.ody-popover--arrow::before{
+  content:""; position:absolute; top:-5px; left:var(--ody-sp-5); width:10px; height:10px;
+  background:var(--ody-surface); border-left:1px solid var(--ody-border);
+  border-top:1px solid var(--ody-border); transform:rotate(45deg); border-radius:2px 0 0 0;
+}
+
+/* ---- Hover card: NEW rich hover surface (CSS-only, host-safe) ------------ */
+.ody-hovercard{ position:relative; display:inline-flex; }
+.ody-hovercard__panel{
+  position:absolute; top:calc(100% + var(--ody-sp-2)); left:0; z-index:85;
+  width:280px; max-width:min(320px, 90vw); padding:var(--ody-sp-4);
+  background:var(--ody-surface); border:1px solid var(--ody-border);
+  border-radius:var(--ody-r); box-shadow:var(--ody-sh-pop); color:var(--ody-ink-2);
+  font-size:var(--ody-fs-body); opacity:0; visibility:hidden; transform:translateY(-4px);
+  transition:opacity var(--ody-dur) var(--ody-ease), transform var(--ody-dur) var(--ody-ease),
+             visibility var(--ody-dur); pointer-events:none;
+}
+/* invisible hover bridge so the pointer can cross the gap into the panel */
+.ody-hovercard__panel::before{
+  content:""; position:absolute; left:0; right:0; top:calc(var(--ody-sp-2) * -1); height:var(--ody-sp-2);
+}
+.ody-hovercard:hover > .ody-hovercard__panel,
+.ody-hovercard:focus-within > .ody-hovercard__panel{
+  opacity:1; visibility:visible; transform:translateY(0); pointer-events:auto;
+}
+.ody-hovercard--right > .ody-hovercard__panel{ left:auto; right:0; }
+.ody-hovercard__media{
+  display:flex; align-items:center; gap:var(--ody-sp-3); margin-bottom:var(--ody-sp-3);
+}
+.ody-hovercard__media img,.ody-hovercard__avatar{
+  flex:0 0 auto; width:44px; height:44px; border-radius:var(--ody-r-pill);
+  object-fit:cover; background:var(--ody-surface-2); display:grid; place-items:center;
+  color:var(--ody-ink-3); border:1px solid var(--ody-hairline);
+}
+.ody-hovercard__title{ display:block; font-weight:var(--ody-fw-semibold); color:var(--ody-ink); line-height:1.25; }
+.ody-hovercard__meta{ display:block; font-size:var(--ody-fs-sm); color:var(--ody-ink-3); }
+.ody-hovercard__body{ display:block; color:var(--ody-ink-2); font-size:var(--ody-fs-sm); line-height:1.45; }
+.ody-hovercard__foot{
+  display:flex; align-items:center; gap:var(--ody-sp-4); margin-top:var(--ody-sp-3);
+  padding-top:var(--ody-sp-3); border-top:1px solid var(--ody-hairline);
+  font-size:var(--ody-fs-sm); color:var(--ody-ink-3);
+}
+
+/* respect reduced motion for every overlay added here */
+@media (prefers-reduced-motion: reduce){
+  .ody-tooltip[class*="ody-tooltip--"],
+  .ody-hovercard__panel{ transition:none; }
+}
