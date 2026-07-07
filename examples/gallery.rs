@@ -45,6 +45,7 @@ fn main() {
         extra_css: GALLERY_CSS,
         head_extra: Html::default(),
         body_class: "page-console",
+        ..Default::default()
     };
 
     print!("{}", page_shell(chrome, gallery_body(), opts));

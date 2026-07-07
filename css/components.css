@@ -508,3 +508,9 @@ input[type="range"]:focus-visible { box-shadow:0 0 0 4px var(--ring); border-rad
 @media (prefers-reduced-motion:reduce){
   * { transition:none !important; animation:none !important; }
 }
+
+/* ============ i18n · language switcher (app-bar autonym pills) ============ */
+.langswitch{display:inline-flex;align-items:center;gap:2px;margin-right:var(--sp-2);padding:2px;border:1px solid var(--border);border-radius:var(--r-pill);background:var(--surface);}
+.langswitch__opt{display:inline-flex;align-items:center;height:24px;padding:0 9px;border-radius:var(--r-pill);font-size:12px;font-weight:550;color:var(--ink-3);text-decoration:none;white-space:nowrap;transition:background var(--dur) var(--ease),color var(--dur) var(--ease);}
+.langswitch__opt:hover{color:var(--ink);background:var(--bg-2);}
+.langswitch__opt.is-active{color:var(--accent-ink);background:var(--accent-soft);}

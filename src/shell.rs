@@ -1,4 +1,5 @@
 use crate::html::{esc, raw, Html};
+use crate::i18n::{t, Locale};
 use crate::icons;
 use crate::APP_CSS;
 
@@ -25,6 +26,10 @@ pub struct ShellOpts {
     pub extra_css: &'static str,
     pub head_extra: Html,
     pub body_class: &'static str,
+    /// The resolved UI locale — drives `<html lang>`, the chrome strings, and the CSS `:lang`
+    /// CJK font selection. Defaults to `En`; a service opts in with
+    /// `ShellOpts { locale: odyssey::resolve_locale(cookie, accept_language), ..Default::default() }`.
+    pub locale: Locale,
 }
 
 impl Default for ShellOpts {
@@ -33,6 +38,7 @@ impl Default for ShellOpts {
             extra_css: "",
             head_extra: Html::default(),
             body_class: "",
+            locale: Locale::En,
         }
     }
 }
@@ -66,7 +72,7 @@ pub fn page_shell(chrome: PageChrome<'_>, body: Html, opts: ShellOpts) -> String
     format!(
         concat!(
             "<!doctype html>\n",
-            "<html lang=\"en\">\n",
+            "<html lang=\"{lang}\">\n",
             "<head>\n",
             "<meta charset=\"utf-8\">\n",
             "<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\n",
@@ -82,13 +88,14 @@ pub fn page_shell(chrome: PageChrome<'_>, body: Html, opts: ShellOpts) -> String
             "</a>",
             "{nav}",
             "<span class=\"appbar__spacer\"></span>",
-            "<div class=\"appbar__right\">{userbox}</div>",
+            "<div class=\"appbar__right\">{switcher}{userbox}</div>",
             "</header>\n",
             "<main class=\"console\">{body}</main>\n",
             "{footer}\n",
             "</body>\n",
             "</html>\n"
         ),
+        lang = opts.locale.bcp47(),
         title = esc(chrome.title),
         css = APP_CSS,
         extra_css = opts.extra_css,
@@ -99,10 +106,39 @@ pub fn page_shell(chrome: PageChrome<'_>, body: Html, opts: ShellOpts) -> String
         brand_name = esc(chrome.brand.name),
         brand_sub = esc(chrome.brand.sub),
         nav = nav,
-        userbox = render_userbox(&chrome.user),
+        switcher = render_switcher(opts.locale),
+        userbox = render_userbox(&chrome.user, opts.locale),
         body = body,
         footer = footer
     )
+}
+
+/// The estate language switcher: three script-native autonyms linking to the gateway-owned
+/// `/_gw/lang?to=…` endpoint, which sets the `__Secure-lang` cookie (Domain=.w33d.xyz) and bounces
+/// back. Pure SSR — works with no JavaScript. The current locale is marked active.
+fn render_switcher(locale: Locale) -> String {
+    let mut out = String::from("<div class=\"langswitch\" role=\"group\" aria-label=\"Language\">");
+    for l in Locale::all() {
+        let key = match l {
+            Locale::En => "lang.name.en",
+            Locale::Zh => "lang.name.zh",
+            Locale::Ja => "lang.name.ja",
+        };
+        let (active, current) = if l == locale {
+            (" is-active", " aria-current=\"true\"")
+        } else {
+            ("", "")
+        };
+        out.push_str(&format!(
+            "<a class=\"langswitch__opt{}\" href=\"/_gw/lang?to={}\"{}>{}</a>",
+            active,
+            l.code(),
+            current,
+            esc(t(locale, key)).0
+        ));
+    }
+    out.push_str("</div>");
+    out
 }
 
 pub fn layout_split(main: Html, side: Html) -> Html {
@@ -140,7 +176,7 @@ fn render_nav(nav: &[NavItem]) -> String {
     out
 }
 
-fn render_userbox(user: &UserBox) -> String {
+fn render_userbox(user: &UserBox, locale: Locale) -> String {
     let (avatar, name, sub) = match user.email.as_deref() {
         Some(email) if !email.is_empty() => (
             esc(&initials(email)).0,
@@ -149,8 +185,8 @@ fn render_userbox(user: &UserBox) -> String {
         ),
         _ => (
             icons::icon("key").0,
-            String::from("Account"),
-            String::from("Not signed in"),
+            esc(t(locale, "chrome.account")).0,
+            esc(t(locale, "chrome.not_signed_in")).0,
         ),
     };
 
@@ -165,8 +201,8 @@ fn render_userbox(user: &UserBox) -> String {
             "<div class=\"usermenu__pop\" role=\"menu\">",
             "<div class=\"usermenu__head\"><span class=\"avatar avatar--lg\" aria-hidden=\"true\">{avatar}</span>",
             "<div><b>{name}</b><span>{sub}</span></div></div>",
-            "<a class=\"menuitem\" role=\"menuitem\" href=\"/\">{apps}<span>All apps</span></a>",
-            "<a class=\"menuitem menuitem--danger\" role=\"menuitem\" href=\"{logout}\">{logout_icon}<span>Log out</span></a>",
+            "<a class=\"menuitem\" role=\"menuitem\" href=\"/\">{apps}<span>{all_apps}</span></a>",
+            "<a class=\"menuitem menuitem--danger\" role=\"menuitem\" href=\"{logout}\">{logout_icon}<span>{log_out}</span></a>",
             "</div>",
             "</div>"
         ),
@@ -175,8 +211,10 @@ fn render_userbox(user: &UserBox) -> String {
         sub = sub,
         caret = caret_icon(),
         apps = icons::icon("database"),
+        all_apps = esc(t(locale, "chrome.all_apps")).0,
         logout = esc(user.logout_url),
-        logout_icon = icons::icon("x")
+        logout_icon = icons::icon("x"),
+        log_out = esc(t(locale, "chrome.log_out")).0
     )
 }
 
@@ -207,4 +245,63 @@ fn initials(email: &str) -> String {
 
 fn local_part(email: &str) -> String {
     email.split('@').next().unwrap_or(email).to_string()
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn chrome() -> PageChrome<'static> {
+        PageChrome {
+            title: "Test",
+            brand: Brand {
+                tile_svg: "",
+                accent: "",
+                name: "App",
+                sub: "app.w33d.xyz",
+            },
+            nav: &[],
+            user: UserBox {
+                email: None,
+                logout_url: "https://sso.w33d.xyz/_gw/auth/logout",
+            },
+            footer: Html::default(),
+        }
+    }
+
+    #[test]
+    fn shell_localizes_chrome_and_html_lang() {
+        // English (default): the untranslated chrome + en lang tag.
+        let en = page_shell(chrome(), Html::default(), ShellOpts::default());
+        assert!(en.contains("<html lang=\"en\">"));
+        assert!(en.contains(">Account<") && en.contains(">All apps<") && en.contains(">Log out<"));
+
+        // Chinese: localized chrome + the BCP-47 tag that drives CSS :lang CJK fonts.
+        let zh = page_shell(
+            chrome(),
+            Html::default(),
+            ShellOpts { locale: Locale::Zh, ..Default::default() },
+        );
+        assert!(zh.contains("<html lang=\"zh-Hans\">"), "zh lang tag drives CJK :lang fonts");
+        assert!(zh.contains("账户") && zh.contains("所有应用") && zh.contains("退出登录"));
+
+        // Japanese.
+        let ja = page_shell(
+            chrome(),
+            Html::default(),
+            ShellOpts { locale: Locale::Ja, ..Default::default() },
+        );
+        assert!(ja.contains("<html lang=\"ja\">"));
+        assert!(ja.contains("アカウント") && ja.contains("ログアウト"));
+    }
+
+    #[test]
+    fn shell_renders_language_switcher() {
+        let out = page_shell(chrome(), Html::default(), ShellOpts::default());
+        // Autonyms (each language in its own script) linking the gateway switcher endpoint.
+        assert!(out.contains("href=\"/_gw/lang?to=zh\">中文"));
+        assert!(out.contains("href=\"/_gw/lang?to=ja\">日本語"));
+        // The active locale is marked.
+        assert!(out.contains("langswitch__opt is-active\" href=\"/_gw/lang?to=en\""));
+    }
 }
