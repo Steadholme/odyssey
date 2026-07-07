@@ -8,6 +8,7 @@ pub mod controls;
 pub mod data;
 pub mod feedback;
 pub mod html;
+pub mod i18n;
 pub mod icons;
 pub mod shell;
 
@@ -18,6 +19,7 @@ pub use controls::{
 pub use data::{card, card_list, empty_state, stat_tile, table, Col};
 pub use feedback::{pill, switch, toast, Tone};
 pub use html::{esc, raw, Html};
+pub use i18n::{fmt_date, fmt_int, month_abbr, resolve_locale, t, tf, tn, Locale};
 pub use shell::{
     console_head, layout_split, page_shell, Brand, NavItem, PageChrome, ShellOpts, UserBox,
 };
