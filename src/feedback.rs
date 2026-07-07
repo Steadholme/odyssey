@@ -62,8 +62,23 @@ pub fn toast(tone: Tone, msg: &str) -> Html {
 pub fn switch(name: &str, checked: bool) -> Html {
     let checked_attr = if checked { " checked" } else { "" };
     Html(format!(
-        "<span class=\"switch\"><input type=\"checkbox\" name=\"{}\"{}><i></i></span>",
+        "<span class=\"switch\"><input type=\"checkbox\" role=\"switch\" aria-label=\"{}\" name=\"{}\"{}><i aria-hidden=\"true\"></i></span>",
+        esc(name),
         esc(name),
         checked_attr
     ))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn switch_has_accessible_switch_semantics() {
+        let html = switch("alerts", true);
+
+        assert!(html.as_str().contains("role=\"switch\""));
+        assert!(html.as_str().contains("aria-label=\"alerts\""));
+        assert!(html.as_str().contains("checked"));
+    }
 }

@@ -59,6 +59,14 @@
     if (/^[#.\[]/.test(ref)) { try { return $(ref, ctx); } catch (e) { return null; } }
     return document.getElementById(ref);
   }
+  var generatedId = 0;
+  function ensureId(el, prefix) {
+    if (el.id) return el.id;
+    var id;
+    do { generatedId += 1; id = prefix + generatedId; } while (document.getElementById(id));
+    el.id = id;
+    return id;
+  }
   var FOCUSABLE = 'a[href],area[href],button:not([disabled]),input:not([disabled]),' +
     'select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
   function focusables(el) {
@@ -527,8 +535,8 @@
       var ov = topOverlay();
       if (ov) { e.preventDefault(); closeModal(ov); return; }
       if ($('.ody-dropdown .ody-menu.is-open')) {
-        closeAllMenus(null);
         var openBtn = $('.ody-dropdown [data-ody-toggle][aria-expanded="true"]');
+        closeAllMenus(null);
         if (openBtn) openBtn.focus();
         return;
       }
@@ -639,6 +647,8 @@
     $all('[data-ody-popover]', root).forEach(function (b) {
       if (!b.hasAttribute('aria-expanded')) b.setAttribute('aria-expanded', 'false');
       if (!b.hasAttribute('aria-haspopup')) b.setAttribute('aria-haspopup', 'dialog');
+      var content = byRef(attr(b, 'data-ody-popover'));
+      if (content) b.setAttribute('aria-controls', ensureId(content, 'ody-popover-'));
     });
     return Odyssey;
   }

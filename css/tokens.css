@@ -68,6 +68,7 @@ html[lang^="ja"] body,html[lang^="zh"] body{ letter-spacing:normal; }
   --ink:var(--c-ink-900); --ink-2:var(--c-ink-700); --ink-3:var(--c-ink-500); --ink-4:var(--c-ink-400);
   --accent:var(--c-indigo-600); --accent-2:var(--c-indigo-500); --accent-ink:var(--c-indigo-700);
   --accent-soft:var(--c-indigo-50); --accent-soft-2:var(--c-indigo-100); --ring:rgba(79,70,229,.30);
+  --brand:var(--accent); --brand-soft:var(--accent-soft); --brand-ink:color-mix(in srgb, var(--brand) 82%, var(--ink));
   --ok:var(--c-green-600); --ok-soft:var(--c-green-50); --ok-ink:var(--c-green-700);
   --warn:var(--c-amber-600); --warn-soft:var(--c-amber-50); --warn-ink:var(--c-amber-700);
   --down:var(--c-rose-600); --down-soft:var(--c-rose-50); --down-ink:var(--c-rose-700);

@@ -190,19 +190,20 @@ fn render_userbox(user: &UserBox, locale: Locale) -> String {
         ),
     };
 
+    // CSS focus-within controls this popover; without JS there is no truthful aria-expanded state.
     format!(
         concat!(
             "<div class=\"usermenu\">",
-            "<button class=\"usermenu__btn\" type=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">",
+            "<button class=\"usermenu__btn\" type=\"button\" aria-haspopup=\"true\">",
             "<span class=\"avatar\" aria-hidden=\"true\">{avatar}</span>",
             "<span class=\"usermenu__name\">{name}</span>",
             "{caret}",
             "</button>",
-            "<div class=\"usermenu__pop\" role=\"menu\">",
+            "<div class=\"usermenu__pop\">",
             "<div class=\"usermenu__head\"><span class=\"avatar avatar--lg\" aria-hidden=\"true\">{avatar}</span>",
             "<div><b>{name}</b><span>{sub}</span></div></div>",
-            "<a class=\"menuitem\" role=\"menuitem\" href=\"/\">{apps}<span>{all_apps}</span></a>",
-            "<a class=\"menuitem menuitem--danger\" role=\"menuitem\" href=\"{logout}\">{logout_icon}<span>{log_out}</span></a>",
+            "<a class=\"menuitem\" href=\"/\">{apps}<span>{all_apps}</span></a>",
+            "<a class=\"menuitem menuitem--danger\" href=\"{logout}\">{logout_icon}<span>{log_out}</span></a>",
             "</div>",
             "</div>"
         ),
@@ -280,16 +281,25 @@ mod tests {
         let zh = page_shell(
             chrome(),
             Html::default(),
-            ShellOpts { locale: Locale::Zh, ..Default::default() },
+            ShellOpts {
+                locale: Locale::Zh,
+                ..Default::default()
+            },
         );
-        assert!(zh.contains("<html lang=\"zh-Hans\">"), "zh lang tag drives CJK :lang fonts");
+        assert!(
+            zh.contains("<html lang=\"zh-Hans\">"),
+            "zh lang tag drives CJK :lang fonts"
+        );
         assert!(zh.contains("账户") && zh.contains("所有应用") && zh.contains("退出登录"));
 
         // Japanese.
         let ja = page_shell(
             chrome(),
             Html::default(),
-            ShellOpts { locale: Locale::Ja, ..Default::default() },
+            ShellOpts {
+                locale: Locale::Ja,
+                ..Default::default()
+            },
         );
         assert!(ja.contains("<html lang=\"ja\">"));
         assert!(ja.contains("アカウント") && ja.contains("ログアウト"));

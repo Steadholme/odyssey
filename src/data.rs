@@ -1,4 +1,5 @@
 use crate::html::{esc, Html};
+use crate::i18n::{t, Locale};
 use crate::icons;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -33,9 +34,9 @@ pub fn card_list(title: &str, body: Html) -> Html {
     ))
 }
 
-pub fn table(cols: &[Col], rows: Vec<Vec<Html>>) -> Html {
+pub fn table(locale: Locale, cols: &[Col], rows: Vec<Vec<Html>>) -> Html {
     if rows.is_empty() {
-        return empty_state("database", "No data", "There are no rows to display.");
+        return empty_state(locale, "database");
     }
 
     let mut out = String::from("<div class=\"table-wrap\"><table><thead><tr>");
@@ -85,7 +86,7 @@ pub fn stat_tile(label: &str, value: &str, spark: Option<Html>, sub: Option<&str
     ))
 }
 
-pub fn empty_state(icon: &'static str, heading: &str, note: &str) -> Html {
+pub fn empty_state(locale: Locale, icon: &'static str) -> Html {
     Html(format!(
         concat!(
             "<div class=\"empty\">",
@@ -95,8 +96,8 @@ pub fn empty_state(icon: &'static str, heading: &str, note: &str) -> Html {
             "</div>"
         ),
         icons::icon(icon),
-        esc(heading),
-        esc(note)
+        esc(t(locale, "empty.no_data.title")),
+        esc(t(locale, "empty.no_data.note"))
     ))
 }
 
@@ -107,6 +108,7 @@ mod tests {
     #[test]
     fn empty_rows_render_empty_state_instead_of_table() {
         let html = table(
+            Locale::En,
             &[Col {
                 label: "Name",
                 numeric: false,
@@ -115,5 +117,13 @@ mod tests {
         );
         assert!(html.as_str().contains("class=\"empty\""));
         assert!(!html.as_str().contains("<table>"));
+    }
+
+    #[test]
+    fn empty_state_renders_localized_zh_copy() {
+        let html = empty_state(Locale::Zh, "database");
+
+        assert!(html.as_str().contains("暂无数据"));
+        assert!(html.as_str().contains("这里还没有内容。"));
     }
 }

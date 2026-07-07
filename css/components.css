@@ -29,7 +29,7 @@ h3 { font-size:var(--fs-h3); }
 h4 { font-size:var(--fs-body); }
 a { color:var(--accent-ink); text-decoration:none; }
 a:hover { text-decoration:underline; text-underline-offset:2px; }
-::selection { background:var(--accent-soft-2); }
+::selection { background:var(--brand-soft); }
 svg { flex:0 0 auto; }
 code {
   font-family:var(--mono); font-size:var(--fs-sm); color:var(--accent-ink);
@@ -242,7 +242,7 @@ td.num,th.num { text-align:right; white-space:nowrap; }
 .btn:hover { text-decoration:none; }
 .btn:active { transform:translateY(.5px); }
 .btn svg { width:16px; height:16px; }
-.btn-primary { background:var(--accent); color:var(--surface); box-shadow:var(--sh-sm); }
+.btn-primary { background:var(--brand); color:var(--surface); border-color:var(--brand); box-shadow:var(--sh-sm); }
 .btn-primary:hover { background:var(--accent-ink); box-shadow:var(--sh-md); }
 /* 去漂移:.btn-ghost 与 .btn-secondary 规则相同 → 折叠为一条选择器 */
 .btn-ghost,.btn-secondary { background:var(--surface); color:var(--ink); border-color:var(--border); box-shadow:var(--sh-xs); }
@@ -405,7 +405,7 @@ input[type="range"]:focus-visible { box-shadow:0 0 0 4px var(--ring); border-rad
   transition:color var(--dur) var(--ease), border-color var(--dur) var(--ease);
 }
 .tab:hover { color:var(--ink); text-decoration:none; }
-.tab.is-active { color:var(--accent-ink); border-bottom-color:var(--accent); }
+.tab.is-active { color:var(--accent-ink); border-bottom-color:var(--brand); }
 .tab svg { width:16px; height:16px; }
 /* 小尺寸 pill 组变体(24h/7d/30d 时间窗切换) */
 .tabs--window {

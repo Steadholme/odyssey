@@ -147,6 +147,7 @@ fn data_demo() -> Html {
         },
     ];
     let table_html = table(
+        Locale::En,
         &cols,
         vec![
             vec![raw("relay"), pill(Tone::Ok, "healthy"), raw("48,211")],
@@ -178,13 +179,13 @@ fn data_demo() -> Html {
         "<div class=\"gallery-grid\">{}{}{}</div>",
         card("Status", stats),
         card_list("Service table", table_html),
-        card("Empty table", table(&cols, Vec::new()))
+        card("Empty table", table(Locale::En, &cols, Vec::new()))
     ))
 }
 
 fn forms_demo() -> Html {
     let form_body = Html::concat([
-        field("Name", text_input("name", "relay")),
+        field("Name", text_input("name", "relay", &[])),
         field("Replicas", number_input("replicas", "1", "9", "3")),
         field(
             "Region",
@@ -192,11 +193,12 @@ fn forms_demo() -> Html {
                 "region",
                 &[("fsn1", "FSN1"), ("hel1", "HEL1"), ("ash", "ASH")],
                 Some("fsn1"),
+                &[],
             ),
         ),
         field_hint(
             "Notes",
-            textarea("notes", 4, "Rotate keys monthly."),
+            textarea("notes", 4, "Rotate keys monthly.", &[]),
             "Plain text only.",
         ),
         range_field("Traffic split", "split", "0", "100", "5", "45", true),
