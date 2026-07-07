@@ -608,7 +608,7 @@ details.pop{position:relative;}
 .error-card__title{margin:var(--sp-2) 0;font-size:var(--fs-h1);font-weight:var(--fw-semibold);color:var(--ink);}
 .error-card__msg{margin:0 auto var(--sp-6);color:var(--ink-2);max-width:40ch;line-height:1.6;}
 
-/* ============ 28 · Markdown ============ */
+/* ============ 28 · Prose ============ */
 .markdown{font-size:15px;line-height:1.65;color:var(--ink);overflow-wrap:break-word;}
 .markdown>:first-child{margin-top:0;}
 .markdown>:last-child{margin-bottom:0;}
