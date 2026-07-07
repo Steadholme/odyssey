@@ -8,6 +8,7 @@ pub static TABLE: &[(&str, &str)] = &[
     ("action.delete", "删除"),
     ("action.edit", "编辑"),
     ("action.save", "保存"),
+    ("chip.remove", "移除 {name}"),
     ("chrome.account", "账户"),
     ("chrome.all_apps", "所有应用"),
     ("chrome.log_out", "退出登录"),
@@ -21,4 +22,8 @@ pub static TABLE: &[(&str, &str)] = &[
     ("lang.name.en", "English"),
     ("lang.name.ja", "日本語"),
     ("lang.name.zh", "中文"),
+    ("nav.breadcrumb", "面包屑导航"),
+    ("pager.label", "分页"),
+    ("pager.next", "下一页"),
+    ("pager.prev", "上一页"),
 ];

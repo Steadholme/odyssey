@@ -63,6 +63,8 @@ fn gallery_body() -> Html {
         section("data", "Cards, stats, tables", data_demo()),
         section("forms", "Forms and fields", forms_demo()),
         section("layout", "Layout, tabs, modal, pager", layout_demo()),
+        section("bank", "W3 bank components", bank_demo()),
+        section("density", "Compact density", compact_demo()),
         raw("</div>"),
     ])
 }
@@ -236,61 +238,138 @@ fn layout_demo() -> Html {
 }
 
 fn tabs_demo() -> Html {
-    raw(concat!(
-        "<nav class=\"tabs\">",
-        "<a class=\"tab is-active\" href=\"#\">Overview</a>",
-        "<a class=\"tab\" href=\"#\">Usage</a>",
-        "<a class=\"tab\" href=\"#\">Keys</a>",
-        "</nav>"
-    ))
+    tabs(
+        "Resource sections",
+        &[
+            Tab {
+                href: "#overview",
+                label: "Overview",
+                active: true,
+            },
+            Tab {
+                href: "#usage",
+                label: "Usage",
+                active: false,
+            },
+            Tab {
+                href: "#keys",
+                label: "Keys",
+                active: false,
+            },
+        ],
+        TabsOpts::default(),
+    )
 }
 
 fn pager_demo() -> Html {
-    raw(format!(
-        concat!(
-            "<nav class=\"pager\" aria-label=\"Pagination\">",
-            "{}",
-            "<span class=\"pager__spacer\"></span>",
-            "<a href=\"#\">1</a>",
-            "<span class=\"is-current\">2</span>",
-            "<a href=\"#\">3</a>",
-            "{}",
-            "</nav>"
-        ),
-        link_button(
-            "#",
-            "Newer",
-            Variant::Ghost,
-            BtnOpts {
-                small: true,
-                ..BtnOpts::default()
-            }
-        ),
-        link_button(
-            "#",
-            "Older",
-            Variant::Ghost,
-            BtnOpts {
-                small: true,
-                ..BtnOpts::default()
-            }
-        )
-    ))
+    pager(Locale::En, 2, 3, "#page-")
 }
 
 fn modal_demo() -> Html {
-    raw(format!(
-        concat!(
-            "<div class=\"modal\" role=\"dialog\" aria-modal=\"true\">",
-            "<div class=\"modal__card\">",
-            "<div class=\"modal__head\"><h2>Revoke key</h2></div>",
-            "<div class=\"modal__body\"><p>This trusted static snippet demonstrates modal classes.</p>{}</div>",
-            "<div class=\"modal__foot\">{}{}</div>",
-            "</div>",
-            "</div>"
+    modal(
+        "revoke-key",
+        "Revoke key",
+        raw(format!(
+            "<p>This trusted static snippet demonstrates modal classes.</p>{}",
+            checkbox_field("confirm", "I understand this cannot be undone", false)
+        )),
+        raw(format!(
+            "{}{}",
+            button("Cancel", Variant::Ghost, BtnOpts::default()),
+            button("Revoke", Variant::Danger, BtnOpts::default())
+        )),
+        true,
+    )
+}
+
+fn bank_demo() -> Html {
+    let alerts = raw(format!(
+        "<div class=\"gallery-stack\">{}{}{}{}</div>",
+        alert(
+            Tone::Ok,
+            Some("Saved"),
+            "Changes replicated to all regions."
         ),
-        checkbox_field("confirm", "I understand this cannot be undone", false),
-        button("Cancel", Variant::Ghost, BtnOpts::default()),
-        button("Revoke", Variant::Danger, BtnOpts::default())
+        alert(Tone::Warn, Some("Near limit"), "Storage is above 80%."),
+        alert(
+            Tone::Down,
+            Some("Deploy failed"),
+            "Builder node is unreachable."
+        ),
+        alert(Tone::Info, None, "Version 1.1.0 is available.")
+    ));
+    let chips = raw(format!(
+        "<div class=\"gallery-row\">{}<span class=\"chip tone-3 chip--dot\">Growth<span class=\"countpill\">7</span><button class=\"chip__remove\" type=\"button\" aria-label=\"Remove Growth\">×</button></span>{}</div>",
+        filter_chip(Locale::En, "region: fsn1", "#remove-region"),
+        letter_tile("Odyssey", "odyssey")
+    ));
+    let rich = raw(concat!(
+        "<dl class=\"desc\"><dt class=\"desc__term\">Owner</dt><dd class=\"desc__val\">Platform</dd><dt class=\"desc__term\">Region</dt><dd class=\"desc__val\">FSN1</dd></dl>",
+        "<div class=\"segment\"><a class=\"segment__item is-active\" href=\"#\">Daily</a><a class=\"segment__item\" href=\"#\">Weekly</a><a class=\"segment__item\" href=\"#\">Monthly</a></div>",
+        "<div class=\"stepper\"><div class=\"step is-done\"><span class=\"step__dot\">1</span><div class=\"step__body\"><div class=\"step__label\">Plan</div><div class=\"step__sub\">Done</div></div></div><div class=\"step is-active\"><span class=\"step__dot\">2</span><div class=\"step__body\"><div class=\"step__label\">Build</div><div class=\"step__sub\">Running</div></div></div><div class=\"step\"><span class=\"step__dot\">3</span><div class=\"step__body\"><div class=\"step__label\">Ship</div><div class=\"step__sub\">Queued</div></div></div></div>"
+    ));
+    let disclosure = raw(concat!(
+        "<div class=\"accordion\"><details class=\"accordion__item\" open><summary class=\"accordion__head\"><span>Deployment notes</span><svg class=\"accordion__caret\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m6 9 6 6 6-6\"/></svg></summary><div class=\"accordion__panel\">Zero JavaScript details/summary accordion.</div></details></div>",
+        "<details class=\"pop\"><summary class=\"btn btn-ghost btn-sm\">Actions</summary><div class=\"pop__card\"><a class=\"menuitem\" href=\"#\">Open</a><a class=\"menuitem menuitem--danger\" href=\"#\">Delete</a></div></details>",
+        "<div class=\"drawer is-open\" style=\"position:relative;height:190px;inset:auto\"><div class=\"drawer__backdrop\"></div><div class=\"drawer__panel\"><div class=\"drawer__head\"><h2 class=\"drawer__title\">Drawer</h2></div><div class=\"drawer__body\">Server-rendered drawer shell.</div><div class=\"drawer__foot\"><button class=\"btn btn-ghost btn-sm\">Close</button></div></div></div>"
+    ));
+    let timeline = raw(concat!(
+        "<ul class=\"eventline\"><li class=\"eventline__item\"><span class=\"eventline__dot eventline__dot--ok\"></span><div class=\"eventline__time\">09:12</div><div class=\"eventline__title\">Build complete</div><div class=\"eventline__body\">Artifacts uploaded.</div></li><li class=\"eventline__item\"><span class=\"eventline__dot eventline__dot--warn\"></span><div class=\"eventline__time\">09:18</div><div class=\"eventline__title\">Manual approval</div><div class=\"eventline__body\">Waiting on operator.</div></li></ul>",
+        "<div class=\"error-card\"><div class=\"error-card__code\">404</div><div class=\"error-card__title\">Not found</div><div class=\"error-card__msg\">The requested example does not exist.</div></div>"
+    ));
+    let chrome = raw(format!(
+        concat!(
+            "<div class=\"masthead\"><div><div class=\"masthead__eyebrow\">Release</div><h1 class=\"masthead__title\">Bank withdrawal</h1><p class=\"masthead__tagline\">Components harvested into canonical Odyssey.</p></div><div class=\"masthead__actions\">{}</div></div>",
+            "<div class=\"filterbar\"><input class=\"input\" type=\"search\" value=\"status:open\"><div class=\"filterbar__right\"><span class=\"notif-badge-wrap\"><button class=\"iconbtn\" type=\"button\">{}</button><span class=\"notif-badge notif-badge--accent\">3</span></span></div></div>"
+        ),
+        button("Ship", Variant::Primary, BtnOpts::default()),
+        icons::icon("search")
+    ));
+
+    raw(format!(
+        "<div class=\"gallery-grid\">{}{}{}{}{}{}{}{}</div>",
+        card("Alerts", alerts),
+        card("Chips and identity", chips),
+        card(
+            "Progress and skeleton",
+            raw(format!("{}{}", progress(63, Tone::Ok), skeleton(4)))
+        ),
+        card(
+            "Breadcrumb",
+            breadcrumb(Locale::En, &[("/", "Home"), ("#bank", "Bank")])
+        ),
+        card("Description, segment, stepper", rich),
+        card("Disclosure and overlays", disclosure),
+        card("Timeline and errors", timeline),
+        card("Masthead, filterbar, badge", chrome)
+    ))
+}
+
+fn compact_demo() -> Html {
+    raw(format!(
+        "<div data-density=\"compact\" class=\"gallery-grid\">{}{}{}</div>",
+        card(
+            "Compact controls",
+            raw(format!(
+                "<div class=\"gallery-row\">{}{}{} </div>",
+                button("Save", Variant::Primary, BtnOpts::default()),
+                button("Cancel", Variant::Ghost, BtnOpts::default()),
+                filter_chip(Locale::En, "compact", "#")
+            ))
+        ),
+        card(
+            "Compact data",
+            raw(format!("{}{}", progress(42, Tone::Info), skeleton(3)))
+        ),
+        pagehead(PageHead {
+            eyebrow: Some("Density"),
+            glyph: Some(icons::icon("zap")),
+            title: "Compact pagehead",
+            meta: raw("<p>Scoped preview using the density tokens.</p>"),
+            actions: raw(format!(
+                "{}",
+                button("Action", Variant::Primary, BtnOpts::default())
+            )),
+        })
     ))
 }
