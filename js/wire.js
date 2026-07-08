@@ -16,6 +16,9 @@
     if(/(^|\s)external(\s|$)/.test(a.getAttribute('rel')||''))return null;
     var region=boostRegion(a);if(!region)return null;
     var u=urlOf(a.getAttribute('href'));if(!u||u.href===w.location.href)return null;
+    // Gateway control endpoints (/_gw/theme, /_gw/lang, /_gw/auth/*) set a cookie + redirect; they
+    // repaint <html>/<head> which a region inner-swap never touches. Never boost them — full nav.
+    if(u.pathname.indexOf('/_gw/')===0)return null;
     if(u.pathname===w.location.pathname&&u.search===w.location.search&&u.hash)return null;
     return{u:u,region:region};
   }
