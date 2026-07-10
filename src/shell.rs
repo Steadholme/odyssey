@@ -158,6 +158,21 @@ pub fn page_shell(chrome: PageChrome<'_>, body: Html, opts: ShellOpts) -> String
     )
 }
 
+/// The estate language switcher as standalone markup, for services that render their OWN shell
+/// (not [`page_shell`]) and want the switcher in their appbar. Emits the SAME SSR markup
+/// `page_shell` uses: three script-native autonyms linking `/_gw/lang?to=…`, current locale marked
+/// active, `role="group" aria-label="Language"`, zero JavaScript. Pair it with `locale.bcp47()` on
+/// `<html lang>` and a per-request [`resolve_locale`](crate::resolve_locale).
+pub fn lang_switcher(locale: Locale) -> Html {
+    raw(render_switcher(locale))
+}
+
+/// The estate theme switcher as standalone markup, for own-shell services (see [`lang_switcher`]).
+/// `theme` is the resolved `light` | `dark` | `auto`.
+pub fn theme_switcher(theme: &str, locale: Locale) -> Html {
+    raw(render_theme_switcher(theme, locale))
+}
+
 /// The estate language switcher: three script-native autonyms linking to the gateway-owned
 /// `/_gw/lang?to=…` endpoint, which sets the `__Secure-lang` cookie (Domain=.w33d.xyz) and bounces
 /// back. Pure SSR — works with no JavaScript. The current locale is marked active.
@@ -650,5 +665,30 @@ mod tests {
             },
         );
         assert!(compact_with_class.contains("<body class=\"console-x\" data-density=\"compact\">"));
+    }
+
+    #[test]
+    fn lang_switcher_standalone_matches_page_shell() {
+        // The exported switcher (for own-shell services) renders the three autonyms, the /_gw/lang
+        // links, the group aria-label, and marks the current locale active.
+        let sw = lang_switcher(Locale::Ja).0;
+        assert!(sw.contains("aria-label=\"Language\""));
+        assert!(sw.contains("/_gw/lang?to=en"));
+        assert!(sw.contains("/_gw/lang?to=zh"));
+        assert!(sw.contains("/_gw/lang?to=ja"));
+        assert!(sw.contains("is-active"));
+        assert!(sw.contains("aria-current=\"true\""));
+        // It is byte-identical to what page_shell embeds for the same locale.
+        let full = page_shell(
+            chrome(),
+            Html::default(),
+            ShellOpts {
+                locale: Locale::Ja,
+                ..Default::default()
+            },
+        );
+        assert!(full.contains(&sw));
+        // theme_switcher is likewise exported and links the gateway theme endpoint.
+        assert!(theme_switcher("dark", Locale::En).0.contains("/_gw/theme?to="));
     }
 }

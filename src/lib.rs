@@ -30,8 +30,8 @@ pub use html::{esc, raw, Html};
 pub use i18n::{fmt_date, fmt_int, month_abbr, resolve_locale, t, tf, tn, Locale};
 pub use identity::{initial, letter_tile, tone};
 pub use shell::{
-    breadcrumb, console_head, layout_split, page_shell, pagehead, tabs, Brand, NavItem, PageChrome,
-    PageHead, ShellOpts, Tab, TabsOpts, UserBox,
+    breadcrumb, console_head, lang_switcher, layout_split, page_shell, pagehead, tabs,
+    theme_switcher, Brand, NavItem, PageChrome, PageHead, ShellOpts, Tab, TabsOpts, UserBox,
 };
 pub use theme::{color_scheme_meta, html_theme_attr, resolve_theme};
 
