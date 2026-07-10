@@ -73,10 +73,10 @@ $ODYSSEYCTL manifest
 输出 canonical bundle 的机器可读摘要：
 
 ```text
-release=1.1.0
+release=1.2.0-canary.1
 channel=internal-rust
-fingerprint=fnv1a64:<bundle-fingerprint>
-files=<canonical-file-count>
+fingerprint=fnv1a64:20ae76d5c2ada57d
+files=24
 consumers=27
 surfaces=47
 ```
@@ -192,7 +192,7 @@ $ODYSSEYCTL check --repo cortex,familiar,relay
 
 `distribution.toml` 当前只接受 `channel = "internal-rust"`。非 Rust 应用不属于 27 consumer / 47 surface 统计，也不能通过伪造 channel 接入 `odysseyctl`。
 
-非 Rust 页面应使用公开、framework-agnostic 的 versioned assets：
+非 Rust 页面应使用公开、framework-agnostic 的 versioned assets。`1.1` 是冻结的 stable snapshot：
 
 ```html
 <link rel="stylesheet" href="https://odyssey.w33d.xyz/1.1/odyssey.css">
@@ -200,9 +200,36 @@ $ODYSSEYCTL check --repo cortex,familiar,relay
 <script src="https://odyssey.w33d.xyz/1.1/odyssey.js"></script>
 ```
 
-也可以把 `dist/` 中对应 release 的文件固定到应用自己的 asset pipeline。无论 CDN 还是 self-host，都必须 pin release；不要指向内部 `crates/odyssey`，也不要复制未版本化的 canonical source。
+`1.2.0-canary.1` 通过固定的 `/1.2` path 提供，供显式 canary 页面接入：
+
+```html
+<link rel="stylesheet" href="https://odyssey.w33d.xyz/1.2/odyssey.css">
+<link rel="stylesheet" href="https://odyssey.w33d.xyz/1.2/odyssey-font.css">
+<script src="https://odyssey.w33d.xyz/1.2/odyssey.js"></script>
+```
+
+仓库中的 `releases/1.1/` 与 `releases/1.2/` 都是 immutable snapshot；其文件不可被后续 release 覆盖。`dist/` 保存当前 `1.2` canary 的 byte-identical 物理发行文件，供短缓存 `/dist` 路由与 self-host pipeline 使用；`tools/build-public-dist.sh` 从 `1.1` 组件基线加 canonical `css/profile.css`、`js/canary.js` 确定性生成它，并拒绝静默改写已存在的 `1.2` snapshot。无论 CDN 还是 self-host，都必须 pin release；不要指向内部 `crates/odyssey`，也不要复制未版本化的 canonical source。
 
 公开 `/1.1/odyssey.js` 只提供 `data-ody-*` 组件行为，不包含 Wire、Spark、Motion，也不负责应用 fetch、router、cache 或 offline state。非 Rust SSR/SPA 的数据请求和状态管理仍由宿主框架负责。若未来需要把内部 runtime 提供给非 Rust consumer，应新增独立、版本化且经过安全审计的 distribution channel，而不是扩大现有 `internal-rust` manifest 的含义。
+
+`/1.2/odyssey.js` 在同一安全边界内增加 network-free 的 shell/profile enhancer，不包含 Wire、Spark、Motion，也不发起应用数据请求。
+
+## Odyssey 1.2 profile root contract
+
+`data-ody-profile` 是跨产品可复用的显式 root contract。未标记页面完全沿用 `1.1` 默认视觉；产品只有在 canary vertical slice 中主动标记后，才启用 profile signal、HOLDFAST shell、48 px mineral grid、导航坐标和统一状态语言。
+
+```html
+<html data-ody-profile="public">
+<body data-ody-shell="1.2" class="ody-shell">
+  <nav data-ody-shell-nav>…</nav>
+  <main class="ody-shell__stage" data-ody-coordinate="PUBLIC / STATUS">
+    <span class="ody-signal" data-ody-status="operational">Operational</span>
+  </main>
+</body>
+</html>
+```
+
+允许值与 `distribution.toml` 的 rollout metadata 保持同一词汇：`ai`、`communication`、`content`、`control`、`data`、`developer`、`identity`、`knowledge`、`networking`、`observability`、`portal`、`productivity`、`public`、`security`。Beacon 使用 `public`，Portal 使用 `portal`；profile 只协调 presentation semantics，不改变服务访问边界或业务权限。
 
 ## 修改 fleet membership
 

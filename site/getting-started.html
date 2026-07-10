@@ -19,7 +19,7 @@
     </span>
     <span class="ody-appbar__name">Odyssey UI</span>
   </a>
-  <span class="ody-tag ody-tag--accent ody-mono doc-appbar__ver">v1.1.0</span>
+  <span class="ody-tag ody-tag--warn ody-mono doc-appbar__ver">v1.2 canary</span>
   <span class="ody-appbar__spacer"></span>
   <div class="ody-appbar__right">
     <a class="ody-iconbtn" href="https://git.w33d.xyz/holdfast/odyssey" aria-label="源码仓库" title="源码仓库">
@@ -77,6 +77,25 @@
     <p>在 <code>&lt;/body&gt;</code> 前引入交互脚本。它零依赖、以 <code>data-*</code> 属性渐进增强，并在 <code>DOMContentLoaded</code> 自动初始化。若你只用静态组件，脚本可以省略。</p>
     <div class="doc-code doc-code--stand"><pre><code>  &lt;script src="https://odyssey.w33d.xyz/1.1/odyssey.js"&gt;&lt;/script&gt;
 &lt;/body&gt;</code></pre></div>
+
+    <h3 id="canary-12">Odyssey 1.2 Canary</h3>
+    <div class="ody-alert ody-alert--warn">
+      <svg class="ody-alert__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 20h20L12 3Z"/><path d="M12 10v4M12 17h.01"/></svg>
+      <div class="ody-alert__body"><strong>Canary，不是 stable：</strong><code>/1.1</code> 继续保持 immutable。只有准备验证跨产品 shell 的页面才 pin <code>/1.2</code>，并显式选择 profile。</div>
+    </div>
+    <div class="doc-code doc-code--stand"><pre><code>&lt;html data-ody-profile="public"&gt;
+&lt;head&gt;
+  &lt;link rel="stylesheet" href="https://odyssey.w33d.xyz/1.2/odyssey.css"&gt;
+&lt;/head&gt;
+&lt;body data-ody-shell="1.2" class="ody-shell"&gt;
+  &lt;nav data-ody-shell-nav&gt;…&lt;/nav&gt;
+  &lt;main class="ody-shell__stage" data-ody-coordinate="PUBLIC / STATUS"&gt;
+    &lt;span class="ody-signal" data-ody-status="operational"&gt;Operational&lt;/span&gt;
+  &lt;/main&gt;
+  &lt;script src="https://odyssey.w33d.xyz/1.2/odyssey.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre></div>
+    <p>允许的 profile：<code>public</code>、<code>portal</code>、<code>security</code>、<code>observability</code>、<code>ai</code>、<code>content</code>、<code>control</code> 等 canonical 词汇。它只协调视觉语义，不改变页面的公开／内部访问边界。</p>
 
     <h2 id="usage">基本用法</h2>
     <p>组件类均以 <code>.ody-</code> 前缀命名，遵循 BEM（block <code>.ody-x</code> / element <code>.ody-x__y</code> / modifier <code>.ody-x--z</code> / 状态 <code>.is-*</code>）。直接写 class 即可，不会污染宿主页面的裸元素。</p>

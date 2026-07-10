@@ -11,6 +11,22 @@ const VENDOR_MANIFEST: &str = ".odyssey-vendor";
 const VENDOR_DIR: &str = "crates/odyssey";
 const FNV_OFFSET: u64 = 0xcbf29ce484222325;
 const FNV_PRIME: u64 = 0x100000001b3;
+const SUPPORTED_PROFILES: [&str; 14] = [
+    "ai",
+    "communication",
+    "content",
+    "control",
+    "data",
+    "developer",
+    "identity",
+    "knowledge",
+    "networking",
+    "observability",
+    "portal",
+    "productivity",
+    "public",
+    "security",
+];
 
 #[derive(Clone, Copy)]
 enum Operation {
@@ -261,6 +277,16 @@ fn validate_distribution(distribution: &Distribution) -> Result<(), String> {
                 "consumer {} has unsupported channel {:?}",
                 consumer.name(),
                 consumer.channel
+            ));
+        }
+        if SUPPORTED_PROFILES
+            .binary_search(&consumer.profile.as_str())
+            .is_err()
+        {
+            return Err(format!(
+                "consumer {} has unsupported profile {:?}",
+                consumer.name(),
+                consumer.profile
             ));
         }
         if consumer.surfaces == 0 {
@@ -783,7 +809,7 @@ mod tests {
         let distribution = load_distribution(&root).unwrap();
 
         assert_eq!(distribution.schema, 1);
-        assert_eq!(distribution.release, "1.1.0");
+        assert_eq!(distribution.release, "1.2.0-canary.1");
         assert_eq!(distribution.consumers.len(), 27);
         assert_eq!(
             distribution
@@ -795,6 +821,33 @@ mod tests {
         );
         assert_eq!(distribution.consumers.first().unwrap().name(), "anvil");
         assert_eq!(distribution.consumers.last().unwrap().name(), "verge");
+        let profiles: BTreeSet<_> = distribution
+            .consumers
+            .iter()
+            .map(|consumer| consumer.profile.as_str())
+            .collect();
+        assert_eq!(profiles, SUPPORTED_PROFILES.into_iter().collect());
+    }
+
+    #[test]
+    fn canonical_manifest_includes_the_canary_profile_contract() {
+        let root = odyssey_root().unwrap();
+        let distribution = load_distribution(&root).unwrap();
+        let files = canonical_files(&root).unwrap();
+
+        assert_eq!(distribution.release, "1.2.0-canary.1");
+        assert!(files.contains(&PathBuf::from("css/profile.css")));
+        assert!(files.contains(&PathBuf::from("js/canary.js")));
+        assert!(files.contains(&PathBuf::from("src/profile.rs")));
+        assert_eq!(files.len(), 24);
+
+        let fingerprint = bundle_fingerprint(&root, &files).unwrap();
+        assert_eq!(fingerprint, 0x20ae_76d5_c2ad_a57d);
+
+        let manifest = vendor_manifest(&root, &distribution.release, &files).unwrap();
+        assert!(manifest.contains("release=1.2.0-canary.1\n"));
+        assert!(manifest.contains("fingerprint=fnv1a64:20ae76d5c2ada57d\n"));
+        assert!(manifest.contains(&format!("files={}\n", files.len())));
     }
 
     #[test]

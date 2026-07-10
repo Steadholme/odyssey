@@ -4,8 +4,8 @@
 #   - builder: rust:1.96-slim (Debian trixie).
 #   - runtime: debian:trixie-slim (matching glibc), non-root, no TLS stack.
 #
-# The server embeds the framework, dist/, site/, and Estate Atlas via include_str!,
-# so the runtime image only needs the odyssey-server binary. The HEALTHCHECK uses
+# The server embeds the framework, current dist/, immutable releases/, site/, and Estate Atlas via
+# include_str!, so the runtime image only needs the odyssey-server binary. The HEALTHCHECK uses
 # the built-in subcommand, so the image needs no curl or HTTP client package.
 
 FROM rust:1.96-slim AS builder
@@ -16,6 +16,7 @@ COPY src ./src
 COPY css ./css
 COPY js ./js
 COPY dist ./dist
+COPY releases ./releases
 COPY site ./site
 COPY server ./server
 
