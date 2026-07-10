@@ -1246,6 +1246,12 @@
 
   /* expose */
   API.initExtForms = function (root) { bindExt(); return initExt(root); };
+  var formsInit = API.init;
+  API.init = function (root) {
+    var out = typeof formsInit === 'function' ? formsInit.call(API, root) : API;
+    API.initExtForms(root || document);
+    return out || API;
+  };
   API.comboboxClose = cbxClose;
   API.multiselectValue = msValue;
   API.tagValues = tiValues;

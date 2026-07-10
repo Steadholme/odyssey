@@ -36,7 +36,8 @@
   // Scroll: forward boost nav lands at the top (like a normal link); back/forward restores the
   // saved position. history.scrollRestoration=manual so the browser does not fight us.
   try{if('scrollRestoration' in history)history.scrollRestoration='manual';}catch(e){}
-  function saveScroll(){try{history.replaceState(Object.assign({},history.state||{},{owy:w.pageYOffset||0}),'');}catch(e){}}
+  function wireState(c){return{t:c.t,s:c.s,m:c.m,vt:c.vt};}
+  function saveScroll(c,y){try{var s=Object.assign({},history.state||{},{owy:y==null?(w.pageYOffset||0):y});if(c)s.odysseyWire=wireState(c);history.replaceState(s,'');}catch(e){}}
   function markCurrent(){
     var links=d.querySelectorAll('[data-wire-nav] a[href]'),here=w.location.pathname+w.location.search,i,a,lu;
     for(i=0;i<links.length;i++){a=links[i];if(a.hasAttribute('data-wire-off')){a.removeAttribute('aria-current');continue;}
@@ -117,7 +118,7 @@
   function rollback(snaps){snaps.forEach(function(x){x.n.classList.remove('is-removing');if(!x.n.parentNode&&x.p)x.p.insertBefore(x.n,x.next);});}
   function finish(trigger,evt,detail,inserted){fire(trigger.isConnected?trigger:(inserted&&inserted[0])||d,evt,detail);}
   function run(trigger,req,c,submitter,push){
-    var before={url:req.url.href,method:req.method,targets:c.t,submitter:submitter||null};
+    var before={url:req.url.href,method:req.method,targets:c.t,submitter:submitter||null},originY=push?(w.pageYOffset||0):0;
     if(!fire(trigger,'wire:before',before,true))return false;
     var ctl=new AbortController(),snaps=null;
     if(trigger.tagName==='A'){var old=links.get(trigger);if(old)old.abort();links.set(trigger,ctl);}
@@ -139,7 +140,7 @@
       if(!out)return;
       finish(trigger,'wire:after',{url:out.res.url,status:out.res.status,redirected:out.res.redirected,targets:c.t},out.nodes);
       toast(trigger.getAttribute('data-wire-ok'),true);
-      if(push){history.pushState({odysseyWire:{t:c.t,s:c.s,m:c.m,vt:c.vt}},'',out.res.url);if(c.vt)w.scrollTo(0,0);}
+      if(push){saveScroll(c,originY);history.pushState({odysseyWire:wireState(c)},'',out.res.url);if(c.vt)w.scrollTo(0,0);}
     }).catch(function(err){
       if(snaps)rollback(snaps);
       fire(trigger,'wire:error',{status:err&&err.status||0,error:err});
@@ -165,7 +166,6 @@
       return;
     }
     b=boostable(link);if(!b)return;
-    saveScroll();
     if(run(link,{url:b.u,method:'GET',body:null,headers:H},{t:[b.region],s:[b.region],m:'inner',vt:true},null,true))e.preventDefault();
   });
   w.addEventListener('popstate',function(e){

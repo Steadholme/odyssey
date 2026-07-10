@@ -21,8 +21,9 @@ pub mod shell;
 pub mod theme;
 
 pub use controls::{
-    button, checkbox_field, field, field_err, field_hint, form, link_button, number_input,
-    range_field, select, text_input, textarea, BtnOpts, Csrf, Variant,
+    button, checkbox_field, field, field_err, field_hint, form, form_with_wire, link_button,
+    link_button_with_wire, link_with_wire, number_input, range_field, select, text_input, textarea,
+    BtnOpts, Csrf, Variant, WireOpts, WireSwap,
 };
 pub use data::{card, card_list, empty_state, pager, progress, stat_tile, table, Col};
 pub use feedback::{alert, filter_chip, modal, pill, skeleton, switch, toast, Tone};
@@ -31,16 +32,65 @@ pub use i18n::{fmt_date, fmt_int, month_abbr, resolve_locale, t, tf, tn, Locale}
 pub use identity::{initial, letter_tile, tone};
 pub use shell::{
     breadcrumb, console_head, lang_switcher, layout_split, page_shell, pagehead, tabs,
-    theme_switcher, Brand, NavItem, PageChrome, PageHead, ShellOpts, Tab, TabsOpts, UserBox,
+    theme_switcher, wire_nav, wire_page_shell, Brand, NavItem, PageChrome, PageHead, ShellOpts,
+    Tab, TabsOpts, UserBox, WireShellOpts,
 };
 pub use theme::{color_scheme_meta, html_theme_attr, resolve_theme};
 
-/// Both dynamic modules in one inline script block.
+/// Options for the inline Odyssey internal runtime bundle.
+///
+/// Fields stay private so new runtime modules can be added without breaking downstream
+/// struct literals. Use the builders to opt into Motion or attach a CSP nonce.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct RuntimeOpts<'a> {
+    motion: bool,
+    nonce: Option<&'a str>,
+}
+
+impl<'a> RuntimeOpts<'a> {
+    pub const fn new() -> Self {
+        Self {
+            motion: false,
+            nonce: None,
+        }
+    }
+
+    pub const fn with_motion(mut self) -> Self {
+        self.motion = true;
+        self
+    }
+
+    pub const fn with_nonce(mut self, nonce: &'a str) -> Self {
+        self.nonce = Some(nonce);
+        self
+    }
+}
+
+/// Wire and Spark in one inline script block, preserving the original API.
 ///
 /// Order is wire then spark. Both modules are document-delegated and init-idempotent, so the
 /// ordering is not load-bearing for consumers.
 pub fn dynamic_scripts() -> Html {
-    raw(format!("<script>{WIRE_JS}\n{SPARK_JS}</script>"))
+    dynamic_scripts_with(RuntimeOpts::new())
+}
+
+/// Build the audited internal runtime bundle, optionally including Motion and a CSP nonce.
+///
+/// All modules remain in one script element. This keeps the original no-network deployment
+/// model while allowing strict-CSP services to authorize the exact inline block per response.
+pub fn dynamic_scripts_with(opts: RuntimeOpts<'_>) -> Html {
+    let nonce = opts
+        .nonce
+        .map(|value| format!(" nonce=\"{}\"", esc(value)))
+        .unwrap_or_default();
+    let motion = if opts.motion {
+        format!("\n{MOTION_JS}")
+    } else {
+        String::new()
+    };
+    raw(format!(
+        "<script{nonce}>{WIRE_JS}\n{SPARK_JS}{motion}</script>"
+    ))
 }
 
 #[cfg(test)]
@@ -76,11 +126,15 @@ mod tests {
             }
         }
         assert!(
-            !SPARK_JS.to_ascii_lowercase().contains(&["fetch", "("].concat()),
+            !SPARK_JS
+                .to_ascii_lowercase()
+                .contains(&["fetch", "("].concat()),
             "spark must stay network-free"
         );
         assert!(
-            !MOTION_JS.to_ascii_lowercase().contains(&["fetch", "("].concat()),
+            !MOTION_JS
+                .to_ascii_lowercase()
+                .contains(&["fetch", "("].concat()),
             "motion must stay network-free"
         );
     }
@@ -99,6 +153,10 @@ mod tests {
         assert!(WIRE_JS.contains("wire:before"));
         assert!(WIRE_JS.contains("window.OdysseyWire"));
         assert!(WIRE_JS.contains("toast--ok"));
+        // Record the outgoing swap contract before every push. This seeds the first entry and
+        // refreshes later entries when consecutive navigations use different target regions.
+        assert!(WIRE_JS.contains("if(c)s.odysseyWire=wireState(c)"));
+        assert!(WIRE_JS.contains("saveScroll(c,originY);history.pushState"));
         assert!(SPARK_JS.contains("odyssey-spark v1"));
         assert!(SPARK_JS.contains("data-spark-show"));
         assert!(SPARK_JS.contains("data-spark-click"));
@@ -116,6 +174,44 @@ mod tests {
         assert_eq!(scripts.as_str().matches("<script>").count(), 1);
         assert!(scripts.as_str().contains("odyssey-wire v1"));
         assert!(scripts.as_str().contains("odyssey-spark v1"));
+    }
+
+    #[test]
+    fn runtime_options_keep_default_compatible_and_add_motion_in_order() {
+        let default = dynamic_scripts();
+        assert_eq!(default.as_str().matches("<script").count(), 1);
+        assert!(default.as_str().contains("odyssey-wire v1"));
+        assert!(default.as_str().contains("odyssey-spark v1"));
+        assert!(!default.as_str().contains("odyssey-motion v1"));
+
+        let full = dynamic_scripts_with(
+            RuntimeOpts::new()
+                .with_motion()
+                .with_nonce("request-7\" onload=\"bad"),
+        );
+        assert_eq!(full.as_str().matches("<script").count(), 1);
+        assert!(full
+            .as_str()
+            .starts_with("<script nonce=\"request-7&quot; onload=&quot;bad\">"));
+        assert!(!full.as_str().contains("\" onload=\""));
+        assert!(full.as_str().contains("odyssey-motion v1"));
+
+        let wire = full.as_str().find("odyssey-wire v1").unwrap();
+        let spark = full.as_str().find("odyssey-spark v1").unwrap();
+        let motion = full.as_str().find("odyssey-motion v1").unwrap();
+        assert!(wire < spark && spark < motion);
+    }
+
+    #[test]
+    fn public_init_composes_extended_forms() {
+        let js = include_str!("../dist/odyssey.js");
+        let forms_start = js.find("=== v1.1 forms-ext ===").unwrap();
+        let data_start = js.find("=== v1.1 data-ext ===").unwrap();
+        let forms = &js[forms_start..data_start];
+
+        assert!(forms.contains("var formsInit = API.init;"));
+        assert!(forms.contains("formsInit.call(API, root)"));
+        assert!(forms.contains("API.initExtForms(root || document);"));
     }
 
     #[test]
