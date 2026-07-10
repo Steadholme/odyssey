@@ -5,3 +5,4 @@ Cargo.lock.orig
 .DS_Store
 *.swp
 /server/target
+/tools/odysseyctl/target

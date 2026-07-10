@@ -80,7 +80,7 @@ td.num,th.num { text-align:right; white-space:nowrap; }
   box-shadow:2px 2px 0 color-mix(in srgb,var(--app) 32%,var(--frame-rule)),inset 0 0 0 1px color-mix(in srgb,var(--surface) 20%,transparent);
 }
 .app-tile svg { width:19px; height:19px; }
-.brand__glyph { width:26px; height:26px; display:inline-flex; }
+.brand__glyph { width:26px; height:26px; display:inline-flex; color:var(--brand); }
 .brand__glyph svg { width:100%; height:100%; }
 .brand__word { font-size:var(--fs-body); font-weight:700; letter-spacing:.02em; color:var(--ink); }
 .appbar__name { display:flex; flex-direction:column; line-height:1.15; }

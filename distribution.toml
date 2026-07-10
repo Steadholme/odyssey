@@ -1,0 +1,195 @@
+schema = 1
+release = "1.1.0"
+
+# Every internal Rust consumer receives the same byte-identical vendored crate.
+# `profile` is rollout metadata; products select presentation through semantic
+# tokens/root attributes, never through a forked vendor payload.
+
+[[consumer]]
+path = "../anvil"
+deployable = "anvil"
+channel = "internal-rust"
+profile = "control"
+surfaces = 1
+
+[[consumer]]
+path = "../ark"
+deployable = "ark"
+channel = "internal-rust"
+profile = "control"
+surfaces = 1
+
+[[consumer]]
+path = "../bastion"
+deployable = "bastion"
+channel = "internal-rust"
+profile = "security"
+surfaces = 4
+
+[[consumer]]
+path = "../beacon"
+deployable = "beacon"
+channel = "internal-rust"
+profile = "public"
+surfaces = 1
+
+[[consumer]]
+path = "../census"
+deployable = "census"
+channel = "internal-rust"
+profile = "identity"
+surfaces = 1
+
+[[consumer]]
+path = "../cistern"
+deployable = "cistern"
+channel = "internal-rust"
+profile = "data"
+surfaces = 1
+
+[[consumer]]
+path = "../concourse"
+deployable = "concourse"
+channel = "internal-rust"
+profile = "productivity"
+surfaces = 4
+
+[[consumer]]
+path = "../cortex"
+deployable = "cortex"
+channel = "internal-rust"
+profile = "knowledge"
+surfaces = 1
+
+[[consumer]]
+path = "../corvid"
+deployable = "corvid"
+channel = "internal-rust"
+profile = "communication"
+surfaces = 1
+
+[[consumer]]
+path = "../crucible"
+deployable = "crucible"
+channel = "internal-rust"
+profile = "security"
+surfaces = 1
+
+[[consumer]]
+path = "../estuary"
+deployable = "estuary"
+channel = "internal-rust"
+profile = "control"
+surfaces = 1
+
+[[consumer]]
+path = "../familiar"
+deployable = "familiar"
+channel = "internal-rust"
+profile = "ai"
+surfaces = 1
+
+[[consumer]]
+path = "../forge"
+deployable = "forge"
+channel = "internal-rust"
+profile = "developer"
+surfaces = 3
+
+[[consumer]]
+path = "../ledger"
+deployable = "ledger"
+channel = "internal-rust"
+profile = "control"
+surfaces = 2
+
+[[consumer]]
+path = "../lodestar"
+deployable = "lodestar"
+channel = "internal-rust"
+profile = "control"
+surfaces = 1
+
+[[consumer]]
+path = "../portal"
+deployable = "portal"
+channel = "internal-rust"
+profile = "portal"
+surfaces = 1
+
+[[consumer]]
+path = "../pulse"
+deployable = "pulse"
+channel = "internal-rust"
+profile = "security"
+surfaces = 1
+
+[[consumer]]
+path = "../reader"
+deployable = "reader"
+channel = "internal-rust"
+profile = "content"
+surfaces = 3
+
+[[consumer]]
+path = "../relay"
+deployable = "relay"
+channel = "internal-rust"
+profile = "ai"
+surfaces = 1
+
+[[consumer]]
+path = "../sanctum"
+deployable = "sanctum"
+channel = "internal-rust"
+profile = "security"
+surfaces = 1
+
+[[consumer]]
+path = "../scriptoria"
+deployable = "scriptoria"
+channel = "internal-rust"
+profile = "content"
+surfaces = 6
+
+[[consumer]]
+path = "../sentinel"
+deployable = "watchtower"
+channel = "internal-rust"
+profile = "observability"
+surfaces = 2
+
+[[consumer]]
+path = "../sigil"
+deployable = "sigil"
+channel = "internal-rust"
+profile = "security"
+surfaces = 1
+
+[[consumer]]
+path = "../skiff"
+deployable = "skiff"
+channel = "internal-rust"
+profile = "control"
+surfaces = 1
+
+[[consumer]]
+path = "../telemetry"
+deployable = "telemetry"
+channel = "internal-rust"
+profile = "observability"
+surfaces = 3
+
+[[consumer]]
+path = "../verdict"
+deployable = "verdict"
+channel = "internal-rust"
+profile = "identity"
+surfaces = 1
+
+[[consumer]]
+path = "../verge"
+deployable = "verge"
+channel = "internal-rust"
+profile = "networking"
+surfaces = 2
