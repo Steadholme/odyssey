@@ -142,4 +142,14 @@ mod tests {
         // Dark scaffold ships ready but inert (nothing stamps data-theme this wave).
         assert!(APP_CSS.contains("[data-theme=\"dark\"]"));
     }
+
+    #[test]
+    fn app_css_contains_sovereign_atlas_visual_language() {
+        assert!(APP_CSS.contains("--c-paper-0:#faf9f4"));
+        assert!(APP_CSS.contains("--c-oxide-600:#b6422c"));
+        assert!(APP_CSS.contains("--frame-rule:"));
+        assert!(APP_CSS.contains("--surface-etched:"));
+        assert!(APP_CSS.contains("background-size:48px 48px"));
+        assert!(APP_CSS.contains("@media (forced-colors:active)"));
+    }
 }

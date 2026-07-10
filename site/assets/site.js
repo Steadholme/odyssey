@@ -113,19 +113,46 @@
       backdrop = el('div', 'doc-backdrop');
       document.body.appendChild(backdrop);
     }
-    function set(open) {
+    var mobile = window.matchMedia('(max-width: 900px)');
+    var lastFocus = null;
+    function focusables() {
+      return sidebar.querySelectorAll('a[href],button:not([disabled]),[tabindex]:not([tabindex="-1"])');
+    }
+    function set(open, returnFocus) {
+      open = Boolean(open && mobile.matches);
+      if (open) lastFocus = document.activeElement;
       sidebar.classList.toggle('is-open', open);
       backdrop.classList.toggle('is-open', open);
       toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      sidebar.inert = mobile.matches && !open;
+      if (sidebar.inert) sidebar.setAttribute('aria-hidden', 'true');
+      else sidebar.removeAttribute('aria-hidden');
+      if (open) {
+        var items = focusables();
+        if (items.length) items[0].focus();
+      } else if (returnFocus && lastFocus && typeof lastFocus.focus === 'function') {
+        lastFocus.focus();
+      }
     }
-    toggle.addEventListener('click', function () { set(!sidebar.classList.contains('is-open')); });
-    backdrop.addEventListener('click', function () { set(false); });
+    toggle.addEventListener('click', function () { set(!sidebar.classList.contains('is-open'), false); });
+    backdrop.addEventListener('click', function () { set(false, true); });
     sidebar.addEventListener('click', function (e) {
-      if (e.target.closest('a[href]')) set(false);
+      if (e.target.closest('a[href]')) set(false, false);
     });
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && sidebar.classList.contains('is-open')) set(false);
+      if (e.key === 'Escape' && sidebar.classList.contains('is-open')) set(false, true);
+      if (e.key !== 'Tab' || !sidebar.classList.contains('is-open')) return;
+      var items = focusables();
+      if (!items.length) return;
+      var first = items[0];
+      var last = items[items.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     });
+    function syncMode() { set(false, false); }
+    if (mobile.addEventListener) mobile.addEventListener('change', syncMode);
+    else mobile.addListener(syncMode);
+    syncMode();
   }
 
   /* ------------------------------------------------- 5. appbar scroll shadow */

@@ -22,11 +22,17 @@
 
 /* ============ L0 primitives(唯一 raw hex 处)============ */
 :root{
-  /* 中性 / 表面 ramp */
+  /* 兼容色阶(旧 primitive 名保留,不再作为默认材质映射) */
   --c-white:#ffffff; --c-slate-25:#f7f8fa; --c-slate-50:#f6f7f9; --c-slate-75:#f0f2f6;
   --c-slate-100:#eef0f4; --c-slate-200:#e5e7ec; --c-slate-300:#d3d7e0;
   --c-ink-900:#1a1d24; --c-ink-700:#4a5160; --c-ink-500:#727a8a; --c-ink-400:#9aa2b1;
-  /* 品牌靛蓝 */
+  /* HOLDFAST mineral paper / basalt / oxide */
+  --c-paper-0:#faf9f4; --c-paper-25:#f5f3ec; --c-paper-50:#f2f0e8;
+  --c-paper-75:#ece9df; --c-paper-100:#e9e6dc; --c-paper-200:#cfcabd; --c-paper-300:#8d887c;
+  --c-basalt-900:#191c18; --c-basalt-700:#454b43; --c-basalt-500:#5f665b; --c-basalt-400:#6d7469;
+  --c-oxide-700:#8f2f1e; --c-oxide-600:#b6422c; --c-oxide-500:#d85d3f;
+  --c-oxide-100:#eac9be; --c-oxide-50:#f4e4de;
+  /* 兼容品牌靛蓝(显式引用仍可用) */
   --c-indigo-600:#4f46e5; --c-indigo-500:#6366f1; --c-indigo-700:#4338ca;
   --c-indigo-50:#eef0fe; --c-indigo-100:#e4e7fd;
   /* 语义 4 色(success / warn / danger / info) */
@@ -35,20 +41,20 @@
   --c-rose-600:#e11d48;  --c-rose-50:#fde7ec;  --c-rose-700:#be123c;
   --c-cyan-600:#0891b2;  --c-cyan-50:#e0f5f9;  --c-cyan-700:#0e7490;
   --c-gray-400:#9aa3b5;
-  /* 几何 / 阴影 */
-  --r-xs:6px; --r-sm:8px; --r:11px; --r-lg:16px; --r-pill:999px;
-  --sh-xs:0 1px 1px rgba(20,23,33,.04);
-  --sh-sm:0 1px 2px rgba(20,23,33,.06),0 1px 3px rgba(20,23,33,.05);
-  --sh-md:0 4px 12px rgba(20,23,33,.07),0 2px 4px rgba(20,23,33,.05);
-  --sh-lg:0 12px 32px rgba(20,23,33,.12),0 4px 8px rgba(20,23,33,.06);
-  --sh-pop:0 8px 28px rgba(20,23,33,.16);
+  /* 几何 / 阴影:硬边承重面,浮层才使用柔和高度 */
+  --r-xs:2px; --r-sm:3px; --r:4px; --r-lg:7px; --r-pill:999px; --cut:8px;
+  --sh-xs:0 1px 0 rgba(25,28,24,.10);
+  --sh-sm:2px 2px 0 rgba(25,28,24,.08);
+  --sh-md:4px 4px 0 rgba(25,28,24,.11);
+  --sh-lg:0 16px 40px rgba(25,28,24,.16),0 4px 10px rgba(25,28,24,.08);
+  --sh-pop:0 12px 34px rgba(25,28,24,.20),3px 3px 0 rgba(25,28,24,.10);
   /* 运动 / 控件尺寸 */
   --ease:cubic-bezier(.2,.6,.25,1); --dur:140ms; --tap:40px;
   /* 间距 scale(4 基数梯)*/
   --sp-1:4px; --sp-2:8px; --sp-3:12px; --sp-4:16px; --sp-5:20px; --sp-6:24px; --sp-8:32px;
   /* type scale */
-  --fs-body:14px; --lh-body:1.5; --fs-h1:22px; --lh-h1:1.25; --fs-h2:17px; --lh-h2:1.3;
-  --fs-h3:14.5px; --fs-eyebrow:11.5px; --track-eyebrow:.08em; --fs-stat:26px;
+  --fs-body:14px; --lh-body:1.5; --fs-h1:24px; --lh-h1:1.2; --fs-h2:18px; --lh-h2:1.3;
+  --fs-h3:14.5px; --fs-eyebrow:11.5px; --track-eyebrow:.14em; --fs-stat:28px;
   --fs-sm:12px; --fs-micro:11px;
   --fw-medium:550; --fw-semibold:650;
   /* Latin (embedded Inter) first, then a cross-OS CJK fallback chain so zh/ja render with system
@@ -75,18 +81,24 @@ html[lang^="ja"] body,html[lang^="zh"] body{ letter-spacing:normal; }
 
 /* ============ L1 semantic(组件只引这层)============ */
 :root{
-  --bg:var(--c-slate-50); --bg-2:var(--c-slate-100);
-  --surface:var(--c-white); --surface-2:var(--c-slate-25); --surface-3:var(--c-slate-75);
-  --border:var(--c-slate-200); --border-2:var(--c-slate-300); --hairline:var(--c-slate-100);
-  --ink:var(--c-ink-900); --ink-2:var(--c-ink-700); --ink-3:var(--c-ink-500); --ink-4:var(--c-ink-400);
-  --accent:var(--c-indigo-600); --accent-2:var(--c-indigo-500); --accent-ink:var(--c-indigo-700);
-  --accent-soft:var(--c-indigo-50); --accent-soft-2:var(--c-indigo-100); --ring:rgba(79,70,229,.30);
+  --bg:var(--c-paper-50); --bg-2:var(--c-paper-100);
+  --surface:var(--c-paper-0); --surface-2:var(--c-paper-25); --surface-3:var(--c-paper-75);
+  --border:var(--c-paper-200); --border-2:var(--c-paper-300); --hairline:color-mix(in srgb,var(--c-paper-200) 56%,var(--surface));
+  --ink:var(--c-basalt-900); --ink-2:var(--c-basalt-700); --ink-3:var(--c-basalt-500); --ink-4:var(--c-basalt-400);
+  --accent:var(--c-oxide-600); --accent-2:var(--c-oxide-500); --accent-ink:var(--c-oxide-700);
+  --accent-soft:var(--c-oxide-50); --accent-soft-2:var(--c-oxide-100); --ring:rgba(182,66,44,.30);
   --brand:var(--accent); --brand-soft:var(--accent-soft); --brand-ink:color-mix(in srgb, var(--brand) 82%, var(--ink));
   --ok:var(--c-green-600); --ok-soft:var(--c-green-50); --ok-ink:var(--c-green-700);
   --warn:var(--c-amber-600); --warn-soft:var(--c-amber-50); --warn-ink:var(--c-amber-700);
   --down:var(--c-rose-600); --down-soft:var(--c-rose-50); --down-ink:var(--c-rose-700);
   --info:var(--c-cyan-600); --info-soft:var(--c-cyan-50); --info-ink:var(--c-cyan-700);
   --unknown:var(--c-gray-400);
+  /* 结构语义:组件用这些词表达测绘网格、承重边和定位标记。 */
+  --grid-line:color-mix(in srgb,var(--ink) 6%,transparent);
+  --frame-rule:color-mix(in srgb,var(--ink) 66%,var(--border));
+  --frame-marker:var(--accent);
+  --surface-etched:color-mix(in srgb,var(--surface) 76%,var(--bg-2));
+  --coordinate-ink:var(--ink-4);
   /* 淡描边变体(给 pill/tag 边框) */
   --ok-border:color-mix(in srgb,var(--ok) 24%,#fff); --warn-border:color-mix(in srgb,var(--warn) 24%,#fff);
   --down-border:color-mix(in srgb,var(--down) 24%,#fff); --info-border:color-mix(in srgb,var(--info) 24%,#fff);
@@ -110,6 +122,91 @@ html[lang^="ja"] body,html[lang^="zh"] body{ letter-spacing:normal; }
   --fs-body:13.5px; --lh-body:1.45;
   --fs-h1:20px; --fs-h2:16px; --fs-h3:13.5px; --fs-stat:22px;
 }
+
+/* ============ L1.6 · motion / elevation / frost(W8 运动层地基)============
+   缓动/时长词汇 + 高度阶梯 + 磨砂令牌。--ease-out 与旧 --ease 逐字节同值,
+   故 --ease→var(--ease-out) 是纯别名(渲染零变化)。旧 --dur:140ms 保留不动。
+   跨文档 View Transitions 的实际规则住 motion.css。 */
+:root{
+  /* 缓动:全程 ease-out 收尾;spring 仅留给 toggle/check 的亚感知微交互 */
+  --ease-out:cubic-bezier(.2,.6,.25,1);
+  --ease-in-out:cubic-bezier(.65,0,.35,1);
+  --ease-spring:cubic-bezier(.32,1.22,.62,1);
+  --ease:var(--ease-out);
+  /* 时长梯:120–320ms,GitHub/Linear 式克制 */
+  --dur-1:120ms; --dur-2:180ms; --dur-3:240ms; --dur-4:320ms;
+  /* View Transition 标量 */
+  --vt-dur:200ms; --vt-out:140ms; --vt-ease:var(--ease-out);
+  /* 高度阶梯:纯别名映射 --sh-*,严禁重命名原语(30+ 调用点) */
+  --elev-rest:none; --elev-raised:var(--sh-sm); --elev-hover:var(--sh-md);
+  --elev-sticky:var(--sh-md); --elev-overlay:var(--sh-lg); --elev-modal:var(--sh-pop);
+  /* z 层级 */
+  --z-sticky:20; --z-nav:30; --z-dropdown:40; --z-overlay:60; --z-toast:80;
+  /* 磨砂(@supports 守卫,不支持时 components 回退不透明 --surface) */
+  --frost-bg:color-mix(in srgb, var(--surface) 82%, transparent);
+  --frost-blur:saturate(1.4) blur(12px);
+}
+
+/* ============ 暗色主题(一等 opt-in;light 为不可变默认)============
+   仅当 <html data-theme="dark">(显式)或 data-theme="auto"+系统暗色 时生效。
+   语义名不变,只把 L1 映射改指一套暗色 L0 值(GitHub Primer/Radix 暗调,真对比度调过)。
+   深度靠"材质"(surface 阶梯 + 顶部高光 + hairline),因暗底 rgba 阴影不可见;
+   深 --sh-* 只留给浮层(menu/modal/drawer)把抬起面与画布分开。
+   关键:填充控件用 color:var(--surface) 白标签惯用法 → 抬升 accent(而非给标签盖白)
+   让暗标签在亮 accent 上 AA 清晰(btn-primary 5.49:1)。
+   dark 与 auto 值组相同,只是 auto 跟随系统(仅在 @media prefers-color-scheme:dark 下生效)。 */
+:root[data-theme="dark"]{
+  --c-white:#171b17;
+  --bg:#0f120f; --bg-2:#0a0c0a;
+  --surface:#171b17; --surface-2:#1d221d; --surface-3:#252b25;
+  --border:#343b34; --border-2:#4a534a; --hairline:#292f29;
+  --ink:#ede9dd; --ink-2:#c7c2b5; --ink-3:#aaa497; --ink-4:#898477;
+  --accent:#ff7559; --accent-2:#e85f45; --accent-ink:#ff9a83;
+  --accent-soft:#33201b; --accent-soft-2:#4c2a22; --ring:rgba(255,117,89,.38);
+  --brand:var(--accent); --brand-soft:var(--accent-soft);
+  --ok:#3fb950; --ok-soft:#12261a; --ok-ink:#56d364;
+  --warn:#d29922; --warn-soft:#271c0e; --warn-ink:#e3b341;
+  --down:#f85149; --down-soft:#2a1416; --down-ink:#ff7b72;
+  --info:#39c5cf; --info-soft:#0e2a2c; --info-ink:#56d4dd;
+  --tone-2:#ff7559; --tone-2-soft:#33201b; --tone-2-ink:#ff9a83;
+  --tone-3:#3fb950; --tone-3-soft:#12261a; --tone-3-ink:#56d364;
+  --tone-4:#d29922; --tone-4-soft:#271c0e; --tone-4-ink:#e3b341;
+  --tone-5:#39c5cf; --tone-5-soft:#0e2a2c; --tone-5-ink:#56d4dd;
+  --scrim:color-mix(in srgb,#0a0c0a 68%,transparent);
+  --sh-xs:0 1px 0 rgba(0,0,0,.44);
+  --sh-sm:2px 2px 0 rgba(0,0,0,.38);
+  --sh-md:4px 4px 0 rgba(0,0,0,.50);
+  --sh-lg:0 16px 40px rgba(0,0,0,.62),0 4px 10px rgba(0,0,0,.48);
+  --sh-pop:0 12px 34px rgba(0,0,0,.68),3px 3px 0 rgba(0,0,0,.44);
+  color-scheme:dark;
+}
+@media (prefers-color-scheme:dark){
+  :root[data-theme="auto"]{
+    --c-white:#171b17;
+    --bg:#0f120f; --bg-2:#0a0c0a;
+    --surface:#171b17; --surface-2:#1d221d; --surface-3:#252b25;
+    --border:#343b34; --border-2:#4a534a; --hairline:#292f29;
+    --ink:#ede9dd; --ink-2:#c7c2b5; --ink-3:#aaa497; --ink-4:#898477;
+    --accent:#ff7559; --accent-2:#e85f45; --accent-ink:#ff9a83;
+    --accent-soft:#33201b; --accent-soft-2:#4c2a22; --ring:rgba(255,117,89,.38);
+    --brand:var(--accent); --brand-soft:var(--accent-soft);
+    --ok:#3fb950; --ok-soft:#12261a; --ok-ink:#56d364;
+    --warn:#d29922; --warn-soft:#271c0e; --warn-ink:#e3b341;
+    --down:#f85149; --down-soft:#2a1416; --down-ink:#ff7b72;
+    --info:#39c5cf; --info-soft:#0e2a2c; --info-ink:#56d4dd;
+    --tone-2:#ff7559; --tone-2-soft:#33201b; --tone-2-ink:#ff9a83;
+    --tone-3:#3fb950; --tone-3-soft:#12261a; --tone-3-ink:#56d364;
+    --tone-4:#d29922; --tone-4-soft:#271c0e; --tone-4-ink:#e3b341;
+    --tone-5:#39c5cf; --tone-5-soft:#0e2a2c; --tone-5-ink:#56d4dd;
+    --scrim:color-mix(in srgb,#0a0c0a 68%,transparent);
+    --sh-xs:0 1px 0 rgba(0,0,0,.44);
+    --sh-sm:2px 2px 0 rgba(0,0,0,.38);
+    --sh-md:4px 4px 0 rgba(0,0,0,.50);
+    --sh-lg:0 16px 40px rgba(0,0,0,.62),0 4px 10px rgba(0,0,0,.48);
+    --sh-pop:0 12px 34px rgba(0,0,0,.68),3px 3px 0 rgba(0,0,0,.44);
+    color-scheme:dark;
+  }
+}
 /* ============================================================================
    Odyssey · components.css — L2 组件层(canonical)
    ----------------------------------------------------------------------------
@@ -130,7 +227,11 @@ html[lang^="ja"] body,html[lang^="zh"] body{ letter-spacing:normal; }
 *,*::before,*::after { box-sizing:border-box; }
 html { -webkit-text-size-adjust:100%; }
 body {
-  margin:0; font-family:var(--font); background:var(--bg); color:var(--ink);
+  margin:0; font-family:var(--font); background-color:var(--bg); color:var(--ink);
+  background-image:
+    linear-gradient(var(--grid-line) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid-line) 1px,transparent 1px);
+  background-size:48px 48px; background-attachment:fixed;
   font-size:var(--fs-body); line-height:var(--lh-body); letter-spacing:-.006em;
   -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
 }
@@ -172,18 +273,20 @@ td.num,th.num { text-align:right; white-space:nowrap; }
   position:sticky; top:0; z-index:40;
   height:var(--appbar-h,56px); display:flex; align-items:center; gap:var(--sp-4);
   padding:0 var(--sp-5);
-  background:color-mix(in srgb, var(--surface) 86%, transparent);
+  background-color:color-mix(in srgb, var(--surface) 94%, transparent);
+  background-image:linear-gradient(90deg,var(--app) 0 96px,var(--frame-rule) 96px 128px,transparent 128px);
+  background-position:left top; background-repeat:no-repeat; background-size:100% 2px;
   backdrop-filter:saturate(1.6) blur(10px);
-  border-bottom:1px solid var(--border);
+  border-bottom:1px solid var(--frame-rule);
 }
 .topbar__inner { flex:1 1 auto; max-width:1120px; margin:0 auto; height:100%; display:flex; align-items:center; gap:var(--sp-4); }
 .appbar__brand,.brand { display:flex; align-items:center; gap:var(--sp-3); text-decoration:none; color:inherit; }
 .appbar__brand:hover,.brand:hover { text-decoration:none; color:inherit; }
 .app-tile {
-  width:34px; height:34px; flex:0 0 auto; border-radius:var(--r-sm); display:grid; place-items:center;
-  background:linear-gradient(160deg, var(--app), color-mix(in srgb, var(--app) 84%, var(--ink)));
+  width:34px; height:34px; flex:0 0 auto; border-radius:var(--r-xs); display:grid; place-items:center;
+  background:var(--app);
   color:var(--surface);
-  box-shadow:var(--sh-sm), inset 0 1px 0 color-mix(in srgb, var(--surface) 25%, transparent);
+  box-shadow:2px 2px 0 color-mix(in srgb,var(--app) 32%,var(--frame-rule)),inset 0 0 0 1px color-mix(in srgb,var(--surface) 20%,transparent);
 }
 .app-tile svg { width:19px; height:19px; }
 .brand__glyph { width:26px; height:26px; display:inline-flex; }
@@ -200,7 +303,7 @@ td.num,th.num { text-align:right; white-space:nowrap; }
   transition:background var(--dur) var(--ease), color var(--dur) var(--ease);
 }
 .appnav:hover { background:var(--surface-3); color:var(--ink); text-decoration:none; }
-.appnav.is-active { background:var(--brand-soft); color:var(--brand-ink); }
+.appnav.is-active { background:var(--brand-soft); color:var(--brand-ink); box-shadow:inset 2px 0 0 var(--brand),inset 0 0 0 1px var(--accent-border); }
 .appnav svg { width:16px; height:16px; opacity:.85; }
 .appbar__spacer { flex:1 1 auto; }
 .appbar__right,.topbar__right { display:flex; align-items:center; gap:var(--sp-2); margin-left:auto; }
@@ -265,7 +368,7 @@ td.num,th.num { text-align:right; white-space:nowrap; }
   transition:background var(--dur) var(--ease), color var(--dur) var(--ease);
 }
 .nav__item:hover { background:var(--surface-3); color:var(--ink); text-decoration:none; }
-.nav__item.is-active { background:var(--accent-soft); color:var(--accent-ink); }
+.nav__item.is-active { background:var(--accent-soft); color:var(--accent-ink); box-shadow:inset 2px 0 0 var(--accent),inset 0 0 0 1px var(--accent-border); }
 .nav__ico,.nav__item svg { width:18px; height:18px; flex:0 0 auto; }
 .nav__text { flex:1 1 auto; }
 .nav__divider { height:1px; background:var(--border); margin:var(--sp-3) var(--sp-1); }
@@ -275,10 +378,11 @@ td.num,th.num { text-align:right; white-space:nowrap; }
 .page--narrow { max-width:760px; }
 
 /* .console__head + .sub 收编为 .pagehead 族的 alias */
-.pagehead { display:flex; align-items:flex-end; justify-content:space-between; gap:var(--sp-4); margin:0 0 var(--sp-5); }
+.pagehead { position:relative; display:flex; align-items:flex-end; justify-content:space-between; gap:var(--sp-4); margin:0 0 var(--sp-5); padding-bottom:var(--sp-4); border-bottom:1px solid var(--frame-rule); }
+.pagehead::after { content:""; position:absolute; left:0; bottom:-1px; width:72px; height:2px; background:var(--frame-marker); pointer-events:none; }
 .console__head { margin:0 0 var(--sp-6); }
 .pagehead__eyebrow,.eyebrow {
-  font-size:var(--fs-eyebrow); font-weight:var(--fw-semibold); letter-spacing:var(--track-eyebrow);
+  font-family:var(--mono); font-size:var(--fs-eyebrow); font-weight:var(--fw-semibold); letter-spacing:var(--track-eyebrow);
   text-transform:uppercase; color:var(--ink-3); margin:0 0 var(--sp-1);
 }
 .pagehead h1,.console__head h1 { margin:0; font-size:var(--fs-h1); line-height:var(--lh-h1); letter-spacing:-.02em; }
@@ -302,11 +406,13 @@ td.num,th.num { text-align:right; white-space:nowrap; }
 
 /* ============ 3 · Card ============ */
 .card {
-  background:var(--surface); border:1px solid var(--border); border-radius:var(--r);
-  box-shadow:var(--sh-sm); overflow:hidden;
-  transition:box-shadow var(--dur) var(--ease);
+  position:relative; background-color:var(--surface); border:1px solid var(--border); border-radius:var(--r);
+  background-image:linear-gradient(90deg,var(--frame-rule) 0 52px,var(--frame-marker) 52px 76px,transparent 76px);
+  background-position:left top; background-repeat:no-repeat; background-size:100% 2px;
+  box-shadow:var(--sh-xs); overflow:hidden;
+  transition:box-shadow var(--dur) var(--ease),border-color var(--dur) var(--ease);
 }
-.card:hover { box-shadow:var(--sh-md); }
+.card:hover { box-shadow:var(--sh-sm); border-color:var(--border-2); }
 .card__head { display:flex; align-items:center; gap:var(--sp-3); padding:var(--sp-4) var(--sp-5); border-bottom:1px solid var(--hairline); }
 .card__ico {
   width:32px; height:32px; flex:0 0 auto; border-radius:var(--r-sm); display:grid; place-items:center;
@@ -327,12 +433,12 @@ td.num,th.num { text-align:right; white-space:nowrap; }
 .card--message .card__body { padding:var(--sp-8); }
 
 /* ============ 4 · Stat / KPI tile ============ */
-.stat { background:var(--surface); border:1px solid var(--border); border-radius:var(--r); padding:var(--sp-4) var(--sp-5); box-shadow:var(--sh-sm); }
+.stat { background:var(--surface-etched); border:1px solid var(--border); border-left:3px solid var(--frame-marker); border-radius:var(--r); padding:var(--sp-4) var(--sp-5); box-shadow:var(--sh-xs); }
 .stat__label { font-size:var(--fs-sm); color:var(--ink-3); font-weight:var(--fw-medium); display:flex; align-items:center; gap:var(--sp-2); }
 .stat__label svg { width:15px; height:15px; color:var(--ink-4); }
 /* .stat__num 为 .stat__value 的旧 alias */
 .stat__value,.stat__num {
-  font-size:var(--fs-stat); font-weight:700; letter-spacing:-.02em; line-height:1.15; color:var(--ink);
+  font-family:var(--mono); font-size:var(--fs-stat); font-weight:700; letter-spacing:-.035em; line-height:1.15; color:var(--ink);
   margin-top:var(--sp-2); font-variant-numeric:tabular-nums;
 }
 .stat__meta { font-size:var(--fs-sm); color:var(--ink-3); margin-top:var(--sp-1); }
@@ -347,18 +453,19 @@ td.num,th.num { text-align:right; white-space:nowrap; }
 .btn {
   display:inline-flex; align-items:center; justify-content:center; gap:var(--sp-2);
   height:var(--tap); padding:0 var(--sp-4); border-radius:var(--r-sm); border:1px solid transparent;
-  font-family:inherit; font-size:var(--fs-body); font-weight:var(--fw-semibold); letter-spacing:-.01em;
+  font-family:inherit; font-size:var(--fs-body); font-weight:var(--fw-semibold); letter-spacing:.005em;
   cursor:pointer; white-space:nowrap; text-decoration:none;
   transition:background var(--dur) var(--ease), box-shadow var(--dur) var(--ease), border-color var(--dur), transform var(--dur);
 }
 .btn:hover { text-decoration:none; }
 .btn:active { transform:translateY(.5px); }
 .btn svg { width:16px; height:16px; }
-.btn-primary { background:var(--brand); color:var(--surface); border-color:var(--brand); box-shadow:var(--sh-sm); }
-.btn-primary:hover { background:color-mix(in srgb,var(--brand) 84%,var(--ink)); box-shadow:var(--sh-md); }
+.btn-primary { background:var(--brand); color:var(--surface); border-color:color-mix(in srgb,var(--brand) 78%,var(--ink)); box-shadow:2px 2px 0 color-mix(in srgb,var(--brand) 46%,var(--frame-rule)); }
+.btn-primary:hover { background:color-mix(in srgb,var(--brand) 84%,var(--ink)); box-shadow:3px 3px 0 color-mix(in srgb,var(--brand) 40%,var(--frame-rule)); transform:translate(-1px,-1px); }
+.btn-primary:active { transform:translateY(.5px); box-shadow:1px 1px 0 color-mix(in srgb,var(--brand) 46%,var(--frame-rule)); }
 /* 去漂移:.btn-ghost 与 .btn-secondary 规则相同 → 折叠为一条选择器 */
 .btn-ghost,.btn-secondary { background:var(--surface); color:var(--ink); border-color:var(--border); box-shadow:var(--sh-xs); }
-.btn-ghost:hover,.btn-secondary:hover { background:var(--surface-2); border-color:var(--border-2); box-shadow:var(--sh-md); }
+.btn-ghost:hover,.btn-secondary:hover { background:var(--surface-2); border-color:var(--border-2); box-shadow:2px 2px 0 var(--hairline); }
 .btn-subtle { background:transparent; color:var(--ink-2); }
 .btn-subtle:hover { background:var(--surface-3); color:var(--ink); }
 .btn-danger { background:var(--down); color:var(--surface); box-shadow:var(--sh-sm); }
@@ -391,19 +498,20 @@ td.num,th.num { text-align:right; white-space:nowrap; }
 /* .badge / .state-badge / .cache-badge 收编为 .pill 的薄 alias */
 .pill,.badge,.state-badge,.cache-badge {
   display:inline-flex; align-items:center; gap:5px; height:22px; padding:0 var(--sp-2);
-  border-radius:var(--r-pill); font-size:var(--fs-eyebrow); font-weight:var(--fw-semibold); letter-spacing:.01em;
+  border-radius:var(--r-xs); font-family:var(--mono); font-size:var(--fs-eyebrow); font-weight:var(--fw-semibold); letter-spacing:.055em; text-transform:uppercase;
   background:var(--surface-3); color:var(--ink-2); border:1px solid transparent;
+  box-shadow:inset 2px 0 0 var(--pill-rail,var(--border-2));
 }
 .pill svg,.badge svg { width:12px; height:12px; }
-.pill-ok { background:var(--ok-soft); color:var(--ok-ink); border-color:var(--ok-border); }
-.pill-warn { background:var(--warn-soft); color:var(--warn-ink); border-color:var(--warn-border); }
-.pill-down { background:var(--down-soft); color:var(--down-ink); border-color:var(--down-border); }
-.pill-info { background:var(--info-soft); color:var(--info-ink); border-color:var(--info-border); }
-.pill-accent { background:var(--accent-soft); color:var(--accent-ink); border-color:var(--accent-soft-2); }
+.pill-ok { --pill-rail:var(--ok); background:var(--ok-soft); color:var(--ok-ink); border-color:var(--ok-border); }
+.pill-warn { --pill-rail:var(--warn); background:var(--warn-soft); color:var(--warn-ink); border-color:var(--warn-border); }
+.pill-down { --pill-rail:var(--down); background:var(--down-soft); color:var(--down-ink); border-color:var(--down-border); }
+.pill-info { --pill-rail:var(--info); background:var(--info-soft); color:var(--info-ink); border-color:var(--info-border); }
+.pill-accent { --pill-rail:var(--accent); background:var(--accent-soft); color:var(--accent-ink); border-color:var(--accent-soft-2); }
 .pill-neutral,.pill--muted { background:var(--surface-3); color:var(--ink-2); border-color:var(--border); }
-.state-badge--open { background:var(--ok-soft); color:var(--ok-ink); border-color:var(--ok-border); }
+.state-badge--open { --pill-rail:var(--ok); background:var(--ok-soft); color:var(--ok-ink); border-color:var(--ok-border); }
 .state-badge--closed { background:var(--surface-3); color:var(--ink-3); border-color:var(--border); }
-.cache-badge--hit { background:var(--accent-soft); color:var(--accent-ink); border-color:var(--accent-soft-2); }
+.cache-badge--hit { --pill-rail:var(--accent); background:var(--accent-soft); color:var(--accent-ink); border-color:var(--accent-soft-2); }
 .cache-badge--miss { background:var(--surface-3); color:var(--ink-3); border-color:var(--border); }
 .dot { width:7px; height:7px; border-radius:50%; }
 .dot-ok { background:var(--ok); } .dot-warn { background:var(--warn); }
@@ -411,10 +519,10 @@ td.num,th.num { text-align:right; white-space:nowrap; }
 .dot-unknown { background:var(--unknown); }
 
 /* ============ 7 · Table(relay 两份表格样式合并为一;裸 table 即 canonical)===== */
-.table-wrap { background:var(--surface); border:1px solid var(--border); border-radius:var(--r); box-shadow:var(--sh-sm); overflow:hidden; }
+.table-wrap { background:var(--surface); border:1px solid var(--border); border-top:2px solid var(--frame-rule); border-radius:var(--r); box-shadow:var(--sh-xs); overflow:hidden; }
 table { width:100%; border-collapse:collapse; font-size:var(--fs-body); }
 thead th {
-  text-align:left; font-size:var(--fs-micro); font-weight:var(--fw-semibold);
+  text-align:left; font-family:var(--mono); font-size:var(--fs-micro); font-weight:var(--fw-semibold);
   letter-spacing:var(--track-eyebrow); text-transform:uppercase;
   color:var(--ink-3); background:var(--surface-2);
   padding:var(--sp-3) var(--sp-4); border-bottom:1px solid var(--border); white-space:nowrap;
@@ -439,7 +547,7 @@ input[type="url"],input[type="number"],input[type="date"],input[type="time"],inp
 select,textarea {
   width:100%; height:var(--tap); padding:0 var(--sp-3);
   font-family:inherit; font-size:var(--fs-body); color:var(--ink);
-  background:var(--surface); border:1px solid var(--border-2); border-radius:var(--r-sm); outline:none;
+  background:var(--surface-etched); border:1px solid var(--border-2); border-radius:var(--r-sm); outline:none;
   transition:border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
 }
 .textarea,textarea { height:auto; min-height:96px; padding:var(--sp-2) var(--sp-3); resize:vertical; line-height:var(--lh-body); }
@@ -450,7 +558,7 @@ select,textarea {
 }
 .input::placeholder,.textarea::placeholder,input::placeholder,textarea::placeholder { color:var(--ink-4); }
 .input:focus,.select:focus,.textarea:focus,input:focus,select:focus,textarea:focus {
-  border-color:var(--accent); box-shadow:0 0 0 4px var(--ring); outline:none;
+  border-color:var(--accent); box-shadow:inset 2px 0 0 var(--accent),0 0 0 4px var(--ring); outline:none;
 }
 input[type="checkbox"],input[type="radio"] { width:17px; height:17px; accent-color:var(--accent); margin:0; }
 input[type="range"] { width:100%; height:auto; padding:0; border:0; background:transparent; box-shadow:none; accent-color:var(--accent); }
@@ -517,7 +625,7 @@ input[type="range"]:focus-visible { box-shadow:0 0 0 4px var(--ring); border-rad
   transition:color var(--dur) var(--ease), border-color var(--dur) var(--ease);
 }
 .tab:hover { color:var(--ink); text-decoration:none; }
-.tab.is-active { color:var(--ink); font-weight:var(--fw-semibold); border-bottom-color:var(--brand); }
+.tab.is-active { color:var(--ink); font-weight:var(--fw-semibold); border-bottom-color:var(--brand); box-shadow:inset 0 -1px 0 var(--brand); }
 .tab svg { width:16px; height:16px; }
 /* 小尺寸 pill 组变体(24h/7d/30d 时间窗切换) */
 .tabs--window {
@@ -565,6 +673,9 @@ input[type="range"]:focus-visible { box-shadow:0 0 0 4px var(--ring); border-rad
 .toast--ok svg,.toast--ok .toast__ico { color:color-mix(in srgb, var(--ok) 45%, var(--surface)); }
 .toast--err { background:var(--down-ink); }
 .toast--err .toast__ico { color:var(--surface); background:color-mix(in srgb, var(--surface) 22%, transparent); }
+
+[hidden]{display:none!important;}
+[data-spark-cloak]{display:none!important;}
 
 /* ============ 13 · Modal / dialog(缺口补件)============ */
 .modal {
@@ -629,6 +740,13 @@ input[type="range"]:focus-visible { box-shadow:0 0 0 4px var(--ring); border-rad
 .langswitch__opt:hover{color:var(--ink);background:var(--bg-2);}
 .langswitch__opt.is-active{color:var(--accent-ink);background:var(--accent-soft);}
 
+/* 主题切换器(Light/Dark/System 三档,镜像 langswitch;appbar 内可见) */
+.themeswitch{display:inline-flex;align-items:center;gap:2px;margin-right:var(--sp-2);padding:2px;border:1px solid var(--border);border-radius:var(--r-pill);background:var(--surface);}
+.themeswitch__opt{display:grid;place-items:center;width:28px;height:24px;border-radius:var(--r-pill);color:var(--ink-3);text-decoration:none;transition:background var(--dur) var(--ease),color var(--dur) var(--ease);}
+.themeswitch__opt:hover{color:var(--ink);background:var(--bg-2);}
+.themeswitch__opt.is-active{color:var(--accent-ink);background:var(--accent-soft);}
+.themeswitch__opt svg{width:15px;height:15px;}
+
 /* ============ 16 · Micro utilities ============ */
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;}
 .clamp-2,.clamp-3{display:-webkit-box;-webkit-box-orient:vertical;overflow:hidden;}
@@ -661,7 +779,7 @@ mark{background:var(--brand-soft);color:var(--brand-ink);padding:0 2px;border-ra
 
 /* ============ 19 · Masthead + brand banner ============ */
 .masthead{display:flex;align-items:flex-end;justify-content:space-between;gap:var(--sp-5);flex-wrap:wrap;padding:var(--sp-8) 0 var(--sp-6);margin-bottom:var(--sp-5);border-bottom:1px solid var(--hairline);}
-.masthead__eyebrow{font-size:var(--fs-eyebrow);font-weight:var(--fw-semibold);letter-spacing:var(--track-eyebrow);text-transform:uppercase;color:var(--brand-ink);margin:0 0 var(--sp-2);}
+.masthead__eyebrow{font-family:var(--mono);font-size:var(--fs-eyebrow);font-weight:var(--fw-semibold);letter-spacing:var(--track-eyebrow);text-transform:uppercase;color:var(--brand-ink);margin:0 0 var(--sp-2);}
 .masthead__title{margin:0;font-size:clamp(30px,5vw,40px);line-height:1.12;letter-spacing:-.015em;}
 .masthead__tagline{margin:var(--sp-2) 0 0;color:var(--ink-3);max-width:52ch;line-height:1.6;}
 .masthead__actions{display:flex;gap:var(--sp-2);flex-wrap:wrap;}
@@ -720,7 +838,7 @@ details.pop{position:relative;}
 .error-card__title{margin:var(--sp-2) 0;font-size:var(--fs-h1);font-weight:var(--fw-semibold);color:var(--ink);}
 .error-card__msg{margin:0 auto var(--sp-6);color:var(--ink-2);max-width:40ch;line-height:1.6;}
 
-/* ============ 28 · Markdown ============ */
+/* ============ 28 · Prose ============ */
 .markdown{font-size:15px;line-height:1.65;color:var(--ink);overflow-wrap:break-word;}
 .markdown>:first-child{margin-top:0;}
 .markdown>:last-child{margin-bottom:0;}
@@ -869,16 +987,125 @@ details[open]>.accordion__head .accordion__caret{transform:rotate(180deg);}
 .notif-badge-wrap{position:relative;display:inline-flex;}
 .notif-badge-wrap>.notif-badge{position:absolute;top:-6px;right:-6px;}
 
-.gallery-stack{display:grid;gap:var(--sp-5)}
-.gallery-section{display:grid;gap:var(--sp-3)}
+/* ============ W8 · frost 工具 + 暗色材质(随 motion 层)============ */
+/* 磨砂表面:支持 backdrop-filter 时半透明+模糊,否则回退不透明 --surface(零破坏)。 */
+.surface--frost{ background:var(--surface); }
+@supports ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .surface--frost{
+    background:var(--frost-bg);
+    -webkit-backdrop-filter:var(--frost-blur);
+    backdrop-filter:var(--frost-blur);
+  }
+}
+/* 暗色下"深度靠材质"而非投影:抬升面提亮一档 + 顶部高光 + 发光边(暗底阴影不可见)。 */
+:root[data-theme="dark"] .card,
+:root[data-theme="dark"] .surface--raised{
+  background:var(--surface-2);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.05);
+  border-color:var(--border);
+}
+
+/* ============ §W9 · 组件暗色修补============
+   oxide accent 在暗色下以深 surface 作为前景,保持 AA 对比;这里只补材质抬升面、
+   select 箭头、autofill、激活段、switch 旋钮、toast、selection。 */
+/* 面内抬升面:镜像 .card(阶梯+顶部高光+hairline,无投影) */
+:root[data-theme="dark"] :is(.stat,.table-wrap,.accordion){ background:var(--surface-2); box-shadow:inset 0 1px 0 rgba(255,255,255,.05); border-color:var(--border); }
+/* 浮层:材质 + 深投影把抬起面与画布分开 */
+:root[data-theme="dark"] :is(.usermenu__pop,.pop__card,.modal__card,.drawer__panel){ background:var(--surface-2); box-shadow:inset 0 1px 0 rgba(255,255,255,.05),var(--sh-pop); border-color:var(--border); }
+/* select 箭头是 stroke='slategray' 定值 data-URI,暗底发暗 → 换抬升 ink-3 */
+:root[data-theme="dark"] .select,:root[data-theme="dark"] select{ background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23aaa497' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d='m6 9 6 6 6-6'/></svg>"); }
+/* -webkit-autofill 会画亮框 → 强制暗 */
+:root[data-theme="dark"] input:-webkit-autofill,:root[data-theme="dark"] textarea:-webkit-autofill{ -webkit-text-fill-color:var(--ink); caret-color:var(--ink); -webkit-box-shadow:0 0 0 1000px var(--surface) inset; }
+/* 激活段/窗口 tab 画 var(--surface) 比其 track 更暗 → 下陷;抬到 ramp 之上 + 高光 */
+:root[data-theme="dark"] :is(.segment__item.is-active,.tabs--window .tab.is-active){ background:color-mix(in srgb,var(--surface-3) 78%,#fff); box-shadow:inset 0 1px 0 rgba(255,255,255,.06),var(--sh-xs); }
+/* switch 旋钮是 var(--surface) 暗底消失 → 白旋钮(状态另由 track 色+滑动承载) */
+:root[data-theme="dark"] .switch i::before{ background:#fff; }
+/* .toast 是 bg:var(--ink) 暗色下翻成近白刺眼 → 保持暗表面 */
+:root[data-theme="dark"] .toast{ background:var(--surface-3); color:var(--ink); }
+:root[data-theme="dark"] .toast--err{ background:var(--down-soft); color:var(--down-ink); }
+:root[data-theme="dark"] ::selection{ background:color-mix(in srgb,var(--accent) 42%,transparent); color:var(--ink); }
+
+/* auto 与显式 dark 使用同一套组件材质；media gate 只在系统暗色时启用。 */
+@media (prefers-color-scheme:dark){
+  :root[data-theme="auto"] .card,
+  :root[data-theme="auto"] .surface--raised{background:var(--surface-2);box-shadow:inset 0 1px 0 rgba(255,255,255,.05);border-color:var(--border);}
+  :root[data-theme="auto"] :is(.stat,.table-wrap,.accordion){background:var(--surface-2);box-shadow:inset 0 1px 0 rgba(255,255,255,.05);border-color:var(--border);}
+  :root[data-theme="auto"] :is(.usermenu__pop,.pop__card,.modal__card,.drawer__panel){background:var(--surface-2);box-shadow:inset 0 1px 0 rgba(255,255,255,.05),var(--sh-pop);border-color:var(--border);}
+  :root[data-theme="auto"] .select,:root[data-theme="auto"] select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23aaa497' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d='m6 9 6 6 6-6'/></svg>");}
+  :root[data-theme="auto"] input:-webkit-autofill,:root[data-theme="auto"] textarea:-webkit-autofill{-webkit-text-fill-color:var(--ink);caret-color:var(--ink);-webkit-box-shadow:0 0 0 1000px var(--surface) inset;}
+  :root[data-theme="auto"] :is(.segment__item.is-active,.tabs--window .tab.is-active){background:color-mix(in srgb,var(--surface-3) 78%,#fff);box-shadow:inset 0 1px 0 rgba(255,255,255,.06),var(--sh-xs);}
+  :root[data-theme="auto"] .switch i::before{background:#fff;}
+  :root[data-theme="auto"] .toast{background:var(--surface-3);color:var(--ink);}
+  :root[data-theme="auto"] .toast--err{background:var(--down-soft);color:var(--down-ink);}
+  :root[data-theme="auto"] ::selection{background:color-mix(in srgb,var(--accent) 42%,transparent);color:var(--ink);}
+}
+
+/* High Contrast / forced-colors:材质会被系统抹平,显式恢复结构与焦点。 */
+@media (forced-colors:active){
+  body{background-image:none;}
+  *:focus-visible{outline:2px solid Highlight;outline-offset:2px;box-shadow:none!important;}
+  :is(.appbar,.topbar,.card,.stat,.table-wrap,.modal__card,.drawer__panel,.pop__card){border-color:CanvasText;box-shadow:none;background-image:none;}
+  :is(.appnav.is-active,.nav__item.is-active,.tab.is-active,.pill,.badge,.state-badge,.cache-badge){border-color:Highlight;box-shadow:none;}
+  :is(.btn-primary,.btn-danger){border-color:ButtonText;box-shadow:none;}
+}
+/* ============================================================================
+   Odyssey · motion.css — W8 跨文档 View Transitions + 运动地基
+   ----------------------------------------------------------------------------
+   全 estate 第一份运动层。核心是 100% CSS、零 JS 的跨文档 View Transitions:
+   SSR 整页导航自动交叉淡入,持久 shell 元素跨页 morph 而非白闪。
+   - 不支持 View Transitions 的浏览器:@view-transition / view-transition-name
+     被静默忽略 → 普通导航,零破坏。
+   - prefers-reduced-motion:本文件末尾的守卫覆盖 components.css 的全局
+     `*{animation:none}` 够不到的 ::view-transition-* 伪元素 + WAAPI。
+   view-transition-name 约定:一律 ody- 前缀,且【每个渲染文档内必须唯一】——
+   重复的 name 会静默中止【整个】过渡。canonical 只命名【共享 shell】;
+   各服务在自己的 theme/service.css 里命名自有 chrome。
+   ============================================================================ */
+
+/* 让新旧两个文档都 opt-in(跨文档过渡的硬性要求) */
+@view-transition{ navigation:auto; }
+
+/* 根过渡:旧文档快速淡出,新文档淡入 + 6px 上浮 */
+::view-transition-old(root){ animation-duration:var(--vt-out); animation-timing-function:var(--vt-ease); }
+::view-transition-new(root){ animation:ody-vt-rise var(--vt-dur) var(--vt-ease) both; }
+@keyframes ody-vt-rise{ from{ opacity:0; transform:translateY(6px); } }
+
+/* 共享 shell 命名:任何用了这些 canonical class 的服务,re-vendor 后免费获得
+   "导航时 shell 定住不动"。这些 class 在一个页面内天然唯一。 */
+.appbar{ view-transition-name:ody-appbar; }
+.site-foot{ view-transition-name:ody-footer; }
+.pagehead h1{ view-transition-name:ody-page-title; }
+
+/* 命名组过渡的统一节奏(如滑动激活指示条 ody-tab-active) */
+::view-transition-group(ody-tab-active){ animation-duration:var(--dur-3); animation-timing-function:var(--ease-out); }
+
+/* 静态元素进场 + 到达高亮(WAAPI 与 CSS 双通道用) */
+[data-motion-enter]{ animation:ody-rise var(--dur-3) var(--ease-out) both; }
+@keyframes ody-rise{ from{ opacity:0; transform:translateY(6px); } }
+@keyframes ody-line-flash{ 0%{ background:color-mix(in srgb,var(--warn) 22%,transparent); } 100%{ background:transparent; } }
+
+/* ---- prefers-reduced-motion 硬开关 ----
+   components.css:513 的 `*{animation:none}` 是后代选择器,够不到 ::view-transition-*
+   伪元素(它们不是 * 的后代)。这里补齐,让"减少动效"真的把过渡也关掉。 */
+@media (prefers-reduced-motion:reduce){
+  ::view-transition-group(*),
+  ::view-transition-image-pair(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*){ animation:none !important; }
+}
+
+.gallery-stack{display:grid;gap:var(--sp-5);counter-reset:gallery-plate}
+.gallery-section{display:grid;gap:var(--sp-3);counter-increment:gallery-plate}
+.gallery-section>h2{display:flex;align-items:center;gap:var(--sp-3);font-family:var(--mono)}
+.gallery-section>h2::before{content:"PLATE " counter(gallery-plate,decimal-leading-zero);font-size:var(--fs-micro);letter-spacing:var(--track-eyebrow);color:var(--coordinate-ink)}
 .gallery-row{display:flex;flex-wrap:wrap;gap:var(--sp-3);align-items:center}
 .gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:var(--sp-4)}
 </style>
 
 </head>
 <body class="page-console">
-<header class="appbar"><a class="appbar__brand" href="/"><span class="app-tile" style="--app:#4f46e5"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span><span class="appbar__name"><b>Odyssey</b><span>helper-rendered UI</span></span></a><nav class="appbar__nav"><a class="appnav is-active" href="#controls"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span>Controls</span></a><a class="appnav" href="#data"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.7 9a1 1 0 0 1-.6 0C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.2-2.7a1.2 1.2 0 0 1 1.6 0C14.5 3.8 17 5 19 5a1 1 0 0 1 1 1z"/></svg><span>Data</span></a></nav><span class="appbar__spacer"></span><div class="appbar__right"><div class="langswitch" role="group" aria-label="Language"><a class="langswitch__opt is-active" href="/_gw/lang?to=en" aria-current="true">English</a><a class="langswitch__opt" href="/_gw/lang?to=zh">中文</a><a class="langswitch__opt" href="/_gw/lang?to=ja">日本語</a></div><div class="usermenu"><button class="usermenu__btn" type="button" aria-haspopup="true"><span class="avatar" aria-hidden="true">O</span><span class="usermenu__name">ops</span><svg class="usermenu__caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><div class="usermenu__pop"><div class="usermenu__head"><span class="avatar avatar--lg" aria-hidden="true">O</span><div><b>ops</b><span>ops@w33d.xyz</span></div></div><a class="menuitem" href="/"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.7 4 3 9 3s9-1.3 9-3V5"/><path d="M3 12c0 1.7 4 3 9 3s9-1.3 9-3"/></svg><span>All apps</span></a><a class="menuitem menuitem--danger" href="/logout"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg><span>Log out</span></a></div></div></div></header>
-<main class="console"><div id="top" class="gallery-stack"><div class="pagehead"><div><h1>Odyssey helpers</h1><p>Kitchen-sink page rendered by the Rust helper API.</p></div></div><section id="controls" class="gallery-section"><h2>Buttons</h2><div class="gallery-row"><button class="btn btn-primary" type="button">Primary</button><button class="btn btn-secondary" type="button">Secondary</button><button class="btn btn-ghost" type="button">Ghost</button><button class="btn btn-subtle" type="button">Subtle</button><button class="btn btn-danger" type="button">Danger</button><button class="btn btn-primary btn-sm" type="button">Small</button><button class="btn btn-primary btn-lg" type="button">Large</button><button class="btn btn-primary is-busy" type="button" aria-busy="true" disabled>Saving</button></div></section><section id="feedback" class="gallery-section"><h2>Pills, toasts, switches</h2><div class="gallery-row"><span class="pill pill-ok">ok</span><span class="pill pill-warn">warn</span><span class="pill pill-down">down</span><span class="pill pill-info">info</span><span class="pill pill-accent">accent</span><span class="pill pill-neutral">neutral</span><label class="check"><span class="switch"><input type="checkbox" role="switch" aria-label="enabled" name="enabled" checked><i aria-hidden="true"></i></span> Enabled</label></div><div class="toast-region" style="position:static;transform:none;align-items:flex-start;pointer-events:auto"><div class="toast toast--ok"><span class="toast__ico">ok</span>API key created</div><div class="toast toast--err"><span class="toast__ico">!</span>Upstream returned 502</div></div></section><section id="data" class="gallery-section"><h2>Cards, stats, tables</h2><div class="gallery-grid"><div class="card"><div class="card__head"><div class="card__title"><h2>Status</h2></div></div><div class="card__body"><div class="stat-grid"><div class="stat"><div class="stat__label">Requests</div><div class="stat__value">48,211</div><div class="stat__meta">+12.4% vs yesterday</div><div class="stat__meter"><i style="width:72%"></i></div></div><div class="stat"><div class="stat__label">Latency</div><div class="stat__value">184 ms</div><div class="stat__meta">P95</div><div class="stat__meter"><i style="width:46%"></i></div></div><div class="stat"><div class="stat__label">Uptime</div><div class="stat__value">99.98%</div><div class="stat__meta">90 days</div></div></div></div></div><div class="card"><div class="card__head"><div class="card__title"><h2>Service table</h2></div></div><div class="card__body card__body--list"><div class="table-wrap"><table><thead><tr><th>Service</th><th>Status</th><th class="num">Requests</th></tr></thead><tbody><tr><td>relay</td><td><span class="pill pill-ok">healthy</span></td><td class="num">48,211</td></tr><tr><td>corvid</td><td><span class="pill pill-warn">degraded</span></td><td class="num">9,038</td></tr><tr><td>beacon</td><td><span class="pill pill-down">down</span></td><td class="num">0</td></tr></tbody></table></div></div></div><div class="card"><div class="card__head"><div class="card__title"><h2>Empty table</h2></div></div><div class="card__body"><div class="empty"><div class="empty__ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.7 4 3 9 3s9-1.3 9-3V5"/><path d="M3 12c0 1.7 4 3 9 3s9-1.3 9-3"/></svg></div><h3>No data</h3><p>There is nothing to show here yet.</p></div></div></div></div></section><section id="forms" class="gallery-section"><h2>Forms and fields</h2><div class="card"><div class="card__head"><div class="card__title"><h2>Settings form</h2></div></div><div class="card__body"><form method="post" action="/settings"><input type="hidden" name="csrf_token" value="csrf&lt;&amp;token"><div class="field"><label for="field-name">Name</label><input class="input" type="text" name="name" value="relay" id="field-name"></div><div class="field"><label for="field-replicas">Replicas</label><input class="input" type="number" name="replicas" min="1" max="9" value="3" id="field-replicas"></div><div class="field"><label for="field-region">Region</label><select class="select" name="region" id="field-region"><option value="fsn1" selected>FSN1</option><option value="hel1">HEL1</option><option value="ash">ASH</option></select></div><div class="field"><label for="field-notes">Notes</label><textarea class="textarea" name="notes" rows="4" id="field-notes">Rotate keys monthly.</textarea><div class="hint">Plain text only.</div></div><div class="field"><label>Traffic split</label><div class="field__row"><input type="range" name="split" min="0" max="100" step="5" value="45"><output class="pg__out">45</output></div></div><div class="field field--check"><label class="check"><input type="checkbox" name="logging" value="1" checked> Enable request logging</label></div><div class="actions"><button class="btn btn-primary" type="button">Save changes</button><a class="btn btn-ghost" href="/cancel" role="button">Cancel</a></div></form></div></div></section><section id="layout" class="gallery-section"><h2>Layout, tabs, modal, pager</h2><div class="layout"><div><div class="card"><div class="card__head"><div class="card__title"><h2>Main column</h2></div></div><div class="card__body card__body--list"><nav class="tabs" aria-label="Resource sections"><a class="tab is-active" href="#overview" aria-current="page">Overview</a><a class="tab" href="#usage">Usage</a><a class="tab" href="#keys">Keys</a></nav><nav class="pager" aria-label="Pagination"><a class="btn btn-ghost btn-sm" href="#page-1">Previous</a><span class="pager__spacer"></span><a href="#page-1">1</a><span class="is-current" aria-current="page">2</span><a href="#page-3">3</a><a class="btn btn-ghost btn-sm" href="#page-3">Next</a></nav></div></div></div><div><div class="stat"><div class="stat__label">Spend</div><div class="stat__value">$66.15</div><div class="stat__meta">30d</div><div class="stat__meter"><i style="width:58%"></i></div></div><div class="modal" id="revoke-key" role="dialog" aria-modal="true" aria-labelledby="revoke-key-title"><div class="modal__card"><div class="modal__head"><h2 id="revoke-key-title">Revoke key</h2></div><div class="modal__body"><p>This trusted static snippet demonstrates modal classes.</p><div class="field field--check"><label class="check"><input type="checkbox" name="confirm" value="1"> I understand this cannot be undone</label></div></div><div class="modal__foot"><button class="btn btn-ghost" type="button">Cancel</button><button class="btn btn-danger" type="button">Revoke</button></div></div></div></div></div></section><section id="bank" class="gallery-section"><h2>W3 bank components</h2><div class="gallery-grid"><div class="card"><div class="card__head"><div class="card__title"><h2>Alerts</h2></div></div><div class="card__body"><div class="gallery-stack"><div class="alert alert--ok" role="status"><span class="alert__ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg></span><div class="alert__body"><div class="alert__title">Saved</div>Changes replicated to all regions.</div></div><div class="alert alert--warn" role="status"><span class="alert__ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 2 20h20L12 3Z"/><path d="M12 10v4M12 17h.01"/></svg></span><div class="alert__body"><div class="alert__title">Near limit</div>Storage is above 80%.</div></div><div class="alert alert--down" role="alert"><span class="alert__ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg></span><div class="alert__body"><div class="alert__title">Deploy failed</div>Builder node is unreachable.</div></div><div class="alert alert--info" role="status"><span class="alert__ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg></span><div class="alert__body">Version 1.1.0 is available.</div></div></div></div></div><div class="card"><div class="card__head"><div class="card__title"><h2>Chips and identity</h2></div></div><div class="card__body"><div class="gallery-row"><span class="chip">region: fsn1<a class="chip__remove" href="#remove-region" aria-label="Remove region: fsn1">×</a></span><span class="chip tone-3 chip--dot">Growth<span class="countpill">7</span><button class="chip__remove" type="button" aria-label="Remove Growth">×</button></span><span class="letter-tile tone-5" aria-hidden="true">O</span></div></div></div><div class="card"><div class="card__head"><div class="card__title"><h2>Progress and skeleton</h2></div></div><div class="card__body"><div class="progress progress--ok" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="63"><span class="progress__bar" style="--w:63%"></span></div><div class="skeleton-group" aria-hidden="true"><span class="skeleton skeleton--text"></span><span class="skeleton skeleton--text"></span><span class="skeleton skeleton--text"></span><span class="skeleton skeleton--text"></span></div></div></div><div class="card"><div class="card__head"><div class="card__title"><h2>Breadcrumb</h2></div></div><div class="card__body"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="breadcrumb__sep" aria-hidden="true">/</span><span class="breadcrumb__item" aria-current="page">Bank</span></nav></div></div><div class="card"><div class="card__head"><div class="card__title"><h2>Description, segment, stepper</h2></div></div><div class="card__body"><dl class="desc"><dt class="desc__term">Owner</dt><dd class="desc__val">Platform</dd><dt class="desc__term">Region</dt><dd class="desc__val">FSN1</dd></dl><div class="segment"><a class="segment__item is-active" href="#">Daily</a><a class="segment__item" href="#">Weekly</a><a class="segment__item" href="#">Monthly</a></div><div class="stepper"><div class="step is-done"><span class="step__dot">1</span><div class="step__body"><div class="step__label">Plan</div><div class="step__sub">Done</div></div></div><div class="step is-active"><span class="step__dot">2</span><div class="step__body"><div class="step__label">Build</div><div class="step__sub">Running</div></div></div><div class="step"><span class="step__dot">3</span><div class="step__body"><div class="step__label">Ship</div><div class="step__sub">Queued</div></div></div></div></div></div><div class="card"><div class="card__head"><div class="card__title"><h2>Disclosure and overlays</h2></div></div><div class="card__body"><div class="accordion"><details class="accordion__item" open><summary class="accordion__head"><span>Deployment notes</span><svg class="accordion__caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary><div class="accordion__panel">Zero JavaScript details/summary accordion.</div></details></div><details class="pop"><summary class="btn btn-ghost btn-sm">Actions</summary><div class="pop__card"><a class="menuitem" href="#">Open</a><a class="menuitem menuitem--danger" href="#">Delete</a></div></details><div class="drawer is-open" style="position:relative;height:190px;inset:auto"><div class="drawer__backdrop"></div><div class="drawer__panel"><div class="drawer__head"><h2 class="drawer__title">Drawer</h2></div><div class="drawer__body">Server-rendered drawer shell.</div><div class="drawer__foot"><button class="btn btn-ghost btn-sm">Close</button></div></div></div></div></div><div class="card"><div class="card__head"><div class="card__title"><h2>Timeline and errors</h2></div></div><div class="card__body"><ul class="eventline"><li class="eventline__item"><span class="eventline__dot eventline__dot--ok"></span><div class="eventline__time">09:12</div><div class="eventline__title">Build complete</div><div class="eventline__body">Artifacts uploaded.</div></li><li class="eventline__item"><span class="eventline__dot eventline__dot--warn"></span><div class="eventline__time">09:18</div><div class="eventline__title">Manual approval</div><div class="eventline__body">Waiting on operator.</div></li></ul><div class="error-card"><div class="error-card__code">404</div><div class="error-card__title">Not found</div><div class="error-card__msg">The requested example does not exist.</div></div></div></div><div class="card"><div class="card__head"><div class="card__title"><h2>Masthead, filterbar, badge</h2></div></div><div class="card__body"><div class="masthead"><div><div class="masthead__eyebrow">Release</div><h1 class="masthead__title">Bank withdrawal</h1><p class="masthead__tagline">Components harvested into canonical Odyssey.</p></div><div class="masthead__actions"><button class="btn btn-primary" type="button">Ship</button></div></div><div class="filterbar"><input class="input" type="search" value="status:open"><div class="filterbar__right"><span class="notif-badge-wrap"><button class="iconbtn" type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></button><span class="notif-badge notif-badge--accent">3</span></span></div></div></div></div></div></section><section id="density" class="gallery-section"><h2>Compact density</h2><div data-density="compact" class="gallery-grid"><div class="card"><div class="card__head"><div class="card__title"><h2>Compact controls</h2></div></div><div class="card__body"><div class="gallery-row"><button class="btn btn-primary" type="button">Save</button><button class="btn btn-ghost" type="button">Cancel</button><span class="chip">compact<a class="chip__remove" href="#" aria-label="Remove compact">×</a></span> </div></div></div><div class="card"><div class="card__head"><div class="card__title"><h2>Compact data</h2></div></div><div class="card__body"><div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="42"><span class="progress__bar" style="--w:42%"></span></div><div class="skeleton-group" aria-hidden="true"><span class="skeleton skeleton--text"></span><span class="skeleton skeleton--text"></span><span class="skeleton skeleton--text"></span></div></div></div><div class="pagehead pagehead--glyph"><span class="glyph"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span><div><div class="pagehead__eyebrow">Density</div><h1>Compact pagehead</h1><p>Scoped preview using the density tokens.</p></div><div class="pagehead__actions"><button class="btn btn-primary" type="button">Action</button></div></div></div></section></div></main>
+<header class="appbar"><a class="appbar__brand" href="/"><span class="app-tile" style="--app:#b6422c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v5M12 17v5M2 12h5M17 12h5"/><path d="m12 9 3 3-3 3-3-3Z"/></svg></span><span class="appbar__name"><b>Odyssey</b><span>sovereign component system</span></span></a><nav class="appbar__nav"><a class="appnav is-active" href="#controls"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span>Controls</span></a><a class="appnav" href="#data"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.7 9a1 1 0 0 1-.6 0C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.2-2.7a1.2 1.2 0 0 1 1.6 0C14.5 3.8 17 5 19 5a1 1 0 0 1 1 1z"/></svg><span>Data</span></a></nav><span class="appbar__spacer"></span><div class="appbar__right"><div class="themeswitch" role="group" aria-label="Theme"><a class="themeswitch__opt is-active" href="/_gw/theme?to=light" title="Light" aria-label="Light" aria-current="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></a><a class="themeswitch__opt" href="/_gw/theme?to=dark" title="Dark" aria-label="Dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6.5 6.5 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg></a><a class="themeswitch__opt" href="/_gw/theme?to=auto" title="System" aria-label="System"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></a></div><div class="langswitch" role="group" aria-label="Language"><a class="langswitch__opt is-active" href="/_gw/lang?to=en" aria-current="true">English</a><a class="langswitch__opt" href="/_gw/lang?to=zh">中文</a><a class="langswitch__opt" href="/_gw/lang?to=ja">日本語</a></div><div class="usermenu"><button class="usermenu__btn" type="button" aria-haspopup="true"><span class="avatar" aria-hidden="true">O</span><span class="usermenu__name">ops</span><svg class="usermenu__caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><div class="usermenu__pop"><div class="usermenu__head"><span class="avatar avatar--lg" aria-hidden="true">O</span><div><b>ops</b><span>ops@w33d.xyz</span></div></div><a class="menuitem" href="/"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.7 4 3 9 3s9-1.3 9-3V5"/><path d="M3 12c0 1.7 4 3 9 3s9-1.3 9-3"/></svg><span>All apps</span></a><a class="menuitem menuitem--danger" href="/logout"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg><span>Log out</span></a></div></div></div></header>
+<main class="console"><div id="top" class="gallery-stack"><div class="pagehead"><div><h1>Odyssey field console</h1><p>Mineral surfaces, structural rules, and status-first components rendered by the Rust helper API.</p></div></div><section id="controls" class="gallery-section"><h2>Buttons</h2><div class="gallery-row"><button class="btn btn-primary" type="button">Primary</button><button class="btn btn-secondary" type="button">Secondary</button><button class="btn btn-ghost" type="button">Ghost</button><button class="btn btn-subtle" type="button">Subtle</button><button class="btn btn-danger" type="button">Danger</button><button class="btn btn-primary btn-sm" type="button">Small</button><button class="btn btn-primary btn-lg" type="button">Large</button><button class="btn btn-primary is-busy" type="button" aria-busy="true" disabled>Saving</button></div></section><section id="feedback" class="gallery-section"><h2>Pills, toasts, switches</h2><div class="gallery-row"><span class="pill pill-ok">ok</span><span class="pill pill-warn">warn</span><span class="pill pill-down">down</span><span class="pill pill-info">info</span><span class="pill pill-accent">accent</span><span class="pill pill-neutral">neutral</span><label class="check"><span class="switch"><input type="checkbox" role="switch" aria-label="enabled" name="enabled" checked><i aria-hidden="true"></i></span> Enabled</label></div><div class="toast-region" style="position:static;transform:none;align-items:flex-start;pointer-events:auto"><div class="toast toast--ok"><span class="toast__ico">ok</span>API key created</div><div class="toast toast--err"><span class="toast__ico">!</span>Upstream returned 502</div></div></section><section id="data" class="gallery-section"><h2>Cards, stats, tables</h2><div class="gallery-grid"><div class="card"><div class="card__head"><div class="card__title"><h2>Status</h2></div></div><div class="card__body"><div class="stat-grid"><div class="stat"><div class="stat__label">Requests</div><div class="stat__value">48,211</div><div class="stat__meta">+12.4% vs yesterday</div><div class="stat__meter"><i style="width:72%"></i></div></div><div class="stat"><div class="stat__label">Latency</div><div class="stat__value">184 ms</div><div class="stat__meta">P95</div><div class="stat__meter"><i style="width:46%"></i></div></div><div class="stat"><div class="stat__label">Uptime</div><div class="stat__value">99.98%</div><div class="stat__meta">90 days</div></div></div></div></div><div class="card"><div class="card__head"><div class="card__title"><h2>Service table</h2></div></div><div class="card__body card__body--list"><div class="table-wrap"><table><thead><tr><th>Service</th><th>Status</th><th class="num">Requests</th></tr></thead><tbody><tr><td>relay</td><td><span class="pill pill-ok">healthy</span></td><td class="num">48,211</td></tr><tr><td>corvid</td><td><span class="pill pill-warn">degraded</span></td><td class="num">9,038</td></tr><tr><td>beacon</td><td><span class="pill pill-down">down</span></td><td class="num">0</td></tr></tbody></table></div></div></div><div class="card"><div class="card__head"><div class="card__title"><h2>Empty table</h2></div></div><div class="card__body"><div class="empty"><div class="empty__ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.7 4 3 9 3s9-1.3 9-3V5"/><path d="M3 12c0 1.7 4 3 9 3s9-1.3 9-3"/></svg></div><h3>No data</h3><p>There is nothing to show here yet.</p></div></div></div></div></section><section id="forms" class="gallery-section"><h2>Forms and fields</h2><div class="card"><div class="card__head"><div class="card__title"><h2>Settings form</h2></div></div><div class="card__body"><form method="post" action="/settings"><input type="hidden" name="csrf_token" value="csrf&lt;&amp;token"><div class="field"><label for="field-name">Name</label><input class="input" type="text" name="name" value="relay" id="field-name"></div><div class="field"><label for="field-replicas">Replicas</label><input class="input" type="number" name="replicas" min="1" max="9" value="3" id="field-replicas"></div><div class="field"><label for="field-region">Region</label><select class="select" name="region" id="field-region"><option value="fsn1" selected>FSN1</option><option value="hel1">HEL1</option><option value="ash">ASH</option></select></div><div class="field"><label for="field-notes">Notes</label><textarea class="textarea" name="notes" rows="4" id="field-notes">Rotate keys monthly.</textarea><div class="hint">Plain text only.</div></div><div class="field"><label>Traffic split</label><div class="field__row"><input type="range" name="split" min="0" max="100" step="5" value="45"><output class="pg__out">45</output></div></div><div class="field field--check"><label class="check"><input type="checkbox" name="logging" value="1" checked> Enable request logging</label></div><div class="actions"><button class="btn btn-primary" type="button">Save changes</button><a class="btn btn-ghost" href="/cancel" role="button">Cancel</a></div></form></div></div></section><section id="layout" class="gallery-section"><h2>Layout, tabs, modal, pager</h2><div class="layout"><div><div class="card"><div class="card__head"><div class="card__title"><h2>Main column</h2></div></div><div class="card__body card__body--list"><nav class="tabs" aria-label="Resource sections"><a class="tab is-active" href="#overview" aria-current="page">Overview</a><a class="tab" href="#usage">Usage</a><a class="tab" href="#keys">Keys</a></nav><nav class="pager" aria-label="Pagination"><a class="btn btn-ghost btn-sm" href="#page-1">Previous</a><span class="pager__spacer"></span><a href="#page-1">1</a><span class="is-current" aria-current="page">2</span><a href="#page-3">3</a><a class="btn btn-ghost btn-sm" href="#page-3">Next</a></nav></div></div></div><div><div class="stat"><div class="stat__label">Spend</div><div class="stat__value">$66.15</div><div class="stat__meta">30d</div><div class="stat__meter"><i style="width:58%"></i></div></div><div class="modal" id="revoke-key" role="dialog" aria-modal="true" aria-labelledby="revoke-key-title"><div class="modal__card"><div class="modal__head"><h2 id="revoke-key-title">Revoke key</h2></div><div class="modal__body"><p>This trusted static snippet demonstrates modal classes.</p><div class="field field--check"><label class="check"><input type="checkbox" name="confirm" value="1"> I understand this cannot be undone</label></div></div><div class="modal__foot"><button class="btn btn-ghost" type="button">Cancel</button><button class="btn btn-danger" type="button">Revoke</button></div></div></div></div></div></section><section id="bank" class="gallery-section"><h2>W3 bank components</h2><div class="gallery-grid"><div class="card"><div class="card__head"><div class="card__title"><h2>Alerts</h2></div></div><div class="card__body"><div class="gallery-stack"><div class="alert alert--ok" role="status"><span class="alert__ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg></span><div class="alert__body"><div class="alert__title">Saved</div>Changes replicated to all regions.</div></div><div class="alert alert--warn" role="status"><span class="alert__ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 2 20h20L12 3Z"/><path d="M12 10v4M12 17h.01"/></svg></span><div class="alert__body"><div class="alert__title">Near limit</div>Storage is above 80%.</div></div><div class="alert alert--down" role="alert"><span class="alert__ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg></span><div class="alert__body"><div class="alert__title">Deploy failed</div>Builder node is unreachable.</div></div><div class="alert alert--info" role="status"><span class="alert__ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg></span><div class="alert__body">Version 1.1.0 is available.</div></div></div></div></div><div class="card"><div class="card__head"><div class="card__title"><h2>Chips and identity</h2></div></div><div class="card__body"><div class="gallery-row"><span class="chip">region: fsn1<a class="chip__remove" href="#remove-region" aria-label="Remove region: fsn1">×</a></span><span class="chip tone-3 chip--dot">Growth<span class="countpill">7</span><button class="chip__remove" type="button" aria-label="Remove Growth">×</button></span><span class="letter-tile tone-5" aria-hidden="true">O</span></div></div></div><div class="card"><div class="card__head"><div class="card__title"><h2>Progress and skeleton</h2></div></div><div class="card__body"><div class="progress progress--ok" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="63"><span class="progress__bar" style="--w:63%"></span></div><div class="skeleton-group" aria-hidden="true"><span class="skeleton skeleton--text"></span><span class="skeleton skeleton--text"></span><span class="skeleton skeleton--text"></span><span class="skeleton skeleton--text"></span></div></div></div><div class="card"><div class="card__head"><div class="card__title"><h2>Breadcrumb</h2></div></div><div class="card__body"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="breadcrumb__sep" aria-hidden="true">/</span><span class="breadcrumb__item" aria-current="page">Bank</span></nav></div></div><div class="card"><div class="card__head"><div class="card__title"><h2>Description, segment, stepper</h2></div></div><div class="card__body"><dl class="desc"><dt class="desc__term">Owner</dt><dd class="desc__val">Platform</dd><dt class="desc__term">Region</dt><dd class="desc__val">FSN1</dd></dl><div class="segment"><a class="segment__item is-active" href="#">Daily</a><a class="segment__item" href="#">Weekly</a><a class="segment__item" href="#">Monthly</a></div><div class="stepper"><div class="step is-done"><span class="step__dot">1</span><div class="step__body"><div class="step__label">Plan</div><div class="step__sub">Done</div></div></div><div class="step is-active"><span class="step__dot">2</span><div class="step__body"><div class="step__label">Build</div><div class="step__sub">Running</div></div></div><div class="step"><span class="step__dot">3</span><div class="step__body"><div class="step__label">Ship</div><div class="step__sub">Queued</div></div></div></div></div></div><div class="card"><div class="card__head"><div class="card__title"><h2>Disclosure and overlays</h2></div></div><div class="card__body"><div class="accordion"><details class="accordion__item" open><summary class="accordion__head"><span>Deployment notes</span><svg class="accordion__caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary><div class="accordion__panel">Zero JavaScript details/summary accordion.</div></details></div><details class="pop"><summary class="btn btn-ghost btn-sm">Actions</summary><div class="pop__card"><a class="menuitem" href="#">Open</a><a class="menuitem menuitem--danger" href="#">Delete</a></div></details><div class="drawer is-open" style="position:relative;height:190px;inset:auto"><div class="drawer__backdrop"></div><div class="drawer__panel"><div class="drawer__head"><h2 class="drawer__title">Drawer</h2></div><div class="drawer__body">Server-rendered drawer shell.</div><div class="drawer__foot"><button class="btn btn-ghost btn-sm">Close</button></div></div></div></div></div><div class="card"><div class="card__head"><div class="card__title"><h2>Timeline and errors</h2></div></div><div class="card__body"><ul class="eventline"><li class="eventline__item"><span class="eventline__dot eventline__dot--ok"></span><div class="eventline__time">09:12</div><div class="eventline__title">Build complete</div><div class="eventline__body">Artifacts uploaded.</div></li><li class="eventline__item"><span class="eventline__dot eventline__dot--warn"></span><div class="eventline__time">09:18</div><div class="eventline__title">Manual approval</div><div class="eventline__body">Waiting on operator.</div></li></ul><div class="error-card"><div class="error-card__code">404</div><div class="error-card__title">Not found</div><div class="error-card__msg">The requested example does not exist.</div></div></div></div><div class="card"><div class="card__head"><div class="card__title"><h2>Masthead, filterbar, badge</h2></div></div><div class="card__body"><div class="masthead"><div><div class="masthead__eyebrow">Release</div><h1 class="masthead__title">Bank withdrawal</h1><p class="masthead__tagline">Components harvested into canonical Odyssey.</p></div><div class="masthead__actions"><button class="btn btn-primary" type="button">Ship</button></div></div><div class="filterbar"><input class="input" type="search" value="status:open"><div class="filterbar__right"><span class="notif-badge-wrap"><button class="iconbtn" type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></button><span class="notif-badge notif-badge--accent">3</span></span></div></div></div></div></div></section><section id="density" class="gallery-section"><h2>Compact density</h2><div data-density="compact" class="gallery-grid"><div class="card"><div class="card__head"><div class="card__title"><h2>Compact controls</h2></div></div><div class="card__body"><div class="gallery-row"><button class="btn btn-primary" type="button">Save</button><button class="btn btn-ghost" type="button">Cancel</button><span class="chip">compact<a class="chip__remove" href="#" aria-label="Remove compact">×</a></span> </div></div></div><div class="card"><div class="card__head"><div class="card__title"><h2>Compact data</h2></div></div><div class="card__body"><div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="42"><span class="progress__bar" style="--w:42%"></span></div><div class="skeleton-group" aria-hidden="true"><span class="skeleton skeleton--text"></span><span class="skeleton skeleton--text"></span><span class="skeleton skeleton--text"></span></div></div></div><div class="pagehead pagehead--glyph"><span class="glyph"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span><div><div class="pagehead__eyebrow">Density</div><h1>Compact pagehead</h1><p>Scoped preview using the density tokens.</p></div><div class="pagehead__actions"><button class="btn btn-primary" type="button">Action</button></div></div></div></section></div></main>
 <footer class="site-foot"><span>Odyssey helper gallery</span><a href="#top">Top</a></footer>
 </body>
 </html>

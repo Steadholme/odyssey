@@ -1,12 +1,14 @@
 use odyssey::*;
 
-const BRAND_TILE: &str = r#"<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>"#;
+const BRAND_TILE: &str = r#"<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v5M12 17v5M2 12h5M17 12h5"/><path d="m12 9 3 3-3 3-3-3Z"/></svg>"#;
 const ICON_GRID: &str = r#"<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>"#;
 const ICON_SHIELD: &str = r#"<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.7 9a1 1 0 0 1-.6 0C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.2-2.7a1.2 1.2 0 0 1 1.6 0C14.5 3.8 17 5 19 5a1 1 0 0 1 1 1z"/></svg>"#;
 
 const GALLERY_CSS: &str = r#"
-.gallery-stack{display:grid;gap:var(--sp-5)}
-.gallery-section{display:grid;gap:var(--sp-3)}
+.gallery-stack{display:grid;gap:var(--sp-5);counter-reset:gallery-plate}
+.gallery-section{display:grid;gap:var(--sp-3);counter-increment:gallery-plate}
+.gallery-section>h2{display:flex;align-items:center;gap:var(--sp-3);font-family:var(--mono)}
+.gallery-section>h2::before{content:"PLATE " counter(gallery-plate,decimal-leading-zero);font-size:var(--fs-micro);letter-spacing:var(--track-eyebrow);color:var(--coordinate-ink)}
 .gallery-row{display:flex;flex-wrap:wrap;gap:var(--sp-3);align-items:center}
 .gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:var(--sp-4)}
 "#;
@@ -16,9 +18,9 @@ fn main() {
         title: "Odyssey Helper Gallery",
         brand: Brand {
             tile_svg: BRAND_TILE,
-            accent: "#4f46e5",
+            accent: "#b6422c",
             name: "Odyssey",
-            sub: "helper-rendered UI",
+            sub: "sovereign component system",
         },
         nav: &[
             NavItem {
@@ -55,8 +57,8 @@ fn gallery_body() -> Html {
     Html::concat([
         raw("<div id=\"top\" class=\"gallery-stack\">"),
         console_head(
-            "Odyssey helpers",
-            raw("<p>Kitchen-sink page rendered by the Rust helper API.</p>"),
+            "Odyssey field console",
+            raw("<p>Mineral surfaces, structural rules, and status-first components rendered by the Rust helper API.</p>"),
         ),
         section("controls", "Buttons", buttons_demo()),
         section("feedback", "Pills, toasts, switches", feedback_demo()),
