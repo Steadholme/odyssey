@@ -76,8 +76,9 @@ pub fn dynamic_scripts() -> Html {
 
 /// Build the audited internal runtime bundle, optionally including Motion and a CSP nonce.
 ///
-/// All modules remain in one script element. This keeps the original no-network deployment
-/// model while allowing strict-CSP services to authorize the exact inline block per response.
+/// All modules remain in one script element, so services make no external runtime-script request.
+/// Wire itself may still perform the same-origin HTML requests declared by `data-wire-*` markup;
+/// a CSP nonce lets strict-CSP services authorize the exact inline block per response.
 pub fn dynamic_scripts_with(opts: RuntimeOpts<'_>) -> Html {
     let nonce = opts
         .nonce
@@ -153,10 +154,36 @@ mod tests {
         assert!(WIRE_JS.contains("wire:before"));
         assert!(WIRE_JS.contains("window.OdysseyWire"));
         assert!(WIRE_JS.contains("toast--ok"));
-        // Record the outgoing swap contract before every push. This seeds the first entry and
-        // refreshes later entries when consecutive navigations use different target regions.
-        assert!(WIRE_JS.contains("if(c)s.odysseyWire=wireState(c)"));
-        assert!(WIRE_JS.contains("saveScroll(c,originY);history.pushState"));
+        // Directional history keeps both sides of an edge so mixed target regions survive
+        // Back/Forward: Back uses the destination's outgoing contract, Forward its incoming one.
+        assert!(WIRE_JS.contains("incoming:raw.incoming||null,outgoing:raw.outgoing||null"));
+        assert!(WIRE_JS.contains("if(raw.index<from)return raw.outgoing||raw.incoming"));
+        assert!(WIRE_JS.contains("if(raw.index>from)return raw.incoming||raw.outgoing"));
+        assert!(WIRE_JS.contains("entry.outgoing=wireState(c)"));
+        assert!(WIRE_JS.contains("incoming:incoming,outgoing:null"));
+        assert!(WIRE_JS.contains("u.search=new URLSearchParams(fd).toString()"));
+        assert!(WIRE_JS.contains("push=req.method==='GET'&&f.hasAttribute('data-wire-push')"));
+        assert!(WIRE_JS.contains("a.classList.toggle('is-active',current)"));
+        assert!(WIRE_JS.contains("(!lu.search||lu.search===w.location.search)"));
+        assert!(WIRE_JS.contains("function trackScroll(){saveScroll(null,w.pageYOffset||0);}"));
+        assert!(WIRE_JS.contains("w.addEventListener('scroll',trackScroll"));
+        assert!(WIRE_JS.contains("w.addEventListener('pagehide',flushScroll)"));
+        assert!(WIRE_JS.contains("err.name==='AbortError'"));
+        assert!(WIRE_JS.contains("if(s.m!=='outer'&&s.m!=='inner'){w.location.reload();return;}"));
+        assert!(WIRE_JS.contains("var ru=urlOf(r.url),ct=r.headers.get('Content-Type')||''"));
+
+        let push = WIRE_JS.find("history.pushState({odysseyWire:").unwrap();
+        let after = WIRE_JS.find("finish(trigger,'wire:after'").unwrap();
+        assert!(
+            push < after,
+            "history must be visible to wire:after listeners"
+        );
+        let choose_direction = WIRE_JS.find("s=historyWire(raw,from)").unwrap();
+        let enter_target = WIRE_JS.find("wireIndex=raw.index").unwrap();
+        assert!(
+            choose_direction < enter_target,
+            "popstate must choose direction before entering the target index"
+        );
         assert!(SPARK_JS.contains("odyssey-spark v1"));
         assert!(SPARK_JS.contains("data-spark-show"));
         assert!(SPARK_JS.contains("data-spark-click"));

@@ -441,10 +441,16 @@ fn render_nav(nav: &[NavItem], wire_target: Option<&str>) -> String {
     let mut out = format!("<nav class=\"appbar__nav\"{wire_attr}>");
     for item in nav {
         let active = if item.active { " is-active" } else { "" };
+        let current = if item.active {
+            " aria-current=\"page\""
+        } else {
+            ""
+        };
         out.push_str(&format!(
-            "<a class=\"appnav{}\" href=\"{}\">{}<span>{}</span></a>",
+            "<a class=\"appnav{}\" href=\"{}\"{}>{}<span>{}</span></a>",
             active,
             esc(item.href),
+            current,
             raw(item.icon),
             esc(item.label)
         ));
@@ -810,6 +816,10 @@ mod tests {
             .as_str()
             .contains("href=\"/deploys?state=running&amp;region=fsn1\""));
         assert!(nav.as_str().contains("Deploys &amp; jobs"));
+        assert!(nav
+            .as_str()
+            .contains("class=\"appnav is-active\" href=\"/services\" aria-current=\"page\""));
+        assert_eq!(nav.as_str().matches("aria-current=\"page\"").count(), 1);
         assert!(!nav.as_str().contains("\" onmouseover=\""));
     }
 

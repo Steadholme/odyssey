@@ -42,6 +42,7 @@
       <div class="ody-nav__label">Guide</div>
       <a class="ody-nav__item" href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12 12 3l9 9"/><path d="M5 10v10h14V10"/></svg><span>Overview</span></a>
       <a class="ody-nav__item" href="getting-started.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 10-12h-7Z"/></svg><span>Getting started</span></a>
+      <a class="ody-nav__item" href="/labs/estate"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18M5 16V8l7-5 7 5v8M9 20v-7h6v7"/><circle cx="18" cy="6" r="2"/></svg><span>Dynamic lab</span></a>
       <a class="ody-nav__item" href="tokens.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="6.5" cy="12" r="2.5"/><circle cx="15" cy="17" r="2.5"/></svg><span>Design tokens</span></a>
       <div class="ody-nav__label">Components</div>
       <a class="ody-nav__item" href="actions.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="8" rx="4"/></svg><span>Actions</span></a>
@@ -89,6 +90,7 @@
             快速开始
           </a>
           <a class="ody-btn ody-btn--secondary ody-btn--lg" href="actions.html">浏览组件</a>
+          <a class="ody-btn ody-btn--secondary ody-btn--lg" href="/labs/estate">体验动态样板</a>
           <a class="ody-btn ody-btn--ghost ody-btn--lg" href="https://git.w33d.xyz/holdfast/odyssey">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 4.6 18 4.9 18 4.9c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5Z"/></svg>
             源码
@@ -133,19 +135,19 @@
       </div></div>
       <div class="ody-card doc-feature"><div class="ody-card__body">
         <div class="doc-feature__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></div>
-        <h3>Element 级广度</h3><p>Actions、Forms、Data display、Feedback、Navigation、Typography、Layout、Overlays 八大类，覆盖上百个组件与状态。</p>
+        <h3>内部服务端动态</h3><p>HOLDFAST 内部 Rust 发行线由 Wire、Spark、Motion 组成；公开 <code>odyssey.js</code> 仍是无网络请求的 UI 行为层。</p>
       </div></div>
     </div>
 
     <h2 id="install">30 秒装上</h2>
     <p>在页面 <code>&lt;head&gt;</code> 引入样式，在 <code>&lt;/body&gt;</code> 前引入脚本即可。字体为可选项。</p>
     <div class="doc-code doc-code--stand"><pre><code>&lt;!-- 样式（必需） --&gt;
-&lt;link rel="stylesheet" href="https://odyssey.w33d.xyz/1.0/odyssey.css"&gt;
+&lt;link rel="stylesheet" href="https://odyssey.w33d.xyz/1.1/odyssey.css"&gt;
 &lt;!-- Inter 字体（可选） --&gt;
-&lt;link rel="stylesheet" href="https://odyssey.w33d.xyz/1.0/odyssey-font.css"&gt;
+&lt;link rel="stylesheet" href="https://odyssey.w33d.xyz/1.1/odyssey-font.css"&gt;
 
 &lt;!-- 交互脚本（可选，data-* 渐进增强） --&gt;
-&lt;script src="https://odyssey.w33d.xyz/1.0/odyssey.js"&gt;&lt;/script&gt;</code></pre></div>
+&lt;script src="https://odyssey.w33d.xyz/1.1/odyssey.js"&gt;&lt;/script&gt;</code></pre></div>
 
     <h2 id="components">按类别浏览</h2>
     <div class="ody-grid ody-grid--2 ody-mt-4">

@@ -125,8 +125,8 @@ impl<'a> WireOpts<'a> {
         self
     }
 
-    /// Push the final response URL into browser history for a wired link.
-    /// Forms deliberately ignore this option and retain their native history semantics.
+    /// Push the final response URL into browser history for a wired link or GET form.
+    /// POST forms deliberately ignore this option to avoid replayable mutation entries.
     pub const fn push_history(mut self) -> Self {
         self.push_history = true;
         self
@@ -210,12 +210,13 @@ pub fn link_with_wire(href: &str, label: &str, wire: WireOpts<'_>) -> Html {
 }
 
 pub fn form(method: &'static str, action: &str, csrf: Csrf<'_>, body: Html) -> Html {
-    form_impl(method, action, csrf, body, "")
+    form_impl(method, action, csrf, body, "", true)
 }
 
 /// A progressively enhanced form backed by Odyssey Wire.
 ///
-/// The native method, action, and CSRF field are retained as the no-JavaScript floor.
+/// The native method and action are retained as the no-JavaScript floor. Mutation forms include
+/// the CSRF field; GET forms omit it so secrets never leak into URLs or browser history.
 pub fn form_with_wire(
     method: &'static str,
     action: &str,
@@ -223,12 +224,14 @@ pub fn form_with_wire(
     body: Html,
     wire: WireOpts<'_>,
 ) -> Html {
+    let is_get = method.eq_ignore_ascii_case("get");
     form_impl(
         method,
         action,
         csrf,
         body,
-        &render_wire_attrs(wire, WireElement::Form),
+        &render_wire_attrs(wire, WireElement::Form(is_get)),
+        !is_get,
     )
 }
 
@@ -238,31 +241,35 @@ fn form_impl(
     csrf: Csrf<'_>,
     body: Html,
     wire_attrs: &str,
+    include_csrf: bool,
 ) -> Html {
-    Html(format!(
-        concat!(
-            "<form method=\"{}\" action=\"{}\"{}>",
+    let csrf_field = if include_csrf {
+        format!(
             "<input type=\"hidden\" name=\"csrf_token\" value=\"{}\">",
-            "{}",
-            "</form>"
-        ),
+            esc(csrf.0)
+        )
+    } else {
+        String::new()
+    };
+    Html(format!(
+        "<form method=\"{}\" action=\"{}\"{}>{}{}</form>",
         esc(method),
         esc(action),
         wire_attrs,
-        esc(csrf.0),
+        csrf_field,
         body
     ))
 }
 
 #[derive(Clone, Copy)]
 enum WireElement {
-    Form,
+    Form(bool),
     Link,
 }
 
 fn render_wire_attrs(wire: WireOpts<'_>, element: WireElement) -> String {
     let action = match element {
-        WireElement::Form => "submit",
+        WireElement::Form(_) => "submit",
         WireElement::Link => "get",
     };
     let mut out = format!(
@@ -281,10 +288,10 @@ fn render_wire_attrs(wire: WireOpts<'_>, element: WireElement) -> String {
             out.push_str(&format!(" {name}=\"{}\"", esc(value)));
         }
     }
-    if matches!(element, WireElement::Link) && wire.push_history {
+    if matches!(element, WireElement::Link | WireElement::Form(true)) && wire.push_history {
         out.push_str(" data-wire-push");
     }
-    if matches!(element, WireElement::Form) && wire.optimistic_delete {
+    if matches!(element, WireElement::Form(_)) && wire.optimistic_delete {
         out.push_str(" data-wire-optimistic");
     }
     out
@@ -650,6 +657,17 @@ mod tests {
         assert!(html
             .as_str()
             .contains("name=\"csrf_token\" value=\"token&lt;&amp;&quot;\""));
+
+        let get = form_with_wire(
+            "get",
+            "/services",
+            Csrf("must-not-leak"),
+            Html::default(),
+            WireOpts::new("#service-grid").push_history(),
+        );
+        assert!(get.as_str().contains("data-wire-push"));
+        assert!(!get.as_str().contains("csrf_token"));
+        assert!(!get.as_str().contains("must-not-leak"));
     }
 
     #[test]

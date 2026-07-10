@@ -42,6 +42,7 @@
       <div class="ody-nav__label">Guide</div>
       <a class="ody-nav__item" href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12 12 3l9 9"/><path d="M5 10v10h14V10"/></svg><span>Overview</span></a>
       <a class="ody-nav__item" href="getting-started.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 10-12h-7Z"/></svg><span>Getting started</span></a>
+      <a class="ody-nav__item" href="/labs/estate"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18M5 16V8l7-5 7 5v8M9 20v-7h6v7"/><circle cx="18" cy="6" r="2"/></svg><span>Dynamic lab</span></a>
       <a class="ody-nav__item" href="tokens.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="6.5" cy="12" r="2.5"/><circle cx="15" cy="17" r="2.5"/></svg><span>Design tokens</span></a>
       <div class="ody-nav__label">Components</div>
       <a class="ody-nav__item" href="actions.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="8" rx="4"/></svg><span>Actions</span></a>
@@ -67,14 +68,14 @@
     <p>在页面 <code>&lt;head&gt;</code> 内引入样式表。<code>odyssey.css</code> 为核心（不内嵌字体，保持轻量）；<code>odyssey-font.css</code> 为可选的 Inter 字体（data-URI 内嵌，零外部请求）。</p>
     <div class="doc-code doc-code--stand"><pre><code>&lt;head&gt;
   &lt;!-- 核心样式，必需 --&gt;
-  &lt;link rel="stylesheet" href="https://odyssey.w33d.xyz/1.0/odyssey.css"&gt;
+  &lt;link rel="stylesheet" href="https://odyssey.w33d.xyz/1.1/odyssey.css"&gt;
 
   &lt;!-- Inter 字体，可选 --&gt;
-  &lt;link rel="stylesheet" href="https://odyssey.w33d.xyz/1.0/odyssey-font.css"&gt;
+  &lt;link rel="stylesheet" href="https://odyssey.w33d.xyz/1.1/odyssey-font.css"&gt;
 &lt;/head&gt;</code></pre></div>
 
     <p>在 <code>&lt;/body&gt;</code> 前引入交互脚本。它零依赖、以 <code>data-*</code> 属性渐进增强，并在 <code>DOMContentLoaded</code> 自动初始化。若你只用静态组件，脚本可以省略。</p>
-    <div class="doc-code doc-code--stand"><pre><code>  &lt;script src="https://odyssey.w33d.xyz/1.0/odyssey.js"&gt;&lt;/script&gt;
+    <div class="doc-code doc-code--stand"><pre><code>  &lt;script src="https://odyssey.w33d.xyz/1.1/odyssey.js"&gt;&lt;/script&gt;
 &lt;/body&gt;</code></pre></div>
 
     <h2 id="usage">基本用法</h2>
@@ -107,6 +108,30 @@
     </ul>
     <p>如需为后插入的子树手动接线，调用 <code>Odyssey.init(rootEl)</code>；命令式 Toast 用 <code>Odyssey.toast(&#123;title, message, tone&#125;)</code>。</p>
 
+    <h2 id="dynamic-ssr">动态 SSR 应用</h2>
+    <p>公开的 <code>.ody-*</code> 发行包负责视觉与组件行为，不接管应用数据。同仓的 HOLDFAST 内部 Rust 发行线共享 Odyssey 设计语言，并提供 <strong>Wire</strong>、<strong>Spark</strong> 与 <strong>Motion</strong>：服务端继续生成可信 HTML，浏览器按 selector 局部交换，并为小型本地状态和列表变化增加渐进增强。</p>
+    <div class="ody-alert ody-alert--info">
+      <svg class="ody-alert__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg>
+      <div class="ody-alert__body"><strong>发行边界：</strong><code>/1.1/odyssey.js</code> 只包含公开的 <code>data-ody-*</code> 组件行为，不包含 Wire、Spark 或 Motion，也不会发起网络请求。下面的 <code>data-wire-*</code> 示例仅适用于 vendored Rust 内部发行线。</div>
+    </div>
+    <div class="ody-grid ody-grid--3 ody-mt-4">
+      <div class="ody-card"><div class="ody-card__body"><span class="ody-eyebrow">Wire</span><h3 class="ody-h3 ody-mt-2">HTML over the wire</h3><p class="ody-muted ody-mt-1">同源 GET/POST、CSRF token 传递、History、焦点恢复与多个 target；响应 selector 不匹配时转为完整导航，网络或 HTTP 错误派发 <code>wire:error</code> 并显示 Toast。</p></div></div>
+      <div class="ody-card"><div class="ody-card__body"><span class="ody-eyebrow">Spark</span><h3 class="ody-h3 ody-mt-2">Local state islands</h3><p class="ody-muted ody-mt-1">用受限 data-API 管理显示、class、文本、属性与本地偏好，不引入通用状态框架。</p></div></div>
+      <div class="ody-card"><div class="ody-card__body"><span class="ody-eyebrow">Motion</span><h3 class="ody-h3 ody-mt-2">Native continuity</h3><p class="ody-muted ody-mt-1">基于 View Transition 与 FLIP，在 reduced-motion 下自动退回无动画路径。</p></div></div>
+    </div>
+    <div class="doc-code doc-code--stand"><pre><code>&lt;a href="?scope=wireguard"
+   data-wire
+   data-wire-target="#estate-results"
+   data-wire-push&gt;WireGuard&lt;/a&gt;
+
+&lt;section id="estate-results" data-motion-list&gt;...SSR HTML...&lt;/section&gt;
+
+&lt;div data-spark="view:table" data-spark-persist="view=estate:view"&gt;
+  &lt;button data-spark-click="set:view=map"&gt;Map&lt;/button&gt;
+&lt;/div&gt;</code></pre></div>
+    <p>这条路径不是客户端 SPA，也不包含缓存、WebSocket 或离线数据库；服务端仍是唯一状态源。先在真实 vertical slice 中证明需求，再按需要增加传输能力。</p>
+    <p><a class="ody-btn ody-btn--primary" href="/labs/estate">打开 Estate Atlas 动态样板</a></p>
+
     <h2 id="theming">主题切换</h2>
     <p>默认亮色。暗色同时由两条途径触发，显式覆盖优先：</p>
     <ul>
@@ -135,7 +160,7 @@
     <h2 id="delivery">CDN 与自托管</h2>
     <p>两种方式二选一，产物文件完全相同且自包含：</p>
     <ol>
-      <li><strong>CDN</strong> — 直接指向发行地址 <code>https://odyssey.w33d.xyz/1.0/…</code>，最省事。</li>
+      <li><strong>CDN</strong> — 直接指向发行地址 <code>https://odyssey.w33d.xyz/1.1/…</code>，最省事。</li>
       <li><strong>自托管</strong> — 把 <code>dist/</code> 下的 <code>odyssey.css</code>、<code>odyssey-font.css</code>、<code>odyssey.js</code> 拷进你的静态资源目录，改成本地路径。因为无任何外链，离线／内网／气隙环境同样可用。</li>
     </ol>
     <div class="doc-example">

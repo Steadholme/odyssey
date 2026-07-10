@@ -1,21 +1,25 @@
 # syntax=docker/dockerfile:1
 #
-# Multi-stage build for Odyssey UI static assets and documentation.
+# Multi-stage build for Odyssey UI assets, documentation, and the dynamic SSR lab.
 #   - builder: rust:1.96-slim (Debian trixie).
 #   - runtime: debian:trixie-slim (matching glibc), non-root, no TLS stack.
 #
-# The server embeds dist/ + site/ via include_str!, so the runtime image only needs
-# the odyssey-server binary. The HEALTHCHECK uses the built-in subcommand, so the
-# image needs no curl or HTTP client package.
+# The server embeds the framework, dist/, site/, and Estate Atlas via include_str!,
+# so the runtime image only needs the odyssey-server binary. The HEALTHCHECK uses
+# the built-in subcommand, so the image needs no curl or HTTP client package.
 
 FROM rust:1.96-slim AS builder
 WORKDIR /build
 
+COPY Cargo.toml Cargo.lock ./
+COPY src ./src
+COPY css ./css
+COPY js ./js
 COPY dist ./dist
 COPY site ./site
 COPY server ./server
 
-RUN cargo build --release --manifest-path server/Cargo.toml \
+RUN cargo build --locked --release --manifest-path server/Cargo.toml \
     && strip server/target/release/odyssey-server
 
 FROM debian:trixie-slim AS runtime

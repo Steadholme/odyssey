@@ -246,11 +246,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "odyssey"
+version = "0.1.0"
+
+[[package]]
 name = "odyssey-server"
 version = "0.1.0"
 dependencies = [
  "axum",
+ "http-body-util",
+ "odyssey",
  "tokio",
+ "tower",
 ]
 
 [[package]]
