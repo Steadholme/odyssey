@@ -216,7 +216,7 @@ node /usr/local/libexec/odyssey-gate/odyssey-gate.mjs status \
 
 审批使用 Ed25519，并精确绑定 release、fingerprint、window、证据 cutoff、当前 cohort 与下一 cohort。审批 private key 必须保留在离线 signer，不能放到这台拥有 Docker 权限的主机；release policy 必须先 pin public key 的 SPKI SHA-256，安装器才接受 `ODYSSEY_APPROVAL_PUBLIC_KEY_SOURCE`。当前 policy 的 `publicKeySpkiSha256` 为 `null`，因此 24 小时观察可以运行，但 approval 明确 fail closed；日后 pin public key 会改变 policy identity，必须重开完整 24 小时窗口。有效审批也不会调用 `plan`、`sync`、build、Git 或 deploy；负责人仍需复核证据，再手动执行本节前述 batch 流程。
 
-当前正式窗口于 2026-07-11 03:18:40 CEST 开始，window ID 为 `2ee089b5-3712-477f-9d45-98aa15471119`，状态为 `observing`。最早只能在 2026-07-12 03:18:40 CEST 后、同时满足至少 280 个完整样本与 freshness gate 时进入人工批准候选。status full/Wire 比较只规范化 renderer 中明确 volatile 的 `latest N ms` title，其他内容仍做 normalized exact comparison；raw hashes 同时保留用于诊断。
+当前正式窗口于 2026-07-11 03:37:07 CEST 开始，window ID 为 `b03a9148-fb2b-4244-9dfd-9cad7df8218a`，状态为 `observing`。最早只能在 2026-07-12 03:37:07 CEST 后、同时满足至少 280 个完整样本与 freshness gate 时进入人工批准候选。status full/Wire 比较只规范化 renderer 中明确 volatile 的 `latest N ms` title，其他内容仍做 normalized exact comparison；raw hashes 同时保留用于诊断。
 
 ## 非 Rust 接入边界
 

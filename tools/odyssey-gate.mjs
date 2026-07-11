@@ -1118,7 +1118,7 @@ function statusFragmentContract(html) {
 function normalizeStatusFragment(fragment) {
   if (!statusFragmentContract(fragment)) return null;
   return fragment.trim().replace(
-    /title="24h average · latest [^"]+"/g,
+    /title="24h average · latest [0-9]+ ms"/g,
     'title="24h average · latest <volatile>"',
   );
 }

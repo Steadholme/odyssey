@@ -325,6 +325,7 @@ test("status semantic parity tolerates volatile latency but rejects unsafe fragm
   assert.equal(statusFragmentsSemanticallyMatch(fragment(2), fragment(6)), true);
   assert.equal(statusFragmentsSemanticallyMatch(fragment(2), `${fragment(6)}<script>alert(1)</script>`), false);
   assert.equal(statusFragmentsSemanticallyMatch(fragment(2), fragment(6).replace("Operational", "Down")), false);
+  assert.equal(statusFragmentsSemanticallyMatch(fragment(2), fragment("ATTACK")), false);
 });
 
 test("evaluator accepts raw fragment drift only when normalized hashes match", async (t) => {

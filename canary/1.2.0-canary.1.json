@@ -101,7 +101,7 @@
   },
   "implementation": {
     "collectorPath": "/usr/local/libexec/odyssey-gate/odyssey-gate.mjs",
-    "collectorSha256": "2113bac8c4f3666718819f76a37baf106690ea372f65fb0e5a1545efeb5bdaf0",
+    "collectorSha256": "0ec2c70cfa172102a4ef07fa205f978fff1d9caeee7c8f732e65bab47574ed80",
     "browserRunnerPath": "/usr/local/libexec/odyssey-gate/odyssey-gate-browser.mjs",
     "browserRunnerSha256": "5a3d5c36f14d7f8c1a951e8d5061262ae7dd98c22681e90fd861127266f57a92",
     "browserRuntimePath": "/usr/local/lib/odyssey-browser",
