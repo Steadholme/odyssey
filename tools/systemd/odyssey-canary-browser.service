@@ -1,0 +1,41 @@
+[Unit]
+Description=Odyssey canary browser smoke collector
+After=network-online.target odyssey-canary.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=odyssey-browser
+Group=odyssey-browser
+WorkingDirectory=/usr/local/lib/odyssey-browser
+UMask=0077
+Environment=HOME=/tmp
+Environment=NODE_NO_WARNINGS=1
+ExecStart=/usr/bin/node /usr/local/libexec/odyssey-gate/odyssey-gate-browser.mjs --status-url https://status.w33d.xyz --portal-url-file /run/odyssey-canary/browser-endpoint.json --siteflow-root /usr/local/lib/odyssey-browser --chromium-path /usr/bin/chromium --output /var/lib/odyssey-canary-browser/latest.json
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+ProtectKernelLogs=true
+ProtectClock=true
+ProtectHostname=true
+ProtectProc=invisible
+RestrictNamespaces=true
+RestrictSUIDSGID=true
+RestrictRealtime=true
+LockPersonality=true
+CapabilityBoundingSet=
+AmbientCapabilities=
+ReadOnlyPaths=/run/odyssey-canary/browser-endpoint.json
+ReadWritePaths=/var/lib/odyssey-canary-browser
+InaccessiblePaths=-/var/run/docker.sock /etc/odyssey-canary /root
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+TimeoutStartSec=3min
+MemoryMax=1G
+
+[Install]
+WantedBy=multi-user.target

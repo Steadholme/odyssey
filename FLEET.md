@@ -188,6 +188,36 @@ $ODYSSEYCTL check --repo cortex,familiar,relay
 
 上述分组是推荐顺序，不是 `odysseyctl` 内建 policy。遇到高风险业务发布窗口、schema 迁移或 consumer 自身 dirty 状态时，应继续缩小 batch。
 
+## 1.2 canary 自动验收
+
+`odyssey-gate` 将“观察”自动化，但不会把“晋级”自动化。当前 policy 固定 `beacon,portal` 为 canary cohort、`sanctum` 为唯一下一候选；即使 24 小时证据全部通过，它也只生成 `ready_for_manual_approval` 和以下无执行能力的计划：
+
+```json
+{
+  "currentCohort": ["beacon", "portal"],
+  "nextCohort": ["sanctum"],
+  "autoExecute": false,
+  "commands": []
+}
+```
+
+安装器会创建两个相互隔离的 systemd timer：root collector 每 5 分钟读取 canonical、容器、live route 和公开 ingress 证据；无 Docker 权限的 `odyssey-browser` 用户每 30 分钟执行 1440/390 px、Wire refresh、overflow、Console/CSP 与真实 no-JavaScript fallback smoke。浏览器进程不能读取 `/root`、Docker socket 或审批配置，root collector 不启动 Chromium。
+
+```bash
+sudo ./tools/install-canary-gate.sh
+
+systemctl status odyssey-canary.timer odyssey-canary-browser.timer
+node /usr/local/libexec/odyssey-gate/odyssey-gate.mjs status \
+  --config /etc/odyssey-canary/policy.json \
+  --state-dir /var/lib/odyssey-canary/1.2.0-canary.1
+```
+
+主证据位于 `/var/lib/odyssey-canary/1.2.0-canary.1/`，浏览器只写 sanitized evidence 到 `/var/lib/odyssey-canary-browser/latest.json`。样本使用 SHA-256 链、不可覆盖的原子 append、tip 和 secret scanner；policy 还精确 pin 当前/rollback image ID、25 个 stable vendor tree hash、collector、browser runner 与 Playwright runtime hash。任意公开状态认证退化、route 漂移、制品或实现 hash 漂移、容器/镜像 identity 漂移、rollback 缺失、浏览器失败或日志安全信号都会阻止晋级，其中已完成采集上的硬失败返回 `rollback_required`。采集缺失、证据过期、超过 15 分钟的间隔或不足 280 个样本返回 `hold`。本地 SHA chain/tip 用于发现误改和尾部丢失，不宣称能抵御已取得 root/Docker host 控制权的攻击者；人工批准仍须在主机外保存证据副本并复核公开探针。
+
+审批使用 Ed25519，并精确绑定 release、fingerprint、window、证据 cutoff、当前 cohort 与下一 cohort。审批 private key 必须保留在离线 signer，不能放到这台拥有 Docker 权限的主机；release policy 必须先 pin public key 的 SPKI SHA-256，安装器才接受 `ODYSSEY_APPROVAL_PUBLIC_KEY_SOURCE`。当前 policy 的 `publicKeySpkiSha256` 为 `null`，因此 24 小时观察可以运行，但 approval 明确 fail closed；日后 pin public key 会改变 policy identity，必须重开完整 24 小时窗口。有效审批也不会调用 `plan`、`sync`、build、Git 或 deploy；负责人仍需复核证据，再手动执行本节前述 batch 流程。
+
+当前正式窗口于 2026-07-11 03:18:40 CEST 开始，window ID 为 `2ee089b5-3712-477f-9d45-98aa15471119`，状态为 `observing`。最早只能在 2026-07-12 03:18:40 CEST 后、同时满足至少 280 个完整样本与 freshness gate 时进入人工批准候选。status full/Wire 比较只规范化 renderer 中明确 volatile 的 `latest N ms` title，其他内容仍做 normalized exact comparison；raw hashes 同时保留用于诊断。
+
 ## 非 Rust 接入边界
 
 `distribution.toml` 当前只接受 `channel = "internal-rust"`。非 Rust 应用不属于 27 consumer / 47 surface 统计，也不能通过伪造 channel 接入 `odysseyctl`。

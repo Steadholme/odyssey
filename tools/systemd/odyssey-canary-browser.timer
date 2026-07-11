@@ -1,0 +1,12 @@
+[Unit]
+Description=Run Odyssey canary browser smoke every thirty minutes
+
+[Timer]
+OnCalendar=*:0/30
+RandomizedDelaySec=30s
+AccuracySec=15s
+Persistent=true
+Unit=odyssey-canary-browser.service
+
+[Install]
+WantedBy=timers.target

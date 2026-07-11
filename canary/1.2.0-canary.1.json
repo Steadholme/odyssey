@@ -1,0 +1,116 @@
+{
+  "schemaVersion": "odyssey.canaryPolicy.v1",
+  "release": "1.2.0-canary.1",
+  "fingerprint": "fnv1a64:20ae76d5c2ada57d",
+  "canonicalCommit": "047c33af85160b6489226907c7ff7d5ee0c693d9",
+  "stableRelease": "1.1.0",
+  "stableFingerprint": "fnv1a64:ec3b6050f90a4cf7",
+  "stableVendorTreeSha256": "9d9214e895af6f22eed68ab511102e1b8ef548f653b6c383a0b527c9815f92c9",
+  "windowSeconds": 86400,
+  "sampleIntervalSeconds": 300,
+  "maxGapSeconds": 900,
+  "minSamples": 280,
+  "maxEvidenceAgeSeconds": 900,
+  "browserMaxAgeSeconds": 3900,
+  "maxP95Ms": 5000,
+  "cohort": [
+    "beacon",
+    "portal"
+  ],
+  "nextCohort": [
+    "sanctum"
+  ],
+  "odysseyRoot": "/root/w33d_infra/odyssey",
+  "deployRoot": "/root/w33d_infra/deploy",
+  "odysseyctlPath": "/usr/local/bin/odysseyctl",
+  "postgresContainer": "holdfast-postgres-1",
+  "containers": [
+    {
+      "name": "holdfast-odyssey-web-1",
+      "image": "holdfast/odyssey-web:dev",
+      "rollbackTag": "holdfast/odyssey-web:rollback-pre-1.2-canary-20260710",
+      "currentImageId": "sha256:9d9eb03b1d534882b7c0fb81883383384e0bf131e459c8c3ecd31e0ca5b6900f",
+      "rollbackImageId": "sha256:677e904f9d75a46328c9f90e5aa8c87fe8214a949545f71e125abab8959f550d"
+    },
+    {
+      "name": "holdfast-beacon-1",
+      "image": "holdfast/beacon:dev",
+      "rollbackTag": "holdfast/beacon:rollback-pre-1.2-canary-20260710",
+      "currentImageId": "sha256:e78b7afb821ca644335b7676297c3fb56166533e9029f16b70ecf65f63cec33a",
+      "rollbackImageId": "sha256:0f62f1a1490ecd9ef44530babd91ac42c5b001755ab62baa3430691a8849411a"
+    },
+    {
+      "name": "holdfast-portal-1",
+      "image": "holdfast/portal:dev",
+      "rollbackTag": "holdfast/portal:rollback-pre-1.2-canary-20260710",
+      "currentImageId": "sha256:210ba321c09d3f67bff4f11dd9deaa747205f2c03fefedab5aa20653244beb7c",
+      "rollbackImageId": "sha256:f50207e2167c249358aebf5d606dea71464b69c956c94174ae7d66c915dd6352"
+    }
+  ],
+  "public": {
+    "statusBaseUrl": "https://status.w33d.xyz",
+    "portalUrl": "https://w33d.xyz",
+    "odysseyUrl": "https://odyssey.w33d.xyz",
+    "portalSsoOrigin": "https://sso.w33d.xyz",
+    "portalSsoPath": "/authorize",
+    "assetSha256": {
+      "/1.1/odyssey.css": "be25e37aeb52a32067314921436c9719ee39459314b86bd2c2c005603a0ac27c",
+      "/1.1/odyssey.js": "6a49d1ed7f8b4135de1be717d7199721e1122f44a1146b3d0eba2e2b9420d50e",
+      "/1.1/odyssey-font.css": "bfb7661166d95922624bec4f184ece1c34b70983e2b6d70bd19b807dd7d875ac",
+      "/1.2/odyssey.css": "838bde951f0ab82367ff4aff156e0d375b972d4192f9b94be6914b8b889022e2",
+      "/1.2/odyssey.js": "c3c1616ff6cc966891a9f9c1551feceb71a226cf231e4032b69545805ebfe226",
+      "/1.2/odyssey-font.css": "bfb7661166d95922624bec4f184ece1c34b70983e2b6d70bd19b807dd7d875ac"
+    },
+    "forbiddenPortalHosts": [
+      "authz.w33d.xyz",
+      "people.w33d.xyz",
+      "vault.w33d.xyz",
+      "audit.w33d.xyz",
+      "vitals.w33d.xyz",
+      "logs.w33d.xyz",
+      "traces.w33d.xyz",
+      "dns.w33d.xyz",
+      "backup.w33d.xyz",
+      "ci.w33d.xyz",
+      "deploy.w33d.xyz",
+      "siteflow.w33d.xyz",
+      "egress.w33d.xyz",
+      "mesh.w33d.xyz",
+      "edge.w33d.xyz",
+      "spiffe.w33d.xyz",
+      "risk.w33d.xyz",
+      "events.w33d.xyz",
+      "jobs.w33d.xyz",
+      "intel.w33d.xyz",
+      "guard.w33d.xyz",
+      "purple.w33d.xyz",
+      "atlas.w33d.xyz",
+      "rca.w33d.xyz",
+      "detonate.w33d.xyz",
+      "canary.w33d.xyz",
+      "vpn.w33d.xyz"
+    ]
+  },
+  "browser": {
+    "nodePath": "/usr/bin/node",
+    "scriptPath": "/usr/local/libexec/odyssey-gate/odyssey-gate-browser.mjs",
+    "siteflowRoot": "/usr/local/lib/odyssey-browser",
+    "chromiumPath": "/usr/bin/chromium",
+    "endpointPath": "/run/odyssey-canary/browser-endpoint.json",
+    "evidencePath": "/var/lib/odyssey-canary-browser/latest.json"
+  },
+  "implementation": {
+    "collectorPath": "/usr/local/libexec/odyssey-gate/odyssey-gate.mjs",
+    "collectorSha256": "2113bac8c4f3666718819f76a37baf106690ea372f65fb0e5a1545efeb5bdaf0",
+    "browserRunnerPath": "/usr/local/libexec/odyssey-gate/odyssey-gate-browser.mjs",
+    "browserRunnerSha256": "5a3d5c36f14d7f8c1a951e8d5061262ae7dd98c22681e90fd861127266f57a92",
+    "browserRuntimePath": "/usr/local/lib/odyssey-browser",
+    "browserRuntimeSha256": "7cdde8f8dca7bc813713ab172631a60f281505f5cb58402d7a83235a3889f2b2"
+  },
+  "approval": {
+    "keyId": "odyssey-canary-approver-2026-01",
+    "publicKeyPath": "/etc/odyssey-canary/approval-public.pem",
+    "publicKeySpkiSha256": null,
+    "maxAgeSeconds": 3600
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "name": "odyssey-canary-browser-runtime",
+  "private": true,
+  "type": "module"
+}
