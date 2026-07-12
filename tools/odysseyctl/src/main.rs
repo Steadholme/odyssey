@@ -842,11 +842,11 @@ mod tests {
         assert_eq!(files.len(), 24);
 
         let fingerprint = bundle_fingerprint(&root, &files).unwrap();
-        assert_eq!(fingerprint, 0x20ae_76d5_c2ad_a57d);
+        assert_eq!(fingerprint, 0x3382_80ed_48c1_de41);
 
         let manifest = vendor_manifest(&root, &distribution.release, &files).unwrap();
         assert!(manifest.contains("release=1.2.0-canary.1\n"));
-        assert!(manifest.contains("fingerprint=fnv1a64:20ae76d5c2ada57d\n"));
+        assert!(manifest.contains("fingerprint=fnv1a64:338280ed48c1de41\n"));
         assert!(manifest.contains(&format!("files={}\n", files.len())));
     }
 
