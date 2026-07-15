@@ -1,7 +1,7 @@
 /*! ============================================================================
  * Odyssey UI JS · v1.1.0
  * ----------------------------------------------------------------------------
- * Framework-agnostic public release of the HOLDFAST "Odyssey" design language.
+ * Framework-agnostic public release of the Steadholme "Odyssey" design language.
  * Zero-dependency vanilla JavaScript interaction layer (IIFE → window.Odyssey).
  *
  *   USAGE

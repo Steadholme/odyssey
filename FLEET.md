@@ -246,7 +246,7 @@ node /usr/local/libexec/odyssey-gate/odyssey-gate.mjs status \
 
 ## Odyssey 1.2 profile root contract
 
-`data-ody-profile` 是跨产品可复用的显式 root contract。未标记页面完全沿用 `1.1` 默认视觉；产品只有在 canary vertical slice 中主动标记后，才启用 profile signal、HOLDFAST shell、48 px mineral grid、导航坐标和统一状态语言。
+`data-ody-profile` 是跨产品可复用的显式 root contract。未标记页面完全沿用 `1.1` 默认视觉；产品只有在 canary vertical slice 中主动标记后，才启用 profile signal、Steadholme shell、48 px mineral grid、导航坐标和统一状态语言。
 
 ```html
 <html data-ody-profile="public">

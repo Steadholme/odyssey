@@ -128,7 +128,7 @@
     <p>如需为后插入的子树手动接线，调用 <code>Odyssey.init(rootEl)</code>；命令式 Toast 用 <code>Odyssey.toast(&#123;title, message, tone&#125;)</code>。</p>
 
     <h2 id="dynamic-ssr">动态 SSR 应用</h2>
-    <p>公开的 <code>.ody-*</code> 发行包负责视觉与组件行为，不接管应用数据。同仓的 HOLDFAST 内部 Rust 发行线共享 Odyssey 设计语言，并提供 <strong>Wire</strong>、<strong>Spark</strong> 与 <strong>Motion</strong>：服务端继续生成可信 HTML，浏览器按 selector 局部交换，并为小型本地状态和列表变化增加渐进增强。</p>
+    <p>公开的 <code>.ody-*</code> 发行包负责视觉与组件行为，不接管应用数据。同仓的 Steadholme 内部 Rust 发行线共享 Odyssey 设计语言，并提供 <strong>Wire</strong>、<strong>Spark</strong> 与 <strong>Motion</strong>：服务端继续生成可信 HTML，浏览器按 selector 局部交换，并为小型本地状态和列表变化增加渐进增强。</p>
     <div class="ody-alert ody-alert--info">
       <svg class="ody-alert__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg>
       <div class="ody-alert__body"><strong>发行边界：</strong><code>/1.1/odyssey.js</code> 只包含公开的 <code>data-ody-*</code> 组件行为，不包含 Wire、Spark 或 Motion，也不会发起网络请求。下面的 <code>data-wire-*</code> 示例仅适用于 vendored Rust 内部发行线。</div>
@@ -201,7 +201,7 @@
 
     <footer class="doc-footer">
       <svg class="doc-footer__star" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2 14.2 9.8 22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2Z"/></svg>
-      <span>Odyssey UI · HOLDFAST 主权自持设计语言</span>
+      <span>Odyssey UI · Steadholme 主权自持设计语言</span>
       <span class="doc-footer__sep"></span>
       <a href="index.html">Overview</a>
       <a href="tokens.html">Design tokens</a>

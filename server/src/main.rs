@@ -621,7 +621,7 @@ fn render_estate_fragment(state: &AppState, query: &EstateQuery, csrf_token: &st
             "<section id=\"estate-atlas\" class=\"estate-atlas\" aria-labelledby=\"estate-title\" ",
             "data-spark=\"view:map\" data-spark-persist=\"view=estate-atlas-view\">",
             "<header class=\"estate-hero\">",
-            "<div class=\"estate-kicker\">HOLDFAST / DYNAMIC LAB / ESTATE 01</div>",
+            "<div class=\"estate-kicker\">Steadholme / DYNAMIC LAB / ESTATE 01</div>",
             "<h1 id=\"estate-title\" class=\"estate-title\">Estate<br>Atlas</h1>",
             "<p class=\"estate-deck\">A server-rendered survey of representative public, mixed, WireGuard-only, and compose-only surfaces.</p>",
             "<div class=\"estate-notice\" role=\"status\"><strong>Reference snapshot, not a live control plane.</strong> ",
