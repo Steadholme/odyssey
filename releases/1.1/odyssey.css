@@ -1,7 +1,7 @@
 /* ============================================================================
    Odyssey UI · odyssey.css
    ----------------------------------------------------------------------------
-   Odyssey UI — the framework-agnostic public distribution of the Steadholme
+   Odyssey UI — the framework-agnostic public distribution of the HOLDFAST
    "Odyssey" design language. A single, self-contained, CDN-ready stylesheet:
    pure CSS, zero dependencies, zero external requests, Element-UI-class breadth.
 
@@ -35,7 +35,7 @@
   --ody-c-white:#ffffff; --ody-c-slate-25:#f7f8fa; --ody-c-slate-50:#f6f7f9; --ody-c-slate-75:#f0f2f6;
   --ody-c-slate-100:#eef0f4; --ody-c-slate-200:#e5e7ec; --ody-c-slate-300:#d3d7e0;
   --ody-c-ink-900:#1a1d24; --ody-c-ink-700:#4a5160; --ody-c-ink-500:#727a8a; --ody-c-ink-400:#9aa2b1;
-  /* Steadholme mineral paper / basalt / oxide */
+  /* HOLDFAST mineral paper / basalt / oxide */
   --ody-c-paper-0:#faf9f4; --ody-c-paper-25:#f5f3ec; --ody-c-paper-50:#f2f0e8;
   --ody-c-paper-75:#ece9df; --ody-c-paper-100:#e9e6dc; --ody-c-paper-200:#cfcabd; --ody-c-paper-300:#8d887c;
   --ody-c-basalt-900:#191c18; --ody-c-basalt-700:#454b43; --ody-c-basalt-500:#5f665b; --ody-c-basalt-400:#6d7469;
