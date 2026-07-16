@@ -53,6 +53,16 @@ const DIST_ODYSSEY_11_FONT_CSS: &str = include_str!("../../releases/1.1/odyssey-
 const DIST_ODYSSEY_12_CSS: &str = include_str!("../../releases/1.2/odyssey.css");
 const DIST_ODYSSEY_12_JS: &str = include_str!("../../releases/1.2/odyssey.js");
 const DIST_ODYSSEY_12_FONT_CSS: &str = include_str!("../../releases/1.2/odyssey-font.css");
+
+// Frozen 1.3 Steadholme structural-language canary. This generation is additive;
+// it does not supersede or rewrite the 1.1/1.2 immutable routes above.
+// SHA-256 identities:
+// css  7b196298f0cc81a691e705dc2555aced33dafdbd01dc1bc51473f257b759cb8f
+// js   2bdee27df0d41827d179261724866bcf4facd33dad2a758d3ac03376a3a4785c
+// font bfb7661166d95922624bec4f184ece1c34b70983e2b6d70bd19b807dd7d875ac
+const DIST_ODYSSEY_13_CSS: &str = include_str!("../../releases/1.3/odyssey.css");
+const DIST_ODYSSEY_13_JS: &str = include_str!("../../releases/1.3/odyssey.js");
+const DIST_ODYSSEY_13_FONT_CSS: &str = include_str!("../../releases/1.3/odyssey-font.css");
 const DIST_ODYSSEY_CURRENT_CSS: &str = include_str!("../../dist/odyssey.css");
 const DIST_ODYSSEY_CURRENT_JS: &str = include_str!("../../dist/odyssey.js");
 const DIST_ODYSSEY_CURRENT_FONT_CSS: &str = include_str!("../../dist/odyssey-font.css");
@@ -62,6 +72,7 @@ enum DistRelease {
     Current,
     Snapshot11,
     Canary12,
+    Canary13,
 }
 
 const SITE_INDEX: &str = include_str!("../../site/index.html");
@@ -1050,6 +1061,8 @@ fn route_static(path: &str) -> Response {
         _ => {
             if let Some(file) = path.strip_prefix("/dist/") {
                 dist_asset(file, CACHE_DIST, DistRelease::Current)
+            } else if let Some(file) = path.strip_prefix("/1.3/") {
+                dist_asset(file, CACHE_VERSIONED, DistRelease::Canary13)
             } else if let Some(file) = path.strip_prefix("/1.2/") {
                 dist_asset(file, CACHE_VERSIONED, DistRelease::Canary12)
             } else if let Some(file) = path.strip_prefix("/1.1/") {
@@ -1082,6 +1095,9 @@ fn dist_asset(file: &str, cache_control: &'static str, release: DistRelease) -> 
         (DistRelease::Canary12, "odyssey.css") => (CONTENT_TYPE_CSS, DIST_ODYSSEY_12_CSS),
         (DistRelease::Canary12, "odyssey.js") => (CONTENT_TYPE_JS, DIST_ODYSSEY_12_JS),
         (DistRelease::Canary12, "odyssey-font.css") => (CONTENT_TYPE_CSS, DIST_ODYSSEY_12_FONT_CSS),
+        (DistRelease::Canary13, "odyssey.css") => (CONTENT_TYPE_CSS, DIST_ODYSSEY_13_CSS),
+        (DistRelease::Canary13, "odyssey.js") => (CONTENT_TYPE_JS, DIST_ODYSSEY_13_JS),
+        (DistRelease::Canary13, "odyssey-font.css") => (CONTENT_TYPE_CSS, DIST_ODYSSEY_13_FONT_CSS),
         _ => return not_found(),
     };
     static_response(StatusCode::OK, content_type, Some(cache_control), body)
@@ -1230,7 +1246,7 @@ mod tests {
         assert_eq!(header(&response, header::ACCESS_CONTROL_ALLOW_ORIGIN), "*");
         let body = response.into_body().collect().await.unwrap().to_bytes();
         assert_eq!(body.as_ref(), DIST_ODYSSEY_CURRENT_JS.as_bytes());
-        assert_eq!(body.as_ref(), DIST_ODYSSEY_12_JS.as_bytes());
+        assert_eq!(body.as_ref(), DIST_ODYSSEY_13_JS.as_bytes());
     }
 
     #[tokio::test]
@@ -1294,6 +1310,36 @@ mod tests {
         assert_eq!(header(&legacy, header::CACHE_CONTROL), CACHE_DIST);
     }
 
+    #[tokio::test]
+    async fn serves_13_canary_with_immutable_cache() {
+        let assets = [
+            ("odyssey.css", CONTENT_TYPE_CSS, DIST_ODYSSEY_13_CSS),
+            ("odyssey.js", CONTENT_TYPE_JS, DIST_ODYSSEY_13_JS),
+            (
+                "odyssey-font.css",
+                CONTENT_TYPE_CSS,
+                DIST_ODYSSEY_13_FONT_CSS,
+            ),
+        ];
+
+        for (file, content_type, expected) in assets {
+            let response = route_static(&format!("/1.3/{file}"));
+            assert_eq!(response.status(), StatusCode::OK);
+            assert_eq!(header(&response, header::CONTENT_TYPE), content_type);
+            assert_eq!(header(&response, header::CACHE_CONTROL), CACHE_VERSIONED);
+            assert_eq!(header(&response, header::ACCESS_CONTROL_ALLOW_ORIGIN), "*");
+            let body = response.into_body().collect().await.unwrap().to_bytes();
+            assert_eq!(body.as_ref(), expected.as_bytes());
+        }
+    }
+
+    #[test]
+    fn release_13_snapshot_matches_current_dist_byte_for_byte() {
+        assert_eq!(DIST_ODYSSEY_CURRENT_CSS, DIST_ODYSSEY_13_CSS);
+        assert_eq!(DIST_ODYSSEY_CURRENT_JS, DIST_ODYSSEY_13_JS);
+        assert_eq!(DIST_ODYSSEY_CURRENT_FONT_CSS, DIST_ODYSSEY_13_FONT_CSS);
+    }
+
     #[test]
     fn frozen_versioned_assets_keep_their_byte_identity() {
         fn fnv1a64(bytes: &[u8]) -> u64 {
@@ -1331,6 +1377,31 @@ mod tests {
         assert_eq!(DIST_ODYSSEY_12_FONT_CSS.len(), 65_466);
         assert_eq!(
             fnv1a64(DIST_ODYSSEY_12_FONT_CSS.as_bytes()),
+            0x4665_56f0_c0a0_5bf6
+        );
+    }
+
+    #[test]
+    fn release_13_assets_keep_their_byte_identity() {
+        fn fnv1a64(bytes: &[u8]) -> u64 {
+            bytes.iter().fold(0xcbf29ce484222325, |hash, byte| {
+                (hash ^ u64::from(*byte)).wrapping_mul(0x100000001b3)
+            })
+        }
+
+        assert_eq!(DIST_ODYSSEY_13_CSS.len(), 168_506);
+        assert_eq!(
+            fnv1a64(DIST_ODYSSEY_13_CSS.as_bytes()),
+            0xc9a5_0977_5ee7_08f4
+        );
+        assert_eq!(DIST_ODYSSEY_13_JS.len(), 105_406);
+        assert_eq!(
+            fnv1a64(DIST_ODYSSEY_13_JS.as_bytes()),
+            0x2ea5_e2cd_6e9f_2a6a
+        );
+        assert_eq!(DIST_ODYSSEY_13_FONT_CSS.len(), 65_466);
+        assert_eq!(
+            fnv1a64(DIST_ODYSSEY_13_FONT_CSS.as_bytes()),
             0x4665_56f0_c0a0_5bf6
         );
     }

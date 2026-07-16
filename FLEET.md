@@ -73,9 +73,9 @@ $ODYSSEYCTL manifest
 输出 canonical bundle 的机器可读摘要：
 
 ```text
-release=1.2.0-canary.1
+release=1.3.0-canary.1
 channel=internal-rust
-fingerprint=fnv1a64:20ae76d5c2ada57d
+fingerprint=fnv1a64:955b30cefb0246f3
 files=24
 consumers=27
 surfaces=47
@@ -238,11 +238,23 @@ node /usr/local/libexec/odyssey-gate/odyssey-gate.mjs status \
 <script src="https://odyssey.w33d.xyz/1.2/odyssey.js"></script>
 ```
 
-仓库中的 `releases/1.1/` 与 `releases/1.2/` 都是 immutable snapshot；其文件不可被后续 release 覆盖。`dist/` 保存当前 `1.2` canary 的 byte-identical 物理发行文件，供短缓存 `/dist` 路由与 self-host pipeline 使用；`tools/build-public-dist.sh` 从 `1.1` 组件基线加 canonical `css/profile.css`、`js/canary.js` 确定性生成它，并拒绝静默改写已存在的 `1.2` snapshot。无论 CDN 还是 self-host，都必须 pin release；不要指向内部 `crates/odyssey`，也不要复制未版本化的 canonical source。
+`1.3.0-canary.1` 通过固定的 `/1.3` path 提供，加入 Steadholme structural language；它不会覆盖现有 `1.2` canary：
+
+```html
+<link rel="stylesheet" href="https://odyssey.w33d.xyz/1.3/odyssey.css">
+<link rel="stylesheet" href="https://odyssey.w33d.xyz/1.3/odyssey-font.css">
+<script src="https://odyssey.w33d.xyz/1.3/odyssey.js"></script>
+```
+
+仓库中的 `releases/1.1/`、`releases/1.2/` 与 `releases/1.3/` 都是 immutable snapshot；其文件不可被后续 release 覆盖。`dist/` 保存当前 `1.3` canary 的 byte-identical 物理发行文件，供短缓存 `/dist` 路由与 self-host pipeline 使用；`tools/build-public-dist.sh` 从冻结的 `1.1` component bank 加 canonical `css/profile.css`、`js/canary.js` 确定性生成 `1.3`，若 snapshot 已存在则只做逐字节比较。无论 CDN 还是 self-host，都必须 pin release；不要指向内部 `crates/odyssey`，也不要复制未版本化的 canonical source。
+
+`canary/1.2.0-canary.1.json`、systemd collector 与现有 gate 仍只属于 `1.2` 观测窗口。`1.3` 在建立独立 policy、镜像 pin、资产 hash 与批准窗口之前不得借用该证据晋级。
 
 公开 `/1.1/odyssey.js` 只提供 `data-ody-*` 组件行为，不包含 Wire、Spark、Motion，也不负责应用 fetch、router、cache 或 offline state。非 Rust SSR/SPA 的数据请求和状态管理仍由宿主框架负责。若未来需要把内部 runtime 提供给非 Rust consumer，应新增独立、版本化且经过安全审计的 distribution channel，而不是扩大现有 `internal-rust` manifest 的含义。
 
 `/1.2/odyssey.js` 在同一安全边界内增加 network-free 的 shell/profile enhancer，不包含 Wire、Spark、Motion，也不发起应用数据请求。
+
+`/1.3/odyssey.js` 保持同一 network-free 边界，只把 release identity 与 opt-in structural contract 推进到 `1.3`。
 
 ## Odyssey 1.2 profile root contract
 
@@ -260,6 +272,31 @@ node /usr/local/libexec/odyssey-gate/odyssey-gate.mjs status \
 ```
 
 允许值与 `distribution.toml` 的 rollout metadata 保持同一词汇：`ai`、`communication`、`content`、`control`、`data`、`developer`、`identity`、`knowledge`、`networking`、`observability`、`portal`、`productivity`、`public`、`security`。Beacon 使用 `public`，Portal 使用 `portal`；profile 只协调 presentation semantics，不改变服务访问边界或业务权限。
+
+## Odyssey 1.3 Steadholme structural contract
+
+`data-ody-shell="1.3"` 将工程网格从全页 wallpaper 收回到显式 masthead/material，并提供跨产品可组合的结构词汇：`ody-canvas`、`ody-masthead`、`ody-display`、`ody-command`、`ody-foundry-panel`、`ody-band`、`ody-wall`、`ody-cell`、`ody-index` 与 `ody-status-rail`。粗犷感由承重 rule、共享网格、硬阴影和排版比例产生；状态色仍只表达状态，不承担品牌身份。
+
+这些 class 不拥有产品信息架构、服务排序、权限、数据请求或业务 DOM。宿主产品决定内容与组合；Odyssey 只统一 token、focus、forced-colors、reduced-motion 和响应式结构语义。`clip-path` 不用于 focusable controls。
+
+```html
+<html data-ody-profile="portal">
+<body data-ody-shell="1.3">
+  <header class="ody-masthead">
+    <div class="ody-canvas">
+      <p class="ody-coordinate">W33D / STEADHOLME</p>
+      <h1 class="ody-display">Everything you run.</h1>
+    </div>
+  </header>
+  <main class="ody-canvas">
+    <section class="ody-band">
+      <header><span class="ody-index">01</span><h2>Communication</h2></header>
+      <div class="ody-wall"><a class="ody-cell" href="/mail">Mail</a></div>
+    </section>
+  </main>
+</body>
+</html>
+```
 
 ## 修改 fleet membership
 

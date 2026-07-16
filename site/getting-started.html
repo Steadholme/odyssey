@@ -19,7 +19,7 @@
     </span>
     <span class="ody-appbar__name">Odyssey UI</span>
   </a>
-  <span class="ody-tag ody-tag--warn ody-mono doc-appbar__ver">v1.2 canary</span>
+  <span class="ody-tag ody-tag--warn ody-mono doc-appbar__ver">v1.3 canary</span>
   <span class="ody-appbar__spacer"></span>
   <div class="ody-appbar__right">
     <a class="ody-iconbtn" href="https://git.w33d.xyz/holdfast/odyssey" aria-label="源码仓库" title="源码仓库">
@@ -96,6 +96,32 @@
 &lt;/body&gt;
 &lt;/html&gt;</code></pre></div>
     <p>允许的 profile：<code>public</code>、<code>portal</code>、<code>security</code>、<code>observability</code>、<code>ai</code>、<code>content</code>、<code>control</code> 等 canonical 词汇。它只协调视觉语义，不改变页面的公开／内部访问边界。</p>
+
+    <h3 id="canary-13">Odyssey 1.3 Steadholme Canary</h3>
+    <div class="ody-alert ody-alert--warn">
+      <svg class="ody-alert__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 20h20L12 3Z"/><path d="M12 10v4M12 17h.01"/></svg>
+      <div class="ody-alert__body"><strong>Design canary：</strong><code>/1.3</code> 加入 refined-brutalist structural primitives，但尚未继承 1.2 的 promotion evidence。只有明确进入 1.3 cohort 的页面才应接入。</div>
+    </div>
+    <div class="doc-code doc-code--stand"><pre><code>&lt;html data-ody-profile="portal"&gt;
+&lt;head&gt;
+  &lt;link rel="stylesheet" href="https://odyssey.w33d.xyz/1.3/odyssey.css"&gt;
+&lt;/head&gt;
+&lt;body data-ody-shell="1.3"&gt;
+  &lt;header class="ody-masthead"&gt;
+    &lt;div class="ody-canvas"&gt;
+      &lt;p class="ody-coordinate"&gt;W33D / STEADHOLME&lt;/p&gt;
+      &lt;h1 class="ody-display"&gt;Everything you run.&lt;/h1&gt;
+    &lt;/div&gt;
+  &lt;/header&gt;
+  &lt;main class="ody-canvas"&gt;
+    &lt;section class="ody-band"&gt;
+      &lt;header&gt;&lt;span class="ody-index"&gt;01&lt;/span&gt;&lt;h2&gt;Communication&lt;/h2&gt;&lt;/header&gt;
+      &lt;div class="ody-wall"&gt;&lt;a class="ody-cell" href="/mail"&gt;Mail&lt;/a&gt;&lt;/div&gt;
+    &lt;/section&gt;
+  &lt;/main&gt;
+  &lt;script src="https://odyssey.w33d.xyz/1.3/odyssey.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre></div>
 
     <h2 id="usage">基本用法</h2>
     <p>组件类均以 <code>.ody-</code> 前缀命名，遵循 BEM（block <code>.ody-x</code> / element <code>.ody-x__y</code> / modifier <code>.ody-x--z</code> / 状态 <code>.is-*</code>）。直接写 class 即可，不会污染宿主页面的裸元素。</p>

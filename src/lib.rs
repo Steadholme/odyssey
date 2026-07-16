@@ -7,7 +7,7 @@ pub const APP_CSS: &str = concat!(
 );
 pub const WIRE_JS: &str = include_str!("../js/wire.js");
 pub const SPARK_JS: &str = include_str!("../js/spark.js");
-/// Public Odyssey 1.2 canary enhancer. It is network-free and remains separate from the internal
+/// Public Odyssey 1.3 canary enhancer. It is network-free and remains separate from the internal
 /// Wire/Spark runtime so applications opt into the public shell contract explicitly.
 pub const CANARY_JS: &str = include_str!("../js/canary.js");
 pub const PROFILE_CSS: &str = include_str!("../css/profile.css");
@@ -282,7 +282,9 @@ mod tests {
 
     #[test]
     fn dynamic_runtime_propagates_synchronous_fallback_update_errors() {
-        assert!(MOTION_JS.contains("typeof d.startViewTransition !== 'function'){\n      update();"));
+        assert!(
+            MOTION_JS.contains("typeof d.startViewTransition !== 'function'){\n      update();")
+        );
         assert!(!MOTION_JS.contains("try{ update(); }catch(e){}"));
     }
 
@@ -323,7 +325,10 @@ mod tests {
         assert!(PROFILE_CSS.contains("data-ody-status=\"operational\""));
         assert!(!PROFILE_CSS.contains(":root:not([data-ody-profile])"));
 
-        assert!(CANARY_JS.contains("1.2.0-canary.1"));
+        assert!(CANARY_JS.contains("1.3.0-canary.1"));
+        assert!(PROFILE_CSS.contains("data-ody-shell=\"1.3\""));
+        assert!(PROFILE_CSS.contains(".ody-band"));
+        assert!(PROFILE_CSS.contains(".ody-wall"));
         assert!(CANARY_JS.contains("data-ody-shell-nav"));
         assert!(CANARY_JS.contains("Odyssey.canary"));
     }
