@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sanctum Vault Ledger — sealed register specimen (synthetic lab)</title>
+<meta name="description" content="Off-fleet static design specimen of a sealed archival register. Synthetic data, not live, no rollout authority.">
+<link rel="stylesheet" href="./assets/lab-dna.css">
+<link rel="stylesheet" href="./assets/lab-vault.css">
+</head>
+<body data-lab="sanctum-vault-ledger" data-ody-archetype="register">
+<a class="vault-skip" href="#main">Skip to register</a>
+<div class="vault-sheet">
+  <header class="vault-head">
+    <a class="vault-brand" href="./index.html">
+      <span class="vault-brand-seal" aria-hidden="true"></span>
+      <span class="vault-brand-word">Sanctum</span>
+      <span class="vault-brand-tag">Vault Ledger · Lab</span>
+    </a>
+    <p class="vault-synth">Synthetic specimen — not live</p>
+    <nav class="vault-nav" aria-label="Specimen sections">
+      <ul class="vault-nav-list">
+        <li><a class="vault-nav-link" href="#vault-due">Due window</a></li>
+        <li><a class="vault-nav-link" href="#vault-register" aria-current="page">Register</a></li>
+        <li><a class="vault-nav-link" href="#vault-jurisdictions">Jurisdictions</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="vault-main" id="main">
+    <section class="vault-intro" aria-labelledby="vault-title">
+      <p class="vault-kicker">Sealed register</p>
+      <h1 class="vault-title" id="vault-title">Sanctum Vault Ledger</h1>
+      <p class="vault-lede">A ruled archival register of eight synthetic sealed records. Every seal shows its state as a word, a shape, and a hue at once; the rotation window and jurisdiction stay legible at every size. Evidence is dated 2026-07-20; nothing here is live and nothing can be unsealed.</p>
+    </section>
+
+    <section class="vault-zone" id="vault-due" aria-labelledby="vault-due-h">
+      <h2 class="vault-h2" id="vault-due-h">Due window</h2>
+      <p class="vault-hint">Synthetic seals inside the fourteen-day rotation window, plus anything already overdue. The register below carries the full custody detail.</p>
+      <ul class="vault-due-window" aria-label="Seals needing attention">
+        <li class="vault-due-entry">
+          <span class="vault-due-mark" aria-hidden="true"></span>
+          <span class="vault-due-name">Nightly custody seal</span>
+          <span class="vault-scope">Custody window</span>
+          <span class="vault-due vault-due--soon">Rotates in 8 days</span>
+        </li>
+        <li class="vault-due-entry">
+          <span class="vault-due-mark" aria-hidden="true"></span>
+          <span class="vault-due-name">Legacy receipt seal</span>
+          <span class="vault-scope">Archive ledger</span>
+          <span class="vault-due vault-due--overdue">Overdue by 5 days</span>
+        </li>
+      </ul>
+    </section>
+
+    <section class="vault-zone" id="vault-register" aria-labelledby="vault-register-h">
+      <h2 class="vault-h2" id="vault-register-h">Sealed register — eight records</h2>
+      <p class="vault-hint">Fixture order. State words: SEALED, EXPIRING, EXPIRED, REVOKED. Only the nightly custody seal opens a dossier.</p>
+      <ul class="vault-register" data-as-of="2026-07-20T00:00:00Z" aria-label="Sealed register of eight synthetic records">
+        <li class="vault-line" data-vault-id="seal-ash-01" data-state="active" data-sealed="true" data-version="3" data-scope="archive-ledger" data-due-days="43">
+          <span class="vault-margin" aria-hidden="true">
+            <span class="vault-seal vault-seal--active"></span>
+            <span class="vault-sigil vault-sigil--archive-ledger"></span>
+          </span>
+          <div class="vault-line-body">
+            <div class="vault-label">Archive receipt seal</div>
+            <div class="vault-meta">
+              <span class="vault-scope">Archive ledger</span>
+              <span class="vault-version">v3</span>
+            </div>
+          </div>
+          <div class="vault-status">
+            <span class="vault-state vault-state--active">SEALED</span>
+            <span class="vault-due">Rotates in 43 days</span>
+          </div>
+        </li>
+        <li class="vault-line" data-vault-id="seal-briar-02" data-state="expiring" data-sealed="true" data-version="4" data-scope="custody-window" data-due-days="8">
+          <span class="vault-margin" aria-hidden="true">
+            <span class="vault-seal vault-seal--expiring"></span>
+            <span class="vault-sigil vault-sigil--custody-window"></span>
+          </span>
+          <div class="vault-line-body">
+            <div class="vault-label">Nightly custody seal</div>
+            <div class="vault-meta">
+              <span class="vault-scope">Custody window</span>
+              <span class="vault-version">v4</span>
+            </div>
+          </div>
+          <div class="vault-status">
+            <span class="vault-state vault-state--expiring">EXPIRING</span>
+            <span class="vault-due vault-due--soon">Rotates in 8 days</span>
+            <a class="vault-open" href="./secret.html">Open dossier</a>
+          </div>
+        </li>
+        <li class="vault-line" data-vault-id="seal-cinder-03" data-state="expired" data-sealed="true" data-version="2" data-scope="archive-ledger" data-due-days="-5">
+          <span class="vault-margin" aria-hidden="true">
+            <span class="vault-seal vault-seal--expired"></span>
+            <span class="vault-sigil vault-sigil--archive-ledger"></span>
+          </span>
+          <div class="vault-line-body">
+            <div class="vault-label">Legacy receipt seal</div>
+            <div class="vault-meta">
+              <span class="vault-scope">Archive ledger</span>
+              <span class="vault-version">v2</span>
+            </div>
+          </div>
+          <div class="vault-status">
+            <span class="vault-state vault-state--expired">EXPIRED</span>
+            <span class="vault-due vault-due--overdue">Overdue by 5 days</span>
+          </div>
+        </li>
+        <li class="vault-line" data-vault-id="seal-dune-04" data-state="revoked" data-sealed="true" data-version="3" data-scope="dispatch-notes" data-due-days="25">
+          <span class="vault-margin" aria-hidden="true">
+            <span class="vault-seal vault-seal--revoked"></span>
+            <span class="vault-sigil vault-sigil--dispatch-notes"></span>
+          </span>
+          <div class="vault-line-body">
+            <div class="vault-label">Retired dispatch seal</div>
+            <div class="vault-meta">
+              <span class="vault-scope">Dispatch notes</span>
+              <span class="vault-version">v3</span>
+            </div>
+          </div>
+          <div class="vault-status">
+            <span class="vault-state vault-state--revoked">REVOKED</span>
+            <span class="vault-due">Rotates in 25 days</span>
+          </div>
+        </li>
+        <li class="vault-line" data-vault-id="seal-flint-05" data-state="active" data-sealed="true" data-version="1" data-scope="custody-window" data-due-days="73">
+          <span class="vault-margin" aria-hidden="true">
+            <span class="vault-seal vault-seal--active"></span>
+            <span class="vault-sigil vault-sigil--custody-window"></span>
+          </span>
+          <div class="vault-line-body">
+            <div class="vault-label">Morning register seal</div>
+            <div class="vault-meta">
+              <span class="vault-scope">Custody window</span>
+              <span class="vault-version">v1</span>
+            </div>
+          </div>
+          <div class="vault-status">
+            <span class="vault-state vault-state--active">SEALED</span>
+            <span class="vault-due">Rotates in 73 days</span>
+          </div>
+        </li>
+        <li class="vault-line" data-vault-id="seal-ochre-06" data-state="active" data-sealed="true" data-version="2" data-scope="dispatch-notes" data-due-days="31">
+          <span class="vault-margin" aria-hidden="true">
+            <span class="vault-seal vault-seal--active"></span>
+            <span class="vault-sigil vault-sigil--dispatch-notes"></span>
+          </span>
+          <div class="vault-line-body">
+            <div class="vault-label">Courier receipt seal</div>
+            <div class="vault-meta">
+              <span class="vault-scope">Dispatch notes</span>
+              <span class="vault-version">v2</span>
+            </div>
+          </div>
+          <div class="vault-status">
+            <span class="vault-state vault-state--active">SEALED</span>
+            <span class="vault-due">Rotates in 31 days</span>
+          </div>
+        </li>
+        <li class="vault-line" data-vault-id="seal-slate-07" data-state="active" data-sealed="true" data-version="2" data-scope="archive-ledger" data-due-days="108">
+          <span class="vault-margin" aria-hidden="true">
+            <span class="vault-seal vault-seal--active"></span>
+            <span class="vault-sigil vault-sigil--archive-ledger"></span>
+          </span>
+          <div class="vault-line-body">
+            <div class="vault-label">Quarterly ledger seal</div>
+            <div class="vault-meta">
+              <span class="vault-scope">Archive ledger</span>
+              <span class="vault-version">v2</span>
+            </div>
+          </div>
+          <div class="vault-status">
+            <span class="vault-state vault-state--active">SEALED</span>
+            <span class="vault-due">Rotates in 108 days</span>
+          </div>
+        </li>
+        <li class="vault-line" data-vault-id="seal-umber-08" data-state="active" data-sealed="true" data-version="1" data-scope="custody-window" data-due-days="19">
+          <span class="vault-margin" aria-hidden="true">
+            <span class="vault-seal vault-seal--active"></span>
+            <span class="vault-sigil vault-sigil--custody-window"></span>
+          </span>
+          <div class="vault-line-body">
+            <div class="vault-label">Handover note seal</div>
+            <div class="vault-meta">
+              <span class="vault-scope">Custody window</span>
+              <span class="vault-version">v1</span>
+            </div>
+          </div>
+          <div class="vault-status">
+            <span class="vault-state vault-state--active">SEALED</span>
+            <span class="vault-due">Rotates in 19 days</span>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <section class="vault-zone" id="vault-jurisdictions" aria-labelledby="vault-jur-h">
+      <h2 class="vault-h2" id="vault-jur-h">Jurisdictions</h2>
+      <p class="vault-hint">Three synthetic policy categories. Each carries a distinct sigil and label, independent of any seal's state.</p>
+      <ul class="vault-jurisdictions" aria-label="Policy jurisdictions">
+        <li class="vault-jur">
+          <span class="vault-jur-sigil vault-jur-sigil--archive-ledger" aria-hidden="true"></span>
+          <span class="vault-jur-label">Archive ledger</span>
+          <span class="vault-jur-desc">Synthetic custody records retained for quarterly review.</span>
+        </li>
+        <li class="vault-jur">
+          <span class="vault-jur-sigil vault-jur-sigil--custody-window" aria-hidden="true"></span>
+          <span class="vault-jur-label">Custody window</span>
+          <span class="vault-jur-desc">Synthetic seals reviewed during each documented handover.</span>
+        </li>
+        <li class="vault-jur">
+          <span class="vault-jur-sigil vault-jur-sigil--dispatch-notes" aria-hidden="true"></span>
+          <span class="vault-jur-label">Dispatch notes</span>
+          <span class="vault-jur-desc">Synthetic receipt records used for training and visual review.</span>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="vault-foot">
+    <p class="vault-foot-line">Synthetic · off-fleet · not served. This register is a static design specimen; the records, personas, and dates are invented and hold no real seal, key, or authority.</p>
+    <p class="vault-foot-line">No JavaScript, no network, no forms — the page is the whole behaviour.</p>
+  </footer>
+</div>
+</body>
+</html>

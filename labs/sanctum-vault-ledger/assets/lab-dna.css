@@ -1,0 +1,86 @@
+/* Sanctum Vault Ledger — lab DNA. Off-fleet specimen only; no production authority. */
+/* This file is the sole declaration authority for the --vault-* token vocabulary. */
+/* lab-vault.css consumes these tokens and declares none. */
+
+/* ---------- core palette: warm paper, dark ink, ruled ledger ---------- */
+
+[data-lab="sanctum-vault-ledger"] {
+  /* paper ground + panel surfaces */
+  --vault-paper: #f1e7cd;
+  --vault-paper-alt: #eaddbd;
+  --vault-panel: #faf4e3;
+  --vault-edge: #d7c6a0;
+  /* ledger ruling: 1px row rules, 2px zone rules, margin rule */
+  --vault-rule: #cbba92;
+  --vault-rule-strong: #b0995f;
+  /* ink */
+  --vault-ink: #2f2a1e;
+  --vault-ink-2: #58503f;
+  --vault-ink-3: #837962;
+  /* blue wax: brand emblem, links, focus only — never a status channel */
+  --vault-wax: #294f8c;
+  --vault-wax-strong: #1d3a68;
+  --vault-focus: #294f8c;
+}
+
+/* ---------- rhythm, geometry, and type primitives ---------- */
+
+[data-lab="sanctum-vault-ledger"] {
+  /* state raw hues — warm archival tones, deliberately not blue */
+  --vault-active: #3c6733;
+  --vault-active-fill: #dbe6cc;
+  --vault-expiring: #8a5a0b;
+  --vault-expiring-fill: #f0e1ba;
+  --vault-expired: #63594a;
+  --vault-expired-fill: #e2d7bd;
+  --vault-revoked: #892c25;
+  --vault-revoked-fill: #ebd2ca;
+  /* layout rhythm */
+  --vault-margin-col: 3rem;
+  --vault-gap: 1rem;
+  --vault-radius: 0.4rem;
+  --vault-radius-sm: 0.22rem;
+  --vault-seal-size: 2.6rem;
+  --vault-page-max: 52rem;
+  --vault-measure: 42rem;
+  --vault-motion: 150ms;
+  /* type: system stacks only, nothing fetched */
+  --vault-serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+  --vault-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+}
+
+/* ---------- per-state tone mapping: word + geometry + hue draw from one tone ---------- */
+
+.vault-seal--active,
+.vault-state--active {
+  --vault-tone: var(--vault-active);
+  --vault-tone-fill: var(--vault-active-fill);
+}
+
+.vault-seal--expiring,
+.vault-state--expiring {
+  --vault-tone: var(--vault-expiring);
+  --vault-tone-fill: var(--vault-expiring-fill);
+}
+
+.vault-seal--expired,
+.vault-state--expired {
+  --vault-tone: var(--vault-expired);
+  --vault-tone-fill: var(--vault-expired-fill);
+}
+
+.vault-seal--revoked,
+.vault-state--revoked {
+  --vault-tone: var(--vault-revoked);
+  --vault-tone-fill: var(--vault-revoked-fill);
+}
+
+/* ---------- structural tokens consumed by the dossier fold and custody chain ---------- */
+
+.vault-gate {
+  --vault-gate-line: var(--vault-rule-strong);
+}
+
+.vault-chain {
+  --vault-chain-line: var(--vault-rule-strong);
+}

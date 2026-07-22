@@ -1,0 +1,86 @@
+{
+  "synthetic": true,
+  "as_of": "2026-07-20T00:00:00Z",
+  "secrets": [
+    {
+      "id": "seal-ash-01",
+      "label": "Archive receipt seal",
+      "scope": "archive-ledger",
+      "sealed": true,
+      "version": 3,
+      "state": "active",
+      "created_at": "2026-04-02T09:00:00Z",
+      "rotates_at": "2026-09-01T00:00:00Z"
+    },
+    {
+      "id": "seal-briar-02",
+      "label": "Nightly custody seal",
+      "scope": "custody-window",
+      "sealed": true,
+      "version": 4,
+      "state": "expiring",
+      "created_at": "2026-03-11T12:30:00Z",
+      "rotates_at": "2026-07-28T00:00:00Z"
+    },
+    {
+      "id": "seal-cinder-03",
+      "label": "Legacy receipt seal",
+      "scope": "archive-ledger",
+      "sealed": true,
+      "version": 2,
+      "state": "expired",
+      "created_at": "2026-02-14T16:00:00Z",
+      "rotates_at": "2026-07-15T00:00:00Z"
+    },
+    {
+      "id": "seal-dune-04",
+      "label": "Retired dispatch seal",
+      "scope": "dispatch-notes",
+      "sealed": true,
+      "version": 3,
+      "state": "revoked",
+      "created_at": "2026-01-19T08:15:00Z",
+      "rotates_at": "2026-08-14T00:00:00Z"
+    },
+    {
+      "id": "seal-flint-05",
+      "label": "Morning register seal",
+      "scope": "custody-window",
+      "sealed": true,
+      "version": 1,
+      "state": "active",
+      "created_at": "2026-06-01T07:00:00Z",
+      "rotates_at": "2026-10-01T00:00:00Z"
+    },
+    {
+      "id": "seal-ochre-06",
+      "label": "Courier receipt seal",
+      "scope": "dispatch-notes",
+      "sealed": true,
+      "version": 2,
+      "state": "active",
+      "created_at": "2026-05-20T10:45:00Z",
+      "rotates_at": "2026-08-20T00:00:00Z"
+    },
+    {
+      "id": "seal-slate-07",
+      "label": "Quarterly ledger seal",
+      "scope": "archive-ledger",
+      "sealed": true,
+      "version": 2,
+      "state": "active",
+      "created_at": "2026-04-28T14:10:00Z",
+      "rotates_at": "2026-11-05T00:00:00Z"
+    },
+    {
+      "id": "seal-umber-08",
+      "label": "Handover note seal",
+      "scope": "custody-window",
+      "sealed": true,
+      "version": 1,
+      "state": "active",
+      "created_at": "2026-06-18T18:20:00Z",
+      "rotates_at": "2026-08-08T00:00:00Z"
+    }
+  ]
+}

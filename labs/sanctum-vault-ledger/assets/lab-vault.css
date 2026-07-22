@@ -1,0 +1,824 @@
+/* Sanctum Vault Ledger — presentation. Consumes the --vault-* DNA; declares none. */
+/* Every selector is rooted in [data-lab="sanctum-vault-ledger"] or the .vault-* vocabulary. */
+
+/* ---------- reset + page ground ---------- */
+
+[data-lab="sanctum-vault-ledger"] *,
+[data-lab="sanctum-vault-ledger"] *::before,
+[data-lab="sanctum-vault-ledger"] *::after {
+  box-sizing: border-box;
+}
+
+[data-lab="sanctum-vault-ledger"] {
+  margin: 0;
+  background: var(--vault-paper);
+  color: var(--vault-ink);
+  font-family: var(--vault-serif);
+  font-size: 16px;
+  line-height: 1.5;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+[data-lab="sanctum-vault-ledger"] h1,
+[data-lab="sanctum-vault-ledger"] h2,
+[data-lab="sanctum-vault-ledger"] h3,
+[data-lab="sanctum-vault-ledger"] p,
+[data-lab="sanctum-vault-ledger"] ul,
+[data-lab="sanctum-vault-ledger"] ol,
+[data-lab="sanctum-vault-ledger"] dl,
+[data-lab="sanctum-vault-ledger"] dd {
+  margin: 0;
+  padding: 0;
+}
+
+[data-lab="sanctum-vault-ledger"] ul,
+[data-lab="sanctum-vault-ledger"] ol {
+  list-style: none;
+}
+
+[data-lab="sanctum-vault-ledger"] a {
+  color: var(--vault-wax);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  transition: color var(--vault-motion) linear, background-color var(--vault-motion) linear;
+}
+
+[data-lab="sanctum-vault-ledger"] a:hover {
+  color: var(--vault-wax-strong);
+}
+
+[data-lab="sanctum-vault-ledger"] a:focus-visible,
+[data-lab="sanctum-vault-ledger"] summary:focus-visible {
+  outline: 3px solid var(--vault-focus);
+  outline-offset: 2px;
+  border-radius: var(--vault-radius-sm);
+}
+
+[data-lab="sanctum-vault-ledger"] ::selection {
+  background: var(--vault-wax);
+  color: var(--vault-paper);
+}
+
+/* ---------- skip link: first focusable, on screen the instant focus lands ---------- */
+
+.vault-skip {
+  position: absolute;
+  top: 0;
+  left: 1rem;
+  z-index: 20;
+  transform: translateY(-260%);
+  background: var(--vault-ink);
+  color: var(--vault-paper);
+  font-family: var(--vault-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.55rem 0.9rem;
+  /* no transform transition: position must be final at first focus */
+}
+
+.vault-skip:focus,
+.vault-skip:focus-visible {
+  transform: translateY(0);
+  top: 0.5rem;
+  outline: 3px solid var(--vault-focus);
+  outline-offset: 2px;
+  box-shadow: 4px 4px 0 var(--vault-wax);
+}
+
+/* ---------- sheet frame ---------- */
+
+.vault-sheet {
+  max-width: var(--vault-page-max);
+  margin-inline: auto;
+  padding: 0 1.15rem 3rem;
+}
+
+/* ---------- masthead ---------- */
+
+.vault-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 1.1rem;
+  padding: 1rem 0 0.85rem;
+  border-bottom: 2px solid var(--vault-ink);
+}
+
+.vault-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--vault-ink);
+  text-decoration: none;
+}
+
+/* the one blue-wax mark: brand identity, not a status */
+.vault-brand-seal {
+  flex: none;
+  inline-size: 1.5rem;
+  block-size: 1.5rem;
+  border-radius: 50%;
+  background: var(--vault-wax);
+  border: 2px solid var(--vault-wax-strong);
+  position: relative;
+}
+
+.vault-brand-seal::before {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border: 1.5px solid var(--vault-paper);
+  border-radius: 50%;
+}
+
+.vault-brand-word {
+  font-family: var(--vault-serif);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.vault-brand-tag {
+  font-family: var(--vault-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--vault-ink-2);
+  border: 1px solid var(--vault-edge);
+  padding: 0.15rem 0.45rem;
+  white-space: nowrap;
+}
+
+/* synthetic stamp: inverse ink, impossible to miss, carries no status hue */
+.vault-synth {
+  background: var(--vault-ink);
+  color: var(--vault-paper);
+  font-family: var(--vault-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.6rem;
+  white-space: nowrap;
+}
+
+.vault-nav {
+  margin-left: auto;
+}
+
+.vault-nav-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.15rem;
+}
+
+.vault-nav-link {
+  display: inline-block;
+  color: var(--vault-ink-2);
+  text-decoration: none;
+  font-size: 0.85rem;
+  padding: 0.35rem 0.6rem;
+}
+
+.vault-nav-link:hover {
+  color: var(--vault-ink);
+  background: var(--vault-paper-alt);
+}
+
+.vault-nav-link[aria-current="page"] {
+  color: var(--vault-wax);
+  box-shadow: inset 0 -2px 0 var(--vault-wax);
+}
+
+/* ---------- headings + prose ---------- */
+
+.vault-kicker {
+  font-family: var(--vault-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--vault-ink-2);
+}
+
+.vault-title {
+  font-family: var(--vault-serif);
+  font-size: clamp(1.9rem, 5vw, 2.9rem);
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  margin: 0.35rem 0 0.6rem;
+}
+
+.vault-lede {
+  font-size: 1.05rem;
+  line-height: 1.55;
+  max-width: var(--vault-measure);
+  color: var(--vault-ink-2);
+}
+
+.vault-zone {
+  border-top: 2px solid var(--vault-rule-strong);
+  margin-top: 2.2rem;
+  padding-top: 0.9rem;
+}
+
+.vault-h2 {
+  font-family: var(--vault-serif);
+  font-size: 1.3rem;
+  line-height: 1.2;
+}
+
+.vault-h3 {
+  font-family: var(--vault-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--vault-ink-2);
+  margin-bottom: 0.4rem;
+}
+
+.vault-hint {
+  color: var(--vault-ink-2);
+  font-size: 0.9rem;
+  max-width: var(--vault-measure);
+  margin: 0.15rem 0 0.9rem;
+}
+
+/* ---------- seal geometry: state as shape + hue, redundant with the word ---------- */
+
+.vault-seal {
+  flex: none;
+  inline-size: var(--vault-seal-size);
+  block-size: var(--vault-seal-size);
+  border: 2px solid var(--vault-tone, var(--vault-ink));
+  border-radius: 50%;
+  background: var(--vault-tone-fill, var(--vault-panel));
+  position: relative;
+  display: inline-block;
+}
+
+/* active — intact seal with an embossed inner ring */
+.vault-seal--active::before {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border: 1.5px solid var(--vault-tone);
+  border-radius: 50%;
+}
+
+/* expiring — dripped silhouette with an upward warning wedge */
+.vault-seal--expiring {
+  border-radius: 46% 46% 46% 14%;
+}
+
+.vault-seal--expiring::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 9px solid var(--vault-tone);
+  transform: translate(-50%, -50%);
+}
+
+/* expired — broken seal drawn with a dashed rim and a fracture line */
+.vault-seal--expired {
+  border-style: dashed;
+}
+
+.vault-seal--expired::before {
+  content: "";
+  position: absolute;
+  left: 20%;
+  right: 20%;
+  top: 50%;
+  height: 2px;
+  background: var(--vault-tone);
+  transform: translateY(-50%) rotate(-12deg);
+}
+
+/* revoked — struck seal with a diagonal cross */
+.vault-seal--revoked::before,
+.vault-seal--revoked::after {
+  content: "";
+  position: absolute;
+  left: 16%;
+  right: 16%;
+  top: 50%;
+  height: 2.5px;
+  background: var(--vault-tone);
+}
+
+.vault-seal--revoked::before {
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.vault-seal--revoked::after {
+  transform: translateY(-50%) rotate(-45deg);
+}
+
+/* ---------- state word + due text ---------- */
+
+.vault-state {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--vault-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--vault-tone, var(--vault-ink));
+}
+
+.vault-due {
+  font-family: var(--vault-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+  color: var(--vault-ink-2);
+}
+
+.vault-due--soon {
+  color: var(--vault-expiring);
+  font-weight: 700;
+}
+
+.vault-due--overdue {
+  color: var(--vault-revoked);
+  font-weight: 700;
+}
+
+.vault-scope {
+  font-family: var(--vault-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  color: var(--vault-ink-2);
+}
+
+/* ---------- due window ---------- */
+
+.vault-due-window {
+  border: 1px solid var(--vault-edge);
+  border-left: 3px solid var(--vault-rule-strong);
+  background: var(--vault-panel);
+}
+
+.vault-due-entry {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.8rem;
+  padding: 0.6rem 0.85rem;
+  border-bottom: 1px solid var(--vault-rule);
+}
+
+.vault-due-entry:last-child {
+  border-bottom: 0;
+}
+
+.vault-due-mark {
+  flex: none;
+  inline-size: 0.7rem;
+  block-size: 0.7rem;
+  border: 2px solid var(--vault-rule-strong);
+  transform: rotate(45deg);
+  align-self: center;
+}
+
+.vault-due-name {
+  font-weight: 600;
+}
+
+/* ---------- register: the ruled sealed ledger ---------- */
+
+.vault-register {
+  border-top: 2px solid var(--vault-rule-strong);
+  background: var(--vault-panel);
+}
+
+.vault-line {
+  display: grid;
+  grid-template-columns: var(--vault-margin-col) minmax(0, 1fr);
+  grid-template-areas:
+    "margin body"
+    "margin status";
+  column-gap: 0.9rem;
+  row-gap: 0.3rem;
+  align-items: start;
+  padding: 0.8rem 0.95rem 0.85rem;
+  border-bottom: 1px solid var(--vault-rule);
+  border-left: 3px solid var(--vault-rule);
+}
+
+.vault-line:nth-child(even) {
+  background: var(--vault-paper-alt);
+}
+
+/* margin / sigil column — the ledger's ruled left band */
+.vault-margin {
+  grid-area: margin;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  padding-top: 0.1rem;
+}
+
+.vault-sigil {
+  flex: none;
+  inline-size: 1.25rem;
+  block-size: 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--vault-edge);
+  color: var(--vault-ink-2);
+  font-size: 0.8rem;
+  line-height: 1;
+}
+
+.vault-sigil--archive-ledger::before {
+  content: "\2632";
+}
+
+.vault-sigil--custody-window::before {
+  content: "\25C8";
+}
+
+.vault-sigil--dispatch-notes::before {
+  content: "\25B8";
+}
+
+.vault-line-body {
+  grid-area: body;
+  min-width: 0;
+}
+
+.vault-label {
+  font-size: 1.02rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.vault-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.2rem 0.7rem;
+  margin-top: 0.2rem;
+}
+
+.vault-version {
+  font-family: var(--vault-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  color: var(--vault-ink-3);
+}
+
+.vault-status {
+  grid-area: status;
+  min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 0.7rem;
+}
+
+.vault-open {
+  font-family: var(--vault-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ---------- jurisdictions: policy categories, distinct sigils, orthogonal to state ---------- */
+
+.vault-jurisdictions {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.vault-jur {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr);
+  gap: 0.2rem 0.85rem;
+  align-items: start;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid var(--vault-edge);
+  background: var(--vault-panel);
+}
+
+.vault-jur-sigil {
+  grid-row: span 2;
+  align-self: center;
+  inline-size: 2rem;
+  block-size: 2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid var(--vault-rule-strong);
+  color: var(--vault-ink);
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
+.vault-jur-sigil--archive-ledger::before {
+  content: "\2632";
+}
+
+.vault-jur-sigil--custody-window::before {
+  content: "\25C8";
+}
+
+.vault-jur-sigil--dispatch-notes::before {
+  content: "\25B8";
+}
+
+.vault-jur-label {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.vault-jur-desc {
+  color: var(--vault-ink-2);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+/* ---------- colophon ---------- */
+
+.vault-foot {
+  border-top: 2px solid var(--vault-ink);
+  margin-top: 2.6rem;
+  padding-top: 0.9rem;
+}
+
+.vault-foot-line {
+  color: var(--vault-ink-2);
+  font-size: 0.88rem;
+  line-height: 1.5;
+  max-width: var(--vault-measure);
+  margin-bottom: 0.4rem;
+}
+
+/* ---------- dossier archetype ---------- */
+
+.vault-dossier {
+  background: var(--vault-panel);
+  border: 2px solid var(--vault-rule-strong);
+  border-radius: var(--vault-radius);
+  padding: clamp(1rem, 3vw, 1.6rem);
+}
+
+.vault-dossier-head {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.8rem 1.1rem;
+  align-items: start;
+  border-left: 3px solid var(--vault-rule);
+  padding-left: 0.9rem;
+}
+
+.vault-dossier-ident {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  align-items: flex-start;
+}
+
+.vault-dossier-ident .vault-label {
+  font-family: var(--vault-serif);
+  font-size: 1.3rem;
+}
+
+.vault-badges {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.3rem 0.8rem;
+}
+
+.vault-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+  gap: 0.5rem 1rem;
+  margin-top: 0.7rem;
+  width: 100%;
+}
+
+.vault-fact {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  border-top: 1px solid var(--vault-rule);
+  padding-top: 0.35rem;
+}
+
+.vault-fact dt {
+  font-family: var(--vault-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--vault-ink-3);
+}
+
+.vault-fact dd {
+  font-size: 0.95rem;
+  overflow-wrap: anywhere;
+}
+
+/* ---------- sealed gate (native details) ---------- */
+
+.vault-gate {
+  display: block;
+  border: 2px solid var(--vault-gate-line);
+  border-radius: var(--vault-radius);
+  background: var(--vault-paper-alt);
+  margin-top: 0.9rem;
+}
+
+/* override the circular seal base for the rectangular fold */
+.vault-seal.vault-gate {
+  inline-size: auto;
+  block-size: auto;
+  border-radius: var(--vault-radius);
+}
+
+.vault-gate-summary {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1rem;
+  cursor: pointer;
+  font-family: var(--vault-mono);
+  font-size: 0.76rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--vault-ink);
+  list-style: none;
+}
+
+.vault-gate-summary::-webkit-details-marker {
+  display: none;
+}
+
+/* the blue-wax seal disc on the fold: brand mark, rotates when broken */
+.vault-gate-seal {
+  flex: none;
+  inline-size: 1.15rem;
+  block-size: 1.15rem;
+  border-radius: 50%;
+  background: var(--vault-wax);
+  border: 2px solid var(--vault-wax-strong);
+  transition: transform var(--vault-motion) ease;
+}
+
+.vault-gate[open] .vault-gate-seal {
+  transform: rotate(45deg);
+}
+
+.vault-gate-body {
+  padding: 0 1rem 1rem;
+  border-top: 1px solid var(--vault-rule);
+}
+
+.vault-gate-note {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0.85rem 0;
+  max-width: var(--vault-measure);
+}
+
+/* ---------- custody chain ---------- */
+
+.vault-chain {
+  border-left: 2px solid var(--vault-chain-line);
+  margin: 0.4rem 0 1rem;
+}
+
+.vault-chain-step {
+  position: relative;
+  padding: 0.55rem 0 0.55rem 1.25rem;
+  border-bottom: 1px solid var(--vault-rule);
+}
+
+.vault-chain-step:last-child {
+  border-bottom: 0;
+}
+
+.vault-chain-step::before {
+  content: "";
+  position: absolute;
+  left: -6px;
+  top: 0.85rem;
+  inline-size: 9px;
+  block-size: 9px;
+  background: var(--vault-panel);
+  border: 2px solid var(--vault-chain-line);
+  border-radius: 50%;
+}
+
+.vault-chain-v {
+  font-family: var(--vault-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--vault-ink);
+}
+
+.vault-chain-at,
+.vault-chain-actor {
+  font-family: var(--vault-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.02em;
+  color: var(--vault-ink-2);
+  overflow-wrap: anywhere;
+}
+
+.vault-chain-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.15rem 0.8rem;
+  margin-top: 0.15rem;
+}
+
+/* ---------- deed of destruction ---------- */
+
+.vault-deed {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  max-width: var(--vault-measure);
+  border-top: 1px solid var(--vault-rule);
+  padding-top: 0.75rem;
+}
+
+.vault-deed-title {
+  font-family: var(--vault-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--vault-revoked);
+  display: inline-block;
+  margin-right: 0.35rem;
+}
+
+/* ---------- wide viewports: seal / body / status on one ledger line ---------- */
+
+@media (min-width: 46rem) {
+  .vault-line {
+    grid-template-columns: var(--vault-margin-col) minmax(0, 1fr) auto;
+    grid-template-areas: "margin body status";
+    align-items: center;
+    column-gap: 1.15rem;
+  }
+
+  .vault-status {
+    justify-content: flex-end;
+    text-align: right;
+    max-width: 14rem;
+  }
+
+  .vault-jurisdictions {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* ---------- forced colors: keep seal borders, state words, and structure ---------- */
+
+@media (forced-colors: active) {
+  .vault-brand-seal,
+  .vault-gate-seal {
+    forced-color-adjust: none;
+  }
+
+  .vault-seal {
+    border-color: CanvasText;
+  }
+
+  .vault-synth {
+    border: 1px solid CanvasText;
+  }
+
+  .vault-due-mark,
+  .vault-sigil,
+  .vault-jur-sigil {
+    border-color: CanvasText;
+  }
+}
+
+/* ---------- reduced motion: no transition or animation anywhere ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  [data-lab="sanctum-vault-ledger"],
+  [data-lab="sanctum-vault-ledger"] *,
+  [data-lab="sanctum-vault-ledger"] *::before,
+  [data-lab="sanctum-vault-ledger"] *::after {
+    transition: none !important;
+    animation: none !important;
+    scroll-behavior: auto !important;
+  }
+}

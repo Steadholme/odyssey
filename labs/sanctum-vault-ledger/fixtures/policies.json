@@ -1,0 +1,20 @@
+{
+  "synthetic": true,
+  "scopes": [
+    {
+      "scope": "archive-ledger",
+      "label": "Archive ledger",
+      "description": "Synthetic custody records retained for quarterly review."
+    },
+    {
+      "scope": "custody-window",
+      "label": "Custody window",
+      "description": "Synthetic seals reviewed during each documented handover."
+    },
+    {
+      "scope": "dispatch-notes",
+      "label": "Dispatch notes",
+      "description": "Synthetic receipt records used for training and visual review."
+    }
+  ]
+}
