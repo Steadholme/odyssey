@@ -1,0 +1,472 @@
+{
+  "meta": {
+    "synthetic": true,
+    "specimen": "beacon-two-faces",
+    "surface": "publication",
+    "archetype": "publication",
+    "generated_at": "2026-07-20T06:00:00Z",
+    "evidence_window": {
+      "days": 30,
+      "from": "2026-06-21",
+      "to": "2026-07-20"
+    },
+    "overall_status": "degraded",
+    "note": "Synthetic fixture for an off-fleet design lab. Every value is fictional, non-live, and safe to redistribute."
+  },
+  "headline": {
+    "state": "degraded",
+    "text": "Search is degraded. The other 23 public services are operational.",
+    "chip": "DEGRADED"
+  },
+  "incident": {
+    "id": "syn-inc-0042",
+    "component": "Search",
+    "severity": "degraded",
+    "state": "active",
+    "title": "Elevated answer latency on Search",
+    "started_at": "2026-07-18T14:22:00Z",
+    "summary": "Synthetic narrative: queries are completing, but more slowly than usual. No data loss is simulated.",
+    "updates": [
+      {
+        "at": "2026-07-18T14:22:00Z",
+        "label": "Investigating",
+        "text": "Synthetic probe flagged rising answer latency."
+      },
+      {
+        "at": "2026-07-19T09:40:00Z",
+        "label": "Identified",
+        "text": "Synthetic cause isolated to a fictional index rebalance."
+      },
+      {
+        "at": "2026-07-20T05:30:00Z",
+        "label": "Monitoring",
+        "text": "Synthetic mitigation applied; latency trending down."
+      }
+    ]
+  },
+  "maintenance": {
+    "id": "syn-mnt-0011",
+    "component": "Mail",
+    "state": "scheduled",
+    "title": "Routine index compaction on Mail",
+    "window_start": "2026-07-22T01:00:00Z",
+    "window_end": "2026-07-22T01:30:00Z",
+    "summary": "Synthetic notice: a brief read-only window is expected; delivery continues throughout."
+  },
+  "components": [
+    {
+      "key": "gateway",
+      "name": "Gateway",
+      "status": "operational",
+      "up_30d": 100,
+      "evidence": "oooooooooooooooooooooooooooooo",
+      "evidence_counts": {
+        "operational": 30,
+        "degraded": 0,
+        "outage": 0,
+        "maintenance": 0,
+        "no_data": 0
+      },
+      "summary": "30 of 30 days operational"
+    },
+    {
+      "key": "identity",
+      "name": "Identity",
+      "status": "operational",
+      "up_30d": 100,
+      "evidence": "oooooooooooooooooooooooooooooo",
+      "evidence_counts": {
+        "operational": 30,
+        "degraded": 0,
+        "outage": 0,
+        "maintenance": 0,
+        "no_data": 0
+      },
+      "summary": "30 of 30 days operational"
+    },
+    {
+      "key": "mail",
+      "name": "Mail",
+      "status": "operational",
+      "up_30d": 100,
+      "evidence": "oooooooooooooooooooooooooooooo",
+      "evidence_counts": {
+        "operational": 30,
+        "degraded": 0,
+        "outage": 0,
+        "maintenance": 0,
+        "no_data": 0
+      },
+      "summary": "30 of 30 days operational",
+      "note": "Maintenance 07-22 01:00–01:30Z"
+    },
+    {
+      "key": "drive",
+      "name": "Drive",
+      "status": "operational",
+      "up_30d": 99.2,
+      "evidence": "ooooooooooooooooooouoooooooooo",
+      "evidence_counts": {
+        "operational": 29,
+        "degraded": 0,
+        "outage": 1,
+        "maintenance": 0,
+        "no_data": 0
+      },
+      "summary": "29 of 30 days operational · 1 outage day"
+    },
+    {
+      "key": "forum",
+      "name": "Forum",
+      "status": "operational",
+      "up_30d": 100,
+      "evidence": "oooooooooooooooooooooooooooooo",
+      "evidence_counts": {
+        "operational": 30,
+        "degraded": 0,
+        "outage": 0,
+        "maintenance": 0,
+        "no_data": 0
+      },
+      "summary": "30 of 30 days operational"
+    },
+    {
+      "key": "git",
+      "name": "Git",
+      "status": "operational",
+      "up_30d": 100,
+      "evidence": "oooooooooooooooooooooooooooooo",
+      "evidence_counts": {
+        "operational": 30,
+        "degraded": 0,
+        "outage": 0,
+        "maintenance": 0,
+        "no_data": 0
+      },
+      "summary": "30 of 30 days operational"
+    },
+    {
+      "key": "relay",
+      "name": "Relay",
+      "status": "operational",
+      "up_30d": 100,
+      "evidence": "oooooooooooooooooooooooooooooo",
+      "evidence_counts": {
+        "operational": 30,
+        "degraded": 0,
+        "outage": 0,
+        "maintenance": 0,
+        "no_data": 0
+      },
+      "summary": "30 of 30 days operational"
+    },
+    {
+      "key": "search",
+      "name": "Search",
+      "status": "degraded",
+      "up_30d": 98.9,
+      "evidence": "oooooooooooooooooooooooooooddd",
+      "evidence_counts": {
+        "operational": 27,
+        "degraded": 3,
+        "outage": 0,
+        "maintenance": 0,
+        "no_data": 0
+      },
+      "summary": "27 of 30 days operational · 3 degraded days",
+      "note": "Incident syn-inc-0042 · monitoring"
+    },
+    {
+      "key": "blog",
+      "name": "Blog",
+      "status": "operational",
+      "up_30d": 100,
+      "evidence": "oooooooooooooooooooooooooooooo",
+      "evidence_counts": {
+        "operational": 30,
+        "degraded": 0,
+        "outage": 0,
+        "maintenance": 0,
+        "no_data": 0
+      },
+      "summary": "30 of 30 days operational"
+    },
+    {
+      "key": "feeds",
+      "name": "Feeds",
+      "status": "operational",
+      "up_30d": 99.5,
+      "evidence": "oooooooooooooododooooooooooooo",
+      "evidence_counts": {
+        "operational": 28,
+        "degraded": 2,
+        "outage": 0,
+        "maintenance": 0,
+        "no_data": 0
+      },
+      "summary": "28 of 30 days operational · 2 degraded days"
+    },
+    {
+      "key": "inbox",
+      "name": "Inbox",
+      "status": "operational",
+      "up_30d": 100,
+      "evidence": "oooooooooooooooooooooooooooooo",
+      "evidence_counts": {
+        "operational": 30,
+        "degraded": 0,
+        "outage": 0,
+        "maintenance": 0,
+        "no_data": 0
+      },
+      "summary": "30 of 30 days operational"
+    },
+    {
+      "key": "chat",
+      "name": "Chat",
+      "status": "operational",
+      "up_30d": 100,
+      "evidence": "oooooooooooooooooooooooooooooo",
+      "evidence_counts": {
+        "operational": 30,
+        "degraded": 0,
+        "outage": 0,
+        "maintenance": 0,
+        "no_data": 0
+      },
+      "summary": "30 of 30 days operational"
+    },
+    {
+      "key": "social",
+      "name": "Social",
+      "status": "operational",
+      "up_30d": 100,
+      "evidence": "oooooooooooooooooooooooooooooo",
+      "evidence_counts": {
+        "operational": 30,
+        "degraded": 0,
+        "outage": 0,
+        "maintenance": 0,
+        "no_data": 0
+      },
+      "summary": "30 of 30 days operational"
+    },
+    {
+      "key": "notify",
+      "name": "Notify",
+      "status": "operational",
+      "up_30d": 100,
+      "evidence": "oooooooooooooooooooooooooooooo",
+      "evidence_counts": {
+        "operational": 30,
+        "degraded": 0,
+        "outage": 0,
+        "maintenance": 0,
+        "no_data": 0
+      },
+      "summary": "30 of 30 days operational"
+    },
+    {
+      "key": "wiki",
+      "name": "Wiki",
+      "status": "operational",
+      "up_30d": 100,
+      "evidence": "oooooooooooooooooooooooooooooo",
+      "evidence_counts": {
+        "operational": 30,
+        "degraded": 0,
+        "outage": 0,
+        "maintenance": 0,
+        "no_data": 0
+      },
+      "summary": "30 of 30 days operational"
+    },
+    {
+      "key": "registry",
+      "name": "Registry",
+      "status": "operational",
+      "up_30d": 100,
+      "evidence": "oooooooooooooooooooooooooooooo",
+      "evidence_counts": {
+        "operational": 30,
+        "degraded": 0,
+        "outage": 0,
+        "maintenance": 0,
+        "no_data": 0
+      },
+      "summary": "30 of 30 days operational"
+    },
+    {
+      "key": "canvas",
+      "name": "Canvas",
+      "status": "operational",
+      "up_30d": 100,
+      "evidence": "oooooooooooooooooooooooooooooo",
+      "evidence_counts": {
+        "operational": 30,
+        "degraded": 0,
+        "outage": 0,
+        "maintenance": 0,
+        "no_data": 0
+      },
+      "summary": "30 of 30 days operational"
+    },
+    {
+      "key": "clips",
+      "name": "Clips",
+      "status": "operational",
+      "up_30d": 100,
+      "evidence": "oooooooooooooooooooooooooooooo",
+      "evidence_counts": {
+        "operational": 30,
+        "degraded": 0,
+        "outage": 0,
+        "maintenance": 0,
+        "no_data": 0
+      },
+      "summary": "30 of 30 days operational"
+    },
+    {
+      "key": "comments",
+      "name": "Comments",
+      "status": "operational",
+      "up_30d": 100,
+      "evidence": "oooooooooooooooooooooooooooooo",
+      "evidence_counts": {
+        "operational": 30,
+        "degraded": 0,
+        "outage": 0,
+        "maintenance": 0,
+        "no_data": 0
+      },
+      "summary": "30 of 30 days operational"
+    },
+    {
+      "key": "pastefire",
+      "name": "Pastefire",
+      "status": "operational",
+      "up_30d": 100,
+      "evidence": "oooooooooooooooooooooooooooooo",
+      "evidence_counts": {
+        "operational": 30,
+        "degraded": 0,
+        "outage": 0,
+        "maintenance": 0,
+        "no_data": 0
+      },
+      "summary": "30 of 30 days operational"
+    },
+    {
+      "key": "relation",
+      "name": "Relation",
+      "status": "operational",
+      "up_30d": 100,
+      "evidence": "oooooooooooooooooooooooooooooo",
+      "evidence_counts": {
+        "operational": 30,
+        "degraded": 0,
+        "outage": 0,
+        "maintenance": 0,
+        "no_data": 0
+      },
+      "summary": "30 of 30 days operational"
+    },
+    {
+      "key": "calendar",
+      "name": "Calendar",
+      "status": "operational",
+      "up_30d": 100,
+      "evidence": "oooooooooooooooooooooooooooooo",
+      "evidence_counts": {
+        "operational": 30,
+        "degraded": 0,
+        "outage": 0,
+        "maintenance": 0,
+        "no_data": 0
+      },
+      "summary": "30 of 30 days operational"
+    },
+    {
+      "key": "multica",
+      "name": "Multica",
+      "status": "operational",
+      "up_30d": 100,
+      "evidence": "oooooooooooooooooooooooooooooo",
+      "evidence_counts": {
+        "operational": 30,
+        "degraded": 0,
+        "outage": 0,
+        "maintenance": 0,
+        "no_data": 0
+      },
+      "summary": "30 of 30 days operational"
+    },
+    {
+      "key": "odyssey-ui",
+      "name": "Odyssey UI",
+      "status": "operational",
+      "up_30d": 100,
+      "evidence": "oooooooooooooooooooooooooooooo",
+      "evidence_counts": {
+        "operational": 30,
+        "degraded": 0,
+        "outage": 0,
+        "maintenance": 0,
+        "no_data": 0
+      },
+      "summary": "30 of 30 days operational"
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-07-20",
+      "label": "degraded",
+      "text": "Search degraded · synthetic incident syn-inc-0042, monitoring."
+    },
+    {
+      "date": "2026-07-19",
+      "label": "degraded",
+      "text": "Search answer latency elevated · cause identified."
+    },
+    {
+      "date": "2026-07-18",
+      "label": "degraded",
+      "text": "Search answer latency first flagged by synthetic probes."
+    },
+    {
+      "date": "2026-07-17",
+      "label": "operational",
+      "text": "All public services operational."
+    },
+    {
+      "date": "2026-07-16",
+      "label": "operational",
+      "text": "All public services operational."
+    },
+    {
+      "date": "2026-07-15",
+      "label": "operational",
+      "text": "All public services operational."
+    },
+    {
+      "date": "2026-07-14",
+      "label": "operational",
+      "text": "All public services operational."
+    }
+  ],
+  "channels": [
+    {
+      "label": "JSON",
+      "detail": "Machine-readable fixture behind this specimen.",
+      "href": "./fixtures/public-status.fixture.json"
+    },
+    {
+      "label": "RSS",
+      "detail": "Not wired in the lab."
+    },
+    {
+      "label": "EMAIL",
+      "detail": "Not wired in the lab."
+    }
+  ]
+}

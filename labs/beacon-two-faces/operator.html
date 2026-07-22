@@ -1,0 +1,711 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beacon — control-room shift ledger specimen (synthetic lab)</title>
+<meta name="description" content="Off-fleet static design specimen of the Beacon control-room surface. Synthetic data, not live, read-only, no rollout authority.">
+<link rel="stylesheet" href="./assets/lab-dna.css">
+<link rel="stylesheet" href="./assets/lab-operator.css">
+</head>
+<body data-lab="beacon-two-faces" data-ody-archetype="control-room">
+<a class="lab-skip" href="#main">Skip to shift ledger</a>
+<header class="lab-masthead">
+  <a class="lab-brand" href="./index.html">
+    <svg class="lab-brand__mark" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><rect width="24" height="24" fill="#9a4a15"/><path d="M0 24 L24 0 L24 24 Z" fill="#1f1b16"/><rect x="10" y="10" width="5" height="5" fill="#f6f3ec"/></svg>
+    <span class="lab-brand__word">Beacon</span>
+    <span class="lab-brand__tag">TWO FACES · LAB</span>
+  </a>
+  <p class="lab-synth">SYNTHETIC SPECIMEN — NOT LIVE</p>
+  <nav class="lab-nav" aria-label="Specimen pages">
+    <a class="lab-nav__link" href="./index.html">Index</a>
+    <a class="lab-nav__link" href="./public.html">Publication</a>
+    <a class="lab-nav__link" href="./operator.html" aria-current="page">Control room</a>
+  </nav>
+</header>
+<main class="lab-spread" id="main">
+
+  <section class="lab-shift" aria-labelledby="page-title">
+    <p class="lab-zone-kicker">Control room</p>
+    <h1 class="lab-shift__title" id="page-title">Shift ledger — 51 checks, 7 anomalies</h1>
+    <p class="lab-meta">SPECIMEN OPS-2026-07-20 · SYNTHETIC DATA · ALL CHECKS 2026-07-20 · TIMES UTC · GENERATED 06:00Z · READ-ONLY</p>
+  </section>
+
+  <section class="lab-zone" aria-labelledby="anomalies-heading">
+    <h2 class="lab-zone__label" id="anomalies-heading">Anomalies — failures first, then warnings by check id</h2>
+    <ol class="lab-anomalies">
+    <li class="lab-anomaly" data-lab-anomaly data-lab-status="fail">
+      <a class="lab-anomaly__link" href="#row-syn-flint-04">
+        <span class="lab-chip lab-chip--fail"><span class="lab-dot lab-dot--fail" aria-hidden="true"></span>FAIL</span>
+        <span class="lab-mono">syn-flint-04</span>
+        <span class="lab-anomaly__group">flint · synthetic-queue</span>
+        <span class="lab-anomaly__note">Synthetic queue depth above threshold for two evidence days.</span>
+      </a>
+    </li>
+    <li class="lab-anomaly" data-lab-anomaly data-lab-status="fail">
+      <a class="lab-anomaly__link" href="#row-syn-ochre-02">
+        <span class="lab-chip lab-chip--fail"><span class="lab-dot lab-dot--fail" aria-hidden="true"></span>FAIL</span>
+        <span class="lab-mono">syn-ochre-02</span>
+        <span class="lab-anomaly__group">ochre · synthetic-tcp</span>
+        <span class="lab-anomaly__note">Synthetic connect probe failing for two consecutive evidence days.</span>
+      </a>
+    </li>
+    <li class="lab-anomaly" data-lab-anomaly data-lab-status="warn">
+      <a class="lab-anomaly__link" href="#row-syn-basalt-07">
+        <span class="lab-chip lab-chip--warn"><span class="lab-dot lab-dot--warn" aria-hidden="true"></span>WARN</span>
+        <span class="lab-mono">syn-basalt-07</span>
+        <span class="lab-anomaly__group">basalt · synthetic-tcp</span>
+        <span class="lab-anomaly__note">Synthetic latency above threshold for three evidence days.</span>
+      </a>
+    </li>
+    <li class="lab-anomaly" data-lab-anomaly data-lab-status="warn">
+      <a class="lab-anomaly__link" href="#row-syn-granite-03">
+        <span class="lab-chip lab-chip--warn"><span class="lab-dot lab-dot--warn" aria-hidden="true"></span>WARN</span>
+        <span class="lab-mono">syn-granite-03</span>
+        <span class="lab-anomaly__group">granite · synthetic-http</span>
+        <span class="lab-anomaly__note">Intermittent synthetic timeouts inside the evidence window.</span>
+      </a>
+    </li>
+    <li class="lab-anomaly" data-lab-anomaly data-lab-status="warn">
+      <a class="lab-anomaly__link" href="#row-syn-granite-08">
+        <span class="lab-chip lab-chip--warn"><span class="lab-dot lab-dot--warn" aria-hidden="true"></span>WARN</span>
+        <span class="lab-mono">syn-granite-08</span>
+        <span class="lab-anomaly__group">granite · synthetic-http</span>
+        <span class="lab-anomaly__note">Synthetic latency above threshold on alternating evidence days.</span>
+      </a>
+    </li>
+    <li class="lab-anomaly" data-lab-anomaly data-lab-status="warn">
+      <a class="lab-anomaly__link" href="#row-syn-marble-05">
+        <span class="lab-chip lab-chip--warn"><span class="lab-dot lab-dot--warn" aria-hidden="true"></span>WARN</span>
+        <span class="lab-mono">syn-marble-05</span>
+        <span class="lab-anomaly__group">marble · synthetic-tcp</span>
+        <span class="lab-anomaly__note">Synthetic latency above threshold for two evidence days.</span>
+      </a>
+    </li>
+    <li class="lab-anomaly" data-lab-anomaly data-lab-status="warn">
+      <a class="lab-anomaly__link" href="#row-syn-slate-06">
+        <span class="lab-chip lab-chip--warn"><span class="lab-dot lab-dot--warn" aria-hidden="true"></span>WARN</span>
+        <span class="lab-mono">syn-slate-06</span>
+        <span class="lab-anomaly__group">slate · synthetic-cert</span>
+        <span class="lab-anomaly__note">Synthetic certificate expiry drifted inside the warning band.</span>
+      </a>
+    </li>
+    </ol>
+  </section>
+
+  <section class="lab-zone" aria-labelledby="checks-heading">
+    <h2 class="lab-zone__label" id="checks-heading">All checks — grouped, then check id</h2>
+    <table class="lab-table">
+      <caption>All 51 synthetic checks for 2026-07-20. Evidence strips show the worst synthetic status per day across a 30-day window, newest day on the right; the mono counts beside each strip repeat the same information as text. Rows are ordered by group, then check id, so a row address stays stable; the anomaly list above links into this table.</caption>
+      <thead>
+        <tr>
+          <th scope="col">Check</th>
+          <th scope="col">Status</th>
+          <th scope="col">Latest</th>
+          <th scope="col">24 h</th>
+          <th scope="col">7 d</th>
+          <th scope="col">30 d</th>
+          <th scope="col">Evidence · 30 d</th>
+          <th scope="col">Last checked</th>
+          <th scope="col">Audit</th>
+        </tr>
+      </thead>
+      <tbody>
+    <tr id="row-syn-basalt-01" data-lab-check data-lab-status="pass">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-basalt-01</span><span class="lab-sub">basalt · synthetic-http</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--pass"><span class="lab-dot lab-dot--pass" aria-hidden="true"></span>PASS</span></td>
+      <td data-label="Latest" class="lab-num">183 ms</td>
+      <td data-label="24 h" class="lab-num">100.0</td>
+      <td data-label="7 d" class="lab-num">100.0</td>
+      <td data-label="30 d" class="lab-num">100.0</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 30 pass, 0 warn, 0 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i></span><span class="lab-ev__counts lab-mono">30P · 0W · 0F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:58:07Z">05:58Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0001</td>
+    </tr>
+    <tr id="row-syn-basalt-02" data-lab-check data-lab-status="pass">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-basalt-02</span><span class="lab-sub">basalt · synthetic-tcp</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--pass"><span class="lab-dot lab-dot--pass" aria-hidden="true"></span>PASS</span></td>
+      <td data-label="Latest" class="lab-num">166 ms</td>
+      <td data-label="24 h" class="lab-num">100.0</td>
+      <td data-label="7 d" class="lab-num">100.0</td>
+      <td data-label="30 d" class="lab-num">100.0</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 30 pass, 0 warn, 0 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i></span><span class="lab-ev__counts lab-mono">30P · 0W · 0F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:57:14Z">05:57Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0002</td>
+    </tr>
+    <tr id="row-syn-basalt-03" data-lab-check data-lab-status="pass">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-basalt-03</span><span class="lab-sub">basalt · synthetic-queue</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--pass"><span class="lab-dot lab-dot--pass" aria-hidden="true"></span>PASS</span></td>
+      <td data-label="Latest" class="lab-num">236 ms</td>
+      <td data-label="24 h" class="lab-num">100.0</td>
+      <td data-label="7 d" class="lab-num">100.0</td>
+      <td data-label="30 d" class="lab-num">100.0</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 30 pass, 0 warn, 0 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i></span><span class="lab-ev__counts lab-mono">30P · 0W · 0F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:56:21Z">05:56Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0003</td>
+    </tr>
+    <tr id="row-syn-basalt-04" data-lab-check data-lab-status="pass">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-basalt-04</span><span class="lab-sub">basalt · synthetic-cert</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--pass"><span class="lab-dot lab-dot--pass" aria-hidden="true"></span>PASS</span></td>
+      <td data-label="Latest" class="lab-num">98 ms</td>
+      <td data-label="24 h" class="lab-num">100.0</td>
+      <td data-label="7 d" class="lab-num">100.0</td>
+      <td data-label="30 d" class="lab-num">99.9</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 30 pass, 0 warn, 0 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i></span><span class="lab-ev__counts lab-mono">30P · 0W · 0F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:55:28Z">05:55Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0004</td>
+    </tr>
+    <tr id="row-syn-basalt-05" data-lab-check data-lab-status="pass">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-basalt-05</span><span class="lab-sub">basalt · synthetic-cron</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--pass"><span class="lab-dot lab-dot--pass" aria-hidden="true"></span>PASS</span></td>
+      <td data-label="Latest" class="lab-num">137 ms</td>
+      <td data-label="24 h" class="lab-num">100.0</td>
+      <td data-label="7 d" class="lab-num">100.0</td>
+      <td data-label="30 d" class="lab-num">100.0</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 30 pass, 0 warn, 0 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i></span><span class="lab-ev__counts lab-mono">30P · 0W · 0F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:54:35Z">05:54Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0005</td>
+    </tr>
+    <tr id="row-syn-basalt-06" data-lab-check data-lab-status="pass">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-basalt-06</span><span class="lab-sub">basalt · synthetic-http</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--pass"><span class="lab-dot lab-dot--pass" aria-hidden="true"></span>PASS</span></td>
+      <td data-label="Latest" class="lab-num">98 ms</td>
+      <td data-label="24 h" class="lab-num">100.0</td>
+      <td data-label="7 d" class="lab-num">100.0</td>
+      <td data-label="30 d" class="lab-num">99.9</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 30 pass, 0 warn, 0 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i></span><span class="lab-ev__counts lab-mono">30P · 0W · 0F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:53:42Z">05:53Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0006</td>
+    </tr>
+    <tr id="row-syn-basalt-07" data-lab-check data-lab-status="warn">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-basalt-07</span><span class="lab-sub">basalt · synthetic-tcp</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--warn"><span class="lab-dot lab-dot--warn" aria-hidden="true"></span>WARN</span></td>
+      <td data-label="Latest" class="lab-num">867 ms</td>
+      <td data-label="24 h" class="lab-num">99.2</td>
+      <td data-label="7 d" class="lab-num">98.2</td>
+      <td data-label="30 d" class="lab-num">98.1</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 29 pass, 1 warn, 0 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--warn"></i><i class="lab-ev__cell lab-ev__cell--pass"></i></span><span class="lab-ev__counts lab-mono">29P · 1W · 0F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:52:49Z">05:52Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0007</td>
+    </tr>
+    <tr id="row-syn-basalt-08" data-lab-check data-lab-status="pass">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-basalt-08</span><span class="lab-sub">basalt · synthetic-queue</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--pass"><span class="lab-dot lab-dot--pass" aria-hidden="true"></span>PASS</span></td>
+      <td data-label="Latest" class="lab-num">58 ms</td>
+      <td data-label="24 h" class="lab-num">100.0</td>
+      <td data-label="7 d" class="lab-num">100.0</td>
+      <td data-label="30 d" class="lab-num">100.0</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 30 pass, 0 warn, 0 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i></span><span class="lab-ev__counts lab-mono">30P · 0W · 0F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:51:56Z">05:51Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0008</td>
+    </tr>
+    <tr id="row-syn-basalt-09" data-lab-check data-lab-status="pass">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-basalt-09</span><span class="lab-sub">basalt · synthetic-cert</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--pass"><span class="lab-dot lab-dot--pass" aria-hidden="true"></span>PASS</span></td>
+      <td data-label="Latest" class="lab-num">137 ms</td>
+      <td data-label="24 h" class="lab-num">100.0</td>
+      <td data-label="7 d" class="lab-num">100.0</td>
+      <td data-label="30 d" class="lab-num">100.0</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 30 pass, 0 warn, 0 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i></span><span class="lab-ev__counts lab-mono">30P · 0W · 0F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:51:03Z">05:51Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0009</td>
+    </tr>
+    <tr id="row-syn-flint-01" data-lab-check data-lab-status="pass">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-flint-01</span><span class="lab-sub">flint · synthetic-cron</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--pass"><span class="lab-dot lab-dot--pass" aria-hidden="true"></span>PASS</span></td>
+      <td data-label="Latest" class="lab-num">62 ms</td>
+      <td data-label="24 h" class="lab-num">100.0</td>
+      <td data-label="7 d" class="lab-num">100.0</td>
+      <td data-label="30 d" class="lab-num">100.0</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 30 pass, 0 warn, 0 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i></span><span class="lab-ev__counts lab-mono">30P · 0W · 0F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:50:10Z">05:50Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0010</td>
+    </tr>
+    <tr id="row-syn-flint-02" data-lab-check data-lab-status="pass">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-flint-02</span><span class="lab-sub">flint · synthetic-http</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--pass"><span class="lab-dot lab-dot--pass" aria-hidden="true"></span>PASS</span></td>
+      <td data-label="Latest" class="lab-num">50 ms</td>
+      <td data-label="24 h" class="lab-num">100.0</td>
+      <td data-label="7 d" class="lab-num">100.0</td>
+      <td data-label="30 d" class="lab-num">99.9</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 30 pass, 0 warn, 0 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i></span><span class="lab-ev__counts lab-mono">30P · 0W · 0F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:58:17Z">05:58Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0011</td>
+    </tr>
+    <tr id="row-syn-flint-03" data-lab-check data-lab-status="pass">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-flint-03</span><span class="lab-sub">flint · synthetic-tcp</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--pass"><span class="lab-dot lab-dot--pass" aria-hidden="true"></span>PASS</span></td>
+      <td data-label="Latest" class="lab-num">72 ms</td>
+      <td data-label="24 h" class="lab-num">100.0</td>
+      <td data-label="7 d" class="lab-num">100.0</td>
+      <td data-label="30 d" class="lab-num">100.0</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 30 pass, 0 warn, 0 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i></span><span class="lab-ev__counts lab-mono">30P · 0W · 0F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:57:24Z">05:57Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0012</td>
+    </tr>
+    <tr id="row-syn-flint-04" data-lab-check data-lab-status="fail">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-flint-04</span><span class="lab-sub">flint · synthetic-queue</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--fail"><span class="lab-dot lab-dot--fail" aria-hidden="true"></span>FAIL</span></td>
+      <td data-label="Latest" class="lab-num">—</td>
+      <td data-label="24 h" class="lab-num">90.2</td>
+      <td data-label="7 d" class="lab-num">93.4</td>
+      <td data-label="30 d" class="lab-num">98.0</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 27 pass, 1 warn, 2 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--warn"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--fail"></i><i class="lab-ev__cell lab-ev__cell--fail"></i></span><span class="lab-ev__counts lab-mono">27P · 1W · 2F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:56:31Z">05:56Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0013</td>
+    </tr>
+    <tr id="row-syn-flint-05" data-lab-check data-lab-status="pass">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-flint-05</span><span class="lab-sub">flint · synthetic-cert</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--pass"><span class="lab-dot lab-dot--pass" aria-hidden="true"></span>PASS</span></td>
+      <td data-label="Latest" class="lab-num">57 ms</td>
+      <td data-label="24 h" class="lab-num">100.0</td>
+      <td data-label="7 d" class="lab-num">100.0</td>
+      <td data-label="30 d" class="lab-num">100.0</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 30 pass, 0 warn, 0 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i></span><span class="lab-ev__counts lab-mono">30P · 0W · 0F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:55:38Z">05:55Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0014</td>
+    </tr>
+    <tr id="row-syn-flint-06" data-lab-check data-lab-status="pass">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-flint-06</span><span class="lab-sub">flint · synthetic-cron</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--pass"><span class="lab-dot lab-dot--pass" aria-hidden="true"></span>PASS</span></td>
+      <td data-label="Latest" class="lab-num">146 ms</td>
+      <td data-label="24 h" class="lab-num">100.0</td>
+      <td data-label="7 d" class="lab-num">100.0</td>
+      <td data-label="30 d" class="lab-num">100.0</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 30 pass, 0 warn, 0 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i></span><span class="lab-ev__counts lab-mono">30P · 0W · 0F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:54:45Z">05:54Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0015</td>
+    </tr>
+    <tr id="row-syn-flint-07" data-lab-check data-lab-status="pass">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-flint-07</span><span class="lab-sub">flint · synthetic-http</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--pass"><span class="lab-dot lab-dot--pass" aria-hidden="true"></span>PASS</span></td>
+      <td data-label="Latest" class="lab-num">132 ms</td>
+      <td data-label="24 h" class="lab-num">100.0</td>
+      <td data-label="7 d" class="lab-num">100.0</td>
+      <td data-label="30 d" class="lab-num">100.0</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 30 pass, 0 warn, 0 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i></span><span class="lab-ev__counts lab-mono">30P · 0W · 0F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:53:52Z">05:53Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0016</td>
+    </tr>
+    <tr id="row-syn-flint-08" data-lab-check data-lab-status="pass">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-flint-08</span><span class="lab-sub">flint · synthetic-tcp</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--pass"><span class="lab-dot lab-dot--pass" aria-hidden="true"></span>PASS</span></td>
+      <td data-label="Latest" class="lab-num">51 ms</td>
+      <td data-label="24 h" class="lab-num">100.0</td>
+      <td data-label="7 d" class="lab-num">100.0</td>
+      <td data-label="30 d" class="lab-num">99.9</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 30 pass, 0 warn, 0 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i></span><span class="lab-ev__counts lab-mono">30P · 0W · 0F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:52:59Z">05:52Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0017</td>
+    </tr>
+    <tr id="row-syn-flint-09" data-lab-check data-lab-status="pass">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-flint-09</span><span class="lab-sub">flint · synthetic-queue</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--pass"><span class="lab-dot lab-dot--pass" aria-hidden="true"></span>PASS</span></td>
+      <td data-label="Latest" class="lab-num">146 ms</td>
+      <td data-label="24 h" class="lab-num">100.0</td>
+      <td data-label="7 d" class="lab-num">100.0</td>
+      <td data-label="30 d" class="lab-num">99.9</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 30 pass, 0 warn, 0 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i></span><span class="lab-ev__counts lab-mono">30P · 0W · 0F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:52:06Z">05:52Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0018</td>
+    </tr>
+    <tr id="row-syn-granite-01" data-lab-check data-lab-status="pass">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-granite-01</span><span class="lab-sub">granite · synthetic-cert</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--pass"><span class="lab-dot lab-dot--pass" aria-hidden="true"></span>PASS</span></td>
+      <td data-label="Latest" class="lab-num">120 ms</td>
+      <td data-label="24 h" class="lab-num">100.0</td>
+      <td data-label="7 d" class="lab-num">100.0</td>
+      <td data-label="30 d" class="lab-num">100.0</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 30 pass, 0 warn, 0 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i></span><span class="lab-ev__counts lab-mono">30P · 0W · 0F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:51:13Z">05:51Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0019</td>
+    </tr>
+    <tr id="row-syn-granite-02" data-lab-check data-lab-status="pass">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-granite-02</span><span class="lab-sub">granite · synthetic-cron</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--pass"><span class="lab-dot lab-dot--pass" aria-hidden="true"></span>PASS</span></td>
+      <td data-label="Latest" class="lab-num">200 ms</td>
+      <td data-label="24 h" class="lab-num">100.0</td>
+      <td data-label="7 d" class="lab-num">100.0</td>
+      <td data-label="30 d" class="lab-num">100.0</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 30 pass, 0 warn, 0 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i></span><span class="lab-ev__counts lab-mono">30P · 0W · 0F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:50:20Z">05:50Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0020</td>
+    </tr>
+    <tr id="row-syn-granite-03" data-lab-check data-lab-status="warn">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-granite-03</span><span class="lab-sub">granite · synthetic-http</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--warn"><span class="lab-dot lab-dot--warn" aria-hidden="true"></span>WARN</span></td>
+      <td data-label="Latest" class="lab-num">689 ms</td>
+      <td data-label="24 h" class="lab-num">99.1</td>
+      <td data-label="7 d" class="lab-num">97.7</td>
+      <td data-label="30 d" class="lab-num">98.5</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 28 pass, 2 warn, 0 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--warn"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--warn"></i></span><span class="lab-ev__counts lab-mono">28P · 2W · 0F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:58:27Z">05:58Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0021</td>
+    </tr>
+    <tr id="row-syn-granite-04" data-lab-check data-lab-status="pass">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-granite-04</span><span class="lab-sub">granite · synthetic-tcp</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--pass"><span class="lab-dot lab-dot--pass" aria-hidden="true"></span>PASS</span></td>
+      <td data-label="Latest" class="lab-num">47 ms</td>
+      <td data-label="24 h" class="lab-num">100.0</td>
+      <td data-label="7 d" class="lab-num">100.0</td>
+      <td data-label="30 d" class="lab-num">100.0</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 30 pass, 0 warn, 0 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i></span><span class="lab-ev__counts lab-mono">30P · 0W · 0F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:57:34Z">05:57Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0022</td>
+    </tr>
+    <tr id="row-syn-granite-05" data-lab-check data-lab-status="pass">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-granite-05</span><span class="lab-sub">granite · synthetic-queue</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--pass"><span class="lab-dot lab-dot--pass" aria-hidden="true"></span>PASS</span></td>
+      <td data-label="Latest" class="lab-num">177 ms</td>
+      <td data-label="24 h" class="lab-num">100.0</td>
+      <td data-label="7 d" class="lab-num">100.0</td>
+      <td data-label="30 d" class="lab-num">100.0</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 30 pass, 0 warn, 0 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i></span><span class="lab-ev__counts lab-mono">30P · 0W · 0F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:56:41Z">05:56Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0023</td>
+    </tr>
+    <tr id="row-syn-granite-06" data-lab-check data-lab-status="pass">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-granite-06</span><span class="lab-sub">granite · synthetic-cert</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--pass"><span class="lab-dot lab-dot--pass" aria-hidden="true"></span>PASS</span></td>
+      <td data-label="Latest" class="lab-num">227 ms</td>
+      <td data-label="24 h" class="lab-num">100.0</td>
+      <td data-label="7 d" class="lab-num">100.0</td>
+      <td data-label="30 d" class="lab-num">100.0</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 30 pass, 0 warn, 0 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i></span><span class="lab-ev__counts lab-mono">30P · 0W · 0F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:55:48Z">05:55Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0024</td>
+    </tr>
+    <tr id="row-syn-granite-07" data-lab-check data-lab-status="pass">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-granite-07</span><span class="lab-sub">granite · synthetic-cron</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--pass"><span class="lab-dot lab-dot--pass" aria-hidden="true"></span>PASS</span></td>
+      <td data-label="Latest" class="lab-num">223 ms</td>
+      <td data-label="24 h" class="lab-num">100.0</td>
+      <td data-label="7 d" class="lab-num">100.0</td>
+      <td data-label="30 d" class="lab-num">100.0</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 30 pass, 0 warn, 0 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i></span><span class="lab-ev__counts lab-mono">30P · 0W · 0F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:54:55Z">05:54Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0025</td>
+    </tr>
+    <tr id="row-syn-granite-08" data-lab-check data-lab-status="warn">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-granite-08</span><span class="lab-sub">granite · synthetic-http</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--warn"><span class="lab-dot lab-dot--warn" aria-hidden="true"></span>WARN</span></td>
+      <td data-label="Latest" class="lab-num">502 ms</td>
+      <td data-label="24 h" class="lab-num">99.7</td>
+      <td data-label="7 d" class="lab-num">98.0</td>
+      <td data-label="30 d" class="lab-num">98.7</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 29 pass, 1 warn, 0 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--warn"></i><i class="lab-ev__cell lab-ev__cell--pass"></i></span><span class="lab-ev__counts lab-mono">29P · 1W · 0F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:54:02Z">05:54Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0026</td>
+    </tr>
+    <tr id="row-syn-granite-09" data-lab-check data-lab-status="pass">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-granite-09</span><span class="lab-sub">granite · synthetic-tcp</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--pass"><span class="lab-dot lab-dot--pass" aria-hidden="true"></span>PASS</span></td>
+      <td data-label="Latest" class="lab-num">118 ms</td>
+      <td data-label="24 h" class="lab-num">100.0</td>
+      <td data-label="7 d" class="lab-num">100.0</td>
+      <td data-label="30 d" class="lab-num">99.9</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 30 pass, 0 warn, 0 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i></span><span class="lab-ev__counts lab-mono">30P · 0W · 0F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:53:09Z">05:53Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0027</td>
+    </tr>
+    <tr id="row-syn-marble-01" data-lab-check data-lab-status="pass">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-marble-01</span><span class="lab-sub">marble · synthetic-queue</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--pass"><span class="lab-dot lab-dot--pass" aria-hidden="true"></span>PASS</span></td>
+      <td data-label="Latest" class="lab-num">33 ms</td>
+      <td data-label="24 h" class="lab-num">100.0</td>
+      <td data-label="7 d" class="lab-num">100.0</td>
+      <td data-label="30 d" class="lab-num">100.0</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 30 pass, 0 warn, 0 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i></span><span class="lab-ev__counts lab-mono">30P · 0W · 0F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:52:16Z">05:52Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0028</td>
+    </tr>
+    <tr id="row-syn-marble-02" data-lab-check data-lab-status="pass">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-marble-02</span><span class="lab-sub">marble · synthetic-cert</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--pass"><span class="lab-dot lab-dot--pass" aria-hidden="true"></span>PASS</span></td>
+      <td data-label="Latest" class="lab-num">117 ms</td>
+      <td data-label="24 h" class="lab-num">100.0</td>
+      <td data-label="7 d" class="lab-num">100.0</td>
+      <td data-label="30 d" class="lab-num">100.0</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 30 pass, 0 warn, 0 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i></span><span class="lab-ev__counts lab-mono">30P · 0W · 0F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:51:23Z">05:51Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0029</td>
+    </tr>
+    <tr id="row-syn-marble-03" data-lab-check data-lab-status="pass">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-marble-03</span><span class="lab-sub">marble · synthetic-cron</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--pass"><span class="lab-dot lab-dot--pass" aria-hidden="true"></span>PASS</span></td>
+      <td data-label="Latest" class="lab-num">102 ms</td>
+      <td data-label="24 h" class="lab-num">100.0</td>
+      <td data-label="7 d" class="lab-num">100.0</td>
+      <td data-label="30 d" class="lab-num">100.0</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 30 pass, 0 warn, 0 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i></span><span class="lab-ev__counts lab-mono">30P · 0W · 0F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:50:30Z">05:50Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0030</td>
+    </tr>
+    <tr id="row-syn-marble-04" data-lab-check data-lab-status="pass">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-marble-04</span><span class="lab-sub">marble · synthetic-http</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--pass"><span class="lab-dot lab-dot--pass" aria-hidden="true"></span>PASS</span></td>
+      <td data-label="Latest" class="lab-num">170 ms</td>
+      <td data-label="24 h" class="lab-num">100.0</td>
+      <td data-label="7 d" class="lab-num">100.0</td>
+      <td data-label="30 d" class="lab-num">100.0</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 30 pass, 0 warn, 0 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i></span><span class="lab-ev__counts lab-mono">30P · 0W · 0F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:58:37Z">05:58Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0031</td>
+    </tr>
+    <tr id="row-syn-marble-05" data-lab-check data-lab-status="warn">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-marble-05</span><span class="lab-sub">marble · synthetic-tcp</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--warn"><span class="lab-dot lab-dot--warn" aria-hidden="true"></span>WARN</span></td>
+      <td data-label="Latest" class="lab-num">423 ms</td>
+      <td data-label="24 h" class="lab-num">99.1</td>
+      <td data-label="7 d" class="lab-num">97.6</td>
+      <td data-label="30 d" class="lab-num">98.3</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 29 pass, 1 warn, 0 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--warn"></i><i class="lab-ev__cell lab-ev__cell--pass"></i></span><span class="lab-ev__counts lab-mono">29P · 1W · 0F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:57:44Z">05:57Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0032</td>
+    </tr>
+    <tr id="row-syn-marble-06" data-lab-check data-lab-status="pass">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-marble-06</span><span class="lab-sub">marble · synthetic-queue</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--pass"><span class="lab-dot lab-dot--pass" aria-hidden="true"></span>PASS</span></td>
+      <td data-label="Latest" class="lab-num">46 ms</td>
+      <td data-label="24 h" class="lab-num">100.0</td>
+      <td data-label="7 d" class="lab-num">100.0</td>
+      <td data-label="30 d" class="lab-num">100.0</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 30 pass, 0 warn, 0 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i></span><span class="lab-ev__counts lab-mono">30P · 0W · 0F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:56:51Z">05:56Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0033</td>
+    </tr>
+    <tr id="row-syn-marble-07" data-lab-check data-lab-status="pass">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-marble-07</span><span class="lab-sub">marble · synthetic-cert</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--pass"><span class="lab-dot lab-dot--pass" aria-hidden="true"></span>PASS</span></td>
+      <td data-label="Latest" class="lab-num">226 ms</td>
+      <td data-label="24 h" class="lab-num">100.0</td>
+      <td data-label="7 d" class="lab-num">100.0</td>
+      <td data-label="30 d" class="lab-num">99.9</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 30 pass, 0 warn, 0 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i></span><span class="lab-ev__counts lab-mono">30P · 0W · 0F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:55:58Z">05:55Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0034</td>
+    </tr>
+    <tr id="row-syn-marble-08" data-lab-check data-lab-status="pass">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-marble-08</span><span class="lab-sub">marble · synthetic-cron</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--pass"><span class="lab-dot lab-dot--pass" aria-hidden="true"></span>PASS</span></td>
+      <td data-label="Latest" class="lab-num">81 ms</td>
+      <td data-label="24 h" class="lab-num">100.0</td>
+      <td data-label="7 d" class="lab-num">100.0</td>
+      <td data-label="30 d" class="lab-num">100.0</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 30 pass, 0 warn, 0 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i></span><span class="lab-ev__counts lab-mono">30P · 0W · 0F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:55:05Z">05:55Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0035</td>
+    </tr>
+    <tr id="row-syn-ochre-01" data-lab-check data-lab-status="pass">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-ochre-01</span><span class="lab-sub">ochre · synthetic-http</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--pass"><span class="lab-dot lab-dot--pass" aria-hidden="true"></span>PASS</span></td>
+      <td data-label="Latest" class="lab-num">27 ms</td>
+      <td data-label="24 h" class="lab-num">100.0</td>
+      <td data-label="7 d" class="lab-num">100.0</td>
+      <td data-label="30 d" class="lab-num">99.9</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 30 pass, 0 warn, 0 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i></span><span class="lab-ev__counts lab-mono">30P · 0W · 0F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:54:12Z">05:54Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0036</td>
+    </tr>
+    <tr id="row-syn-ochre-02" data-lab-check data-lab-status="fail">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-ochre-02</span><span class="lab-sub">ochre · synthetic-tcp</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--fail"><span class="lab-dot lab-dot--fail" aria-hidden="true"></span>FAIL</span></td>
+      <td data-label="Latest" class="lab-num">—</td>
+      <td data-label="24 h" class="lab-num">92.7</td>
+      <td data-label="7 d" class="lab-num">95.4</td>
+      <td data-label="30 d" class="lab-num">96.8</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 27 pass, 1 warn, 2 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--warn"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--fail"></i><i class="lab-ev__cell lab-ev__cell--fail"></i></span><span class="lab-ev__counts lab-mono">27P · 1W · 2F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:53:19Z">05:53Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0037</td>
+    </tr>
+    <tr id="row-syn-ochre-03" data-lab-check data-lab-status="pass">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-ochre-03</span><span class="lab-sub">ochre · synthetic-queue</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--pass"><span class="lab-dot lab-dot--pass" aria-hidden="true"></span>PASS</span></td>
+      <td data-label="Latest" class="lab-num">231 ms</td>
+      <td data-label="24 h" class="lab-num">100.0</td>
+      <td data-label="7 d" class="lab-num">100.0</td>
+      <td data-label="30 d" class="lab-num">99.9</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 30 pass, 0 warn, 0 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i></span><span class="lab-ev__counts lab-mono">30P · 0W · 0F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:52:26Z">05:52Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0038</td>
+    </tr>
+    <tr id="row-syn-ochre-04" data-lab-check data-lab-status="pass">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-ochre-04</span><span class="lab-sub">ochre · synthetic-cert</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--pass"><span class="lab-dot lab-dot--pass" aria-hidden="true"></span>PASS</span></td>
+      <td data-label="Latest" class="lab-num">164 ms</td>
+      <td data-label="24 h" class="lab-num">100.0</td>
+      <td data-label="7 d" class="lab-num">100.0</td>
+      <td data-label="30 d" class="lab-num">100.0</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 30 pass, 0 warn, 0 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i></span><span class="lab-ev__counts lab-mono">30P · 0W · 0F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:51:33Z">05:51Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0039</td>
+    </tr>
+    <tr id="row-syn-ochre-05" data-lab-check data-lab-status="pass">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-ochre-05</span><span class="lab-sub">ochre · synthetic-cron</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--pass"><span class="lab-dot lab-dot--pass" aria-hidden="true"></span>PASS</span></td>
+      <td data-label="Latest" class="lab-num">162 ms</td>
+      <td data-label="24 h" class="lab-num">100.0</td>
+      <td data-label="7 d" class="lab-num">100.0</td>
+      <td data-label="30 d" class="lab-num">100.0</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 30 pass, 0 warn, 0 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i></span><span class="lab-ev__counts lab-mono">30P · 0W · 0F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:50:40Z">05:50Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0040</td>
+    </tr>
+    <tr id="row-syn-ochre-06" data-lab-check data-lab-status="pass">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-ochre-06</span><span class="lab-sub">ochre · synthetic-http</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--pass"><span class="lab-dot lab-dot--pass" aria-hidden="true"></span>PASS</span></td>
+      <td data-label="Latest" class="lab-num">115 ms</td>
+      <td data-label="24 h" class="lab-num">100.0</td>
+      <td data-label="7 d" class="lab-num">100.0</td>
+      <td data-label="30 d" class="lab-num">99.9</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 30 pass, 0 warn, 0 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i></span><span class="lab-ev__counts lab-mono">30P · 0W · 0F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:58:47Z">05:58Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0041</td>
+    </tr>
+    <tr id="row-syn-ochre-07" data-lab-check data-lab-status="pass">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-ochre-07</span><span class="lab-sub">ochre · synthetic-tcp</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--pass"><span class="lab-dot lab-dot--pass" aria-hidden="true"></span>PASS</span></td>
+      <td data-label="Latest" class="lab-num">89 ms</td>
+      <td data-label="24 h" class="lab-num">100.0</td>
+      <td data-label="7 d" class="lab-num">100.0</td>
+      <td data-label="30 d" class="lab-num">100.0</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 30 pass, 0 warn, 0 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i></span><span class="lab-ev__counts lab-mono">30P · 0W · 0F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:57:54Z">05:57Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0042</td>
+    </tr>
+    <tr id="row-syn-ochre-08" data-lab-check data-lab-status="pass">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-ochre-08</span><span class="lab-sub">ochre · synthetic-queue</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--pass"><span class="lab-dot lab-dot--pass" aria-hidden="true"></span>PASS</span></td>
+      <td data-label="Latest" class="lab-num">62 ms</td>
+      <td data-label="24 h" class="lab-num">100.0</td>
+      <td data-label="7 d" class="lab-num">100.0</td>
+      <td data-label="30 d" class="lab-num">99.9</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 30 pass, 0 warn, 0 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i></span><span class="lab-ev__counts lab-mono">30P · 0W · 0F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:57:01Z">05:57Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0043</td>
+    </tr>
+    <tr id="row-syn-slate-01" data-lab-check data-lab-status="pass">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-slate-01</span><span class="lab-sub">slate · synthetic-cert</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--pass"><span class="lab-dot lab-dot--pass" aria-hidden="true"></span>PASS</span></td>
+      <td data-label="Latest" class="lab-num">148 ms</td>
+      <td data-label="24 h" class="lab-num">100.0</td>
+      <td data-label="7 d" class="lab-num">100.0</td>
+      <td data-label="30 d" class="lab-num">99.9</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 30 pass, 0 warn, 0 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i></span><span class="lab-ev__counts lab-mono">30P · 0W · 0F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:56:08Z">05:56Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0044</td>
+    </tr>
+    <tr id="row-syn-slate-02" data-lab-check data-lab-status="pass">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-slate-02</span><span class="lab-sub">slate · synthetic-cron</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--pass"><span class="lab-dot lab-dot--pass" aria-hidden="true"></span>PASS</span></td>
+      <td data-label="Latest" class="lab-num">182 ms</td>
+      <td data-label="24 h" class="lab-num">100.0</td>
+      <td data-label="7 d" class="lab-num">100.0</td>
+      <td data-label="30 d" class="lab-num">99.9</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 30 pass, 0 warn, 0 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i></span><span class="lab-ev__counts lab-mono">30P · 0W · 0F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:55:15Z">05:55Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0045</td>
+    </tr>
+    <tr id="row-syn-slate-03" data-lab-check data-lab-status="pass">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-slate-03</span><span class="lab-sub">slate · synthetic-http</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--pass"><span class="lab-dot lab-dot--pass" aria-hidden="true"></span>PASS</span></td>
+      <td data-label="Latest" class="lab-num">212 ms</td>
+      <td data-label="24 h" class="lab-num">100.0</td>
+      <td data-label="7 d" class="lab-num">100.0</td>
+      <td data-label="30 d" class="lab-num">100.0</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 30 pass, 0 warn, 0 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i></span><span class="lab-ev__counts lab-mono">30P · 0W · 0F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:54:22Z">05:54Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0046</td>
+    </tr>
+    <tr id="row-syn-slate-04" data-lab-check data-lab-status="pass">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-slate-04</span><span class="lab-sub">slate · synthetic-tcp</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--pass"><span class="lab-dot lab-dot--pass" aria-hidden="true"></span>PASS</span></td>
+      <td data-label="Latest" class="lab-num">43 ms</td>
+      <td data-label="24 h" class="lab-num">100.0</td>
+      <td data-label="7 d" class="lab-num">100.0</td>
+      <td data-label="30 d" class="lab-num">99.9</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 30 pass, 0 warn, 0 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i></span><span class="lab-ev__counts lab-mono">30P · 0W · 0F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:53:29Z">05:53Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0047</td>
+    </tr>
+    <tr id="row-syn-slate-05" data-lab-check data-lab-status="pass">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-slate-05</span><span class="lab-sub">slate · synthetic-queue</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--pass"><span class="lab-dot lab-dot--pass" aria-hidden="true"></span>PASS</span></td>
+      <td data-label="Latest" class="lab-num">76 ms</td>
+      <td data-label="24 h" class="lab-num">100.0</td>
+      <td data-label="7 d" class="lab-num">100.0</td>
+      <td data-label="30 d" class="lab-num">100.0</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 30 pass, 0 warn, 0 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i></span><span class="lab-ev__counts lab-mono">30P · 0W · 0F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:52:36Z">05:52Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0048</td>
+    </tr>
+    <tr id="row-syn-slate-06" data-lab-check data-lab-status="warn">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-slate-06</span><span class="lab-sub">slate · synthetic-cert</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--warn"><span class="lab-dot lab-dot--warn" aria-hidden="true"></span>WARN</span></td>
+      <td data-label="Latest" class="lab-num">432 ms</td>
+      <td data-label="24 h" class="lab-num">99.2</td>
+      <td data-label="7 d" class="lab-num">98.5</td>
+      <td data-label="30 d" class="lab-num">99.1</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 29 pass, 1 warn, 0 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--warn"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i></span><span class="lab-ev__counts lab-mono">29P · 1W · 0F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:51:43Z">05:51Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0049</td>
+    </tr>
+    <tr id="row-syn-slate-07" data-lab-check data-lab-status="pass">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-slate-07</span><span class="lab-sub">slate · synthetic-cron</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--pass"><span class="lab-dot lab-dot--pass" aria-hidden="true"></span>PASS</span></td>
+      <td data-label="Latest" class="lab-num">112 ms</td>
+      <td data-label="24 h" class="lab-num">100.0</td>
+      <td data-label="7 d" class="lab-num">100.0</td>
+      <td data-label="30 d" class="lab-num">100.0</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 30 pass, 0 warn, 0 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i></span><span class="lab-ev__counts lab-mono">30P · 0W · 0F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:50:50Z">05:50Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0050</td>
+    </tr>
+    <tr id="row-syn-slate-08" data-lab-check data-lab-status="pass">
+      <th scope="row" data-label="Check"><span class="lab-mono">syn-slate-08</span><span class="lab-sub">slate · synthetic-http</span></th>
+      <td data-label="Status"><span class="lab-status lab-status--pass"><span class="lab-dot lab-dot--pass" aria-hidden="true"></span>PASS</span></td>
+      <td data-label="Latest" class="lab-num">124 ms</td>
+      <td data-label="24 h" class="lab-num">100.0</td>
+      <td data-label="7 d" class="lab-num">100.0</td>
+      <td data-label="30 d" class="lab-num">99.9</td>
+      <td data-label="Evidence · 30 d"><span class="lab-ev lab-ev--mini" role="img" aria-label="30-day evidence: 30 pass, 0 warn, 0 fail"><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i><i class="lab-ev__cell lab-ev__cell--pass"></i></span><span class="lab-ev__counts lab-mono">30P · 0W · 0F</span></td>
+      <td data-label="Last checked" class="lab-num"><time datetime="2026-07-20T05:58:57Z">05:58Z</time></td>
+      <td data-label="Audit" class="lab-mono">syn-a-0051</td>
+    </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="lab-zone" aria-labelledby="method-heading">
+    <h2 class="lab-zone__label" id="method-heading">Method and legend</h2>
+    <dl class="lab-legend">
+      <div class="lab-legend__item">
+        <dt>PASS / WARN / FAIL</dt>
+        <dd>Synthetic probe outcome. Every status word is paired with a distinct dot shape; hue is never the only carrier of meaning.</dd>
+      </div>
+      <div class="lab-legend__item">
+        <dt>Evidence strips</dt>
+        <dd>Thirty cells per strip, oldest day on the left. P pass, W warn, F fail. The mono counts beside each strip repeat the strip as text.</dd>
+      </div>
+      <div class="lab-legend__item">
+        <dt>Ordering</dt>
+        <dd>The anomaly block lists failures first, then warnings, each ascending by check id. The full table stays in group order so every row keeps a stable address.</dd>
+      </div>
+      <div class="lab-legend__item">
+        <dt>Read-only</dt>
+        <dd>This specimen ships no form, button, acknowledgement flow, or production link. Nothing here mutates anything.</dd>
+      </div>
+      <div class="lab-legend__item">
+        <dt>Synthetic boundary</dt>
+        <dd>Every identifier, group, probe, and measurement is fictional. No real service, host, target, URL, configuration, or vitals data is present.</dd>
+      </div>
+    </dl>
+  </section>
+
+</main>
+<footer class="lab-colophon">
+  <p class="lab-colophon__line">Beacon Two Faces is an off-fleet design specimen. Data is synthetic and non-live; the page is not served by any route and carries no rollout authority.</p>
+  <p class="lab-meta">ARCHETYPE CONTROL-ROOM · SHARED LAB DNA · SOURCE <a href="./fixtures/operator-checks.fixture.json">FIXTURE JSON</a></p>
+</footer>
+</body>
+</html>

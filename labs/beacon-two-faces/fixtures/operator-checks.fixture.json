@@ -1,0 +1,946 @@
+{
+  "meta": {
+    "synthetic": true,
+    "specimen": "beacon-two-faces",
+    "surface": "control-room",
+    "archetype": "control-room",
+    "generated_at": "2026-07-20T06:00:00Z",
+    "evidence_window": {
+      "days": 30,
+      "from": "2026-06-21",
+      "to": "2026-07-20"
+    },
+    "totals": {
+      "checks": 51,
+      "anomalies": 7
+    },
+    "note": "Synthetic fixture for an off-fleet design lab. Every check, group, identifier, and measurement is fictional. No real service, host, container, target, URL, configuration, vitals snapshot, or secret-bearing field is present."
+  },
+  "checks": [
+    {
+      "id": "syn-basalt-01",
+      "group": "basalt",
+      "probe": "synthetic-http",
+      "status": "pass",
+      "latest_ms": 183,
+      "up_24h": 100,
+      "up_7d": 100,
+      "up_30d": 100,
+      "evidence": "pppppppppppppppppppppppppppppp",
+      "evidence_counts": {
+        "pass": 30,
+        "warn": 0,
+        "fail": 0
+      },
+      "last_checked": "2026-07-20T05:58:07Z",
+      "audit": "syn-a-0001"
+    },
+    {
+      "id": "syn-basalt-02",
+      "group": "basalt",
+      "probe": "synthetic-tcp",
+      "status": "pass",
+      "latest_ms": 166,
+      "up_24h": 100,
+      "up_7d": 100,
+      "up_30d": 100,
+      "evidence": "pppppppppppppppppppppppppppppp",
+      "evidence_counts": {
+        "pass": 30,
+        "warn": 0,
+        "fail": 0
+      },
+      "last_checked": "2026-07-20T05:57:14Z",
+      "audit": "syn-a-0002"
+    },
+    {
+      "id": "syn-basalt-03",
+      "group": "basalt",
+      "probe": "synthetic-queue",
+      "status": "pass",
+      "latest_ms": 236,
+      "up_24h": 100,
+      "up_7d": 100,
+      "up_30d": 100,
+      "evidence": "pppppppppppppppppppppppppppppp",
+      "evidence_counts": {
+        "pass": 30,
+        "warn": 0,
+        "fail": 0
+      },
+      "last_checked": "2026-07-20T05:56:21Z",
+      "audit": "syn-a-0003"
+    },
+    {
+      "id": "syn-basalt-04",
+      "group": "basalt",
+      "probe": "synthetic-cert",
+      "status": "pass",
+      "latest_ms": 98,
+      "up_24h": 100,
+      "up_7d": 100,
+      "up_30d": 99.9,
+      "evidence": "pppppppppppppppppppppppppppppp",
+      "evidence_counts": {
+        "pass": 30,
+        "warn": 0,
+        "fail": 0
+      },
+      "last_checked": "2026-07-20T05:55:28Z",
+      "audit": "syn-a-0004"
+    },
+    {
+      "id": "syn-basalt-05",
+      "group": "basalt",
+      "probe": "synthetic-cron",
+      "status": "pass",
+      "latest_ms": 137,
+      "up_24h": 100,
+      "up_7d": 100,
+      "up_30d": 100,
+      "evidence": "pppppppppppppppppppppppppppppp",
+      "evidence_counts": {
+        "pass": 30,
+        "warn": 0,
+        "fail": 0
+      },
+      "last_checked": "2026-07-20T05:54:35Z",
+      "audit": "syn-a-0005"
+    },
+    {
+      "id": "syn-basalt-06",
+      "group": "basalt",
+      "probe": "synthetic-http",
+      "status": "pass",
+      "latest_ms": 98,
+      "up_24h": 100,
+      "up_7d": 100,
+      "up_30d": 99.9,
+      "evidence": "pppppppppppppppppppppppppppppp",
+      "evidence_counts": {
+        "pass": 30,
+        "warn": 0,
+        "fail": 0
+      },
+      "last_checked": "2026-07-20T05:53:42Z",
+      "audit": "syn-a-0006"
+    },
+    {
+      "id": "syn-basalt-07",
+      "group": "basalt",
+      "probe": "synthetic-tcp",
+      "status": "warn",
+      "latest_ms": 867,
+      "up_24h": 99.2,
+      "up_7d": 98.2,
+      "up_30d": 98.1,
+      "evidence": "ppppppppppppppppppppppppppppwp",
+      "evidence_counts": {
+        "pass": 29,
+        "warn": 1,
+        "fail": 0
+      },
+      "last_checked": "2026-07-20T05:52:49Z",
+      "audit": "syn-a-0007",
+      "note": "Synthetic latency above threshold for three evidence days."
+    },
+    {
+      "id": "syn-basalt-08",
+      "group": "basalt",
+      "probe": "synthetic-queue",
+      "status": "pass",
+      "latest_ms": 58,
+      "up_24h": 100,
+      "up_7d": 100,
+      "up_30d": 100,
+      "evidence": "pppppppppppppppppppppppppppppp",
+      "evidence_counts": {
+        "pass": 30,
+        "warn": 0,
+        "fail": 0
+      },
+      "last_checked": "2026-07-20T05:51:56Z",
+      "audit": "syn-a-0008"
+    },
+    {
+      "id": "syn-basalt-09",
+      "group": "basalt",
+      "probe": "synthetic-cert",
+      "status": "pass",
+      "latest_ms": 137,
+      "up_24h": 100,
+      "up_7d": 100,
+      "up_30d": 100,
+      "evidence": "pppppppppppppppppppppppppppppp",
+      "evidence_counts": {
+        "pass": 30,
+        "warn": 0,
+        "fail": 0
+      },
+      "last_checked": "2026-07-20T05:51:03Z",
+      "audit": "syn-a-0009"
+    },
+    {
+      "id": "syn-flint-01",
+      "group": "flint",
+      "probe": "synthetic-cron",
+      "status": "pass",
+      "latest_ms": 62,
+      "up_24h": 100,
+      "up_7d": 100,
+      "up_30d": 100,
+      "evidence": "pppppppppppppppppppppppppppppp",
+      "evidence_counts": {
+        "pass": 30,
+        "warn": 0,
+        "fail": 0
+      },
+      "last_checked": "2026-07-20T05:50:10Z",
+      "audit": "syn-a-0010"
+    },
+    {
+      "id": "syn-flint-02",
+      "group": "flint",
+      "probe": "synthetic-http",
+      "status": "pass",
+      "latest_ms": 50,
+      "up_24h": 100,
+      "up_7d": 100,
+      "up_30d": 99.9,
+      "evidence": "pppppppppppppppppppppppppppppp",
+      "evidence_counts": {
+        "pass": 30,
+        "warn": 0,
+        "fail": 0
+      },
+      "last_checked": "2026-07-20T05:58:17Z",
+      "audit": "syn-a-0011"
+    },
+    {
+      "id": "syn-flint-03",
+      "group": "flint",
+      "probe": "synthetic-tcp",
+      "status": "pass",
+      "latest_ms": 72,
+      "up_24h": 100,
+      "up_7d": 100,
+      "up_30d": 100,
+      "evidence": "pppppppppppppppppppppppppppppp",
+      "evidence_counts": {
+        "pass": 30,
+        "warn": 0,
+        "fail": 0
+      },
+      "last_checked": "2026-07-20T05:57:24Z",
+      "audit": "syn-a-0012"
+    },
+    {
+      "id": "syn-flint-04",
+      "group": "flint",
+      "probe": "synthetic-queue",
+      "status": "fail",
+      "latest_ms": null,
+      "up_24h": 90.2,
+      "up_7d": 93.4,
+      "up_30d": 98,
+      "evidence": "pppppppppppppppppppppppppwppff",
+      "evidence_counts": {
+        "pass": 27,
+        "warn": 1,
+        "fail": 2
+      },
+      "last_checked": "2026-07-20T05:56:31Z",
+      "audit": "syn-a-0013",
+      "note": "Synthetic queue depth above threshold for two evidence days."
+    },
+    {
+      "id": "syn-flint-05",
+      "group": "flint",
+      "probe": "synthetic-cert",
+      "status": "pass",
+      "latest_ms": 57,
+      "up_24h": 100,
+      "up_7d": 100,
+      "up_30d": 100,
+      "evidence": "pppppppppppppppppppppppppppppp",
+      "evidence_counts": {
+        "pass": 30,
+        "warn": 0,
+        "fail": 0
+      },
+      "last_checked": "2026-07-20T05:55:38Z",
+      "audit": "syn-a-0014"
+    },
+    {
+      "id": "syn-flint-06",
+      "group": "flint",
+      "probe": "synthetic-cron",
+      "status": "pass",
+      "latest_ms": 146,
+      "up_24h": 100,
+      "up_7d": 100,
+      "up_30d": 100,
+      "evidence": "pppppppppppppppppppppppppppppp",
+      "evidence_counts": {
+        "pass": 30,
+        "warn": 0,
+        "fail": 0
+      },
+      "last_checked": "2026-07-20T05:54:45Z",
+      "audit": "syn-a-0015"
+    },
+    {
+      "id": "syn-flint-07",
+      "group": "flint",
+      "probe": "synthetic-http",
+      "status": "pass",
+      "latest_ms": 132,
+      "up_24h": 100,
+      "up_7d": 100,
+      "up_30d": 100,
+      "evidence": "pppppppppppppppppppppppppppppp",
+      "evidence_counts": {
+        "pass": 30,
+        "warn": 0,
+        "fail": 0
+      },
+      "last_checked": "2026-07-20T05:53:52Z",
+      "audit": "syn-a-0016"
+    },
+    {
+      "id": "syn-flint-08",
+      "group": "flint",
+      "probe": "synthetic-tcp",
+      "status": "pass",
+      "latest_ms": 51,
+      "up_24h": 100,
+      "up_7d": 100,
+      "up_30d": 99.9,
+      "evidence": "pppppppppppppppppppppppppppppp",
+      "evidence_counts": {
+        "pass": 30,
+        "warn": 0,
+        "fail": 0
+      },
+      "last_checked": "2026-07-20T05:52:59Z",
+      "audit": "syn-a-0017"
+    },
+    {
+      "id": "syn-flint-09",
+      "group": "flint",
+      "probe": "synthetic-queue",
+      "status": "pass",
+      "latest_ms": 146,
+      "up_24h": 100,
+      "up_7d": 100,
+      "up_30d": 99.9,
+      "evidence": "pppppppppppppppppppppppppppppp",
+      "evidence_counts": {
+        "pass": 30,
+        "warn": 0,
+        "fail": 0
+      },
+      "last_checked": "2026-07-20T05:52:06Z",
+      "audit": "syn-a-0018"
+    },
+    {
+      "id": "syn-granite-01",
+      "group": "granite",
+      "probe": "synthetic-cert",
+      "status": "pass",
+      "latest_ms": 120,
+      "up_24h": 100,
+      "up_7d": 100,
+      "up_30d": 100,
+      "evidence": "pppppppppppppppppppppppppppppp",
+      "evidence_counts": {
+        "pass": 30,
+        "warn": 0,
+        "fail": 0
+      },
+      "last_checked": "2026-07-20T05:51:13Z",
+      "audit": "syn-a-0019"
+    },
+    {
+      "id": "syn-granite-02",
+      "group": "granite",
+      "probe": "synthetic-cron",
+      "status": "pass",
+      "latest_ms": 200,
+      "up_24h": 100,
+      "up_7d": 100,
+      "up_30d": 100,
+      "evidence": "pppppppppppppppppppppppppppppp",
+      "evidence_counts": {
+        "pass": 30,
+        "warn": 0,
+        "fail": 0
+      },
+      "last_checked": "2026-07-20T05:50:20Z",
+      "audit": "syn-a-0020"
+    },
+    {
+      "id": "syn-granite-03",
+      "group": "granite",
+      "probe": "synthetic-http",
+      "status": "warn",
+      "latest_ms": 689,
+      "up_24h": 99.1,
+      "up_7d": 97.7,
+      "up_30d": 98.5,
+      "evidence": "pppppppppppppppppppppppppppwpw",
+      "evidence_counts": {
+        "pass": 28,
+        "warn": 2,
+        "fail": 0
+      },
+      "last_checked": "2026-07-20T05:58:27Z",
+      "audit": "syn-a-0021",
+      "note": "Intermittent synthetic timeouts inside the evidence window."
+    },
+    {
+      "id": "syn-granite-04",
+      "group": "granite",
+      "probe": "synthetic-tcp",
+      "status": "pass",
+      "latest_ms": 47,
+      "up_24h": 100,
+      "up_7d": 100,
+      "up_30d": 100,
+      "evidence": "pppppppppppppppppppppppppppppp",
+      "evidence_counts": {
+        "pass": 30,
+        "warn": 0,
+        "fail": 0
+      },
+      "last_checked": "2026-07-20T05:57:34Z",
+      "audit": "syn-a-0022"
+    },
+    {
+      "id": "syn-granite-05",
+      "group": "granite",
+      "probe": "synthetic-queue",
+      "status": "pass",
+      "latest_ms": 177,
+      "up_24h": 100,
+      "up_7d": 100,
+      "up_30d": 100,
+      "evidence": "pppppppppppppppppppppppppppppp",
+      "evidence_counts": {
+        "pass": 30,
+        "warn": 0,
+        "fail": 0
+      },
+      "last_checked": "2026-07-20T05:56:41Z",
+      "audit": "syn-a-0023"
+    },
+    {
+      "id": "syn-granite-06",
+      "group": "granite",
+      "probe": "synthetic-cert",
+      "status": "pass",
+      "latest_ms": 227,
+      "up_24h": 100,
+      "up_7d": 100,
+      "up_30d": 100,
+      "evidence": "pppppppppppppppppppppppppppppp",
+      "evidence_counts": {
+        "pass": 30,
+        "warn": 0,
+        "fail": 0
+      },
+      "last_checked": "2026-07-20T05:55:48Z",
+      "audit": "syn-a-0024"
+    },
+    {
+      "id": "syn-granite-07",
+      "group": "granite",
+      "probe": "synthetic-cron",
+      "status": "pass",
+      "latest_ms": 223,
+      "up_24h": 100,
+      "up_7d": 100,
+      "up_30d": 100,
+      "evidence": "pppppppppppppppppppppppppppppp",
+      "evidence_counts": {
+        "pass": 30,
+        "warn": 0,
+        "fail": 0
+      },
+      "last_checked": "2026-07-20T05:54:55Z",
+      "audit": "syn-a-0025"
+    },
+    {
+      "id": "syn-granite-08",
+      "group": "granite",
+      "probe": "synthetic-http",
+      "status": "warn",
+      "latest_ms": 502,
+      "up_24h": 99.7,
+      "up_7d": 98,
+      "up_30d": 98.7,
+      "evidence": "ppppppppppppppppppppppppppppwp",
+      "evidence_counts": {
+        "pass": 29,
+        "warn": 1,
+        "fail": 0
+      },
+      "last_checked": "2026-07-20T05:54:02Z",
+      "audit": "syn-a-0026",
+      "note": "Synthetic latency above threshold on alternating evidence days."
+    },
+    {
+      "id": "syn-granite-09",
+      "group": "granite",
+      "probe": "synthetic-tcp",
+      "status": "pass",
+      "latest_ms": 118,
+      "up_24h": 100,
+      "up_7d": 100,
+      "up_30d": 99.9,
+      "evidence": "pppppppppppppppppppppppppppppp",
+      "evidence_counts": {
+        "pass": 30,
+        "warn": 0,
+        "fail": 0
+      },
+      "last_checked": "2026-07-20T05:53:09Z",
+      "audit": "syn-a-0027"
+    },
+    {
+      "id": "syn-marble-01",
+      "group": "marble",
+      "probe": "synthetic-queue",
+      "status": "pass",
+      "latest_ms": 33,
+      "up_24h": 100,
+      "up_7d": 100,
+      "up_30d": 100,
+      "evidence": "pppppppppppppppppppppppppppppp",
+      "evidence_counts": {
+        "pass": 30,
+        "warn": 0,
+        "fail": 0
+      },
+      "last_checked": "2026-07-20T05:52:16Z",
+      "audit": "syn-a-0028"
+    },
+    {
+      "id": "syn-marble-02",
+      "group": "marble",
+      "probe": "synthetic-cert",
+      "status": "pass",
+      "latest_ms": 117,
+      "up_24h": 100,
+      "up_7d": 100,
+      "up_30d": 100,
+      "evidence": "pppppppppppppppppppppppppppppp",
+      "evidence_counts": {
+        "pass": 30,
+        "warn": 0,
+        "fail": 0
+      },
+      "last_checked": "2026-07-20T05:51:23Z",
+      "audit": "syn-a-0029"
+    },
+    {
+      "id": "syn-marble-03",
+      "group": "marble",
+      "probe": "synthetic-cron",
+      "status": "pass",
+      "latest_ms": 102,
+      "up_24h": 100,
+      "up_7d": 100,
+      "up_30d": 100,
+      "evidence": "pppppppppppppppppppppppppppppp",
+      "evidence_counts": {
+        "pass": 30,
+        "warn": 0,
+        "fail": 0
+      },
+      "last_checked": "2026-07-20T05:50:30Z",
+      "audit": "syn-a-0030"
+    },
+    {
+      "id": "syn-marble-04",
+      "group": "marble",
+      "probe": "synthetic-http",
+      "status": "pass",
+      "latest_ms": 170,
+      "up_24h": 100,
+      "up_7d": 100,
+      "up_30d": 100,
+      "evidence": "pppppppppppppppppppppppppppppp",
+      "evidence_counts": {
+        "pass": 30,
+        "warn": 0,
+        "fail": 0
+      },
+      "last_checked": "2026-07-20T05:58:37Z",
+      "audit": "syn-a-0031"
+    },
+    {
+      "id": "syn-marble-05",
+      "group": "marble",
+      "probe": "synthetic-tcp",
+      "status": "warn",
+      "latest_ms": 423,
+      "up_24h": 99.1,
+      "up_7d": 97.6,
+      "up_30d": 98.3,
+      "evidence": "ppppppppppppppppppppppppppppwp",
+      "evidence_counts": {
+        "pass": 29,
+        "warn": 1,
+        "fail": 0
+      },
+      "last_checked": "2026-07-20T05:57:44Z",
+      "audit": "syn-a-0032",
+      "note": "Synthetic latency above threshold for two evidence days."
+    },
+    {
+      "id": "syn-marble-06",
+      "group": "marble",
+      "probe": "synthetic-queue",
+      "status": "pass",
+      "latest_ms": 46,
+      "up_24h": 100,
+      "up_7d": 100,
+      "up_30d": 100,
+      "evidence": "pppppppppppppppppppppppppppppp",
+      "evidence_counts": {
+        "pass": 30,
+        "warn": 0,
+        "fail": 0
+      },
+      "last_checked": "2026-07-20T05:56:51Z",
+      "audit": "syn-a-0033"
+    },
+    {
+      "id": "syn-marble-07",
+      "group": "marble",
+      "probe": "synthetic-cert",
+      "status": "pass",
+      "latest_ms": 226,
+      "up_24h": 100,
+      "up_7d": 100,
+      "up_30d": 99.9,
+      "evidence": "pppppppppppppppppppppppppppppp",
+      "evidence_counts": {
+        "pass": 30,
+        "warn": 0,
+        "fail": 0
+      },
+      "last_checked": "2026-07-20T05:55:58Z",
+      "audit": "syn-a-0034"
+    },
+    {
+      "id": "syn-marble-08",
+      "group": "marble",
+      "probe": "synthetic-cron",
+      "status": "pass",
+      "latest_ms": 81,
+      "up_24h": 100,
+      "up_7d": 100,
+      "up_30d": 100,
+      "evidence": "pppppppppppppppppppppppppppppp",
+      "evidence_counts": {
+        "pass": 30,
+        "warn": 0,
+        "fail": 0
+      },
+      "last_checked": "2026-07-20T05:55:05Z",
+      "audit": "syn-a-0035"
+    },
+    {
+      "id": "syn-ochre-01",
+      "group": "ochre",
+      "probe": "synthetic-http",
+      "status": "pass",
+      "latest_ms": 27,
+      "up_24h": 100,
+      "up_7d": 100,
+      "up_30d": 99.9,
+      "evidence": "pppppppppppppppppppppppppppppp",
+      "evidence_counts": {
+        "pass": 30,
+        "warn": 0,
+        "fail": 0
+      },
+      "last_checked": "2026-07-20T05:54:12Z",
+      "audit": "syn-a-0036"
+    },
+    {
+      "id": "syn-ochre-02",
+      "group": "ochre",
+      "probe": "synthetic-tcp",
+      "status": "fail",
+      "latest_ms": null,
+      "up_24h": 92.7,
+      "up_7d": 95.4,
+      "up_30d": 96.8,
+      "evidence": "pppppppppppppppppppppppppwppff",
+      "evidence_counts": {
+        "pass": 27,
+        "warn": 1,
+        "fail": 2
+      },
+      "last_checked": "2026-07-20T05:53:19Z",
+      "audit": "syn-a-0037",
+      "note": "Synthetic connect probe failing for two consecutive evidence days."
+    },
+    {
+      "id": "syn-ochre-03",
+      "group": "ochre",
+      "probe": "synthetic-queue",
+      "status": "pass",
+      "latest_ms": 231,
+      "up_24h": 100,
+      "up_7d": 100,
+      "up_30d": 99.9,
+      "evidence": "pppppppppppppppppppppppppppppp",
+      "evidence_counts": {
+        "pass": 30,
+        "warn": 0,
+        "fail": 0
+      },
+      "last_checked": "2026-07-20T05:52:26Z",
+      "audit": "syn-a-0038"
+    },
+    {
+      "id": "syn-ochre-04",
+      "group": "ochre",
+      "probe": "synthetic-cert",
+      "status": "pass",
+      "latest_ms": 164,
+      "up_24h": 100,
+      "up_7d": 100,
+      "up_30d": 100,
+      "evidence": "pppppppppppppppppppppppppppppp",
+      "evidence_counts": {
+        "pass": 30,
+        "warn": 0,
+        "fail": 0
+      },
+      "last_checked": "2026-07-20T05:51:33Z",
+      "audit": "syn-a-0039"
+    },
+    {
+      "id": "syn-ochre-05",
+      "group": "ochre",
+      "probe": "synthetic-cron",
+      "status": "pass",
+      "latest_ms": 162,
+      "up_24h": 100,
+      "up_7d": 100,
+      "up_30d": 100,
+      "evidence": "pppppppppppppppppppppppppppppp",
+      "evidence_counts": {
+        "pass": 30,
+        "warn": 0,
+        "fail": 0
+      },
+      "last_checked": "2026-07-20T05:50:40Z",
+      "audit": "syn-a-0040"
+    },
+    {
+      "id": "syn-ochre-06",
+      "group": "ochre",
+      "probe": "synthetic-http",
+      "status": "pass",
+      "latest_ms": 115,
+      "up_24h": 100,
+      "up_7d": 100,
+      "up_30d": 99.9,
+      "evidence": "pppppppppppppppppppppppppppppp",
+      "evidence_counts": {
+        "pass": 30,
+        "warn": 0,
+        "fail": 0
+      },
+      "last_checked": "2026-07-20T05:58:47Z",
+      "audit": "syn-a-0041"
+    },
+    {
+      "id": "syn-ochre-07",
+      "group": "ochre",
+      "probe": "synthetic-tcp",
+      "status": "pass",
+      "latest_ms": 89,
+      "up_24h": 100,
+      "up_7d": 100,
+      "up_30d": 100,
+      "evidence": "pppppppppppppppppppppppppppppp",
+      "evidence_counts": {
+        "pass": 30,
+        "warn": 0,
+        "fail": 0
+      },
+      "last_checked": "2026-07-20T05:57:54Z",
+      "audit": "syn-a-0042"
+    },
+    {
+      "id": "syn-ochre-08",
+      "group": "ochre",
+      "probe": "synthetic-queue",
+      "status": "pass",
+      "latest_ms": 62,
+      "up_24h": 100,
+      "up_7d": 100,
+      "up_30d": 99.9,
+      "evidence": "pppppppppppppppppppppppppppppp",
+      "evidence_counts": {
+        "pass": 30,
+        "warn": 0,
+        "fail": 0
+      },
+      "last_checked": "2026-07-20T05:57:01Z",
+      "audit": "syn-a-0043"
+    },
+    {
+      "id": "syn-slate-01",
+      "group": "slate",
+      "probe": "synthetic-cert",
+      "status": "pass",
+      "latest_ms": 148,
+      "up_24h": 100,
+      "up_7d": 100,
+      "up_30d": 99.9,
+      "evidence": "pppppppppppppppppppppppppppppp",
+      "evidence_counts": {
+        "pass": 30,
+        "warn": 0,
+        "fail": 0
+      },
+      "last_checked": "2026-07-20T05:56:08Z",
+      "audit": "syn-a-0044"
+    },
+    {
+      "id": "syn-slate-02",
+      "group": "slate",
+      "probe": "synthetic-cron",
+      "status": "pass",
+      "latest_ms": 182,
+      "up_24h": 100,
+      "up_7d": 100,
+      "up_30d": 99.9,
+      "evidence": "pppppppppppppppppppppppppppppp",
+      "evidence_counts": {
+        "pass": 30,
+        "warn": 0,
+        "fail": 0
+      },
+      "last_checked": "2026-07-20T05:55:15Z",
+      "audit": "syn-a-0045"
+    },
+    {
+      "id": "syn-slate-03",
+      "group": "slate",
+      "probe": "synthetic-http",
+      "status": "pass",
+      "latest_ms": 212,
+      "up_24h": 100,
+      "up_7d": 100,
+      "up_30d": 100,
+      "evidence": "pppppppppppppppppppppppppppppp",
+      "evidence_counts": {
+        "pass": 30,
+        "warn": 0,
+        "fail": 0
+      },
+      "last_checked": "2026-07-20T05:54:22Z",
+      "audit": "syn-a-0046"
+    },
+    {
+      "id": "syn-slate-04",
+      "group": "slate",
+      "probe": "synthetic-tcp",
+      "status": "pass",
+      "latest_ms": 43,
+      "up_24h": 100,
+      "up_7d": 100,
+      "up_30d": 99.9,
+      "evidence": "pppppppppppppppppppppppppppppp",
+      "evidence_counts": {
+        "pass": 30,
+        "warn": 0,
+        "fail": 0
+      },
+      "last_checked": "2026-07-20T05:53:29Z",
+      "audit": "syn-a-0047"
+    },
+    {
+      "id": "syn-slate-05",
+      "group": "slate",
+      "probe": "synthetic-queue",
+      "status": "pass",
+      "latest_ms": 76,
+      "up_24h": 100,
+      "up_7d": 100,
+      "up_30d": 100,
+      "evidence": "pppppppppppppppppppppppppppppp",
+      "evidence_counts": {
+        "pass": 30,
+        "warn": 0,
+        "fail": 0
+      },
+      "last_checked": "2026-07-20T05:52:36Z",
+      "audit": "syn-a-0048"
+    },
+    {
+      "id": "syn-slate-06",
+      "group": "slate",
+      "probe": "synthetic-cert",
+      "status": "warn",
+      "latest_ms": 432,
+      "up_24h": 99.2,
+      "up_7d": 98.5,
+      "up_30d": 99.1,
+      "evidence": "ppppppppppppppppppppppppwppppp",
+      "evidence_counts": {
+        "pass": 29,
+        "warn": 1,
+        "fail": 0
+      },
+      "last_checked": "2026-07-20T05:51:43Z",
+      "audit": "syn-a-0049",
+      "note": "Synthetic certificate expiry drifted inside the warning band."
+    },
+    {
+      "id": "syn-slate-07",
+      "group": "slate",
+      "probe": "synthetic-cron",
+      "status": "pass",
+      "latest_ms": 112,
+      "up_24h": 100,
+      "up_7d": 100,
+      "up_30d": 100,
+      "evidence": "pppppppppppppppppppppppppppppp",
+      "evidence_counts": {
+        "pass": 30,
+        "warn": 0,
+        "fail": 0
+      },
+      "last_checked": "2026-07-20T05:50:50Z",
+      "audit": "syn-a-0050"
+    },
+    {
+      "id": "syn-slate-08",
+      "group": "slate",
+      "probe": "synthetic-http",
+      "status": "pass",
+      "latest_ms": 124,
+      "up_24h": 100,
+      "up_7d": 100,
+      "up_30d": 99.9,
+      "evidence": "pppppppppppppppppppppppppppppp",
+      "evidence_counts": {
+        "pass": 30,
+        "warn": 0,
+        "fail": 0
+      },
+      "last_checked": "2026-07-20T05:58:57Z",
+      "audit": "syn-a-0051"
+    }
+  ]
+}

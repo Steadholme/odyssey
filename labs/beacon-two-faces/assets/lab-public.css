@@ -1,0 +1,265 @@
+/* Beacon Two Faces — publication archetype. Centered reading stack; headline + ledger. */
+
+[data-lab="beacon-two-faces"] .lab-headline {
+  padding-top: 2.4rem;
+}
+
+[data-lab="beacon-two-faces"] .lab-headline__text {
+  font-family: var(--lab-font-display);
+  font-size: clamp(1.7rem, 1.15rem + 2.6vw, 2.8rem);
+  line-height: 1.1;
+  letter-spacing: -0.005em;
+  max-width: 30ch;
+  margin: 0.35rem 0 1.1rem;
+}
+
+[data-lab="beacon-two-faces"] .lab-headline__state {
+  margin-bottom: 0.75rem;
+}
+
+/* ---------- incident-first ledger entry ---------- */
+
+[data-lab="beacon-two-faces"] .lab-event {
+  margin-top: 0.2rem;
+  padding-left: 1rem;
+  border-left: 3px solid var(--lab-ink);
+}
+
+[data-lab="beacon-two-faces"] .lab-event--degraded {
+  border-left-color: var(--lab-st-degraded);
+}
+
+[data-lab="beacon-two-faces"] .lab-event--outage {
+  border-left-color: var(--lab-st-outage);
+}
+
+[data-lab="beacon-two-faces"] .lab-event--maintenance {
+  border-left-color: var(--lab-st-maintenance);
+}
+
+[data-lab="beacon-two-faces"] .lab-event__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.4rem 1rem;
+  margin-bottom: 0.35rem;
+}
+
+[data-lab="beacon-two-faces"] .lab-event__title {
+  font-size: 1.12rem;
+  font-weight: 680;
+}
+
+[data-lab="beacon-two-faces"] .lab-event__summary {
+  font-size: 0.95rem;
+  max-width: 62ch;
+  margin-top: 0.45rem;
+}
+
+[data-lab="beacon-two-faces"] .lab-updates {
+  list-style: none;
+  margin-top: 0.9rem;
+  border-top: 1px solid var(--lab-hairline);
+}
+
+[data-lab="beacon-two-faces"] .lab-updates__item {
+  display: grid;
+  grid-template-columns: 13rem 1fr;
+  gap: 0.2rem 1.2rem;
+  align-items: baseline;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--lab-hairline);
+}
+
+[data-lab="beacon-two-faces"] .lab-updates__text {
+  font-size: 0.9rem;
+}
+
+/* ---------- component ledger: hairline rows, full 24-service density ---------- */
+
+[data-lab="beacon-two-faces"] .lab-ledger {
+  list-style: none;
+  border-top: 1px solid var(--lab-hairline);
+}
+
+[data-lab="beacon-two-faces"] .lab-row {
+  display: grid;
+  grid-template-columns: minmax(11rem, 15rem) 1fr 6.5rem;
+  gap: 0.5rem 1.4rem;
+  align-items: center;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--lab-hairline);
+}
+
+[data-lab="beacon-two-faces"] .lab-row__id {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.3rem;
+}
+
+[data-lab="beacon-two-faces"] .lab-row__name {
+  font-size: 1rem;
+  font-weight: 650;
+}
+
+[data-lab="beacon-two-faces"] .lab-row__note {
+  font-family: var(--lab-font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--lab-ink-2);
+}
+
+[data-lab="beacon-two-faces"] .lab-row__evidence {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: 0;
+}
+
+[data-lab="beacon-two-faces"] .lab-row__summary {
+  font-size: 0.8rem;
+  color: var(--lab-ink-2);
+}
+
+[data-lab="beacon-two-faces"] .lab-row__meta {
+  text-align: right;
+}
+
+[data-lab="beacon-two-faces"] .lab-row__meta .lab-num {
+  font-size: 1rem;
+}
+
+/* ---------- recent history ---------- */
+
+[data-lab="beacon-two-faces"] .lab-history {
+  list-style: none;
+  border-top: 1px solid var(--lab-hairline);
+}
+
+[data-lab="beacon-two-faces"] .lab-day {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.2rem 1.2rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--lab-hairline);
+}
+
+[data-lab="beacon-two-faces"] .lab-day .lab-meta {
+  flex: none;
+  width: 6.5rem;
+}
+
+[data-lab="beacon-two-faces"] .lab-day .lab-status {
+  flex: none;
+  width: 8.5rem;
+}
+
+[data-lab="beacon-two-faces"] .lab-day__text {
+  flex: 1 1 18rem;
+  font-size: 0.9rem;
+}
+
+/* ---------- update channels ---------- */
+
+[data-lab="beacon-two-faces"] .lab-channels {
+  list-style: none;
+  border-top: 1px solid var(--lab-hairline);
+}
+
+[data-lab="beacon-two-faces"] .lab-channels__item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.2rem 1.2rem;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--lab-hairline);
+}
+
+[data-lab="beacon-two-faces"] .lab-channels__item .lab-meta {
+  flex: none;
+  width: 4rem;
+}
+
+[data-lab="beacon-two-faces"] .lab-channels__link {
+  font-size: 0.9rem;
+}
+
+[data-lab="beacon-two-faces"] .lab-channels__detail {
+  font-size: 0.9rem;
+  color: var(--lab-ink-2);
+}
+
+/* ---------- state appendix: headline + ledger behavior per state ---------- */
+
+[data-lab="beacon-two-faces"] .lab-states {
+  list-style: none;
+  border-top: 1px solid var(--lab-hairline);
+}
+
+[data-lab="beacon-two-faces"] .lab-state {
+  padding: 0.8rem 0;
+  border-bottom: 1px solid var(--lab-hairline);
+}
+
+[data-lab="beacon-two-faces"] .lab-state__name {
+  display: block;
+  font-family: var(--lab-font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  color: var(--lab-ink-2);
+  margin-bottom: 0.35rem;
+}
+
+[data-lab="beacon-two-faces"] .lab-state__sample {
+  display: block;
+  font-family: var(--lab-font-display);
+  font-size: 1.08rem;
+  line-height: 1.3;
+  margin-bottom: 0.5rem;
+}
+
+[data-lab="beacon-two-faces"] .lab-state .lab-chip {
+  margin-bottom: 0.5rem;
+}
+
+[data-lab="beacon-two-faces"] .lab-state__none {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--lab-ink-2);
+  margin-bottom: 0.5rem;
+}
+
+[data-lab="beacon-two-faces"] .lab-state__note {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--lab-ink-2);
+  max-width: 64ch;
+}
+
+/* ---------- responsive: keep headline, nav, all 24 rows legible at 320px ---------- */
+
+@media (max-width: 700px) {
+  [data-lab="beacon-two-faces"] .lab-row {
+    grid-template-columns: 1fr;
+    gap: 0.45rem;
+    padding: 0.8rem 0;
+  }
+
+  [data-lab="beacon-two-faces"] .lab-row__meta {
+    text-align: left;
+  }
+
+  [data-lab="beacon-two-faces"] .lab-row__meta .lab-sub {
+    display: inline;
+    margin-left: 0.5rem;
+  }
+
+  [data-lab="beacon-two-faces"] .lab-updates__item {
+    grid-template-columns: 1fr;
+    gap: 0.15rem;
+  }
+}

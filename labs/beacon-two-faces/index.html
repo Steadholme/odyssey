@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beacon Two Faces — synthetic design lab</title>
+<meta name="description" content="Off-fleet static design specimen: one Beacon status identity across a publication surface and a control-room surface. Synthetic data, not live.">
+<link rel="stylesheet" href="./assets/lab-dna.css">
+</head>
+<body data-lab="beacon-two-faces">
+<a class="lab-skip" href="#main">Skip to content</a>
+<header class="lab-masthead">
+  <a class="lab-brand" href="./index.html" aria-current="page">
+    <svg class="lab-brand__mark" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><rect width="24" height="24" fill="#9a4a15"/><path d="M0 24 L24 0 L24 24 Z" fill="#1f1b16"/><rect x="10" y="10" width="5" height="5" fill="#f6f3ec"/></svg>
+    <span class="lab-brand__word">Beacon</span>
+    <span class="lab-brand__tag">TWO FACES · LAB</span>
+  </a>
+  <p class="lab-synth">SYNTHETIC SPECIMEN — NOT LIVE</p>
+  <nav class="lab-nav" aria-label="Specimen pages">
+    <a class="lab-nav__link" href="./index.html" aria-current="page">Index</a>
+    <a class="lab-nav__link" href="./public.html">Publication</a>
+    <a class="lab-nav__link" href="./operator.html">Control room</a>
+  </nav>
+</header>
+<main class="lab-stack" id="main">
+
+  <section class="lab-cover" aria-labelledby="page-title">
+    <p class="lab-zone-kicker">Design specimen · off-fleet</p>
+    <h1 class="lab-cover__title" id="page-title">Beacon, two faces.</h1>
+    <p class="lab-cover__standfirst">One status identity, two working surfaces: a calm publication page that answers “is the estate healthy?” in five seconds, and a dense control-room ledger that puts every anomaly within one glance. All data is synthetic.</p>
+  </section>
+
+  <section class="lab-zone" aria-labelledby="faces-heading">
+    <h2 class="lab-zone__label" id="faces-heading">The two faces</h2>
+    <ol class="lab-faces">
+      <li class="lab-face">
+        <a class="lab-face__link" href="./public.html">
+          <span class="lab-face__name">Publication</span>
+          <span class="lab-face__desc">Centered reading stack · headline plus component ledger · 24 public services · 30-day evidence</span>
+          <span class="lab-meta">ARCHETYPE PUBLICATION</span>
+        </a>
+      </li>
+      <li class="lab-face">
+        <a class="lab-face__link" href="./operator.html">
+          <span class="lab-face__name">Control room</span>
+          <span class="lab-face__desc">Full-width shift ledger · anomaly-first block · 51 synthetic checks · semantic table</span>
+          <span class="lab-meta">ARCHETYPE CONTROL-ROOM</span>
+        </a>
+      </li>
+    </ol>
+  </section>
+
+  <section class="lab-zone" aria-labelledby="boundary-heading">
+    <h2 class="lab-zone__label" id="boundary-heading">Boundary</h2>
+    <ul class="lab-facts">
+      <li class="lab-facts__item">Synthetic fixtures only — no live data, no production names, no external addresses.</li>
+      <li class="lab-facts__item">Off-fleet — not vendored, not served, and not part of any release, dist, image, route, or rollout.</li>
+      <li class="lab-facts__item">No JavaScript, no network, nothing to fetch — the pages work from a double-click.</li>
+      <li class="lab-facts__item">The Lab owns every pixel here; nothing in this directory is production authority.</li>
+    </ul>
+  </section>
+
+  <section class="lab-zone" aria-labelledby="verify-heading">
+    <h2 class="lab-zone__label" id="verify-heading">Verify</h2>
+    <p class="lab-zone__hint">Two zero-network test gates prove the contract, run from the workspace root:</p>
+    <pre class="lab-code"><code>node --test odyssey/labs/beacon-two-faces/tests/structure.test.mjs
+node --test odyssey/labs/beacon-two-faces/tests/browser.test.mjs</code></pre>
+    <p class="lab-zone__hint">Read <a href="./SPEC.md">SPEC.md</a> for the frozen identity and falsification contract, and <a href="./README.md">README.md</a> for viewing and pilot instructions.</p>
+  </section>
+
+</main>
+<footer class="lab-colophon">
+  <p class="lab-colophon__line">Beacon Two Faces is an off-fleet design specimen. Data is synthetic and non-live; the pages are not served by any route and carry no rollout authority.</p>
+  <p class="lab-meta">SHARED LAB DNA · TWO ARCHETYPES · TWELVE FILES</p>
+</footer>
+</body>
+</html>

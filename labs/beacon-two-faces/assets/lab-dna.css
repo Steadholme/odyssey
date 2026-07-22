@@ -1,0 +1,575 @@
+/* Beacon Two Faces — shared lab DNA. Off-fleet specimen only; no production authority. */
+
+[data-lab="beacon-two-faces"] {
+  /* mineral palette: paper / basalt / oxide */
+  --lab-paper: #f6f3ec;
+  --lab-paper-2: #eee9dd;
+  --lab-ink: #1f1b16;
+  --lab-ink-2: #57503f;
+  --lab-hairline: #d9d2c2;
+  /* one identity accent: brand tile, active navigation, links, focus */
+  --lab-accent: #9a4a15;
+  --lab-accent-ink: #fff8f0;
+  /* semantic status tokens: status meaning only, never decoration */
+  --lab-st-ok: #2e6b4a;
+  --lab-st-degraded: #8a5d04;
+  --lab-st-outage: #a02116;
+  --lab-st-maintenance: #4b5a66;
+  --lab-st-nodata: #8a8272;
+  /* evidence strip tones: quiet pass, loud anomalies */
+  --lab-ev-ok: #c3cfc6;
+  --lab-ev-degraded: #c98a12;
+  --lab-ev-outage: #b03424;
+  --lab-ev-maintenance: #7d8b96;
+  --lab-ev-nodata: #b9b2a2;
+  /* typography */
+  --lab-font-display: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --lab-font-text: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --lab-font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+
+  margin: 0;
+  background: var(--lab-paper);
+  color: var(--lab-ink);
+  font-family: var(--lab-font-text);
+  font-size: 16px;
+  line-height: 1.5;
+  text-size-adjust: 100%;
+}
+
+[data-lab="beacon-two-faces"] *,
+[data-lab="beacon-two-faces"] *::before,
+[data-lab="beacon-two-faces"] *::after {
+  box-sizing: border-box;
+}
+
+[data-lab="beacon-two-faces"] h1,
+[data-lab="beacon-two-faces"] h2,
+[data-lab="beacon-two-faces"] h3,
+[data-lab="beacon-two-faces"] p,
+[data-lab="beacon-two-faces"] ol,
+[data-lab="beacon-two-faces"] ul,
+[data-lab="beacon-two-faces"] dl,
+[data-lab="beacon-two-faces"] dd,
+[data-lab="beacon-two-faces"] pre {
+  margin: 0;
+  padding: 0;
+}
+
+[data-lab="beacon-two-faces"] ::selection {
+  background: var(--lab-accent);
+  color: var(--lab-accent-ink);
+}
+
+/* links carry the one identity accent */
+[data-lab="beacon-two-faces"] a {
+  color: var(--lab-accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  transition: color 0.12s linear, background-color 0.12s linear;
+}
+
+[data-lab="beacon-two-faces"] a:hover {
+  color: var(--lab-ink);
+}
+
+/* focus: always visible, always the accent */
+[data-lab="beacon-two-faces"] a:focus-visible {
+  outline: 2px solid var(--lab-accent);
+  outline-offset: 2px;
+}
+
+[data-lab="beacon-two-faces"] .lab-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* skip link: the one raised interactive surface, hence the one hard shadow */
+[data-lab="beacon-two-faces"] .lab-skip {
+  position: absolute;
+  top: 0;
+  left: 1rem;
+  z-index: 10;
+  transform: translateY(-250%);
+  background: var(--lab-ink);
+  color: var(--lab-paper);
+  font-family: var(--lab-font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  padding: 0.55rem 0.9rem;
+  text-decoration: none;
+  /* no transform transition: the link must be on screen the instant focus lands */
+}
+
+[data-lab="beacon-two-faces"] .lab-skip:focus {
+  transform: translateY(0);
+  box-shadow: 4px 4px 0 var(--lab-accent);
+  outline: 2px solid var(--lab-ink);
+  outline-offset: 2px;
+}
+
+/* ---------- shared masthead: the identity both faces carry ---------- */
+
+[data-lab="beacon-two-faces"] .lab-masthead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 1.2rem;
+  padding: 0.8rem 1.25rem;
+  border-bottom: 2px solid var(--lab-ink);
+}
+
+[data-lab="beacon-two-faces"] .lab-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--lab-ink);
+  text-decoration: none;
+}
+
+[data-lab="beacon-two-faces"] .lab-brand__mark {
+  flex: none;
+  display: block;
+}
+
+[data-lab="beacon-two-faces"] .lab-brand__word {
+  font-size: 1.05rem;
+  font-weight: 750;
+  letter-spacing: 0.01em;
+}
+
+[data-lab="beacon-two-faces"] .lab-brand__tag {
+  font-family: var(--lab-font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  color: var(--lab-ink-2);
+  border: 1px solid var(--lab-hairline);
+  padding: 0.15rem 0.45rem;
+  white-space: nowrap;
+}
+
+/* synthetic stamp: inverse basalt, impossible to miss, no status hue */
+[data-lab="beacon-two-faces"] .lab-synth {
+  background: var(--lab-ink);
+  color: var(--lab-paper);
+  font-family: var(--lab-font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  padding: 0.25rem 0.6rem;
+  white-space: nowrap;
+}
+
+[data-lab="beacon-two-faces"] .lab-nav {
+  margin-left: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.15rem;
+}
+
+[data-lab="beacon-two-faces"] .lab-nav__link {
+  color: var(--lab-ink-2);
+  text-decoration: none;
+  font-size: 0.85rem;
+  padding: 0.4rem 0.65rem;
+}
+
+[data-lab="beacon-two-faces"] .lab-nav__link:hover {
+  color: var(--lab-ink);
+  background: var(--lab-paper-2);
+}
+
+[data-lab="beacon-two-faces"] .lab-nav__link[aria-current="page"] {
+  color: var(--lab-accent);
+  box-shadow: inset 0 -2px 0 var(--lab-accent);
+}
+
+/* ---------- layout primitives ---------- */
+
+[data-lab="beacon-two-faces"] .lab-stack {
+  max-width: 68rem;
+  margin-inline: auto;
+  padding: 0 1.25rem;
+}
+
+[data-lab="beacon-two-faces"] .lab-spread {
+  padding: 0 1.25rem;
+}
+
+/* heavy 2px rule separates major structural zones */
+[data-lab="beacon-two-faces"] .lab-zone {
+  border-top: 2px solid var(--lab-ink);
+  margin-top: 2.2rem;
+  padding-top: 0.85rem;
+}
+
+[data-lab="beacon-two-faces"] .lab-zone__label {
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 0.85rem;
+}
+
+[data-lab="beacon-two-faces"] .lab-zone__hint {
+  color: var(--lab-ink-2);
+  font-size: 0.85rem;
+  max-width: 64ch;
+  margin: -0.35rem 0 0.9rem;
+}
+
+[data-lab="beacon-two-faces"] .lab-zone-kicker {
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lab-ink-2);
+}
+
+/* ---------- shared type roles ---------- */
+
+/* mono uppercase: coordinates, ids, timestamps, status labels — never sentences */
+[data-lab="beacon-two-faces"] .lab-meta {
+  font-family: var(--lab-font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lab-ink-2);
+}
+
+[data-lab="beacon-two-faces"] .lab-mono {
+  font-family: var(--lab-font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+}
+
+[data-lab="beacon-two-faces"] .lab-num {
+  font-family: var(--lab-font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+
+[data-lab="beacon-two-faces"] .lab-sub {
+  display: block;
+  font-family: var(--lab-font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--lab-ink-2);
+}
+
+/* ---------- status semantics: word + shape + hue, hue never alone ---------- */
+
+[data-lab="beacon-two-faces"] .lab-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--lab-font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+[data-lab="beacon-two-faces"] .lab-status--operational,
+[data-lab="beacon-two-faces"] .lab-status--pass {
+  color: var(--lab-st-ok);
+}
+
+[data-lab="beacon-two-faces"] .lab-status--degraded,
+[data-lab="beacon-two-faces"] .lab-status--warn {
+  color: var(--lab-st-degraded);
+}
+
+[data-lab="beacon-two-faces"] .lab-status--outage,
+[data-lab="beacon-two-faces"] .lab-status--fail {
+  color: var(--lab-st-outage);
+}
+
+[data-lab="beacon-two-faces"] .lab-status--maintenance {
+  color: var(--lab-st-maintenance);
+}
+
+[data-lab="beacon-two-faces"] .lab-status--nodata {
+  color: var(--lab-ink-2);
+}
+
+/* dot: pure shape, color inherited from the word it accompanies */
+[data-lab="beacon-two-faces"] .lab-dot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  display: inline-block;
+  background: currentColor;
+  border-radius: 50%;
+}
+
+[data-lab="beacon-two-faces"] .lab-dot--degraded,
+[data-lab="beacon-two-faces"] .lab-dot--warn {
+  border-radius: 0;
+  transform: rotate(45deg);
+}
+
+[data-lab="beacon-two-faces"] .lab-dot--outage,
+[data-lab="beacon-two-faces"] .lab-dot--fail {
+  border-radius: 0;
+}
+
+[data-lab="beacon-two-faces"] .lab-dot--maintenance {
+  background: transparent;
+  border: 2px solid currentColor;
+}
+
+[data-lab="beacon-two-faces"] .lab-dot--nodata {
+  background: transparent;
+  border: 1.5px solid currentColor;
+}
+
+/* chip: the single overall-state marker */
+[data-lab="beacon-two-faces"] .lab-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--lab-font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  padding: 0.3rem 0.7rem;
+  background: var(--lab-ink);
+  color: var(--lab-accent-ink);
+}
+
+[data-lab="beacon-two-faces"] .lab-chip--operational,
+[data-lab="beacon-two-faces"] .lab-chip--pass {
+  background: var(--lab-st-ok);
+}
+
+[data-lab="beacon-two-faces"] .lab-chip--degraded,
+[data-lab="beacon-two-faces"] .lab-chip--warn {
+  background: var(--lab-st-degraded);
+}
+
+[data-lab="beacon-two-faces"] .lab-chip--outage,
+[data-lab="beacon-two-faces"] .lab-chip--fail {
+  background: var(--lab-st-outage);
+}
+
+[data-lab="beacon-two-faces"] .lab-chip--maintenance {
+  background: var(--lab-st-maintenance);
+}
+
+[data-lab="beacon-two-faces"] .lab-chip--nodata {
+  background: transparent;
+  color: var(--lab-ink-2);
+  box-shadow: inset 0 0 0 1px var(--lab-st-nodata);
+}
+
+/* ---------- evidence strips: quiet pass cells, loud anomaly cells ---------- */
+
+[data-lab="beacon-two-faces"] .lab-ev {
+  display: grid;
+  grid-template-columns: repeat(30, 1fr);
+  gap: 2px;
+}
+
+[data-lab="beacon-two-faces"] .lab-ev__cell {
+  display: block;
+  min-height: 14px;
+}
+
+[data-lab="beacon-two-faces"] .lab-ev__cell--operational,
+[data-lab="beacon-two-faces"] .lab-ev__cell--pass {
+  background: var(--lab-ev-ok);
+}
+
+[data-lab="beacon-two-faces"] .lab-ev__cell--degraded,
+[data-lab="beacon-two-faces"] .lab-ev__cell--warn {
+  background: var(--lab-ev-degraded);
+}
+
+[data-lab="beacon-two-faces"] .lab-ev__cell--outage,
+[data-lab="beacon-two-faces"] .lab-ev__cell--fail {
+  background: var(--lab-ev-outage);
+}
+
+[data-lab="beacon-two-faces"] .lab-ev__cell--maintenance {
+  background: var(--lab-ev-maintenance);
+}
+
+[data-lab="beacon-two-faces"] .lab-ev__cell--nodata {
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--lab-ev-nodata);
+}
+
+[data-lab="beacon-two-faces"] .lab-ev--mini {
+  display: inline-grid;
+  grid-template-columns: repeat(30, 3px);
+  gap: 1px;
+  vertical-align: middle;
+  margin-right: 0.5rem;
+}
+
+[data-lab="beacon-two-faces"] .lab-ev--mini .lab-ev__cell {
+  min-height: 10px;
+}
+
+[data-lab="beacon-two-faces"] .lab-ev__counts {
+  white-space: nowrap;
+}
+
+/* ---------- shared colophon ---------- */
+
+[data-lab="beacon-two-faces"] .lab-colophon {
+  border-top: 2px solid var(--lab-ink);
+  margin-top: 2.6rem;
+  padding: 0.9rem 1.25rem 2.6rem;
+}
+
+[data-lab="beacon-two-faces"] .lab-colophon__line {
+  font-size: 0.85rem;
+  color: var(--lab-ink-2);
+  max-width: 64ch;
+  margin-bottom: 0.45rem;
+}
+
+/* ---------- index cover ---------- */
+
+[data-lab="beacon-two-faces"] .lab-cover {
+  padding-top: 2.6rem;
+}
+
+[data-lab="beacon-two-faces"] .lab-cover__title {
+  font-family: var(--lab-font-display);
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  margin: 0.3rem 0 1.1rem;
+}
+
+[data-lab="beacon-two-faces"] .lab-cover__standfirst {
+  font-size: 1.12rem;
+  line-height: 1.55;
+  max-width: 46rem;
+}
+
+[data-lab="beacon-two-faces"] .lab-faces {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-top: 1px solid var(--lab-hairline);
+}
+
+[data-lab="beacon-two-faces"] .lab-face + .lab-face {
+  border-left: 1px solid var(--lab-hairline);
+}
+
+[data-lab="beacon-two-faces"] .lab-face__link {
+  display: block;
+  height: 100%;
+  padding: 1.2rem 1.1rem 1.3rem;
+  color: var(--lab-ink);
+  text-decoration: none;
+}
+
+[data-lab="beacon-two-faces"] .lab-face__link:hover {
+  background: var(--lab-paper-2);
+}
+
+[data-lab="beacon-two-faces"] .lab-face__name {
+  display: block;
+  font-family: var(--lab-font-display);
+  font-size: 1.55rem;
+  line-height: 1.1;
+}
+
+[data-lab="beacon-two-faces"] .lab-face__desc {
+  display: block;
+  color: var(--lab-ink-2);
+  font-size: 0.92rem;
+  margin: 0.5rem 0 0.7rem;
+}
+
+[data-lab="beacon-two-faces"] .lab-facts {
+  list-style: none;
+  border-top: 1px solid var(--lab-hairline);
+}
+
+[data-lab="beacon-two-faces"] .lab-facts__item {
+  position: relative;
+  padding: 0.65rem 0 0.65rem 1.3rem;
+  border-bottom: 1px solid var(--lab-hairline);
+  font-size: 0.95rem;
+}
+
+[data-lab="beacon-two-faces"] .lab-facts__item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 1.05rem;
+  width: 7px;
+  height: 7px;
+  background: var(--lab-ink);
+}
+
+[data-lab="beacon-two-faces"] .lab-code {
+  font-family: var(--lab-font-mono);
+  font-size: 0.78rem;
+  line-height: 1.6;
+  background: var(--lab-paper-2);
+  border: 1px solid var(--lab-hairline);
+  padding: 0.8rem 1rem;
+  margin-bottom: 0.9rem;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+[data-lab="beacon-two-faces"] .lab-code a {
+  color: var(--lab-accent);
+}
+
+/* ---------- accessibility media ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  [data-lab="beacon-two-faces"],
+  [data-lab="beacon-two-faces"] *,
+  [data-lab="beacon-two-faces"] *::before,
+  [data-lab="beacon-two-faces"] *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@media (forced-colors: active) {
+  [data-lab="beacon-two-faces"] .lab-brand__mark {
+    forced-color-adjust: none;
+  }
+
+  [data-lab="beacon-two-faces"] .lab-chip,
+  [data-lab="beacon-two-faces"] .lab-synth {
+    border: 1px solid CanvasText;
+  }
+
+  [data-lab="beacon-two-faces"] .lab-ev {
+    outline: 1px solid CanvasText;
+  }
+
+  [data-lab="beacon-two-faces"] .lab-face + .lab-face {
+    border-left-color: CanvasText;
+  }
+}
+
+@media (max-width: 640px) {
+  [data-lab="beacon-two-faces"] .lab-faces {
+    grid-template-columns: 1fr;
+  }
+
+  [data-lab="beacon-two-faces"] .lab-face + .lab-face {
+    border-left: none;
+    border-top: 1px solid var(--lab-hairline);
+  }
+}

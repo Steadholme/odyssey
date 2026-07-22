@@ -1,0 +1,248 @@
+/* Beacon Two Faces — control-room archetype. Dense full-width shift ledger. */
+
+[data-lab="beacon-two-faces"] .lab-spread {
+  font-size: 0.9rem;
+}
+
+[data-lab="beacon-two-faces"] .lab-shift {
+  padding-top: 1.6rem;
+}
+
+[data-lab="beacon-two-faces"] .lab-shift__title {
+  font-size: 1.45rem;
+  font-weight: 750;
+  letter-spacing: -0.005em;
+  margin: 0.3rem 0 0.6rem;
+}
+
+/* ---------- anomaly-first block ---------- */
+
+[data-lab="beacon-two-faces"] .lab-anomalies {
+  list-style: none;
+  border-top: 1px solid var(--lab-hairline);
+}
+
+[data-lab="beacon-two-faces"] .lab-anomaly__link {
+  display: grid;
+  grid-template-columns: 6.5rem 10.5rem 12rem 1fr;
+  gap: 0.3rem 1.2rem;
+  align-items: baseline;
+  padding: 0.6rem 0.4rem;
+  border-bottom: 1px solid var(--lab-hairline);
+  color: var(--lab-ink);
+  text-decoration: none;
+}
+
+[data-lab="beacon-two-faces"] .lab-anomaly__link:hover {
+  background: var(--lab-paper-2);
+}
+
+[data-lab="beacon-two-faces"] .lab-anomaly__group {
+  font-family: var(--lab-font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lab-ink-2);
+}
+
+[data-lab="beacon-two-faces"] .lab-anomaly__note {
+  font-size: 0.85rem;
+  color: var(--lab-ink-2);
+}
+
+/* ---------- the semantic check table ---------- */
+
+[data-lab="beacon-two-faces"] .lab-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+
+[data-lab="beacon-two-faces"] .lab-table caption {
+  text-align: left;
+  font-size: 0.8rem;
+  color: var(--lab-ink-2);
+  max-width: 92ch;
+  padding-bottom: 0.7rem;
+}
+
+[data-lab="beacon-two-faces"] .lab-table thead th {
+  font-family: var(--lab-font-mono);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--lab-ink-2);
+  text-align: left;
+  padding: 0.5rem 0.55rem;
+  border-bottom: 2px solid var(--lab-ink);
+  background: var(--lab-paper);
+  white-space: nowrap;
+}
+
+[data-lab="beacon-two-faces"] .lab-table thead th:nth-child(3),
+[data-lab="beacon-two-faces"] .lab-table thead th:nth-child(4),
+[data-lab="beacon-two-faces"] .lab-table thead th:nth-child(5),
+[data-lab="beacon-two-faces"] .lab-table thead th:nth-child(6) {
+  text-align: right;
+}
+
+[data-lab="beacon-two-faces"] .lab-table tbody th,
+[data-lab="beacon-two-faces"] .lab-table tbody td {
+  padding: 0.42rem 0.55rem;
+  border-bottom: 1px solid var(--lab-hairline);
+  vertical-align: middle;
+}
+
+[data-lab="beacon-two-faces"] .lab-table tbody th {
+  text-align: left;
+  font-weight: 500;
+}
+
+[data-lab="beacon-two-faces"] .lab-table tbody td.lab-num {
+  text-align: right;
+  white-space: nowrap;
+}
+
+[data-lab="beacon-two-faces"] .lab-table tbody td.lab-mono {
+  white-space: nowrap;
+}
+
+/* anomaly rows carry a hard status-colored leading edge */
+[data-lab="beacon-two-faces"] tr[data-lab-status="warn"] > th:first-child {
+  box-shadow: inset 3px 0 0 var(--lab-st-degraded);
+}
+
+[data-lab="beacon-two-faces"] tr[data-lab-status="fail"] > th:first-child {
+  box-shadow: inset 3px 0 0 var(--lab-st-outage);
+}
+
+/* fragment target from the anomaly block: basalt marker, never a status hue */
+[data-lab="beacon-two-faces"] tr[data-lab-check]:target > th,
+[data-lab="beacon-two-faces"] tr[data-lab-check]:target > td {
+  background: var(--lab-paper-2);
+}
+
+[data-lab="beacon-two-faces"] tr[data-lab-check]:target > th:first-child {
+  box-shadow: inset 3px 0 0 var(--lab-ink);
+}
+
+/* ---------- method legend ---------- */
+
+[data-lab="beacon-two-faces"] .lab-legend {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1px;
+  background: var(--lab-hairline);
+  border: 1px solid var(--lab-hairline);
+}
+
+[data-lab="beacon-two-faces"] .lab-legend__item {
+  background: var(--lab-paper);
+  padding: 0.9rem 1rem;
+}
+
+[data-lab="beacon-two-faces"] .lab-legend__item dt {
+  font-family: var(--lab-font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+
+[data-lab="beacon-two-faces"] .lab-legend__item dd {
+  font-size: 0.85rem;
+  color: var(--lab-ink-2);
+}
+
+/* ---------- sticky header only when the table is a table ---------- */
+
+@media (min-width: 861px) {
+  [data-lab="beacon-two-faces"] .lab-table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+}
+
+/* ---------- stacked records: every field stays visible, no page scroll ---------- */
+
+@media (max-width: 860px) {
+  [data-lab="beacon-two-faces"] .lab-anomaly__link {
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+    padding: 0.7rem 0.2rem;
+  }
+
+  [data-lab="beacon-two-faces"] .lab-table,
+  [data-lab="beacon-two-faces"] .lab-table tbody,
+  [data-lab="beacon-two-faces"] .lab-table tr,
+  [data-lab="beacon-two-faces"] .lab-table th,
+  [data-lab="beacon-two-faces"] .lab-table td {
+    display: block;
+  }
+
+  [data-lab="beacon-two-faces"] .lab-table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  [data-lab="beacon-two-faces"] .lab-table tr {
+    border-top: 2px solid var(--lab-ink);
+    border-bottom: 1px solid var(--lab-hairline);
+    padding: 0.5rem 0.2rem 0.7rem;
+    margin-bottom: 0.4rem;
+  }
+
+  [data-lab="beacon-two-faces"] .lab-table tbody th,
+  [data-lab="beacon-two-faces"] .lab-table tbody td {
+    border-bottom: none;
+    padding: 0.28rem 0;
+    text-align: left;
+  }
+
+  [data-lab="beacon-two-faces"] .lab-table tbody th::before,
+  [data-lab="beacon-two-faces"] .lab-table tbody td::before {
+    content: attr(data-label);
+    display: block;
+    font-family: var(--lab-font-mono);
+    font-size: 0.58rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--lab-ink-2);
+    margin-bottom: 0.12rem;
+  }
+
+  [data-lab="beacon-two-faces"] tr[data-lab-status="warn"] > th:first-child,
+  [data-lab="beacon-two-faces"] tr[data-lab-status="fail"] > th:first-child {
+    box-shadow: none;
+  }
+
+  [data-lab="beacon-two-faces"] tr[data-lab-status="warn"] {
+    box-shadow: inset 3px 0 0 var(--lab-st-degraded);
+  }
+
+  [data-lab="beacon-two-faces"] tr[data-lab-status="fail"] {
+    box-shadow: inset 3px 0 0 var(--lab-st-outage);
+  }
+
+  [data-lab="beacon-two-faces"] tr[data-lab-check]:target {
+    box-shadow: inset 3px 0 0 var(--lab-ink);
+  }
+
+  [data-lab="beacon-two-faces"] .lab-ev--mini {
+    display: grid;
+    grid-template-columns: repeat(30, 1fr);
+    max-width: 22rem;
+    margin: 0.15rem 0 0.25rem;
+  }
+}
