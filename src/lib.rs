@@ -332,4 +332,23 @@ mod tests {
         assert!(CANARY_JS.contains("data-ody-shell-nav"));
         assert!(CANARY_JS.contains("Odyssey.canary"));
     }
+
+    #[test]
+    fn canary_instrument_and_folio_primitives_exist_and_remain_scoped() {
+        // Prove that instrument and folio selectors are scoped under [data-ody-shell="1.3"]
+        // by matching the exact combined selector head, not just substring coexistence.
+        assert!(
+            PROFILE_CSS
+                .contains("[data-ody-shell=\"1.3\"] :is(.steadholme-instrument,.ody-instrument)"),
+            "instrument must be scoped under 1.3 shell"
+        );
+        assert!(
+            PROFILE_CSS.contains("[data-ody-shell=\"1.3\"] :is(.steadholme-folio,.ody-folio)"),
+            "folio must be scoped under 1.3 shell"
+        );
+        // Verify individual class existence for completeness.
+        assert!(PROFILE_CSS.contains(".ody-instrument__cell"));
+        assert!(PROFILE_CSS.contains(".ody-instrument__label"));
+        assert!(PROFILE_CSS.contains(".ody-instrument__value"));
+    }
 }
