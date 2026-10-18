@@ -29,8 +29,18 @@ const auditBuilder=engine===engines[0]?AxeBuilder:undefined;
 let checks=0;
 function check(value,message) {assert.ok(value,message);checks++;}
 async function keyboardReach(page,target,engine) {
-  // Native macOS WebKit Tab visits text fields; Option-Tab includes buttons without changing OS settings.
-  if(engine==='webkit') { for(let index=0;index<120 && !await target.evaluate(node=>node===document.activeElement);index++) await page.keyboard.press('Alt+Tab'); }
+  // Do not assume Tab wraps: Linux Firefox retains its last content focus at the boundary.
+  const reverse=await target.evaluate(node=>!!(node.compareDocumentPosition(document.activeElement)&Node.DOCUMENT_POSITION_FOLLOWING));
+  if(reverse || engine==='webkit') {
+    // Option-Tab includes native macOS WebKit buttons without changing OS settings.
+    const key=(engine==='webkit'?'Alt+':'')+(reverse?'Shift+Tab':'Tab');
+    let found=await target.evaluate(node=>node===document.activeElement && node.matches(':focus-visible'));
+    for(let index=0;index<120 && !found;index++) {
+      await page.keyboard.press(key);
+      found=await target.evaluate(node=>node===document.activeElement && node.matches(':focus-visible'));
+    }
+    assert.ok(found,'control not keyboard-reachable within 120 native '+key+' presses');
+  }
   await assertKeyboardReachable(page,target);
 }
 const errors=[];
