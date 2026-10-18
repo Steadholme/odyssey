@@ -61,7 +61,9 @@ WebKit 测试不是每一个 Safari/iOS 版本的实机证明；320px viewport �
 - **WebKit 27.2：通过**同样两种入口及真实 `/forms.html`；实测不支持 `interpolate-size:allow-keywords`，原生 disclosure 内容仍能展开、收起。
 - **Firefox 157.0：前序执行宿主启动失败，本次未重试**，退出信息为 `Could not find profile folder`，未执行组件断言。macOS 27 的同类问题见 [Playwright #42768](https://github.com/microsoft/playwright/issues/42768)。没有修改用户 Firefox 数据或宿主隐私权限。
 
-发行负责人仍须运行默认三引擎门禁；Firefox 由已配置浏览器依赖的 Linux CI/执行宿主完成。当前记录不包含 Firefox 组件断言通过。候选内容变更后，需要重新验收受影响路径。
+随后在 OVH 的隔离 Linux 候选容器验证了同一 IvwAre 资产（源码 `5112206`，测试 `bc907b2`），没有切换生产容器。官方 `mcr.microsoft.com/playwright:v1.64.1-noble`、Node 24.21.0 实际结果：**Chromium 156.0.8078.4、Firefox 157.0、WebKit 27.2 全部通过** modular、complete 和真实 Forms guide，共九条入口验收。包括本轮 custom combobox/multiselect/date 的键盘取值与 AX，以及 drop→input.files→FormData 的文件名、类型、大小和内容。
+
+Firefox 与 WebKit 实测 `interpolate-size` 不可用时，原生 disclosure 仍正常展开、收起。Linux 通过解决了本轮跨引擎验证依赖；macOS Firefox 的宿主启动限制仍保留，不把 Linux 结果冒充该宿主已修复。候选尚需真实 IME/VoiceOver 手动验收及发行负责人批准，三引擎通过不代表已冻结或已部署。候选内容变更后，只重验受影响路径。
 
 ## 旧线上 canary gate 的安装边界
 
