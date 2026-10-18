@@ -61,7 +61,7 @@ try {
   check(await page.locator('[data-ody-wf-retry]').isDisabled(),'unknown result must refresh original identity');
   await page.locator('[data-ody-wf-refresh]').click();
   check(await page.evaluate(()=>OdysseyWorkflowExamples.mount(document).task.getState().operationId)===op,'refresh retains operation identity');
-  const rejectedReceipt=await page.evaluate(()=>{try {OdysseyWorkflowExamples.mount(document).task.update({state:'success',operationId:'bad'});return false;}catch{return true;}});
+  const rejectedReceipt=await page.evaluate(()=>{try {OdysseyWorkflowExamples.mount(document).task.update({state:'success',operationId:OdysseyWorkflowExamples.mount(document).task.getState().operationId});return false;}catch{return true;}});
   check(rejectedReceipt,'success without source receipt is rejected');
   await page.locator('[data-task-source=success]').click();
   check(await page.locator('[data-ody-wf-receipt]').isVisible(),'source receipt is visible after success');
@@ -153,8 +153,8 @@ try {
   if(evidence) await page.screenshot({path:evidence+'/'+engine+'-workflows-line-320.png',fullPage:true});
   const translated=await page.evaluate(()=>{
     const root=document.querySelector('#task-workflow'),task=OdysseyWorkflowExamples.mount(document).task;
-    root.lang='zh-CN';task.update({state:'idle'});const zh=root.querySelector('[data-ody-wf-status]').textContent;
-    root.lang='ja-JP';task.update({state:'idle'});const ja=root.querySelector('[data-ody-wf-status]').textContent;
+    root.lang='zh-CN';task.update({state:'idle',operationId:task.getState().operationId});const zh=root.querySelector('[data-ody-wf-status]').textContent;
+    root.lang='ja-JP';task.update({state:'idle',operationId:task.getState().operationId});const ja=root.querySelector('[data-ody-wf-status]').textContent;
     root.removeAttribute('lang');return {zh,ja};
   });
   check(translated.zh==='准备就绪' && translated.ja==='準備完了','workflow status follows the scoped shared Chinese/Japanese locale');
@@ -224,3 +224,5 @@ try {
 } finally {await browser.close();}
 }
 } finally {if(server)await new Promise(resolve=>server.close(resolve));}
+// The source identity contract also runs through the existing unified browser entry.
+await import('./workflows-identity.test.mjs');

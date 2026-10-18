@@ -81,8 +81,11 @@
   }
   var taskStates = ['idle','empty','queued','running','uploading','cancelling','cancelled','success','error','offline','permission','unknown-result'];
   function confirmed(snapshot) { return snapshot && snapshot.receipt && typeof snapshot.receipt.id === 'string' && snapshot.receipt.id.length > 0; }
-  function taskSnapshot(snapshot, previous) {
+  function taskSnapshot(snapshot, previous, establishIdentity) {
     if (!snapshot || !taskStates.includes(snapshot.state)) throw new Error('Adapter must return a workflow state.');
+    if (!establishIdentity && ((previous.operationId != null && snapshot.operationId !== previous.operationId) || (previous.operationId == null && snapshot.operationId != null))) {
+      throw new Error('Workflow snapshot must match the current operationId.');
+    }
     var next = Object.assign({}, previous, snapshot);
     if (snapshot.message === undefined) delete next.message;
     if (snapshot.state !== 'success') delete next.receipt;
@@ -94,7 +97,7 @@
   }
   function mountTask(root, options) {
     return context(root, 'task', options, function (ctx) {
-      var state = {state:'idle', operationId:null}, pending = false, requestSerial = 0;
+      var state = {state:'idle', operationId:null}, pending = false, requestSerial = 0, establishingIdentity = false;
       var start = slot(root, 'start'), cancel = slot(root, 'cancel'), retry = slot(root, 'retry'), refresh = slot(root, 'refresh');
       var progress = slot(root, 'progress'), result = slot(root, 'receipt');
       function render() {
@@ -112,33 +115,35 @@
         ctx.feedback(state.state, pending && state.state==='idle' ? ctx.t('saving') : state.message, ['error','offline','permission','unknown-result'].includes(state.state));
         ctx.emit(clone(state));
       }
-      function apply(snapshot) { state = taskSnapshot(snapshot, state); render(); }
+      function update(snapshot) { if (establishingIdentity) throw new Error('Wait for the source to establish the new operationId.'); state=taskSnapshot(snapshot,state,false); render(); }
       async function run(method) {
         if (method==='start' && (['queued','running','uploading','cancelling','unknown-result'].includes(state.state) || (state.state==='offline' && state.operationId))) return;
         if (method==='cancel' && !['queued','running','uploading'].includes(state.state)) return;
         if (method==='retry' && !['error','cancelled'].includes(state.state)) return;
         if (method==='refresh' && !state.operationId) return;
         if (pending && method !== 'cancel') return;
-        var request = ++requestSerial;
+        var request = ++requestSerial, allowIdentity = method==='start' || method==='retry';
+        establishingIdentity = allowIdentity;
+        function accept(snapshot) { state=taskSnapshot(snapshot,state,allowIdentity); if (snapshot.operationId != null) { allowIdentity=false; establishingIdentity=false; } render(); }
         if (method === 'cancel') ctx.invalidate();
         pending = true;
         if (method === 'start') state = {state:'idle',operationId:null};
         if (method === 'cancel') state = Object.assign({}, state, {state:'cancelling'});
         render();
         try {
-          var next = await ctx.request(method, clone(state), apply);
-          if (next) apply(next.value);
+          var next = await ctx.request(method, clone(state), accept);
+          if (next) accept(next.value);
         } catch (error) {
           if (request !== requestSerial || !ctx.active()) return;
           state = Object.assign({}, state, {state:method === 'start' && !state.operationId ? 'error' : 'unknown-result', message:error.message});
-        } finally { if (request === requestSerial) { pending = false; render(); } }
+        } finally { if (request === requestSerial) { pending = false; establishingIdentity=false; render(); } }
       }
       ctx.listen(start, 'click', function () { run('start'); });
       ctx.listen(cancel, 'click', function () { run('cancel'); });
       ctx.listen(retry, 'click', function () { run('retry'); });
       ctx.listen(refresh, 'click', function () { run('refresh'); });
       render();
-      return {getState:function () { return clone(state); }, update:apply, start:function () { return run('start'); }, cancel:function () { return run('cancel'); }, retry:function () { return run('retry'); }, refresh:function () { return run('refresh'); }};
+      return {getState:function () { return clone(state); }, update:update, start:function () { return run('start'); }, cancel:function () { return run('cancel'); }, retry:function () { return run('retry'); }, refresh:function () { return run('refresh'); }};
     });
   }
   function mountAuth(root, options) {
@@ -293,16 +298,16 @@
         if (method === 'cancel' && task.abort) task.abort.abort();
         var adapter=ctx.options.adapter || {}, fn=adapter[method];
         if (typeof fn!=='function') { task.state='error'; task.message=ctx.t('missing'); render(); return; }
-        task.pending=true; var generation=++task.generation, controller=new AbortController(); task.abort=controller;
+        task.pending=true; var generation=++task.generation, controller=new AbortController(), allowIdentity=method==='start' || method==='retry'; task.establishingIdentity=allowIdentity; task.abort=controller;
         if (method==='cancel') task.state='cancelling';
         if (method==='retry') { task.attempt++; delete task.progress; delete task.receipt; }
         render();
-        function apply(next) { if (task.generation!==generation || !tasks.has(task.id)) return; var state=taskSnapshot(next,task); Object.assign(task,state); render(); }
+        function apply(next) { if (task.generation!==generation || !tasks.has(task.id)) return; var state=taskSnapshot(next,task,allowIdentity); Object.assign(task,state); if (next.operationId != null) { allowIdentity=false; task.establishingIdentity=false; } render(); }
         try {
           var result=await fn({file:task.file, id:task.id, operationId:task.operationId, attempt:task.attempt}, {root:root,signal:controller.signal,onUpdate:apply});
           if (task.generation===generation && tasks.has(task.id)) apply(result);
         } catch (error) { if (task.generation===generation && tasks.has(task.id)) { task.state=task.operationId?'unknown-result':'error'; task.message=error.message; } }
-        finally { if (task.generation===generation && tasks.has(task.id)) { task.pending=false; render(); } }
+        finally { if (task.generation===generation && tasks.has(task.id)) { task.pending=false; task.establishingIdentity=false; render(); } }
       }
       function add(files) {
         Array.from(files).forEach(function (file) { var id='ody-file-'+(++serial); var task={id:id,file:file,state:'idle',operationId:null,attempt:1,generation:0,pending:false}; tasks.set(id,task); run(task,'start'); }); render();
@@ -310,7 +315,7 @@
       ctx.listen(input,'change',function () { add(input.files); input.value=''; });
       ctx.listen(list,'click',function (event) { var button=event.target.closest('[data-queue-action]'); if (button && tasks.has(button.dataset.taskId)) run(tasks.get(button.dataset.taskId),button.dataset.queueAction); });
       ctx.cleanup(function () { tasks.forEach(function (task) { task.generation++; if (task.abort) task.abort.abort(); }); tasks.clear(); });
-      render(); return {getState:getState,add:add,update:function (id,next) { var task=tasks.get(id); if (!task) throw new Error('Unknown file task.'); Object.assign(task,taskSnapshot(next,task)); render(); }};
+      render(); return {getState:getState,add:add,update:function (id,next) { var task=tasks.get(id); if (!task) throw new Error('Unknown file task.'); if (task.establishingIdentity) throw new Error('Wait for the source to establish the new operationId.'); Object.assign(task,taskSnapshot(next,task,false)); render(); }};
     });
   }
   function mountAccess(root, options) {
