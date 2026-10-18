@@ -48,6 +48,8 @@ npm run --prefix tools/browser-runtime install:browsers
 
 `tools/verify.sh` 是本地和 CI 的同一入口：Rust/helper/vendor/server、目录 schema、发行一致性、现有交互、P1 回归、组合和三引擎关键路径。`ODYSSEY_BASE_URL` 可指定已有候选服务；否则只启动并清理自己创建的本地 server。测试不会同步消费者或部署。
 
+显式设置 `ODYSSEY_PUBLIC_RELEASE_DIR` 构建的是**未冻结候选**：server 内嵌候选标记，`/1.4.0/` 资产统一返回 `Cache-Control: no-store`，同 origin 换候选时不会继续缓存上一版。默认从 `releases/1.4.0/` 构建的正式快照继续返回一年 `immutable`；旧冻结版本和 compat aliases 的缓存契约不变。此前已被浏览器存为 `immutable` 的候选不能靠新响应清除，首次改用新浏览上下文或新 origin 验收，不清除用户的全局浏览数据。
+
 稳定晋级由负责人在**本轮候选**通过统一验收、视觉/a11y 审阅以及目标 Odyssey 部署检查后记录实际 commit、命令结果和证据位置。文件的版本号或 `--freeze` 成功不等于晋级；旧 `1.2.0-canary.1` collector/policy/window 不为本轮提供验收凭据。任何必需检查失败时修复候选来源并重新核对，尚未公开的版本需由负责人明确重开候选；已公开 immutable 版本只能发布新版本，不能覆写。
 
 跨引擎支持和已知宿主限制见 `BROWSER_SUPPORT.md`。完整发行门禁要求 Chromium、Firefox、WebKit 实际通过；显式选择部分 `BROWSERS` 只产生该范围证据。

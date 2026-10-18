@@ -1199,7 +1199,12 @@ fn route_static(path: &str) -> Response {
                     .iter()
                     .find(|(name, _, _)| *name == file)
                     .map(|(_, mime, body)| {
-                        static_response(StatusCode::OK, mime, Some(CACHE_VERSIONED), body)
+                        static_response(
+                            StatusCode::OK,
+                            mime,
+                            Some(public_release_cache(PUBLIC_RELEASE_IS_CANDIDATE)),
+                            body,
+                        )
                     })
                     .unwrap_or_else(not_found)
             } else if let Some(file) = path.strip_prefix("/dist/") {
@@ -1221,6 +1226,14 @@ fn route_static(path: &str) -> Response {
 
 fn site_html(body: &'static str) -> Response {
     static_response(StatusCode::OK, CONTENT_TYPE_HTML, Some(CACHE_DOCS), body)
+}
+
+fn public_release_cache(is_candidate: bool) -> &'static str {
+    if is_candidate {
+        CACHE_DYNAMIC
+    } else {
+        CACHE_VERSIONED
+    }
 }
 
 fn dist_asset(file: &str, cache_control: &'static str, release: DistRelease) -> Response {
@@ -1370,6 +1383,15 @@ mod tests {
     const TEST_HOST: &str = "odyssey.test";
     const TEST_ORIGIN: &str = "https://odyssey.test";
 
+    #[test]
+    fn public_release_cache_distinguishes_unfrozen_candidates_and_frozen_assets() {
+        assert_eq!(public_release_cache(true), "no-store");
+        assert_eq!(
+            public_release_cache(false),
+            "public, max-age=31536000, immutable"
+        );
+    }
+
     #[tokio::test]
     async fn legacy_aliases_keep_deployed_bytes_while_14_is_an_explicit_opt_in() {
         for (file, expected) in [
@@ -1455,7 +1477,10 @@ mod tests {
             let response = route_static(&format!("/1.4.0/{file}"));
             assert_eq!(response.status(), StatusCode::OK);
             assert_eq!(header(&response, header::CONTENT_TYPE), mime);
-            assert_eq!(header(&response, header::CACHE_CONTROL), CACHE_VERSIONED);
+            assert_eq!(
+                header(&response, header::CACHE_CONTROL),
+                public_release_cache(PUBLIC_RELEASE_IS_CANDIDATE)
+            );
             assert_eq!(header(&response, header::ACCESS_CONTROL_ALLOW_ORIGIN), "*");
             assert_eq!(
                 response

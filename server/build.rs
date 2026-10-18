@@ -3,7 +3,9 @@ use std::{env, fs, path::PathBuf};
 fn main() {
     println!("cargo:rerun-if-env-changed=ODYSSEY_PUBLIC_RELEASE_DIR");
     let root = PathBuf::from(env::var("CARGO_MANIFEST_DIR").unwrap());
-    let release = env::var_os("ODYSSEY_PUBLIC_RELEASE_DIR")
+    let candidate = env::var_os("ODYSSEY_PUBLIC_RELEASE_DIR");
+    let is_candidate = candidate.is_some();
+    let release = candidate
         .map(PathBuf::from)
         .unwrap_or_else(|| root.join("../releases/1.4.0"));
     let release = release.canonicalize().expect("prepare the 1.4.0 public release first; for a non-frozen candidate set ODYSSEY_PUBLIC_RELEASE_DIR");
@@ -13,7 +15,7 @@ fn main() {
         .map(|entry| entry.unwrap().path())
         .collect();
     files.sort();
-    let mut generated = String::from("const PUBLIC_RELEASE_ASSETS: &[(&str, &str, &str)] = &[\n");
+    let mut generated = format!("const PUBLIC_RELEASE_IS_CANDIDATE: bool = {is_candidate};\nconst PUBLIC_RELEASE_ASSETS: &[(&str, &str, &str)] = &[\n");
     for file in files {
         assert!(
             file.is_file(),
