@@ -1080,7 +1080,7 @@ fn route_static(path: &str) -> Response {
             Some(CACHE_DOCS),
             odyssey::EXTENSIONS_JS,
         ),
-        "/assets/studio.css" => static_response(
+        "/assets/studio.css" | "/assets/studio-20261018.css" => static_response(
             StatusCode::OK,
             CONTENT_TYPE_CSS,
             Some(CACHE_DOCS),
@@ -1098,7 +1098,7 @@ fn route_static(path: &str) -> Response {
             Some(CACHE_DOCS),
             odyssey::LINE_CSS,
         ),
-        "/assets/line-site.css" => static_response(
+        "/assets/line-site.css" | "/assets/line-site-20261018.css" => static_response(
             StatusCode::OK,
             CONTENT_TYPE_CSS,
             Some(CACHE_DOCS),
@@ -1405,6 +1405,35 @@ mod tests {
         assert!(SITE_STUDIO.contains("id=\"motion\""));
         assert!(!SITE_PATTERNS.contains("127.0.0.1"));
         assert!(!SITE_PATTERNS_JS.contains("fetch("));
+    }
+
+    #[tokio::test]
+    async fn site_navigation_styles_have_fresh_urls_and_keep_legacy_aliases() {
+        for (legacy, fresh, expected) in [
+            (
+                "/assets/line-site.css",
+                "/assets/line-site-20261018.css",
+                SITE_LINE_CSS,
+            ),
+            (
+                "/assets/studio.css",
+                "/assets/studio-20261018.css",
+                SITE_STUDIO_CSS,
+            ),
+        ] {
+            for path in [legacy, fresh] {
+                let response = route_static(path);
+                assert_eq!(response.status(), StatusCode::OK);
+                assert_eq!(header(&response, header::CONTENT_TYPE), CONTENT_TYPE_CSS);
+                assert_eq!(header(&response, header::CACHE_CONTROL), CACHE_DOCS);
+                let body = response.into_body().collect().await.unwrap().to_bytes();
+                assert_eq!(body.as_ref(), expected.as_bytes());
+            }
+        }
+        assert!(SITE_INDEX.contains("href=\"assets/line-site-20261018.css\""));
+        assert!(!SITE_INDEX.contains("href=\"assets/line-site.css\""));
+        assert!(SITE_STUDIO.contains("href=\"assets/studio-20261018.css\""));
+        assert!(!SITE_STUDIO.contains("href=\"assets/studio.css\""));
     }
 
     #[tokio::test]
