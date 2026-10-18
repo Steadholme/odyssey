@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-ody-design="line">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -8,6 +8,8 @@
 <link rel="stylesheet" href="../dist/odyssey.css">
 <link rel="stylesheet" href="../dist/odyssey-font.css">
 <link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/line.css">
+<link rel="stylesheet" href="assets/line-site.css">
 </head>
 <body class="ody-scope">
 
@@ -64,6 +66,14 @@
       <p class="doc-lead">Odyssey UI 无需构建步骤或包管理器。引入两个文件即可获得完整的组件样式与交互 —— 全部自包含、零外链。</p>
     </header>
 
+    <h2 id="line">启用 Line Specification</h2>
+    <p>先加载已有组件样式，再加载 Line 层，并给目标 root 添加 <code>data-ody-design="line"</code>。组件 HTML、Rust helper 与交互入口保持原样。Line 不会自动传播到其他产品。</p>
+    <div class="doc-code doc-code--stand"><pre><code>&lt;link rel="stylesheet" href="/dist/odyssey.css"&gt;
+&lt;link rel="stylesheet" href="/assets/line.css"&gt;
+&lt;div class="ody-scope" data-ody-design="line"&gt;
+  &lt;button type="button" class="ody-btn ody-btn--primary"&gt;Save changes&lt;/button&gt;
+&lt;/div&gt;</code></pre></div>
+    <p>自托管时从同一 Odyssey 服务提供两个 CSS 文件。Rust 页面使用 <code>APP_CSS</code>，公共 HTML 单独加载 <code>LINE_CSS</code> 导出的样式层；两者都需要显式 root 属性。交互组件仍使用现有 <code>odyssey.js</code>。</p>
     <h2 id="install">安装</h2>
     <p>在页面 <code>&lt;head&gt;</code> 内引入样式表。<code>odyssey.css</code> 为核心（不内嵌字体，保持轻量）；<code>odyssey-font.css</code> 为可选的 Inter 字体（data-URI 内嵌，零外部请求）。</p>
     <div class="doc-code doc-code--stand"><pre><code>&lt;head&gt;

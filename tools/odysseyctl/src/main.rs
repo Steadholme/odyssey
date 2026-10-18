@@ -809,7 +809,7 @@ mod tests {
         let distribution = load_distribution(&root).unwrap();
 
         assert_eq!(distribution.schema, 1);
-        assert_eq!(distribution.release, "1.3.0-canary.1");
+        assert_eq!(distribution.release, "1.4.0-canary.1");
         assert_eq!(distribution.consumers.len(), 27);
         assert_eq!(
             distribution
@@ -830,23 +830,26 @@ mod tests {
     }
 
     #[test]
-    fn canonical_manifest_includes_the_canary_profile_contract() {
+    fn canonical_manifest_includes_the_opt_in_line_contract() {
         let root = odyssey_root().unwrap();
         let distribution = load_distribution(&root).unwrap();
         let files = canonical_files(&root).unwrap();
 
-        assert_eq!(distribution.release, "1.3.0-canary.1");
+        assert_eq!(distribution.release, "1.4.0-canary.1");
         assert!(files.contains(&PathBuf::from("css/profile.css")));
         assert!(files.contains(&PathBuf::from("js/canary.js")));
         assert!(files.contains(&PathBuf::from("src/profile.rs")));
-        assert_eq!(files.len(), 24);
+        assert!(files.contains(&PathBuf::from("css/line.css")));
+        assert!(files.contains(&PathBuf::from("css/line-font.css")));
+        assert!(files.contains(&PathBuf::from("css/fonts/Archivo-OFL.txt")));
+        assert_eq!(files.len(), 28);
 
         let fingerprint = bundle_fingerprint(&root, &files).unwrap();
-        assert_eq!(fingerprint, 0x955b_30ce_fb02_46f3);
+        assert_eq!(fingerprint, 0x6b97_12f8_1371_3460);
 
         let manifest = vendor_manifest(&root, &distribution.release, &files).unwrap();
-        assert!(manifest.contains("release=1.3.0-canary.1\n"));
-        assert!(manifest.contains("fingerprint=fnv1a64:955b30cefb0246f3\n"));
+        assert!(manifest.contains("release=1.4.0-canary.1\n"));
+        assert!(manifest.contains("fingerprint=fnv1a64:6b9712f813713460\n"));
         assert!(manifest.contains(&format!("files={}\n", files.len())));
     }
 

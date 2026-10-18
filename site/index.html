@@ -1,197 +1,1193 @@
 <!doctype html>
-<html lang="zh-CN">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Odyssey UI · 主权自持的组件库</title>
-<meta name="description" content="Odyssey UI — Steadholme 主权自持、框架无关、零依赖的公开组件库。一个 link，一个 script，即得 Element-UI 级完整组件。">
-<link rel="stylesheet" href="../dist/odyssey.css">
-<link rel="stylesheet" href="../dist/odyssey-font.css">
-<link rel="stylesheet" href="assets/site.css">
-</head>
-<body class="ody-scope">
 
-<!-- ===== appbar ===== -->
-<header class="ody-appbar">
-  <a class="ody-appbar__brand" href="index.html">
-    <span class="ody-appbar__tile" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 14.2 9.8 22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2Z"/></svg>
-    </span>
-    <span class="ody-appbar__name">Odyssey UI</span>
-  </a>
-  <span class="ody-tag ody-tag--warn ody-mono doc-appbar__ver">v1.3 canary</span>
-  <span class="ody-appbar__spacer"></span>
-  <div class="ody-appbar__right">
-    <a class="ody-iconbtn" href="https://git.w33d.xyz/holdfast/odyssey" aria-label="源码仓库" title="源码仓库">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 4.6 18 4.9 18 4.9c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5Z"/></svg>
-    </a>
-    <button class="ody-iconbtn doc-theme" type="button" data-ody-theme-toggle aria-label="切换深色模式" aria-pressed="false">
-      <svg class="doc-ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
-      <svg class="doc-ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
-    </button>
-    <button class="ody-iconbtn doc-navtoggle" type="button" data-doc-nav-toggle aria-label="打开导航" aria-expanded="false">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
-    </button>
-  </div>
+<html lang="en" data-theme="light" data-ody-design="line">
+
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Odyssey — The Line Specification</title><meta name="description" content="42 components on six lines. The Odyssey component standard, with live specimens, tokens and native HTML source.">
+<link rel="stylesheet" href="dist/odyssey-font.css"><link rel="stylesheet" href="dist/odyssey.css"><link rel="stylesheet" href="assets/line.css"><link rel="stylesheet" href="assets/line-site.css">
+<script src="dist/odyssey.js" defer></script><script src="assets/line-site.js" defer></script>
+</head>
+
+<body class="ody-scope line-site"><a class="line-skip" href="#network">Skip to components</a>
+
+<header class="line-top"><a href="index.html" class="line-wordmark">ODYSSEY</a><span class="line-meta">LINE SPECIFICATION</span>
+<nav aria-label="Main navigation"><a href="#network">Library</a><a href="#foundations">Foundations</a><a href="getting-started.html">API &amp; guides ↗</a>
+</nav><button type="button" class="line-theme" data-ody-theme-toggle aria-pressed="false" aria-label="Toggle dark mode">Light / Dark ◐</button>
 </header>
 
-<div class="doc-layout">
-  <!-- ===== sidebar ===== -->
-  <aside class="doc-sidebar">
-    <nav class="ody-nav" aria-label="文档导航">
-      <div class="ody-nav__label">Guide</div>
-      <a class="ody-nav__item" href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12 12 3l9 9"/><path d="M5 10v10h14V10"/></svg><span>Overview</span></a>
-      <a class="ody-nav__item" href="getting-started.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 10-12h-7Z"/></svg><span>Getting started</span></a>
-      <a class="ody-nav__item" href="/labs/estate"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18M5 16V8l7-5 7 5v8M9 20v-7h6v7"/><circle cx="18" cy="6" r="2"/></svg><span>Dynamic lab</span></a>
-      <a class="ody-nav__item" href="tokens.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="6.5" cy="12" r="2.5"/><circle cx="15" cy="17" r="2.5"/></svg><span>Design tokens</span></a>
-      <div class="ody-nav__label">Components</div>
-      <a class="ody-nav__item" href="actions.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="8" rx="4"/></svg><span>Actions</span></a>
-      <a class="ody-nav__item" href="forms.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9h6M7 13h10"/></svg><span>Forms</span></a>
-      <a class="ody-nav__item" href="data-display.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M8 15v3M13 10v8M18 6v12"/></svg><span>Data display</span></a>
-      <a class="ody-nav__item" href="feedback.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/></svg><span>Feedback</span></a>
-      <a class="ody-nav__item" href="navigation.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h10M4 18h16"/></svg><span>Navigation</span></a>
-      <a class="ody-nav__item" href="typography.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V5h16v2M9 19h6M12 5v14"/></svg><span>Typography</span></a>
-      <a class="ody-nav__item" href="layout.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg><span>Layout</span></a>
-      <a class="ody-nav__item" href="overlays.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><rect x="11" y="10" width="8" height="7" rx="1"/></svg><span>Overlays</span></a>
-    </nav>
-  </aside>
+<main>
+<section class="line-cover" aria-labelledby="cover-title">
+<div class="line-cover__body">
+<div>
+<p class="line-meta">A COMPONENT STANDARD, ORGANISED AS A NETWORK
+</p>
+<h1 id="cover-title">The Line<br>Specification
+</h1>
+<div class="line-spectrum" aria-hidden="true"><span data-line="1"></span><span data-line="2"></span><span data-line="3"></span><span data-line="4"></span><span data-line="5"></span><span data-line="6"></span>
+</div>
+<p class="line-cover__deck">Forty-two stations across six lines. One shared language of dimensions, tokens, states and the rules that hold them together.
+</p><a class="line-cover__cta" href="#network">Explore the library <span aria-hidden="true">↓</span></a>
+</div>
+<nav class="line-atlas" aria-label="Atlas index">
+<p class="line-meta">ATLAS INDEX
+</p><a href="#line-1"><span class="line-badge" data-line="1">L1</span><span>SURFACE</span><span>08</span></a><a href="#line-2"><span class="line-badge" data-line="2">L2</span><span>CONTROL</span><span>09</span></a><a href="#line-3"><span class="line-badge" data-line="3">L3</span><span>INPUT</span><span>08</span></a><a href="#line-4"><span class="line-badge" data-line="4">L4</span><span>DATA</span><span>07</span></a><a href="#line-5"><span class="line-badge" data-line="5">L5</span><span>FEEDBACK</span><span>06</span></a><a href="#line-6"><span class="line-badge" data-line="6">L6</span><span>NAVIGATION</span><span>04</span></a>
+</nav>
+</div><dl class="line-cover__folio">
+<div><dt>DOCUMENT</dt><dd>ODY-LS</dd>
+</div>
+<div><dt>EDITION</dt><dd>LINE / 2026</dd>
+</div>
+<div><dt>LINES</dt><dd>SIX</dd>
+</div>
+<div><dt>STATIONS</dt><dd>FORTY-TWO</dd>
+</div>
+<div><dt>ISSUED BY</dt><dd>STEADHOLME</dd>
+</div></dl>
+</section>
 
-  <!-- ===== main ===== -->
-  <main class="doc-main doc-main--landing">
-    <section class="doc-hero">
-      <div class="doc-constellation" aria-hidden="true">
-        <svg viewBox="0 0 1200 420" preserveAspectRatio="xMidYMid slice" fill="none">
-          <path data-bearing d="M86 72H1114M86 350H1114M156 42V378M1044 42V378" stroke-width="1" stroke-dasharray="2 10"/>
-          <path data-line d="M38 326H218V258H386V294H548V190H726V224H894V132H1084V82H1172" stroke-width="1.5" stroke-dasharray="10 6"/>
-          <path data-line d="M218 258V112H430M548 190V72H682M894 132V314H1116" stroke-width="1" stroke-dasharray="3 8"/>
-          <rect data-star x="32" y="320" width="12" height="12"/>
-          <rect data-star x="212" y="252" width="12" height="12"/>
-          <circle data-star cx="386" cy="294" r="5"/>
-          <rect data-star x="542" y="184" width="12" height="12"/>
-          <circle data-star cx="726" cy="224" r="5"/>
-          <rect data-star x="888" y="126" width="12" height="12"/>
-          <circle data-star cx="1084" cy="82" r="5"/>
-          <path data-bearing d="M1084 54v56M1056 82h56M188 84h60M218 54v60" stroke-width="1"/>
-        </svg>
-      </div>
-      <div class="doc-hero__inner">
-        <div class="doc-hero__plate" aria-hidden="true">
-          <b>Plate 01 / UI</b>
-          <span>50°28′N · 11°00′E</span>
-          <span>Scale 1:4 · Grid 44</span>
-          <span>Steadholme systems</span>
-        </div>
-        <p class="doc-eyebrow">Steadholme / ODYSSEY / FIELD MANUAL 01</p>
-        <h1 class="doc-hero__title">为主权系统打造的<br><span class="doc-grad">界面地貌</span></h1>
-        <p class="doc-hero__lead">Odyssey 不是一层通用 SaaS 皮肤，而是一套属于 Steadholme 的 operational visual language：矿物纸面、玄武岩结构、氧化物信号色，以及可读、可访问、零依赖的组件系统。</p>
-        <div class="doc-hero__cta">
-          <a class="ody-btn ody-btn--primary ody-btn--lg" href="getting-started.html">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            快速开始
-          </a>
-          <a class="ody-btn ody-btn--secondary ody-btn--lg" href="actions.html">浏览组件</a>
-          <a class="ody-btn ody-btn--secondary ody-btn--lg" href="/labs/estate">体验动态样板</a>
-          <a class="ody-btn ody-btn--ghost ody-btn--lg" href="https://git.w33d.xyz/holdfast/odyssey">
-            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 4.6 18 4.9 18 4.9c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5Z"/></svg>
-            源码
-          </a>
-        </div>
-        <div class="ody-flex ody-flex-wrap ody-gap-2 doc-hero__pills">
-          <span class="ody-pill ody-pill--ok"><span class="ody-dot ody-dot--ok"></span> Zero dependency</span>
-          <span class="ody-pill ody-pill--accent">Hard-edged</span>
-          <span class="ody-pill ody-pill--info">Status encoded</span>
-          <span class="ody-pill ody-pill--neutral">Self-hosted</span>
-        </div>
-        <div class="doc-stats">
-          <div class="doc-stat"><div class="doc-stat__num"><span class="doc-grad">258</span></div><div class="doc-stat__label">组件类 · 8 大类目</div></div>
-          <div class="doc-stat"><div class="doc-stat__num"><span class="doc-grad">0</span></div><div class="doc-stat__label">外部依赖 / 外链</div></div>
-          <div class="doc-stat"><div class="doc-stat__num"><span class="doc-grad">2</span></div><div class="doc-stat__label">主题 · 亮 / 暗</div></div>
-          <div class="doc-stat"><div class="doc-stat__num"><span class="doc-grad">1+1</span></div><div class="doc-stat__label">link + script 即用</div></div>
-        </div>
-      </div>
-    </section>
+<section id="network" class="line-section">
+<div class="line-section__meta"><span>01 / THE REGISTRY</span><span>42 COMPONENTS · 6 LINES</span>
+</div>
+<div class="line-section__heading">
+<h2>The Library.
+</h2>
+<p>Each plate is a station: a live component, its part number and the source you can use in your own product.
+</p>
+</div>
+<div class="line-toolbar">
+<label for="station-search">Find a station<input id="station-search" class="ody-input" type="search" placeholder="Button, BTN, input…" autocomplete="off">
+</label><span class="line-meta" id="station-count" role="status">42 STATIONS</span><a class="ody-link" href="#adoption">Use the library ↗</a>
+</div>
+<section class="line-family" id="line-1" data-family="1">
+<header class="line-family__head"><span class="line-badge" data-line="1">L1</span>
+<h3>SURFACE · 8
+</h3>
+<p>The planes everything else sits on.
+</p><span class="line-meta">SHEET 01 / 06</span>
+</header>
+<div class="line-stations">
+<article class="line-station" id="station-CRD" data-station="CRD" data-search="CRD Card SURFACE">
+<header><a href="#station-CRD" class="line-station__code">CRD</a>
+<h4>Card
+</h4><span class="line-meta">ODY-001</span>
+</header>
+<div class="line-specimen">
+<div class="ody-card">
+<div class="ody-card__head">
+<h3 class="ody-card__title">Seat usage
+</h3>
+</div>
+<div class="ody-card__body">38 of 50 assigned
+</div>
+</div>
+</div>
+<footer><span>elev 3 · tone 2 · radius 3</span><a href="layout.html" aria-label="Card guide">↗</a>
+</footer>
+<details>
+<summary>HTML source
+</summary>
+<pre><code>&lt;div class=&quot;ody-card&quot;&gt;&lt;div class=&quot;ody-card__head&quot;&gt;&lt;h3 class=&quot;ody-card__title&quot;&gt;Seat usage&lt;/h3&gt;&lt;/div&gt;&lt;div class=&quot;ody-card__body&quot;&gt;38 of 50 assigned&lt;/div&gt;&lt;/div&gt;</code>
+</pre><button type="button" class="ody-btn ody-btn--secondary ody-btn--sm" data-line-copy>Copy source</button>
+</details>
+</article>
+<article class="line-station" id="station-PNL" data-station="PNL" data-search="PNL Panel SURFACE">
+<header><a href="#station-PNL" class="line-station__code">PNL</a>
+<h4>Panel
+</h4><span class="line-meta">ODY-002</span>
+</header>
+<div class="line-specimen">
+<section class="ody-panel" aria-label="Panel example">
+<header class="ody-panel__head">PANEL
+</header>
+<div class="ody-panel__body">The body of the panel.
+</div>
+<footer class="ody-panel__foot">Updated just now
+</footer>
+</section>
+</div>
+<footer><span>header · body · footer</span><a href="layout.html" aria-label="Panel guide">↗</a>
+</footer>
+<details>
+<summary>HTML source
+</summary>
+<pre><code>&lt;section class=&quot;ody-panel&quot; aria-label=&quot;Panel example&quot;&gt;&lt;header class=&quot;ody-panel__head&quot;&gt;PANEL&lt;/header&gt;&lt;div class=&quot;ody-panel__body&quot;&gt;The body of the panel.&lt;/div&gt;&lt;footer class=&quot;ody-panel__foot&quot;&gt;Updated just now&lt;/footer&gt;&lt;/section&gt;</code>
+</pre><button type="button" class="ody-btn ody-btn--secondary ody-btn--sm" data-line-copy>Copy source</button>
+</details>
+</article>
+<article class="line-station" id="station-SHD" data-station="SHD" data-search="SHD Sheet SURFACE">
+<header><a href="#station-SHD" class="line-station__code">SHD</a>
+<h4>Sheet
+</h4><span class="line-meta">ODY-003</span>
+</header>
+<div class="line-specimen">
+<section class="ody-station-sheet"><span class="ody-eyebrow">02 / SHEET</span>
+<p>Body copy sits here.
+</p>
+</section>
+</div>
+<footer><span>margin 56 · rule 1</span><a href="layout.html" aria-label="Sheet guide">↗</a>
+</footer>
+<details>
+<summary>HTML source
+</summary>
+<pre><code>&lt;section class=&quot;ody-station-sheet&quot;&gt;&lt;span class=&quot;ody-eyebrow&quot;&gt;02 / SHEET&lt;/span&gt;&lt;p&gt;Body copy sits here.&lt;/p&gt;&lt;/section&gt;</code>
+</pre><button type="button" class="ody-btn ody-btn--secondary ody-btn--sm" data-line-copy>Copy source</button>
+</details>
+</article>
+<article class="line-station" id="station-SHT" data-station="SHT" data-search="SHT Section head SURFACE">
+<header><a href="#station-SHT" class="line-station__code">SHT</a>
+<h4>Section head
+</h4><span class="line-meta">ODY-004</span>
+</header>
+<div class="line-specimen">
+<header class="ody-section-head"><span class="ody-eyebrow">04 / KICKER</span>
+<h3>Section heading
+</h3>
+</header>
+</div>
+<footer><span>rule · kicker · title</span><a href="layout.html" aria-label="Section head guide">↗</a>
+</footer>
+<details>
+<summary>HTML source
+</summary>
+<pre><code>&lt;header class=&quot;ody-section-head&quot;&gt;&lt;span class=&quot;ody-eyebrow&quot;&gt;04 / KICKER&lt;/span&gt;&lt;h3&gt;Section heading&lt;/h3&gt;&lt;/header&gt;</code>
+</pre><button type="button" class="ody-btn ody-btn--secondary ody-btn--sm" data-line-copy>Copy source</button>
+</details>
+</article>
+<article class="line-station" id="station-TLE" data-station="TLE" data-search="TLE Tile SURFACE">
+<header><a href="#station-TLE" class="line-station__code">TLE</a>
+<h4>Tile
+</h4><span class="line-meta">ODY-005</span>
+</header>
+<div class="line-specimen">
+<div class="ody-tile"><span class="ody-eyebrow">STATIONS</span><strong class="ody-tile__value">42</strong>
+</div>
+</div>
+<footer><span>label · value · unit</span><a href="data-display.html" aria-label="Tile guide">↗</a>
+</footer>
+<details>
+<summary>HTML source
+</summary>
+<pre><code>&lt;div class=&quot;ody-tile&quot;&gt;&lt;span class=&quot;ody-eyebrow&quot;&gt;STATIONS&lt;/span&gt;&lt;strong class=&quot;ody-tile__value&quot;&gt;42&lt;/strong&gt;&lt;/div&gt;</code>
+</pre><button type="button" class="ody-btn ody-btn--secondary ody-btn--sm" data-line-copy>Copy source</button>
+</details>
+</article>
+<article class="line-station" id="station-FRM" data-station="FRM" data-search="FRM Frame SURFACE">
+<header><a href="#station-FRM" class="line-station__code">FRM</a>
+<h4>Frame
+</h4><span class="line-meta">ODY-006</span>
+</header>
+<div class="line-specimen">
+<div class="ody-frame"><span class="ody-eyebrow">FRAME</span>
+<p>A boundary, not decoration.
+</p>
+</div>
+</div>
+<footer><span>clip · padding · marks</span><a href="layout.html" aria-label="Frame guide">↗</a>
+</footer>
+<details>
+<summary>HTML source
+</summary>
+<pre><code>&lt;div class=&quot;ody-frame&quot;&gt;&lt;span class=&quot;ody-eyebrow&quot;&gt;FRAME&lt;/span&gt;&lt;p&gt;A boundary, not decoration.&lt;/p&gt;&lt;/div&gt;</code>
+</pre><button type="button" class="ody-btn ody-btn--secondary ody-btn--sm" data-line-copy>Copy source</button>
+</details>
+</article>
+<article class="line-station" id="station-DVS" data-station="DVS" data-search="DVS Divider SURFACE">
+<header><a href="#station-DVS" class="line-station__code">DVS</a>
+<h4>Divider
+</h4><span class="line-meta">ODY-007</span>
+</header>
+<div class="line-specimen">
+<div class="ody-stack ody-stack--sm"><span class="ody-eyebrow">HAIRLINE · 1PX</span><hr class="ody-divider"><span class="ody-eyebrow">STRUCTURAL · 2PX</span><hr class="ody-divider ody-divider--structural">
+</div>
+</div>
+<footer><span>hair · structural</span><a href="layout.html" aria-label="Divider guide">↗</a>
+</footer>
+<details>
+<summary>HTML source
+</summary>
+<pre><code>&lt;div class=&quot;ody-stack ody-stack--sm&quot;&gt;&lt;span class=&quot;ody-eyebrow&quot;&gt;HAIRLINE · 1PX&lt;/span&gt;&lt;hr class=&quot;ody-divider&quot;&gt;&lt;span class=&quot;ody-eyebrow&quot;&gt;STRUCTURAL · 2PX&lt;/span&gt;&lt;hr class=&quot;ody-divider ody-divider--structural&quot;&gt;&lt;/div&gt;</code>
+</pre><button type="button" class="ody-btn ody-btn--secondary ody-btn--sm" data-line-copy>Copy source</button>
+</details>
+</article>
+<article class="line-station" id="station-WLL" data-station="WLL" data-search="WLL Wall SURFACE">
+<header><a href="#station-WLL" class="line-station__code">WLL</a>
+<h4>Wall
+</h4><span class="line-meta">ODY-008</span>
+</header>
+<div class="line-specimen">
+<div class="ody-wall">
+<div>1
+</div>
+<div>2
+</div>
+<div>3
+</div>
+</div>
+</div>
+<footer><span>3 columns · 1px gaps</span><a href="layout.html" aria-label="Wall guide">↗</a>
+</footer>
+<details>
+<summary>HTML source
+</summary>
+<pre><code>&lt;div class=&quot;ody-wall&quot;&gt;&lt;div&gt;1&lt;/div&gt;&lt;div&gt;2&lt;/div&gt;&lt;div&gt;3&lt;/div&gt;&lt;/div&gt;</code>
+</pre><button type="button" class="ody-btn ody-btn--secondary ody-btn--sm" data-line-copy>Copy source</button>
+</details>
+</article>
+</div>
+</section>
+<section class="line-family" id="line-2" data-family="2">
+<header class="line-family__head"><span class="line-badge" data-line="2">L2</span>
+<h3>CONTROL · 9
+</h3>
+<p>Everything the hand touches.
+</p><span class="line-meta">SHEET 02 / 06</span>
+</header>
+<div class="line-stations">
+<article class="line-station" id="station-BTN" data-station="BTN" data-search="BTN Button CONTROL">
+<header><a href="#station-BTN" class="line-station__code">BTN</a>
+<h4>Button
+</h4><span class="line-meta">ODY-009</span>
+</header>
+<div class="line-specimen"><button type="button" class="ody-btn ody-btn--primary" data-line-toast="Saved to the registry">Save</button><button type="button" class="ody-btn ody-btn--secondary" data-line-toast="Changes cancelled">Cancel</button>
+</div>
+<footer><span>tone 4 · size 3 · radius 3</span><a href="actions.html" aria-label="Button guide">↗</a>
+</footer>
+<details>
+<summary>HTML source
+</summary>
+<pre><code>&lt;button type=&quot;button&quot; class=&quot;ody-btn ody-btn--primary&quot;&gt;Save&lt;/button&gt;&lt;button type=&quot;button&quot; class=&quot;ody-btn ody-btn--secondary&quot;&gt;Cancel&lt;/button&gt;</code>
+</pre><button type="button" class="ody-btn ody-btn--secondary ody-btn--sm" data-line-copy>Copy source</button>
+</details>
+</article>
+<article class="line-station" id="station-IBT" data-station="IBT" data-search="IBT IconButton CONTROL">
+<header><a href="#station-IBT" class="line-station__code">IBT</a>
+<h4>IconButton
+</h4><span class="line-meta">ODY-010</span>
+</header>
+<div class="line-specimen"><button class="ody-iconbtn ody-iconbtn--outline" type="button" aria-label="Add station" data-line-toast="Station added to this demo">+</button><button class="ody-iconbtn ody-iconbtn--outline" type="button" aria-label="Station settings" data-ody-open="#station-drawer"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 7h16M4 17h16M8 4v6M16 14v6"/></svg></button>
+</div>
+<footer><span>28 · 32 · 40 · visible focus</span><a href="actions.html" aria-label="IconButton guide">↗</a>
+</footer>
+<details>
+<summary>HTML source
+</summary>
+<pre><code>&lt;button class=&quot;ody-iconbtn ody-iconbtn--outline&quot; type=&quot;button&quot; aria-label=&quot;Add station&quot;&gt;+&lt;/button&gt;&lt;button class=&quot;ody-iconbtn ody-iconbtn--outline&quot; type=&quot;button&quot; aria-label=&quot;Station settings&quot; data-ody-open=&quot;#station-drawer&quot;&gt;&lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.5&quot;&gt;&lt;path d=&quot;M4 7h16M4 17h16M8 4v6M16 14v6&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;</code>
+</pre><button type="button" class="ody-btn ody-btn--secondary ody-btn--sm" data-line-copy>Copy source</button>
+</details>
+</article>
+<article class="line-station" id="station-LNK" data-station="LNK" data-search="LNK Link CONTROL">
+<header><a href="#station-LNK" class="line-station__code">LNK</a>
+<h4>Link
+</h4><span class="line-meta">ODY-011</span>
+</header>
+<div class="line-specimen">
+<div class="ody-stack ody-stack--sm"><a class="ody-link" href="#foundations">Read the specification</a><a class="ody-link" href="#station-SHT">Station 04 →</a>
+</div>
+</div>
+<footer><span>underline offset 2</span><a href="actions.html" aria-label="Link guide">↗</a>
+</footer>
+<details>
+<summary>HTML source
+</summary>
+<pre><code>&lt;div class=&quot;ody-stack ody-stack--sm&quot;&gt;&lt;a class=&quot;ody-link&quot; href=&quot;#foundations&quot;&gt;Read the specification&lt;/a&gt;&lt;a class=&quot;ody-link&quot; href=&quot;#station-SHT&quot;&gt;Station 04 →&lt;/a&gt;&lt;/div&gt;</code>
+</pre><button type="button" class="ody-btn ody-btn--secondary ody-btn--sm" data-line-copy>Copy source</button>
+</details>
+</article>
+<article class="line-station" id="station-SWT" data-station="SWT" data-search="SWT Switch CONTROL">
+<header><a href="#station-SWT" class="line-station__code">SWT</a>
+<h4>Switch
+</h4><span class="line-meta">ODY-012</span>
+</header>
+<div class="line-specimen">
+<label class="ody-switch"><input type="checkbox" aria-label="Auto-deploy on push" checked><span class="ody-switch__track"></span>
+</label>
+</div>
+<footer><span>38 × 20 · on / off</span><a href="forms.html" aria-label="Switch guide">↗</a>
+</footer>
+<details>
+<summary>HTML source
+</summary>
+<pre><code>&lt;label class=&quot;ody-switch&quot;&gt;&lt;input type=&quot;checkbox&quot; aria-label=&quot;Auto-deploy on push&quot; checked&gt;&lt;span class=&quot;ody-switch__track&quot;&gt;&lt;/span&gt;&lt;/label&gt;</code>
+</pre><button type="button" class="ody-btn ody-btn--secondary ody-btn--sm" data-line-copy>Copy source</button>
+</details>
+</article>
+<article class="line-station" id="station-CBX" data-station="CBX" data-search="CBX Checkbox CONTROL">
+<header><a href="#station-CBX" class="line-station__code">CBX</a>
+<h4>Checkbox
+</h4><span class="line-meta">ODY-013</span>
+</header>
+<div class="line-specimen">
+<div class="ody-stack ody-stack--sm">
+<label class="ody-checkbox"><input type="checkbox" checked>Checked
+</label>
+<label class="ody-checkbox"><input type="checkbox">Empty
+</label>
+</div>
+</div>
+<footer><span>14 · 20 · indeterminate</span><a href="forms.html" aria-label="Checkbox guide">↗</a>
+</footer>
+<details>
+<summary>HTML source
+</summary>
+<pre><code>&lt;div class=&quot;ody-stack ody-stack--sm&quot;&gt;&lt;label class=&quot;ody-checkbox&quot;&gt;&lt;input type=&quot;checkbox&quot; checked&gt;Checked&lt;/label&gt;&lt;label class=&quot;ody-checkbox&quot;&gt;&lt;input type=&quot;checkbox&quot;&gt;Empty&lt;/label&gt;&lt;/div&gt;</code>
+</pre><button type="button" class="ody-btn ody-btn--secondary ody-btn--sm" data-line-copy>Copy source</button>
+</details>
+</article>
+<article class="line-station" id="station-RAD" data-station="RAD" data-search="RAD Radio CONTROL">
+<header><a href="#station-RAD" class="line-station__code">RAD</a>
+<h4>Radio
+</h4><span class="line-meta">ODY-014</span>
+</header>
+<div class="line-specimen"><fieldset class="ody-choice-group"><legend class="ody-sr-only">Radio example</legend>
+<label class="ody-radio"><input type="radio" name="example-line" value="l1" checked>Line 1
+</label>
+<label class="ody-radio"><input type="radio" name="example-line" value="l2">Line 2
+</label></fieldset>
+</div>
+<footer><span>group · one choice</span><a href="forms.html" aria-label="Radio guide">↗</a>
+</footer>
+<details>
+<summary>HTML source
+</summary>
+<pre><code>&lt;fieldset class=&quot;ody-choice-group&quot;&gt;&lt;legend class=&quot;ody-sr-only&quot;&gt;Radio example&lt;/legend&gt;&lt;label class=&quot;ody-radio&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;example-line&quot; value=&quot;l1&quot; checked&gt;Line 1&lt;/label&gt;&lt;label class=&quot;ody-radio&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;example-line&quot; value=&quot;l2&quot;&gt;Line 2&lt;/label&gt;&lt;/fieldset&gt;</code>
+</pre><button type="button" class="ody-btn ody-btn--secondary ody-btn--sm" data-line-copy>Copy source</button>
+</details>
+</article>
+<article class="line-station" id="station-SEG" data-station="SEG" data-search="SEG Segment CONTROL">
+<header><a href="#station-SEG" class="line-station__code">SEG</a>
+<h4>Segment
+</h4><span class="line-meta">ODY-015</span>
+</header>
+<div class="line-specimen">
+<div class="ody-segment" role="group" aria-label="Report interval">
+<label><input type="radio" name="interval" value="Day" checked><span>Day</span>
+</label>
+<label><input type="radio" name="interval" value="Week" ><span>Week</span>
+</label>
+<label><input type="radio" name="interval" value="Month" ><span>Month</span>
+</label>
+</div>
+</div>
+<footer><span>2–4 options · native radios</span><a href="forms.html" aria-label="Segment guide">↗</a>
+</footer>
+<details>
+<summary>HTML source
+</summary>
+<pre><code>&lt;div class=&quot;ody-segment&quot; role=&quot;group&quot; aria-label=&quot;Report interval&quot;&gt;&lt;label&gt;&lt;input type=&quot;radio&quot; name=&quot;interval&quot; value=&quot;Day&quot; checked&gt;&lt;span&gt;Day&lt;/span&gt;&lt;/label&gt;&lt;label&gt;&lt;input type=&quot;radio&quot; name=&quot;interval&quot; value=&quot;Week&quot; &gt;&lt;span&gt;Week&lt;/span&gt;&lt;/label&gt;&lt;label&gt;&lt;input type=&quot;radio&quot; name=&quot;interval&quot; value=&quot;Month&quot; &gt;&lt;span&gt;Month&lt;/span&gt;&lt;/label&gt;&lt;/div&gt;</code>
+</pre><button type="button" class="ody-btn ody-btn--secondary ody-btn--sm" data-line-copy>Copy source</button>
+</details>
+</article>
+<article class="line-station" id="station-KCP" data-station="KCP" data-search="KCP Keycap CONTROL">
+<header><a href="#station-KCP" class="line-station__code">KCP</a>
+<h4>Keycap
+</h4><span class="line-meta">ODY-016</span>
+</header>
+<div class="line-specimen"><kbd class="ody-kbd">⌘</kbd><kbd class="ody-kbd">K</kbd><kbd class="ody-kbd">⇧</kbd><kbd class="ody-kbd">A</kbd>
+</div>
+<footer><span>18 tall · 2px shadow rule</span><a href="typography.html" aria-label="Keycap guide">↗</a>
+</footer>
+<details>
+<summary>HTML source
+</summary>
+<pre><code>&lt;kbd class=&quot;ody-kbd&quot;&gt;⌘&lt;/kbd&gt;&lt;kbd class=&quot;ody-kbd&quot;&gt;K&lt;/kbd&gt;&lt;kbd class=&quot;ody-kbd&quot;&gt;⇧&lt;/kbd&gt;&lt;kbd class=&quot;ody-kbd&quot;&gt;A&lt;/kbd&gt;</code>
+</pre><button type="button" class="ody-btn ody-btn--secondary ody-btn--sm" data-line-copy>Copy source</button>
+</details>
+</article>
+<article class="line-station" id="station-FAB" data-station="FAB" data-search="FAB Fab CONTROL">
+<header><a href="#station-FAB" class="line-station__code">FAB</a>
+<h4>Fab
+</h4><span class="line-meta">ODY-017</span>
+</header>
+<div class="line-specimen"><button type="button" class="ody-fab" aria-label="Create station" data-line-toast="Station added to this demo">+</button>
+</div>
+<footer><span>40 · 52 · one per view</span><a href="actions.html" aria-label="Fab guide">↗</a>
+</footer>
+<details>
+<summary>HTML source
+</summary>
+<pre><code>&lt;button type=&quot;button&quot; class=&quot;ody-fab&quot; aria-label=&quot;Create station&quot;&gt;+&lt;/button&gt;</code>
+</pre><button type="button" class="ody-btn ody-btn--secondary ody-btn--sm" data-line-copy>Copy source</button>
+</details>
+</article>
+</div>
+</section>
+<section class="line-family" id="line-3" data-family="3">
+<header class="line-family__head"><span class="line-badge" data-line="3">L3</span>
+<h3>INPUT · 8
+</h3>
+<p>Where the operator writes.
+</p><span class="line-meta">SHEET 03 / 06</span>
+</header>
+<div class="line-stations">
+<article class="line-station" id="station-FLD" data-station="FLD" data-search="FLD Field INPUT">
+<header><a href="#station-FLD" class="line-station__code">FLD</a>
+<h4>Field
+</h4><span class="line-meta">ODY-018</span>
+</header>
+<div class="line-specimen">
+<label class="ody-field"><span class="ody-label">Email address</span><input class="ody-input" type="email" value="ellis@studio.co" aria-describedby="email-hint"><span class="ody-hint" id="email-hint">We never share it.</span>
+</label>
+</div>
+<footer><span>label · hint · error</span><a href="forms.html" aria-label="Field guide">↗</a>
+</footer>
+<details>
+<summary>HTML source
+</summary>
+<pre><code>&lt;label class=&quot;ody-field&quot;&gt;&lt;span class=&quot;ody-label&quot;&gt;Email address&lt;/span&gt;&lt;input class=&quot;ody-input&quot; type=&quot;email&quot; value=&quot;ellis@studio.co&quot; aria-describedby=&quot;email-hint&quot;&gt;&lt;span class=&quot;ody-hint&quot; id=&quot;email-hint&quot;&gt;We never share it.&lt;/span&gt;&lt;/label&gt;</code>
+</pre><button type="button" class="ody-btn ody-btn--secondary ody-btn--sm" data-line-copy>Copy source</button>
+</details>
+</article>
+<article class="line-station" id="station-TXT" data-station="TXT" data-search="TXT TextInput INPUT">
+<header><a href="#station-TXT" class="line-station__code">TXT</a>
+<h4>TextInput
+</h4><span class="line-meta">ODY-019</span>
+</header>
+<div class="line-specimen">
+<label class="ody-sr-only" for="station-name">Station name
+</label><input class="ody-input" id="station-name" placeholder="Station name">
+</div>
+<footer><span>40 · native caret</span><a href="forms.html" aria-label="TextInput guide">↗</a>
+</footer>
+<details>
+<summary>HTML source
+</summary>
+<pre><code>&lt;label class=&quot;ody-sr-only&quot; for=&quot;station-name&quot;&gt;Station name&lt;/label&gt;&lt;input class=&quot;ody-input&quot; id=&quot;station-name&quot; placeholder=&quot;Station name&quot;&gt;</code>
+</pre><button type="button" class="ody-btn ody-btn--secondary ody-btn--sm" data-line-copy>Copy source</button>
+</details>
+</article>
+<article class="line-station" id="station-TAR" data-station="TAR" data-search="TAR Textarea INPUT">
+<header><a href="#station-TAR" class="line-station__code">TAR</a>
+<h4>Textarea
+</h4><span class="line-meta">ODY-020</span>
+</header>
+<div class="line-specimen">
+<label class="ody-sr-only" for="station-note">Note for the plate
+</label><textarea class="ody-textarea" id="station-note" rows="3" placeholder="Note for the plate…"></textarea>
+</div>
+<footer><span>rows 3–8 · resize y</span><a href="forms.html" aria-label="Textarea guide">↗</a>
+</footer>
+<details>
+<summary>HTML source
+</summary>
+<pre><code>&lt;label class=&quot;ody-sr-only&quot; for=&quot;station-note&quot;&gt;Note for the plate&lt;/label&gt;&lt;textarea class=&quot;ody-textarea&quot; id=&quot;station-note&quot; rows=&quot;3&quot; placeholder=&quot;Note for the plate…&quot;&gt;&lt;/textarea&gt;</code>
+</pre><button type="button" class="ody-btn ody-btn--secondary ody-btn--sm" data-line-copy>Copy source</button>
+</details>
+</article>
+<article class="line-station" id="station-SEL" data-station="SEL" data-search="SEL Select INPUT">
+<header><a href="#station-SEL" class="line-station__code">SEL</a>
+<h4>Select
+</h4><span class="line-meta">ODY-021</span>
+</header>
+<div class="line-specimen">
+<label class="ody-sr-only" for="plan">Plan
+</label><select class="ody-select" id="plan"><option>Enterprise</option><option>Team</option><option>Personal</option></select>
+</div>
+<footer><span>single · native keyboard</span><a href="forms.html" aria-label="Select guide">↗</a>
+</footer>
+<details>
+<summary>HTML source
+</summary>
+<pre><code>&lt;label class=&quot;ody-sr-only&quot; for=&quot;plan&quot;&gt;Plan&lt;/label&gt;&lt;select class=&quot;ody-select&quot; id=&quot;plan&quot;&gt;&lt;option&gt;Enterprise&lt;/option&gt;&lt;option&gt;Team&lt;/option&gt;&lt;option&gt;Personal&lt;/option&gt;&lt;/select&gt;</code>
+</pre><button type="button" class="ody-btn ody-btn--secondary ody-btn--sm" data-line-copy>Copy source</button>
+</details>
+</article>
+<article class="line-station" id="station-NUM" data-station="NUM" data-search="NUM NumberInput INPUT">
+<header><a href="#station-NUM" class="line-station__code">NUM</a>
+<h4>NumberInput
+</h4><span class="line-meta">ODY-022</span>
+</header>
+<div class="line-specimen">
+<label class="ody-sr-only" for="station-count">Station count
+</label><input class="ody-input" id="station-count" type="number" min="0" max="100" step="1" value="42">
+</div>
+<footer><span>min · max · step</span><a href="forms.html" aria-label="NumberInput guide">↗</a>
+</footer>
+<details>
+<summary>HTML source
+</summary>
+<pre><code>&lt;label class=&quot;ody-sr-only&quot; for=&quot;station-count&quot;&gt;Station count&lt;/label&gt;&lt;input class=&quot;ody-input&quot; id=&quot;station-count&quot; type=&quot;number&quot; min=&quot;0&quot; max=&quot;100&quot; step=&quot;1&quot; value=&quot;42&quot;&gt;</code>
+</pre><button type="button" class="ody-btn ody-btn--secondary ody-btn--sm" data-line-copy>Copy source</button>
+</details>
+</article>
+<article class="line-station" id="station-RNG" data-station="RNG" data-search="RNG Range INPUT">
+<header><a href="#station-RNG" class="line-station__code">RNG</a>
+<h4>Range
+</h4><span class="line-meta">ODY-023</span>
+</header>
+<div class="line-specimen">
+<label class="ody-field"><span class="ody-label">Volume</span><input class="ody-range" type="range" min="0" max="100" value="68">
+</label>
+</div>
+<footer><span>track · thumb · keyboard</span><a href="forms.html" aria-label="Range guide">↗</a>
+</footer>
+<details>
+<summary>HTML source
+</summary>
+<pre><code>&lt;label class=&quot;ody-field&quot;&gt;&lt;span class=&quot;ody-label&quot;&gt;Volume&lt;/span&gt;&lt;input class=&quot;ody-range&quot; type=&quot;range&quot; min=&quot;0&quot; max=&quot;100&quot; value=&quot;68&quot;&gt;&lt;/label&gt;</code>
+</pre><button type="button" class="ody-btn ody-btn--secondary ody-btn--sm" data-line-copy>Copy source</button>
+</details>
+</article>
+<article class="line-station" id="station-DTP" data-station="DTP" data-search="DTP DatePicker INPUT">
+<header><a href="#station-DTP" class="line-station__code">DTP</a>
+<h4>DatePicker
+</h4><span class="line-meta">ODY-024</span>
+</header>
+<div class="line-specimen">
+<label class="ody-field"><span class="ody-label">Edition date</span><input class="ody-input" type="date" value="2026-02-12">
+</label>
+</div>
+<footer><span>native calendar</span><a href="forms.html" aria-label="DatePicker guide">↗</a>
+</footer>
+<details>
+<summary>HTML source
+</summary>
+<pre><code>&lt;label class=&quot;ody-field&quot;&gt;&lt;span class=&quot;ody-label&quot;&gt;Edition date&lt;/span&gt;&lt;input class=&quot;ody-input&quot; type=&quot;date&quot; value=&quot;2026-02-12&quot;&gt;&lt;/label&gt;</code>
+</pre><button type="button" class="ody-btn ody-btn--secondary ody-btn--sm" data-line-copy>Copy source</button>
+</details>
+</article>
+<article class="line-station" id="station-CMB" data-station="CMB" data-search="CMB Combobox INPUT">
+<header><a href="#station-CMB" class="line-station__code">CMB</a>
+<h4>Combobox
+</h4><span class="line-meta">ODY-025</span>
+</header>
+<div class="line-specimen">
+<label class="ody-field"><span class="ody-label">Choose a line</span><input class="ody-input" list="station-lines" placeholder="Search lines…"><datalist id="station-lines"><option value="L1 Surface"><option value="L2 Control"><option value="L3 Input"><option value="L4 Data"><option value="L5 Feedback"><option value="L6 Navigation"></datalist>
+</label>
+</div>
+<footer><span>search · native suggestions</span><a href="forms.html" aria-label="Combobox guide">↗</a>
+</footer>
+<details>
+<summary>HTML source
+</summary>
+<pre><code>&lt;label class=&quot;ody-field&quot;&gt;&lt;span class=&quot;ody-label&quot;&gt;Choose a line&lt;/span&gt;&lt;input class=&quot;ody-input&quot; list=&quot;station-lines&quot; placeholder=&quot;Search lines…&quot;&gt;&lt;datalist id=&quot;station-lines&quot;&gt;&lt;option value=&quot;L1 Surface&quot;&gt;&lt;option value=&quot;L2 Control&quot;&gt;&lt;option value=&quot;L3 Input&quot;&gt;&lt;option value=&quot;L4 Data&quot;&gt;&lt;option value=&quot;L5 Feedback&quot;&gt;&lt;option value=&quot;L6 Navigation&quot;&gt;&lt;/datalist&gt;&lt;/label&gt;</code>
+</pre><button type="button" class="ody-btn ody-btn--secondary ody-btn--sm" data-line-copy>Copy source</button>
+</details>
+</article>
+</div>
+</section>
+<section class="line-family" id="line-4" data-family="4">
+<header class="line-family__head"><span class="line-badge" data-line="4">L4</span>
+<h3>DATA · 7
+</h3>
+<p>What the system reports back.
+</p><span class="line-meta">SHEET 04 / 06</span>
+</header>
+<div class="line-stations">
+<article class="line-station" id="station-TBL" data-station="TBL" data-search="TBL Table DATA">
+<header><a href="#station-TBL" class="line-station__code">TBL</a>
+<h4>Table
+</h4><span class="line-meta">ODY-026</span>
+</header>
+<div class="line-specimen">
+<div class="ody-table-wrap"><table class="ody-table"><caption class="ody-sr-only">Component release states</caption><thead><tr><th scope="col">PART</th><th scope="col">STATE</th></tr></thead><tbody><tr><td>button</td><td>stable</td></tr><tr><td>dialog</td><td>beta</td></tr></tbody></table>
+</div>
+</div>
+<footer><span>caption · scoped headings · rows</span><a href="data-display.html" aria-label="Table guide">↗</a>
+</footer>
+<details>
+<summary>HTML source
+</summary>
+<pre><code>&lt;div class=&quot;ody-table-wrap&quot;&gt;&lt;table class=&quot;ody-table&quot;&gt;&lt;caption class=&quot;ody-sr-only&quot;&gt;Component release states&lt;/caption&gt;&lt;thead&gt;&lt;tr&gt;&lt;th scope=&quot;col&quot;&gt;PART&lt;/th&gt;&lt;th scope=&quot;col&quot;&gt;STATE&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;button&lt;/td&gt;&lt;td&gt;stable&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;dialog&lt;/td&gt;&lt;td&gt;beta&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;</code>
+</pre><button type="button" class="ody-btn ody-btn--secondary ody-btn--sm" data-line-copy>Copy source</button>
+</details>
+</article>
+<article class="line-station" id="station-STA" data-station="STA" data-search="STA Stat DATA">
+<header><a href="#station-STA" class="line-station__code">STA</a>
+<h4>Stat
+</h4><span class="line-meta">ODY-027</span>
+</header>
+<div class="line-specimen">
+<div class="ody-stat">
+<div class="ody-stat__label">MONTHLY RECURRING
+</div>
+<div class="ody-stat__value">$48,290
+</div>
+<div class="ody-stat__meta">+12.4% vs last month
+</div>
+</div>
+</div>
+<footer><span>label · value · delta</span><a href="data-display.html" aria-label="Stat guide">↗</a>
+</footer>
+<details>
+<summary>HTML source
+</summary>
+<pre><code>&lt;div class=&quot;ody-stat&quot;&gt;&lt;div class=&quot;ody-stat__label&quot;&gt;MONTHLY RECURRING&lt;/div&gt;&lt;div class=&quot;ody-stat__value&quot;&gt;$48,290&lt;/div&gt;&lt;div class=&quot;ody-stat__meta&quot;&gt;+12.4% vs last month&lt;/div&gt;&lt;/div&gt;</code>
+</pre><button type="button" class="ody-btn ody-btn--secondary ody-btn--sm" data-line-copy>Copy source</button>
+</details>
+</article>
+<article class="line-station" id="station-CHT" data-station="CHT" data-search="CHT Chart DATA">
+<header><a href="#station-CHT" class="line-station__code">CHT</a>
+<h4>Chart
+</h4><span class="line-meta">ODY-028</span>
+</header>
+<div class="line-specimen">
+<div class="ody-chart" role="img" aria-label="Seven days: 35, 52, 44, 72, 58, 88, 76"><span style="--value:35%"></span><span style="--value:52%"></span><span style="--value:44%"></span><span style="--value:72%"></span><span style="--value:58%"></span><span style="--value:88%"></span><span style="--value:76%"></span>
+</div>
+</div>
+<footer><span>7 bars · 1 series</span><a href="data-display.html" aria-label="Chart guide">↗</a>
+</footer>
+<details>
+<summary>HTML source
+</summary>
+<pre><code>&lt;div class=&quot;ody-chart&quot; role=&quot;img&quot; aria-label=&quot;Seven days: 35, 52, 44, 72, 58, 88, 76&quot;&gt;&lt;span style=&quot;--value:35%&quot;&gt;&lt;/span&gt;&lt;span style=&quot;--value:52%&quot;&gt;&lt;/span&gt;&lt;span style=&quot;--value:44%&quot;&gt;&lt;/span&gt;&lt;span style=&quot;--value:72%&quot;&gt;&lt;/span&gt;&lt;span style=&quot;--value:58%&quot;&gt;&lt;/span&gt;&lt;span style=&quot;--value:88%&quot;&gt;&lt;/span&gt;&lt;span style=&quot;--value:76%&quot;&gt;&lt;/span&gt;&lt;/div&gt;</code>
+</pre><button type="button" class="ody-btn ody-btn--secondary ody-btn--sm" data-line-copy>Copy source</button>
+</details>
+</article>
+<article class="line-station" id="station-LST" data-station="LST" data-search="LST List DATA">
+<header><a href="#station-LST" class="line-station__code">LST</a>
+<h4>List
+</h4><span class="line-meta">ODY-029</span>
+</header>
+<div class="line-specimen"><ul class="ody-list"><li class="ody-list__item"><span>Ellis Kade</span><span>owner</span></li><li class="ody-list__item"><span>Sam Holm</span><span>editor</span></li><li class="ody-list__item"><span>Ada Reyes</span><span>viewer</span></li></ul>
+</div>
+<footer><span>3 rows · avatar · meta</span><a href="data-display.html" aria-label="List guide">↗</a>
+</footer>
+<details>
+<summary>HTML source
+</summary>
+<pre><code>&lt;ul class=&quot;ody-list&quot;&gt;&lt;li class=&quot;ody-list__item&quot;&gt;&lt;span&gt;Ellis Kade&lt;/span&gt;&lt;span&gt;owner&lt;/span&gt;&lt;/li&gt;&lt;li class=&quot;ody-list__item&quot;&gt;&lt;span&gt;Sam Holm&lt;/span&gt;&lt;span&gt;editor&lt;/span&gt;&lt;/li&gt;&lt;li class=&quot;ody-list__item&quot;&gt;&lt;span&gt;Ada Reyes&lt;/span&gt;&lt;span&gt;viewer&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;</code>
+</pre><button type="button" class="ody-btn ody-btn--secondary ody-btn--sm" data-line-copy>Copy source</button>
+</details>
+</article>
+<article class="line-station" id="station-DSC" data-station="DSC" data-search="DSC DescList DATA">
+<header><a href="#station-DSC" class="line-station__code">DSC</a>
+<h4>DescList
+</h4><span class="line-meta">ODY-030</span>
+</header>
+<div class="line-specimen"><dl class="ody-desc"><dt class="ody-desc__term">Document</dt><dd class="ody-desc__val">ODY-LS</dd><dt class="ody-desc__term">Edition</dt><dd class="ody-desc__val">Line</dd></dl>
+</div>
+<footer><span>term · detail</span><a href="data-display.html" aria-label="DescList guide">↗</a>
+</footer>
+<details>
+<summary>HTML source
+</summary>
+<pre><code>&lt;dl class=&quot;ody-desc&quot;&gt;&lt;dt class=&quot;ody-desc__term&quot;&gt;Document&lt;/dt&gt;&lt;dd class=&quot;ody-desc__val&quot;&gt;ODY-LS&lt;/dd&gt;&lt;dt class=&quot;ody-desc__term&quot;&gt;Edition&lt;/dt&gt;&lt;dd class=&quot;ody-desc__val&quot;&gt;Line&lt;/dd&gt;&lt;/dl&gt;</code>
+</pre><button type="button" class="ody-btn ody-btn--secondary ody-btn--sm" data-line-copy>Copy source</button>
+</details>
+</article>
+<article class="line-station" id="station-PGR" data-station="PGR" data-search="PGR Pager DATA">
+<header><a href="#station-PGR" class="line-station__code">PGR</a>
+<h4>Pager
+</h4><span class="line-meta">ODY-031</span>
+</header>
+<div class="line-specimen">
+<nav class="ody-pager" aria-label="Example pages"><button type="button" aria-label="Previous page" data-line-page="prev">←</button><button type="button" aria-current="page" data-line-page="1">1</button><button type="button" data-line-page="2">2</button><button type="button" data-line-page="3">3</button><button type="button" aria-label="Next page" data-line-page="next">→</button>
+</nav><span class="ody-eyebrow" data-line-page-label aria-live="polite">PAGE 1 OF 3</span>
+</div>
+<footer><span>prev · 1 · 2 · 3 · next</span><a href="navigation.html" aria-label="Pager guide">↗</a>
+</footer>
+<details>
+<summary>HTML source
+</summary>
+<pre><code>&lt;nav class=&quot;ody-pager&quot; aria-label=&quot;Example pages&quot;&gt;&lt;button type=&quot;button&quot; aria-label=&quot;Previous page&quot;&gt;←&lt;/button&gt;&lt;button type=&quot;button&quot; aria-current=&quot;page&quot;&gt;1&lt;/button&gt;&lt;button type=&quot;button&quot;&gt;2&lt;/button&gt;&lt;button type=&quot;button&quot;&gt;3&lt;/button&gt;&lt;button type=&quot;button&quot; aria-label=&quot;Next page&quot;&gt;→&lt;/button&gt;&lt;/nav&gt;&lt;span class=&quot;ody-eyebrow&quot; aria-live=&quot;polite&quot;&gt;PAGE 1 OF 3&lt;/span&gt;</code>
+</pre><button type="button" class="ody-btn ody-btn--secondary ody-btn--sm" data-line-copy>Copy source</button>
+</details>
+</article>
+<article class="line-station" id="station-PRG" data-station="PRG" data-search="PRG Progress DATA">
+<header><a href="#station-PRG" class="line-station__code">PRG</a>
+<h4>Progress
+</h4><span class="line-meta">ODY-032</span>
+</header>
+<div class="line-specimen">
+<div class="ody-stack ody-stack--sm"><span class="ody-eyebrow">UPLOADING · 68%</span>
+<div class="ody-progress" role="progressbar" aria-label="Upload progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="68">
+<div class="ody-progress__bar" style="width:68%">
+</div>
+</div>
+</div>
+</div>
+<footer><span>track 4 · value</span><a href="data-display.html" aria-label="Progress guide">↗</a>
+</footer>
+<details>
+<summary>HTML source
+</summary>
+<pre><code>&lt;div class=&quot;ody-stack ody-stack--sm&quot;&gt;&lt;span class=&quot;ody-eyebrow&quot;&gt;UPLOADING · 68%&lt;/span&gt;&lt;div class=&quot;ody-progress&quot; role=&quot;progressbar&quot; aria-label=&quot;Upload progress&quot; aria-valuemin=&quot;0&quot; aria-valuemax=&quot;100&quot; aria-valuenow=&quot;68&quot;&gt;&lt;div class=&quot;ody-progress__bar&quot; style=&quot;width:68%&quot;&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</code>
+</pre><button type="button" class="ody-btn ody-btn--secondary ody-btn--sm" data-line-copy>Copy source</button>
+</details>
+</article>
+</div>
+</section>
+<section class="line-family" id="line-5" data-family="5">
+<header class="line-family__head"><span class="line-badge" data-line="5">L5</span>
+<h3>FEEDBACK · 6
+</h3>
+<p>What the system says back.
+</p><span class="line-meta">SHEET 05 / 06</span>
+</header>
+<div class="line-stations">
+<article class="line-station" id="station-TST" data-station="TST" data-search="TST Toast FEEDBACK">
+<header><a href="#station-TST" class="line-station__code">TST</a>
+<h4>Toast
+</h4><span class="line-meta">ODY-033</span>
+</header>
+<div class="line-specimen"><button type="button" class="ody-btn ody-btn--secondary" data-line-toast="Saved to the registry">Show toast</button>
+</div>
+<footer><span>4 tones · dismiss</span><a href="feedback.html" aria-label="Toast guide">↗</a>
+</footer>
+<details>
+<summary>HTML source
+</summary>
+<pre><code>&lt;script&gt;
+Odyssey.toast({ title: &#x27;Saved to the registry&#x27;, tone: &#x27;ok&#x27;, timeout: 6000 });
+&lt;/script&gt;</code>
+</pre><button type="button" class="ody-btn ody-btn--secondary ody-btn--sm" data-line-copy>Copy source</button>
+</details>
+</article>
+<article class="line-station" id="station-ALT" data-station="ALT" data-search="ALT Alert FEEDBACK">
+<header><a href="#station-ALT" class="line-station__code">ALT</a>
+<h4>Alert
+</h4><span class="line-meta">ODY-034</span>
+</header>
+<div class="line-specimen">
+<div class="ody-alert ody-alert--warn" role="alert">
+<div><strong>Rate limit reached</strong>
+<p>Retry in 30 seconds.
+</p>
+</div>
+</div>
+</div>
+<footer><span>info · warn · danger</span><a href="feedback.html" aria-label="Alert guide">↗</a>
+</footer>
+<details>
+<summary>HTML source
+</summary>
+<pre><code>&lt;div class=&quot;ody-alert ody-alert--warn&quot; role=&quot;alert&quot;&gt;&lt;div&gt;&lt;strong&gt;Rate limit reached&lt;/strong&gt;&lt;p&gt;Retry in 30 seconds.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;</code>
+</pre><button type="button" class="ody-btn ody-btn--secondary ody-btn--sm" data-line-copy>Copy source</button>
+</details>
+</article>
+<article class="line-station" id="station-MDL" data-station="MDL" data-search="MDL Modal FEEDBACK">
+<header><a href="#station-MDL" class="line-station__code">MDL</a>
+<h4>Modal
+</h4><span class="line-meta">ODY-035</span>
+</header>
+<div class="line-specimen"><button type="button" class="ody-btn ody-btn--secondary" data-ody-open="#station-modal">Open modal</button>
+</div>
+<footer><span>scrim · 480 · 2 actions</span><a href="overlays.html" aria-label="Modal guide">↗</a>
+</footer>
+<details>
+<summary>HTML source
+</summary>
+<pre><code>&lt;button type=&quot;button&quot; class=&quot;ody-btn ody-btn--secondary&quot; data-ody-open=&quot;#station-modal&quot;&gt;Open modal&lt;/button&gt;
+&lt;div class=&quot;ody-modal&quot; id=&quot;station-modal&quot; role=&quot;dialog&quot; aria-modal=&quot;true&quot; aria-labelledby=&quot;modal-title&quot; hidden&gt;&lt;div class=&quot;ody-modal__backdrop&quot; data-ody-dismiss&gt;&lt;/div&gt;&lt;section class=&quot;ody-modal__panel&quot;&gt;&lt;header class=&quot;ody-modal__head&quot;&gt;&lt;h2 class=&quot;ody-modal__title&quot; id=&quot;modal-title&quot;&gt;Delete station?&lt;/h2&gt;&lt;button type=&quot;button&quot; class=&quot;ody-iconbtn&quot; data-ody-dismiss aria-label=&quot;Close dialog&quot;&gt;×&lt;/button&gt;&lt;/header&gt;&lt;div class=&quot;ody-modal__body&quot;&gt;&lt;p&gt;This cannot be undone. This specimen does not change any product data.&lt;/p&gt;&lt;/div&gt;&lt;footer class=&quot;ody-modal__foot&quot;&gt;&lt;button type=&quot;button&quot; class=&quot;ody-btn ody-btn--secondary&quot; data-ody-dismiss&gt;Cancel&lt;/button&gt;&lt;button class=&quot;ody-btn ody-btn--danger&quot; type=&quot;button&quot; data-ody-dismiss&gt;Delete station&lt;/button&gt;&lt;/footer&gt;&lt;/section&gt;&lt;/div&gt;</code>
+</pre><button type="button" class="ody-btn ody-btn--secondary ody-btn--sm" data-line-copy>Copy source</button>
+</details>
+</article>
+<article class="line-station" id="station-DRW" data-station="DRW" data-search="DRW Drawer FEEDBACK">
+<header><a href="#station-DRW" class="line-station__code">DRW</a>
+<h4>Drawer
+</h4><span class="line-meta">ODY-036</span>
+</header>
+<div class="line-specimen"><button type="button" class="ody-btn ody-btn--secondary" data-ody-open="#station-drawer">Open drawer</button>
+</div>
+<footer><span>right · 360 · scrim</span><a href="overlays.html" aria-label="Drawer guide">↗</a>
+</footer>
+<details>
+<summary>HTML source
+</summary>
+<pre><code>&lt;button type=&quot;button&quot; class=&quot;ody-btn ody-btn--secondary&quot; data-ody-open=&quot;#station-drawer&quot;&gt;Open drawer&lt;/button&gt;
+&lt;div class=&quot;ody-drawer&quot; id=&quot;station-drawer&quot; role=&quot;dialog&quot; aria-modal=&quot;true&quot; aria-labelledby=&quot;drawer-title&quot; hidden&gt;&lt;div class=&quot;ody-drawer__backdrop&quot; data-ody-dismiss&gt;&lt;/div&gt;&lt;section class=&quot;ody-drawer__panel&quot;&gt;&lt;header class=&quot;ody-drawer__head&quot;&gt;&lt;h2 id=&quot;drawer-title&quot; class=&quot;ody-drawer__title&quot;&gt;Station detail&lt;/h2&gt;&lt;button type=&quot;button&quot; class=&quot;ody-iconbtn&quot; data-ody-dismiss aria-label=&quot;Close drawer&quot;&gt;×&lt;/button&gt;&lt;/header&gt;&lt;div class=&quot;ody-drawer__body&quot;&gt;&lt;span class=&quot;line-badge&quot; data-line=&quot;2&quot;&gt;L2&lt;/span&gt;&lt;h3&gt;BTN / Button&lt;/h3&gt;&lt;dl class=&quot;ody-desc&quot;&gt;&lt;dt&gt;Part&lt;/dt&gt;&lt;dd&gt;ODY-009&lt;/dd&gt;&lt;dt&gt;Sizes&lt;/dt&gt;&lt;dd&gt;32 / 40 / 48&lt;/dd&gt;&lt;dt&gt;Radius&lt;/dt&gt;&lt;dd&gt;0 / 2 / 4&lt;/dd&gt;&lt;dt&gt;Focus&lt;/dt&gt;&lt;dd&gt;2px line ring&lt;/dd&gt;&lt;/dl&gt;&lt;p&gt;Use the existing button helper or native HTML. Behaviour remains product-owned.&lt;/p&gt;&lt;a class=&quot;ody-link&quot; href=&quot;actions.html&quot;&gt;Read the API guide ↗&lt;/a&gt;&lt;/div&gt;&lt;footer class=&quot;ody-drawer__foot&quot;&gt;&lt;button type=&quot;button&quot; class=&quot;ody-btn ody-btn--secondary&quot; data-ody-dismiss&gt;Close&lt;/button&gt;&lt;/footer&gt;&lt;/section&gt;&lt;/div&gt;</code>
+</pre><button type="button" class="ody-btn ody-btn--secondary ody-btn--sm" data-line-copy>Copy source</button>
+</details>
+</article>
+<article class="line-station" id="station-PLL" data-station="PLL" data-search="PLL Pill FEEDBACK">
+<header><a href="#station-PLL" class="line-station__code">PLL</a>
+<h4>Pill
+</h4><span class="line-meta">ODY-037</span>
+</header>
+<div class="line-specimen"><span class="ody-pill ody-pill--ok">STABLE</span><span class="ody-pill ody-pill--warn">BETA</span><span class="ody-pill ody-pill--neutral">DRAFT</span>
+</div>
+<footer><span>4 tones · 18 tall</span><a href="feedback.html" aria-label="Pill guide">↗</a>
+</footer>
+<details>
+<summary>HTML source
+</summary>
+<pre><code>&lt;span class=&quot;ody-pill ody-pill--ok&quot;&gt;STABLE&lt;/span&gt;&lt;span class=&quot;ody-pill ody-pill--warn&quot;&gt;BETA&lt;/span&gt;&lt;span class=&quot;ody-pill ody-pill--neutral&quot;&gt;DRAFT&lt;/span&gt;</code>
+</pre><button type="button" class="ody-btn ody-btn--secondary ody-btn--sm" data-line-copy>Copy source</button>
+</details>
+</article>
+<article class="line-station" id="station-SKL" data-station="SKL" data-search="SKL Skeleton FEEDBACK">
+<header><a href="#station-SKL" class="line-station__code">SKL</a>
+<h4>Skeleton
+</h4><span class="line-meta">ODY-038</span>
+</header>
+<div class="line-specimen">
+<div class="ody-stack ody-stack--sm" role="status" aria-label="Loading content"><span class="ody-skeleton ody-skeleton--title"></span><span class="ody-skeleton ody-skeleton--text"></span><span class="ody-skeleton ody-skeleton--text"></span>
+</div>
+</div>
+<footer><span>3 lines · 1.4s</span><a href="feedback.html" aria-label="Skeleton guide">↗</a>
+</footer>
+<details>
+<summary>HTML source
+</summary>
+<pre><code>&lt;div class=&quot;ody-stack ody-stack--sm&quot; role=&quot;status&quot; aria-label=&quot;Loading content&quot;&gt;&lt;span class=&quot;ody-skeleton ody-skeleton--title&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ody-skeleton ody-skeleton--text&quot;&gt;&lt;/span&gt;&lt;span class=&quot;ody-skeleton ody-skeleton--text&quot;&gt;&lt;/span&gt;&lt;/div&gt;</code>
+</pre><button type="button" class="ody-btn ody-btn--secondary ody-btn--sm" data-line-copy>Copy source</button>
+</details>
+</article>
+</div>
+</section>
+<section class="line-family" id="line-6" data-family="6">
+<header class="line-family__head"><span class="line-badge" data-line="6">L6</span>
+<h3>NAVIGATION · 4
+</h3>
+<p>How you move between stations.
+</p><span class="line-meta">SHEET 06 / 06</span>
+</header>
+<div class="line-stations">
+<article class="line-station" id="station-TAB" data-station="TAB" data-search="TAB Tabs NAVIGATION">
+<header><a href="#station-TAB" class="line-station__code">TAB</a>
+<h4>Tabs
+</h4><span class="line-meta">ODY-039</span>
+</header>
+<div class="line-specimen">
+<div data-ody-tabs>
+<div class="ody-tabs" role="tablist" aria-label="Station documentation"><button type="button" id="demo-tab-0" class="ody-tab is-active" role="tab" data-ody-panel="#demo-panel-0">Overview</button><button type="button" id="demo-tab-1" class="ody-tab " role="tab" data-ody-panel="#demo-panel-1">Usage</button><button type="button" id="demo-tab-2" class="ody-tab " role="tab" data-ody-panel="#demo-panel-2">API</button>
+</div>
+<div id="demo-panel-0" role="tabpanel" aria-labelledby="demo-tab-0" >Station overview.
+</div>
+<div id="demo-panel-1" role="tabpanel" aria-labelledby="demo-tab-1" hidden>Copy the source into your product.
+</div>
+<div id="demo-panel-2" role="tabpanel" aria-labelledby="demo-tab-2" hidden>Native HTML, existing Odyssey runtime.
+</div>
+</div>
+</div>
+<footer><span>underline 2px · keyboard</span><a href="navigation.html" aria-label="Tabs guide">↗</a>
+</footer>
+<details>
+<summary>HTML source
+</summary>
+<pre><code>&lt;div data-ody-tabs&gt;&lt;div class=&quot;ody-tabs&quot; role=&quot;tablist&quot; aria-label=&quot;Station documentation&quot;&gt;&lt;button type=&quot;button&quot; id=&quot;demo-tab-0&quot; class=&quot;ody-tab is-active&quot; role=&quot;tab&quot; data-ody-panel=&quot;#demo-panel-0&quot;&gt;Overview&lt;/button&gt;&lt;button type=&quot;button&quot; id=&quot;demo-tab-1&quot; class=&quot;ody-tab &quot; role=&quot;tab&quot; data-ody-panel=&quot;#demo-panel-1&quot;&gt;Usage&lt;/button&gt;&lt;button type=&quot;button&quot; id=&quot;demo-tab-2&quot; class=&quot;ody-tab &quot; role=&quot;tab&quot; data-ody-panel=&quot;#demo-panel-2&quot;&gt;API&lt;/button&gt;&lt;/div&gt;&lt;div id=&quot;demo-panel-0&quot; role=&quot;tabpanel&quot; aria-labelledby=&quot;demo-tab-0&quot; &gt;Station overview.&lt;/div&gt;&lt;div id=&quot;demo-panel-1&quot; role=&quot;tabpanel&quot; aria-labelledby=&quot;demo-tab-1&quot; hidden&gt;Copy the source into your product.&lt;/div&gt;&lt;div id=&quot;demo-panel-2&quot; role=&quot;tabpanel&quot; aria-labelledby=&quot;demo-tab-2&quot; hidden&gt;Native HTML, existing Odyssey runtime.&lt;/div&gt;&lt;/div&gt;</code>
+</pre><button type="button" class="ody-btn ody-btn--secondary ody-btn--sm" data-line-copy>Copy source</button>
+</details>
+</article>
+<article class="line-station" id="station-BRC" data-station="BRC" data-search="BRC Breadcrumb NAVIGATION">
+<header><a href="#station-BRC" class="line-station__code">BRC</a>
+<h4>Breadcrumb
+</h4><span class="line-meta">ODY-040</span>
+</header>
+<div class="line-specimen">
+<nav class="ody-breadcrumb" aria-label="Example breadcrumb"><a href="#network">Registry</a><span aria-hidden="true">/</span><a href="#line-2">L2</a><span aria-hidden="true">/</span><span aria-current="page">BTN</span>
+</nav>
+</div>
+<footer><span>depth ≥ 2 · current page</span><a href="navigation.html" aria-label="Breadcrumb guide">↗</a>
+</footer>
+<details>
+<summary>HTML source
+</summary>
+<pre><code>&lt;nav class=&quot;ody-breadcrumb&quot; aria-label=&quot;Example breadcrumb&quot;&gt;&lt;a href=&quot;#network&quot;&gt;Registry&lt;/a&gt;&lt;span aria-hidden=&quot;true&quot;&gt;/&lt;/span&gt;&lt;a href=&quot;#line-2&quot;&gt;L2&lt;/a&gt;&lt;span aria-hidden=&quot;true&quot;&gt;/&lt;/span&gt;&lt;span aria-current=&quot;page&quot;&gt;BTN&lt;/span&gt;&lt;/nav&gt;</code>
+</pre><button type="button" class="ody-btn ody-btn--secondary ody-btn--sm" data-line-copy>Copy source</button>
+</details>
+</article>
+<article class="line-station" id="station-MNU" data-station="MNU" data-search="MNU Menu NAVIGATION">
+<header><a href="#station-MNU" class="line-station__code">MNU</a>
+<h4>Menu
+</h4><span class="line-meta">ODY-041</span>
+</header>
+<div class="line-specimen">
+<div class="ody-dropdown"><button class="ody-btn ody-btn--secondary" type="button" data-ody-toggle aria-expanded="false" aria-haspopup="menu">Station actions ↓</button>
+<div class="ody-menu" role="menu"><button type="button" class="ody-menu__item" role="menuitem" data-line-toast="Station duplicated in this demo">Duplicate</button><button type="button" class="ody-menu__item" role="menuitem" data-ody-open="#station-drawer">Move to line</button><button type="button" class="ody-menu__item" role="menuitem" data-line-toast="Station archived in this demo">Archive</button>
+</div>
+</div>
+</div>
+<footer><span>248 wide · native actions</span><a href="actions.html" aria-label="Menu guide">↗</a>
+</footer>
+<details>
+<summary>HTML source
+</summary>
+<pre><code>&lt;div class=&quot;ody-dropdown&quot;&gt;&lt;button class=&quot;ody-btn ody-btn--secondary&quot; type=&quot;button&quot; data-ody-toggle aria-expanded=&quot;false&quot; aria-haspopup=&quot;menu&quot;&gt;Station actions ↓&lt;/button&gt;&lt;div class=&quot;ody-menu&quot; role=&quot;menu&quot;&gt;&lt;button type=&quot;button&quot; class=&quot;ody-menu__item&quot; role=&quot;menuitem&quot;&gt;Duplicate&lt;/button&gt;&lt;button type=&quot;button&quot; class=&quot;ody-menu__item&quot; role=&quot;menuitem&quot; data-ody-open=&quot;#station-drawer&quot;&gt;Move to line&lt;/button&gt;&lt;button type=&quot;button&quot; class=&quot;ody-menu__item&quot; role=&quot;menuitem&quot;&gt;Archive&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;</code>
+</pre><button type="button" class="ody-btn ody-btn--secondary ody-btn--sm" data-line-copy>Copy source</button>
+</details>
+</article>
+<article class="line-station" id="station-STP" data-station="STP" data-search="STP Stepper NAVIGATION">
+<header><a href="#station-STP" class="line-station__code">STP</a>
+<h4>Stepper
+</h4><span class="line-meta">ODY-042</span>
+</header>
+<div class="line-specimen"><ol class="ody-steps" aria-label="Release steps"><li class="is-complete" aria-label="Step 1 complete">1</li><li aria-current="step" aria-label="Step 2 current">2</li><li aria-label="Step 3">3</li><li aria-label="Step 4">4</li></ol>
+</div>
+<footer><span>1→4 · current · complete</span><a href="navigation.html" aria-label="Stepper guide">↗</a>
+</footer>
+<details>
+<summary>HTML source
+</summary>
+<pre><code>&lt;ol class=&quot;ody-steps&quot; aria-label=&quot;Release steps&quot;&gt;&lt;li class=&quot;is-complete&quot; aria-label=&quot;Step 1 complete&quot;&gt;1&lt;/li&gt;&lt;li aria-current=&quot;step&quot; aria-label=&quot;Step 2 current&quot;&gt;2&lt;/li&gt;&lt;li aria-label=&quot;Step 3&quot;&gt;3&lt;/li&gt;&lt;li aria-label=&quot;Step 4&quot;&gt;4&lt;/li&gt;&lt;/ol&gt;</code>
+</pre><button type="button" class="ody-btn ody-btn--secondary ody-btn--sm" data-line-copy>Copy source</button>
+</details>
+</article>
+</div>
+</section>
+<p id="station-empty" class="line-empty" hidden>No stations match. Try a name, code or line.
+</p>
+</section>
 
-    <h2 id="why">为什么选 Odyssey UI</h2>
-    <div class="ody-grid ody-grid--3 ody-mt-4">
-      <div class="ody-card doc-feature"><div class="ody-card__body">
-        <div class="doc-feature__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg></div>
-        <h3>主权自持</h3><p>无 npm、无构建、无第三方运行时。图标为内联 SVG，字体可选内嵌，交付物完全自包含。</p>
-      </div></div>
-      <div class="ody-card doc-feature"><div class="ody-card__body">
-        <div class="doc-feature__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="M3.3 7 12 12l8.7-5M12 22V12"/></svg></div>
-        <h3>零依赖</h3><p>一份 CSS + 一份 JS，无外链、无 CDN 调用、无网络请求。放进任何页面即可运行。</p>
-      </div></div>
-      <div class="ody-card doc-feature"><div class="ody-card__body">
-        <div class="doc-feature__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg></div>
-        <h3>亮暗主题</h3><p>默认亮色，暗色同时支持系统偏好与显式 <code>[data-theme]</code>，一次点击即切换并记忆。</p>
-      </div></div>
-      <div class="ody-card doc-feature"><div class="ody-card__body">
-        <div class="doc-feature__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M7 12h10M10 18h4"/></svg></div>
-        <h3>Token 驱动</h3><p>两级 <code>--ody-*</code> token（原始 → 语义），换肤只需覆盖语义层，组件规则纹丝不动。</p>
-      </div></div>
-      <div class="ody-card doc-feature"><div class="ody-card__body">
-        <div class="doc-feature__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16a4 4 0 0 1 .5-8 6 6 0 0 1 11.3 1.5A3.5 3.5 0 0 1 17.5 16Z"/><path d="M12 12v6M9 15l3 3 3-3"/></svg></div>
-        <h3>CDN 即用</h3><p>指向发行地址 <code>odyssey.w33d.xyz</code> 一行引入，或整包自托管，随你掌控。</p>
-      </div></div>
-      <div class="ody-card doc-feature"><div class="ody-card__body">
-        <div class="doc-feature__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></div>
-        <h3>内部服务端动态</h3><p>Steadholme 内部 Rust 发行线由 Wire、Spark、Motion 组成；公开 <code>odyssey.js</code> 仍是无网络请求的 UI 行为层。</p>
-      </div></div>
-    </div>
+<section class="line-section" id="foundations">
+<div class="line-section__meta"><span>02 / FOUNDATIONS</span><span>THE LANGUAGE, IN NUMBERS</span>
+</div>
+<div class="line-section__heading">
+<h2>The ink on every sheet.
+</h2>
+<p>Six line inks carry meaning. The neutral ramp does the structural work. Geometry, type and time are shared tokens.
+</p>
+</div>
+<div class="line-swatches">
+<div><span class="line-swatch" data-line="1"></span><span class="line-meta">L1 / SURFACE</span><code>#0062FF</code>
+</div>
+<div><span class="line-swatch" data-line="2"></span><span class="line-meta">L2 / CONTROL</span><code>#10B981</code>
+</div>
+<div><span class="line-swatch" data-line="3"></span><span class="line-meta">L3 / INPUT</span><code>#F59E0B</code>
+</div>
+<div><span class="line-swatch" data-line="4"></span><span class="line-meta">L4 / DATA</span><code>#7C3AED</code>
+</div>
+<div><span class="line-swatch" data-line="5"></span><span class="line-meta">L5 / FEEDBACK</span><code>#E5484D</code>
+</div>
+<div><span class="line-swatch" data-line="6"></span><span class="line-meta">L6 / NAVIGATION</span><code>#64748B</code>
+</div>
+</div>
+<div class="line-foundation-grid">
+<div>
+<h3>Type scale
+</h3>
+<div class="line-type-display">The Line
+</div>
+<p class="line-meta">ARCHIVO / 88 · 44 · 28 · 18
+</p>
+<p>Every station carries a code and a part number.
+</p>
+<p class="line-meta">INTER / 13 · 1.60
+</p><code>BTN · L2 · ODY-009 · 32PX</code>
+<p class="line-meta">AZERET MONO / 9 · 1.40
+</p>
+</div>
+<div>
+<h3>Space &amp; geometry
+</h3>
+<div class="line-space-scale">
+<div><span style="height:4px"></span><code>4</code>
+</div>
+<div><span style="height:8px"></span><code>8</code>
+</div>
+<div><span style="height:12px"></span><code>12</code>
+</div>
+<div><span style="height:16px"></span><code>16</code>
+</div>
+<div><span style="height:24px"></span><code>24</code>
+</div>
+<div><span style="height:32px"></span><code>32</code>
+</div>
+<div><span style="height:48px"></span><code>48</code>
+</div>
+<div><span style="height:64px"></span><code>64</code>
+</div>
+</div>
+<p class="line-meta">4-BASE / 0 · 2 · 4 · PILL RADII
+</p>
+<h3>Motion
+</h3>
+<div class="line-motion"><span>120ms</span><span>180ms</span><span>240ms</span><span>320ms</span>
+</div>
+<p>Press · hover · disclosure · theme. Reduced motion sets every duration to zero.
+</p>
+</div>
+</div>
+</section>
 
-    <h2 id="install">30 秒装上</h2>
-    <p>在页面 <code>&lt;head&gt;</code> 引入样式，在 <code>&lt;/body&gt;</code> 前引入脚本即可。字体为可选项。</p>
-    <div class="doc-code doc-code--stand"><pre><code>&lt;!-- 样式（必需） --&gt;
-&lt;link rel="stylesheet" href="https://odyssey.w33d.xyz/1.1/odyssey.css"&gt;
-&lt;!-- Inter 字体（可选） --&gt;
-&lt;link rel="stylesheet" href="https://odyssey.w33d.xyz/1.1/odyssey-font.css"&gt;
+<section class="line-section" id="states">
+<div class="line-section__meta"><span>03 / STATE MODEL</span><span>DEFAULT · HOVER · FOCUS · DISABLED · BUSY</span>
+</div>
+<div class="line-section__heading">
+<h2>Defined, not discovered.
+</h2>
+<p>Keyboard focus is a flush 2px line ring. Loading keeps the width stable. Native controls keep their native keyboard behaviour.
+</p>
+</div>
+<div class="line-state-row">
+<div><button type="button" class="ody-btn ody-btn--primary" data-line-toast="Saved to the registry">Save changes</button><span>DEFAULT</span>
+</div>
+<div><button type="button" class="ody-btn ody-btn--secondary">Cancel</button><span>SECONDARY</span>
+</div>
+<div><button type="button" class="ody-btn ody-btn--primary" disabled>Disabled</button><span>DISABLED / 40%</span>
+</div>
+<div><button type="button" class="ody-btn ody-btn--primary" aria-busy="true" aria-label="Saving changes" disabled>Saving</button><span>BUSY / ARIA-BUSY</span>
+</div>
+<div><button type="button" class="ody-btn ody-btn--danger" data-ody-open="#station-modal">Delete</button><span>DESTRUCTIVE</span>
+</div>
+</div>
+<form id="line-validation" class="line-validation" novalidate>
+<label class="ody-field"><span class="ody-label">Email address <span aria-hidden="true">*</span></span><input class="ody-input" type="email" name="email" required aria-describedby="validation-hint"><span class="ody-hint" id="validation-hint">Enter an email to try field validation.</span>
+</label><button type="submit" class="ody-btn ody-btn--primary">Validate field</button>
+<p role="status" id="validation-status">
+</p>
+</form>
+</section>
 
-&lt;!-- 交互脚本（可选，data-* 渐进增强） --&gt;
-&lt;script src="https://odyssey.w33d.xyz/1.1/odyssey.js"&gt;&lt;/script&gt;</code></pre></div>
+<section class="line-section" id="patterns">
+<div class="line-section__meta"><span>04 / PATTERNS</span><span>ONE LANGUAGE · REAL ASSEMBLIES</span>
+</div>
+<div class="line-section__heading">
+<h2>Compose the stations.
+</h2>
+<p>The same table, field, switch and actions form an operations console, a settings form and a record detail. The product keeps its own data and runtime.
+</p>
+</div>
+<div class="line-pattern-grid">
+<section class="ody-panel">
+<header class="ody-panel__head"><span class="line-meta">01 / OPERATIONS CONSOLE</span>
+<h3>Production fleet
+</h3>
+</header>
+<div class="ody-panel__body">
+<div class="ody-table-wrap"><table class="ody-table"><caption class="ody-sr-only">Component release states</caption><thead><tr><th scope="col">PART</th><th scope="col">STATE</th></tr></thead><tbody><tr><td>button</td><td>stable</td></tr><tr><td>dialog</td><td>beta</td></tr></tbody></table>
+</div>
+<div class="line-actions"><button type="button" class="ody-btn ody-btn--secondary" data-ody-open="#station-modal">Rollback</button><button type="button" class="ody-btn ody-btn--primary" data-line-toast="Demo deployment complete">Deploy now</button>
+</div>
+</div>
+</section>
+<section class="ody-panel">
+<header class="ody-panel__head"><span class="line-meta">02 / SETTINGS FORM</span>
+<h3>Deployment settings
+</h3>
+</header>
+<div class="ody-panel__body">
+<label class="ody-field"><span class="ody-label">Project name</span><input class="ody-input" value="checkout-api">
+</label>
+<div class="line-actions">
+<label class="ody-switch"><input type="checkbox" aria-label="Enable deployment automation" checked><span class="ody-switch__track"></span>
+</label><span>Auto-deploy on push</span>
+</div>
+</div>
+</section>
+<section class="ody-panel">
+<header class="ody-panel__head"><span class="line-meta">03 / RECORD DETAIL</span>
+<h3>Release 42
+</h3>
+</header>
+<div class="ody-panel__body"><dl class="ody-desc"><dt>Environment</dt><dd>Production</dd><dt>Commit</dt><dd><code>a91f2c4</code></dd><dt>Status</dt><dd><span class="ody-pill ody-pill--ok">LIVE</span></dd></dl>
+<div class="line-actions"><button type="button" class="ody-btn ody-btn--secondary" data-ody-open="#station-drawer">Open drawer</button>
+</div>
+</div>
+</section>
+</div>
+</section>
 
-    <h2 id="components">按类别浏览</h2>
-    <div class="ody-grid ody-grid--2 ody-mt-4">
-      <a class="doc-entry" href="actions.html"><div class="ody-card ody-card--hover"><div class="ody-card__body">
-        <h3 class="ody-h3">Actions</h3><p class="ody-muted ody-mt-1">按钮、图标按钮、按钮组、下拉菜单、复制按钮、链接。</p>
-      </div></div></a>
-      <a class="doc-entry" href="forms.html"><div class="ody-card ody-card--hover"><div class="ody-card__body">
-        <h3 class="ody-h3">Forms</h3><p class="ody-muted ody-mt-1">输入框、文本域、下拉、勾选、单选、开关、滑块、输入组、文件。</p>
-      </div></div></a>
-      <a class="doc-entry" href="data-display.html"><div class="ody-card ody-card--hover"><div class="ody-card__body">
-        <h3 class="ody-h3">Data display</h3><p class="ody-muted ody-mt-1">卡片、表格、统计、标签、徽标、头像、进度、时间线、骨架屏。</p>
-      </div></div></a>
-      <a class="doc-entry" href="feedback.html"><div class="ody-card ody-card--hover"><div class="ody-card__body">
-        <h3 class="ody-h3">Feedback</h3><p class="ody-muted ody-mt-1">警告条、Toast、模态框、抽屉、空状态、加载、横幅、气泡卡片。</p>
-      </div></div></a>
-      <a class="doc-entry" href="navigation.html"><div class="ody-card ody-card--hover"><div class="ody-card__body">
-        <h3 class="ody-h3">Navigation</h3><p class="ody-muted ody-mt-1">顶栏、侧栏、标签页、面包屑、分页、步骤条、手风琴。</p>
-      </div></div></a>
-      <a class="doc-entry" href="typography.html"><div class="ody-card ody-card--hover"><div class="ody-card__body">
-        <h3 class="ody-h3">Typography</h3><p class="ody-muted ody-mt-1">Prose 富文本、引用、描述列表、列表变体，字号/字重/色调/截断工具类。</p>
-      </div></div></a>
-      <a class="doc-entry" href="layout.html"><div class="ody-card ody-card--hover"><div class="ody-card__body">
-        <h3 class="ody-h3">Layout</h3><p class="ody-muted ody-mt-1">容器、栈、栅格、弹性、cluster/center/spread、分隔线、宽高比与间距工具。</p>
-      </div></div></a>
-      <a class="doc-entry" href="overlays.html"><div class="ody-card ody-card--hover"><div class="ody-card__body">
-        <h3 class="ody-h3">Overlays</h3><p class="ody-muted ody-mt-1">Tooltip 文字提示、Popover 气泡卡片、Hover card 悬浮卡，零配置 data-* 驱动。</p>
-      </div></div></a>
-      <a class="doc-entry" href="tokens.html"><div class="ody-card ody-card--hover"><div class="ody-card__body">
-        <h3 class="ody-h3">Design tokens</h3><p class="ody-muted ody-mt-1">色板、间距、圆角、阴影、字号、字重 — 亮暗对照参考。</p>
-      </div></div></a>
-    </div>
+<section class="line-section" id="dark">
+<div class="line-section__meta"><span>05 / DARK MODE</span><span>SAME COMPONENTS · SAME GEOMETRY</span>
+</div>
+<div class="line-section__heading">
+<h2>Nothing here knows it is dark.
+</h2>
+<p>Surface, ink, hairline and rule change their values. No second set of components. Use the theme control above to switch the entire library.
+</p>
+</div>
+<div data-ody-design="line" data-theme="dark" class="line-dark-plate">
+<header><span class="line-meta">ODYSSEY / CONTROL · US-WEST-2</span><span class="ody-pill ody-pill--ok">LIVE</span>
+</header>
+<h3>Production fleet
+</h3>
+<div class="line-dark-grid">
+<div>
+<div class="ody-table-wrap"><table class="ody-table"><caption class="ody-sr-only">Dark theme component release states</caption><thead><tr><th scope="col">PART</th><th scope="col">STATE</th></tr></thead><tbody><tr><td>button</td><td>stable</td></tr><tr><td>dialog</td><td>beta</td></tr></tbody></table>
+</div>
+</div>
+<div>
+<label class="ody-field"><span class="ody-label">PROJECT NAME</span><input class="ody-input" value="checkout-api">
+</label>
+<div class="line-actions"><button type="button" class="ody-btn ody-btn--secondary" data-ody-open="#station-modal">Rollback</button><button type="button" class="ody-btn ody-btn--primary" data-line-toast="Demo deployment complete">Deploy now</button>
+</div>
+</div>
+</div>
+</div>
+</section>
 
-    <footer class="doc-footer">
-      <svg class="doc-footer__star" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2 14.2 9.8 22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2Z"/></svg>
-      <span>Odyssey UI · Steadholme 主权自持设计语言</span>
-      <span class="doc-footer__sep"></span>
-      <a href="getting-started.html">快速开始</a>
-      <a href="tokens.html">Design tokens</a>
-      <a href="https://git.w33d.xyz/holdfast/odyssey">源码</a>
-    </footer>
-  </main>
+<section class="line-section" id="accessibility">
+<div class="line-section__meta"><span>06 / ACCESSIBILITY</span><span>KEYBOARD · CONTRAST · TARGETS</span>
+</div>
+<div class="line-section__heading">
+<h2>Not reached by eye alone.
+</h2>
+<p>DOM order is focus order. Escape dismisses overlays and returns to the trigger. Line inks identify families; readable text uses a separate contrast-safe role.
+</p>
+</div>
+<div class="line-a11y-grid">
+<div>
+<h3>Keyboard map
+</h3><dl class="ody-desc"><dt>Tab / Shift+Tab</dt><dd>Next / previous control</dd><dt>Enter / Space</dt><dd>Activate / toggle</dd><dt>← / → / Home / End</dt><dd>Navigate tabs</dd><dt>Escape</dt><dd>Close an overlay</dd></dl>
+</div>
+<div>
+<h3>Touch &amp; reduced motion
+</h3>
+<p>Controls use at least 44px hit areas on coarse-pointer devices. Reduced motion removes animation and transition delays.
+</p>
+<p>Primary text: <code>#111418</code><br>Muted text: <code>#5D6878</code><br>Ground: <code>#FFFFFF</code>
+</p>
+</div>
+</div>
+</section>
+
+<section class="line-section" id="adoption">
+<div class="line-section__meta"><span>07 / ADOPTION &amp; API</span><span>EXPLICIT OPT-IN · EXISTING CONTRACTS</span>
+</div>
+<div class="line-section__heading">
+<h2>The files are yours.
+</h2>
+<p>Load the existing component bank, then the Line layer. Add one root attribute. Rust consumers can use <code>APP_CSS</code> as before; the new design stays inactive until opted in.
+</p>
+</div>
+<div class="line-install">
+<pre><code>&lt;link rel="stylesheet" href="/dist/odyssey.css"&gt;
+&lt;link rel="stylesheet" href="/assets/line.css"&gt;
+&lt;script src="/dist/odyssey.js" defer&gt;&lt;/script&gt;
+
+&lt;div class="ody-scope" data-ody-design="line"&gt;
+  &lt;button type="button" class="ody-btn ody-btn--primary"&gt;
+    Save changes
+  &lt;/button&gt;
+&lt;/div&gt;</code>
+</pre><button type="button" class="ody-btn ody-btn--secondary" data-line-copy>Copy source</button>
+</div>
+<div class="line-api-links"><a href="actions.html">Buttons & controls<span>↗</span></a><a href="forms.html">Fields & validation<span>↗</span></a><a href="data-display.html">Tables & data<span>↗</span></a><a href="feedback.html">Toasts & alerts<span>↗</span></a><a href="navigation.html">Tabs & navigation<span>↗</span></a><a href="overlays.html">Modals & drawers<span>↗</span></a><a href="tokens.html">Tokens<span>↗</span></a><a href="getting-started.html">Getting started<span>↗</span></a>
+</div>
+</section>
+</main>
+<footer class="line-footer"><span>ODYSSEY / THE LINE SPECIFICATION</span><span>42 STATIONS · SIX LINES · STEADHOLME</span>
+</footer>
+
+<div class="ody-modal" id="station-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+<div class="ody-modal__backdrop" data-ody-dismiss>
+</div>
+<section class="ody-modal__panel">
+<header class="ody-modal__head">
+<h2 class="ody-modal__title" id="modal-title">Delete station?
+</h2><button type="button" class="ody-iconbtn" data-ody-dismiss aria-label="Close dialog">×</button>
+</header>
+<div class="ody-modal__body">
+<p>This cannot be undone. This specimen does not change any product data.
+</p>
+</div>
+<footer class="ody-modal__foot"><button type="button" class="ody-btn ody-btn--secondary" data-ody-dismiss>Cancel</button><button class="ody-btn ody-btn--danger" type="button" data-ody-dismiss data-line-toast="Station deleted in this demo">Delete station</button>
+</footer>
+</section>
 </div>
 
-<script src="../dist/odyssey.js"></script>
-<script src="assets/site.js"></script>
+<div class="ody-drawer" id="station-drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title" hidden>
+<div class="ody-drawer__backdrop" data-ody-dismiss>
+</div>
+<section class="ody-drawer__panel">
+<header class="ody-drawer__head">
+<h2 id="drawer-title" class="ody-drawer__title">Station detail
+</h2><button type="button" class="ody-iconbtn" data-ody-dismiss aria-label="Close drawer">×</button>
+</header>
+<div class="ody-drawer__body"><span class="line-badge" data-line="2">L2</span>
+<h3>BTN / Button
+</h3><dl class="ody-desc"><dt>Part</dt><dd>ODY-009</dd><dt>Sizes</dt><dd>32 / 40 / 48</dd><dt>Radius</dt><dd>0 / 2 / 4</dd><dt>Focus</dt><dd>2px line ring</dd></dl>
+<p>Use the existing button helper or native HTML. Behaviour remains product-owned.
+</p><a class="ody-link" href="actions.html">Read the API guide ↗</a>
+</div>
+<footer class="ody-drawer__foot"><button type="button" class="ody-btn ody-btn--secondary" data-ody-dismiss>Close</button>
+</footer>
+</section>
+</div>
+
+<div id="line-copy-status" class="ody-sr-only" role="status">
+</div>
 </body>
 </html>

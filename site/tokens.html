@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-ody-design="line">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -8,6 +8,8 @@
 <link rel="stylesheet" href="../dist/odyssey.css">
 <link rel="stylesheet" href="../dist/odyssey-font.css">
 <link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/line.css">
+<link rel="stylesheet" href="assets/line-site.css">
 </head>
 <body class="ody-scope">
 
@@ -60,7 +62,7 @@
     <header class="doc-header">
       <p class="doc-eyebrow">Guide</p>
       <h1 class="doc-title">Design tokens</h1>
-      <p class="doc-lead">所有视觉决策都编码为 <code>--ody-*</code> 自定义属性：两级映射 —— 原始色阶 <code>--ody-c-*</code> → 语义 <code>--ody-*</code>。组件规则只引语义层，因此换肤或切主题只需覆盖语义 token。</p>
+      <p class="doc-lead">所有视觉决策都编码为 <code>--ody-*</code> 自定义属性：此页展示启用 <code>data-ody-design="line"</code> 后的语义取值。已冻结的基础发行线保留原始取值；只有显式启用 Line 的 root 才使用新版映射。</p>
     </header>
 
     <div class="ody-alert ody-alert--info">
@@ -68,67 +70,68 @@
       <div class="ody-alert__body">下方所有色块都用 <em>live</em> 变量渲染，会随主题自动变化。标注的十六进制为<strong>亮色取值</strong> —— 点右上角切到暗色即可预览对照。</div>
     </div>
 
+    <h2 id="lines">六条 Line</h2><div class="doc-swatches"><div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-line-1)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-line-1 / Surface</div><div class="doc-swatch__val">#0062FF</div></div></div><div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-line-2)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-line-2 / Control</div><div class="doc-swatch__val">#10B981</div></div></div><div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-line-3)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-line-3 / Input</div><div class="doc-swatch__val">#F59E0B</div></div></div><div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-line-4)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-line-4 / Data</div><div class="doc-swatch__val">#7C3AED</div></div></div><div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-line-5)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-line-5 / Feedback</div><div class="doc-swatch__val">#E5484D</div></div></div><div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-line-6)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-line-6 / Navigation</div><div class="doc-swatch__val">#64748B</div></div></div></div><p>Line 色用于分类与图形；小字号文字使用 <code>--ody-ink-muted: #5D6878</code>，不使用低对比度的 ink-3 / ink-4。</p>
     <h2 id="brand">品牌 / 强调色</h2>
     <div class="doc-swatches">
-      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-accent)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-accent</div><div class="doc-swatch__val">#b6422c</div></div></div>
-      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-accent-2)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-accent-2</div><div class="doc-swatch__val">#d85d3f</div></div></div>
-      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-accent-ink)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-accent-ink</div><div class="doc-swatch__val">#8f2f1e</div></div></div>
-      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-accent-soft)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-accent-soft</div><div class="doc-swatch__val">#f4e4de</div></div></div>
-      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-accent-soft-2)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-accent-soft-2</div><div class="doc-swatch__val">#eac9be</div></div></div>
+      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-accent)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-accent</div><div class="doc-swatch__val">#0062ff</div></div></div>
+      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-accent-2)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-accent-2</div><div class="doc-swatch__val">#004fd1</div></div></div>
+      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-accent-ink)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-accent-ink</div><div class="doc-swatch__val">#004abf</div></div></div>
+      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-accent-soft)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-accent-soft</div><div class="doc-swatch__val">#e8f0ff</div></div></div>
+      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-accent-soft-2)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-accent-soft-2</div><div class="doc-swatch__val">#c8dcff</div></div></div>
     </div>
 
     <h2 id="status">语义状态色</h2>
     <h3 id="ok">Success · ok</h3>
     <div class="doc-swatches">
-      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-ok)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-ok</div><div class="doc-swatch__val">#16a34a</div></div></div>
-      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-ok-soft)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-ok-soft</div><div class="doc-swatch__val">#e6f6ec</div></div></div>
-      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-ok-ink)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-ok-ink</div><div class="doc-swatch__val">#15803d</div></div></div>
+      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-ok)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-ok</div><div class="doc-swatch__val">#10b981</div></div></div>
+      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-ok-soft)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-ok-soft</div><div class="doc-swatch__val">#e3f0e9</div></div></div>
+      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-ok-ink)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-ok-ink</div><div class="doc-swatch__val">#1e6b4b</div></div></div>
     </div>
     <h3 id="warn">Warning · warn</h3>
     <div class="doc-swatches">
-      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-warn)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-warn</div><div class="doc-swatch__val">#d97706</div></div></div>
-      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-warn-soft)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-warn-soft</div><div class="doc-swatch__val">#fdf1de</div></div></div>
-      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-warn-ink)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-warn-ink</div><div class="doc-swatch__val">#b45309</div></div></div>
+      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-warn)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-warn</div><div class="doc-swatch__val">#f59e0b</div></div></div>
+      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-warn-soft)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-warn-soft</div><div class="doc-swatch__val">#f8edda</div></div></div>
+      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-warn-ink)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-warn-ink</div><div class="doc-swatch__val">#85520a</div></div></div>
     </div>
     <h3 id="down">Danger · down</h3>
     <div class="doc-swatches">
-      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-down)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-down</div><div class="doc-swatch__val">#e11d48</div></div></div>
-      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-down-soft)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-down-soft</div><div class="doc-swatch__val">#fde7ec</div></div></div>
-      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-down-ink)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-down-ink</div><div class="doc-swatch__val">#be123c</div></div></div>
+      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-down)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-down</div><div class="doc-swatch__val">#e5484d</div></div></div>
+      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-down-soft)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-down-soft</div><div class="doc-swatch__val">#f7e2e0</div></div></div>
+      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-down-ink)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-down-ink</div><div class="doc-swatch__val">#b72c32</div></div></div>
     </div>
     <h3 id="info">Info</h3>
     <div class="doc-swatches">
-      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-info)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-info</div><div class="doc-swatch__val">#0891b2</div></div></div>
-      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-info-soft)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-info-soft</div><div class="doc-swatch__val">#e0f5f9</div></div></div>
-      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-info-ink)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-info-ink</div><div class="doc-swatch__val">#0e7490</div></div></div>
+      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-info)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-info</div><div class="doc-swatch__val">#0062ff</div></div></div>
+      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-info-soft)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-info-soft</div><div class="doc-swatch__val">#e8f0ff</div></div></div>
+      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-info-ink)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-info-ink</div><div class="doc-swatch__val">#004abf</div></div></div>
     </div>
 
     <h2 id="surface">表面 / 边框</h2>
     <div class="doc-swatches">
-      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-bg)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-bg</div><div class="doc-swatch__val">#f2f0e8</div></div></div>
-      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-bg-2)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-bg-2</div><div class="doc-swatch__val">#e9e6dc</div></div></div>
-      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-surface)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-surface</div><div class="doc-swatch__val">#faf9f4</div></div></div>
-      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-surface-2)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-surface-2</div><div class="doc-swatch__val">#f5f3ec</div></div></div>
-      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-surface-3)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-surface-3</div><div class="doc-swatch__val">#ece9df</div></div></div>
-      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-border)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-border</div><div class="doc-swatch__val">#cfcabd</div></div></div>
-      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-border-2)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-border-2</div><div class="doc-swatch__val">#8d887c</div></div></div>
-      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-hairline)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-hairline</div><div class="doc-swatch__val">#e2dfd5</div></div></div>
+      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-bg)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-bg</div><div class="doc-swatch__val">#fff</div></div></div>
+      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-bg-2)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-bg-2</div><div class="doc-swatch__val">#f3f5f8</div></div></div>
+      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-surface)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-surface</div><div class="doc-swatch__val">#fff</div></div></div>
+      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-surface-2)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-surface-2</div><div class="doc-swatch__val">#f3f5f8</div></div></div>
+      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-surface-3)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-surface-3</div><div class="doc-swatch__val">#e9edf1</div></div></div>
+      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-border)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-border</div><div class="doc-swatch__val">#dde2e8</div></div></div>
+      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-border-2)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-border-2</div><div class="doc-swatch__val">#7c8798</div></div></div>
+      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-hairline)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-hairline</div><div class="doc-swatch__val">#dde2e8</div></div></div>
     </div>
 
     <h2 id="ink">文字 / ink</h2>
     <div class="doc-swatches">
-      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-ink)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-ink</div><div class="doc-swatch__val">#191c18</div></div></div>
-      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-ink-2)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-ink-2</div><div class="doc-swatch__val">#454b43</div></div></div>
-      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-ink-3)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-ink-3</div><div class="doc-swatch__val">#5f665b</div></div></div>
-      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-ink-4)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-ink-4</div><div class="doc-swatch__val">#6d7469</div></div></div>
+      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-ink)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-ink</div><div class="doc-swatch__val">#111418</div></div></div>
+      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-ink-2)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-ink-2</div><div class="doc-swatch__val">#3d4a57</div></div></div>
+      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-ink-3)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-ink-3</div><div class="doc-swatch__val">#7c8798</div></div></div>
+      <div class="doc-swatch"><div class="doc-swatch__chip" style="background:var(--ody-ink-4)"></div><div class="doc-swatch__meta"><div class="doc-swatch__name">--ody-ink-4</div><div class="doc-swatch__val">#aeb6c2</div></div></div>
     </div>
 
     <h2 id="radius">圆角</h2>
     <div class="doc-scale">
-      <div class="doc-scale__row"><span class="doc-scale__key">--ody-r-xs</span><span class="doc-scale__demo" style="width:64px;height:32px;border-radius:var(--ody-r-xs)"></span><span class="doc-scale__val">2px</span></div>
-      <div class="doc-scale__row"><span class="doc-scale__key">--ody-r-sm</span><span class="doc-scale__demo" style="width:64px;height:32px;border-radius:var(--ody-r-sm)"></span><span class="doc-scale__val">3px</span></div>
-      <div class="doc-scale__row"><span class="doc-scale__key">--ody-r</span><span class="doc-scale__demo" style="width:64px;height:32px;border-radius:var(--ody-r)"></span><span class="doc-scale__val">4px</span></div>
-      <div class="doc-scale__row"><span class="doc-scale__key">--ody-r-lg</span><span class="doc-scale__demo" style="width:64px;height:32px;border-radius:var(--ody-r-lg)"></span><span class="doc-scale__val">7px</span></div>
+      <div class="doc-scale__row"><span class="doc-scale__key">--ody-r-xs</span><span class="doc-scale__demo" style="width:64px;height:32px;border-radius:var(--ody-r-xs)"></span><span class="doc-scale__val">0px</span></div>
+      <div class="doc-scale__row"><span class="doc-scale__key">--ody-r-sm</span><span class="doc-scale__demo" style="width:64px;height:32px;border-radius:var(--ody-r-sm)"></span><span class="doc-scale__val">2px</span></div>
+      <div class="doc-scale__row"><span class="doc-scale__key">--ody-r</span><span class="doc-scale__demo" style="width:64px;height:32px;border-radius:var(--ody-r)"></span><span class="doc-scale__val">2px</span></div>
+      <div class="doc-scale__row"><span class="doc-scale__key">--ody-r-lg</span><span class="doc-scale__demo" style="width:64px;height:32px;border-radius:var(--ody-r-lg)"></span><span class="doc-scale__val">4px</span></div>
       <div class="doc-scale__row"><span class="doc-scale__key">--ody-r-pill</span><span class="doc-scale__demo" style="width:64px;height:32px;border-radius:var(--ody-r-pill)"></span><span class="doc-scale__val">999px</span></div>
     </div>
 
@@ -138,9 +141,9 @@
       <div class="doc-scale__row"><span class="doc-scale__key">--ody-sp-2</span><span class="doc-scale__bar" style="width:var(--ody-sp-2)"></span><span class="doc-scale__val">8px</span></div>
       <div class="doc-scale__row"><span class="doc-scale__key">--ody-sp-3</span><span class="doc-scale__bar" style="width:var(--ody-sp-3)"></span><span class="doc-scale__val">12px</span></div>
       <div class="doc-scale__row"><span class="doc-scale__key">--ody-sp-4</span><span class="doc-scale__bar" style="width:var(--ody-sp-4)"></span><span class="doc-scale__val">16px</span></div>
-      <div class="doc-scale__row"><span class="doc-scale__key">--ody-sp-5</span><span class="doc-scale__bar" style="width:var(--ody-sp-5)"></span><span class="doc-scale__val">20px</span></div>
-      <div class="doc-scale__row"><span class="doc-scale__key">--ody-sp-6</span><span class="doc-scale__bar" style="width:var(--ody-sp-6)"></span><span class="doc-scale__val">24px</span></div>
-      <div class="doc-scale__row"><span class="doc-scale__key">--ody-sp-8</span><span class="doc-scale__bar" style="width:var(--ody-sp-8)"></span><span class="doc-scale__val">32px</span></div>
+      <div class="doc-scale__row"><span class="doc-scale__key">--ody-sp-5</span><span class="doc-scale__bar" style="width:var(--ody-sp-5)"></span><span class="doc-scale__val">24px</span></div>
+      <div class="doc-scale__row"><span class="doc-scale__key">--ody-sp-6</span><span class="doc-scale__bar" style="width:var(--ody-sp-6)"></span><span class="doc-scale__val">32px</span></div>
+      <div class="doc-scale__row"><span class="doc-scale__key">--ody-sp-8</span><span class="doc-scale__bar" style="width:var(--ody-sp-8)"></span><span class="doc-scale__val">64px</span></div>
     </div>
 
     <h2 id="shadow">阴影 / 层级</h2>
@@ -154,28 +157,28 @@
 
     <h2 id="type">字号梯</h2>
     <div class="doc-scale">
-      <div class="doc-scale__row"><span class="doc-scale__key">--ody-fs-stat</span><span style="font-size:var(--ody-fs-stat);font-weight:700;letter-spacing:-.02em;color:var(--ody-ink)">1,024</span><span class="doc-scale__val">28px</span></div>
-      <div class="doc-scale__row"><span class="doc-scale__key">--ody-fs-h1</span><span style="font-size:var(--ody-fs-h1);font-weight:var(--ody-fw-semibold);color:var(--ody-ink)">敏捷的棕狐 Aa</span><span class="doc-scale__val">24px</span></div>
-      <div class="doc-scale__row"><span class="doc-scale__key">--ody-fs-h2</span><span style="font-size:var(--ody-fs-h2);font-weight:var(--ody-fw-semibold);color:var(--ody-ink)">敏捷的棕狐 Aa</span><span class="doc-scale__val">18px</span></div>
-      <div class="doc-scale__row"><span class="doc-scale__key">--ody-fs-h3</span><span style="font-size:var(--ody-fs-h3);font-weight:var(--ody-fw-semibold);color:var(--ody-ink)">敏捷的棕狐 Aa</span><span class="doc-scale__val">14.5px</span></div>
-      <div class="doc-scale__row"><span class="doc-scale__key">--ody-fs-body</span><span style="font-size:var(--ody-fs-body);color:var(--ody-ink-2)">敏捷的棕狐 Aa</span><span class="doc-scale__val">14px</span></div>
+      <div class="doc-scale__row"><span class="doc-scale__key">--ody-fs-stat</span><span style="font-size:var(--ody-fs-stat);font-weight:700;letter-spacing:-.02em;color:var(--ody-ink)">1,024</span><span class="doc-scale__val">44px</span></div>
+      <div class="doc-scale__row"><span class="doc-scale__key">--ody-fs-h1</span><span style="font-size:var(--ody-fs-h1);font-weight:var(--ody-fw-semibold);color:var(--ody-ink)">敏捷的棕狐 Aa</span><span class="doc-scale__val">44px</span></div>
+      <div class="doc-scale__row"><span class="doc-scale__key">--ody-fs-h2</span><span style="font-size:var(--ody-fs-h2);font-weight:var(--ody-fw-semibold);color:var(--ody-ink)">敏捷的棕狐 Aa</span><span class="doc-scale__val">28px</span></div>
+      <div class="doc-scale__row"><span class="doc-scale__key">--ody-fs-h3</span><span style="font-size:var(--ody-fs-h3);font-weight:var(--ody-fw-semibold);color:var(--ody-ink)">敏捷的棕狐 Aa</span><span class="doc-scale__val">18px</span></div>
+      <div class="doc-scale__row"><span class="doc-scale__key">--ody-fs-body</span><span style="font-size:var(--ody-fs-body);color:var(--ody-ink-2)">敏捷的棕狐 Aa</span><span class="doc-scale__val">13px</span></div>
       <div class="doc-scale__row"><span class="doc-scale__key">--ody-fs-sm</span><span style="font-size:var(--ody-fs-sm);color:var(--ody-ink-2)">敏捷的棕狐 Aa</span><span class="doc-scale__val">12px</span></div>
       <div class="doc-scale__row"><span class="doc-scale__key">--ody-fs-micro</span><span style="font-size:var(--ody-fs-micro);color:var(--ody-ink-3)">敏捷的棕狐 Aa</span><span class="doc-scale__val">11px</span></div>
-      <div class="doc-scale__row"><span class="doc-scale__key">--ody-fs-eyebrow</span><span style="font-size:var(--ody-fs-eyebrow);font-weight:var(--ody-fw-semibold);letter-spacing:var(--ody-track-eyebrow);text-transform:uppercase;color:var(--ody-ink-3)">Eyebrow</span><span class="doc-scale__val">11.5px</span></div>
+      <div class="doc-scale__row"><span class="doc-scale__key">--ody-fs-eyebrow</span><span style="font-size:var(--ody-fs-eyebrow);font-weight:var(--ody-fw-semibold);letter-spacing:var(--ody-track-eyebrow);text-transform:uppercase;color:var(--ody-ink-3)">Eyebrow</span><span class="doc-scale__val">11px</span></div>
     </div>
 
     <h2 id="weight">字重</h2>
     <div class="doc-scale">
-      <div class="doc-scale__row"><span class="doc-scale__key">--ody-fw-medium</span><span style="font-size:var(--ody-fs-h3);font-weight:var(--ody-fw-medium);color:var(--ody-ink)">Medium 中等字重 550</span><span class="doc-scale__val">550</span></div>
-      <div class="doc-scale__row"><span class="doc-scale__key">--ody-fw-semibold</span><span style="font-size:var(--ody-fs-h3);font-weight:var(--ody-fw-semibold);color:var(--ody-ink)">Semibold 半粗 650</span><span class="doc-scale__val">650</span></div>
+      <div class="doc-scale__row"><span class="doc-scale__key">--ody-fw-medium</span><span style="font-size:var(--ody-fs-h3);font-weight:var(--ody-fw-medium);color:var(--ody-ink)">Medium 中等字重 500</span><span class="doc-scale__val">500</span></div>
+      <div class="doc-scale__row"><span class="doc-scale__key">--ody-fw-semibold</span><span style="font-size:var(--ody-fs-h3);font-weight:var(--ody-fw-semibold);color:var(--ody-ink)">Semibold 半粗 600</span><span class="doc-scale__val">600</span></div>
     </div>
 
     <h2 id="font">字体族</h2>
-    <p>核心样式表<strong>不内嵌字体</strong>，只声明 <code>--ody-font</code> 变量并回退到系统字体栈。若需 Inter，额外 <code>&lt;link&gt;</code> 引入 <code>odyssey-font.css</code> 即可。</p>
+    <p>Line 层自托管 Archivo 与 Azeret Mono 的 Latin 子集，不发起外部字体请求。Inter 沿用 <code>odyssey-font.css</code>，中文与日文使用系统字体。</p>
     <div class="doc-code doc-code--stand"><pre><code>--ody-font: "Inter","Inter Variable",system-ui,-apple-system,
             "Segoe UI",Roboto,Helvetica,Arial,"PingFang SC",sans-serif;
---ody-mono: "JetBrains Mono","SFMono-Regular",ui-monospace,
-            "SF Mono",Menlo,Consolas,monospace;</code></pre></div>
+--ody-font-display: "Archivo","Inter",system-ui,sans-serif;
+--ody-mono: "Azeret Mono",ui-monospace,"SFMono-Regular",monospace;</code></pre></div>
 
     <footer class="doc-footer">
       <svg class="doc-footer__star" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2 14.2 9.8 22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2Z"/></svg>

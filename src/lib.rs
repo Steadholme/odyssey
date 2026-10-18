@@ -3,7 +3,14 @@ pub const APP_CSS: &str = concat!(
     include_str!("../css/tokens.css"),
     include_str!("../css/components.css"),
     include_str!("../css/motion.css"),
-    include_str!("../css/profile.css")
+    include_str!("../css/profile.css"),
+    include_str!("../css/line-font.css"),
+    include_str!("../css/line.css")
+);
+/// Opt-in Line Specification layer for the public component bank.
+pub const LINE_CSS: &str = concat!(
+    include_str!("../css/line-font.css"),
+    include_str!("../css/line.css")
 );
 pub const WIRE_JS: &str = include_str!("../js/wire.js");
 pub const SPARK_JS: &str = include_str!("../js/spark.js");
@@ -105,6 +112,18 @@ pub fn dynamic_scripts_with(opts: RuntimeOpts<'_>) -> Html {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn line_layer_is_opt_in_and_shares_public_and_rust_roles() {
+        assert!(LINE_CSS.contains("[data-ody-design=\"line\"]"));
+        assert!(LINE_CSS.contains("--ody-line-1:#0062ff"));
+        assert!(LINE_CSS.contains("--ody-space-8:64px"));
+        assert!(LINE_CSS.contains("--ody-ink-muted:#5d6878"));
+        assert!(LINE_CSS.contains(".ody-btn--primary,.btn-primary"));
+        assert!(LINE_CSS.contains("prefers-reduced-motion:reduce"));
+        assert!(LINE_CSS.contains(".ody-btn--sm,.btn-sm"));
+        assert!(APP_CSS.ends_with(include_str!("../css/line.css")));
+    }
 
     #[test]
     fn app_css_contains_compact_density_block() {
