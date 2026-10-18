@@ -32,6 +32,16 @@
 3. 删除/改名公开 class、data 属性、事件字段、helper 入口，或改变既有数据含义和默认行为，属于 breaking change，应进入新的 major 公开版本；新增可选能力进入 minor，兼容修复进入 patch。
 4. 弃用先在能力目录和迁移说明标注替代入口，旧入口至少保留整个当前 major；不能只删文档后静默删除实现。Rust API 变更按其独立 Cargo 版本声明，并继续保留旧调用路径。
 
+## 1.4.0 本轮发布决定（2026-10-18）
+
+本轮冻结的 20 个文件与已验收 `IvwAre` 候选逐文件、逐字节一致，`release.json` 来源与身份元数据也一致。旧 `1.1`、`1.2`、`1.3` 和 `compat-7362842` 保持原字节。
+
+- 自动验收复用本轮 [GitHub CI 39130749486](https://github.com/Steadholme/odyssey/actions/runs/39130749486) 与 Linux Chromium、Firefox、WebKit 三引擎的实际组件、完整组合、真实 Forms 输入及文件 `FormData` 证据；冻结后另核正式构建的 immutable header 和发行/兼容资产。
+- macOS Safari 与真实 `SCIM.ITABC` 输入法已验证 Tag 和 Command 的组合输入确认、取消及后续正常执行路径。
+- VoiceOver 完整导航尚未完成；用户已明确批准直接推进 Odyssey 生产，因此该人工检查延期，不计为通过。
+
+本轮只部署 Odyssey，不同步或自动推广外部消费者。实际冻结 commit、镜像、容器、健康检查及回滚基线记录在 OVH 本轮恢复包 `/srv/ovh-migration/odyssey-line-p1-20261018/receipt.json`；回滚目标是本轮切换前的 `95ce746` 镜像，不是更早的 `bd0ccce`。
+
 ## 准备、冻结、验收、晋级
 
 ```sh
