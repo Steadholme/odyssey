@@ -15,6 +15,8 @@ for (const component of manifest.components) {
   assert.ok(html.includes(component.id), component.id + ': state atlas inventory');
 }
 assert.deepEqual(matrix.geometry.space, [4, 8, 12, 16, 24, 32, 48, 64]);
+assert.match(html, /href="\/examples\/compositions\/workspace-settings\.html"/);
+assert.doesNotMatch(html, /href="\/examples\/compositions\/README\.md"/);
 assert.match(await read('site/actions.html'), /48px/);
 assert.doesNotMatch(await read('site/actions.html'), /放大到 46px/);
 assert.match(await read('site/layout.html'), /5=24 6=32 7=48 8=64/);
