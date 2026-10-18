@@ -6,12 +6,15 @@ const fromRoot = path => new URL('../../' + path, import.meta.url);
 let server;
 let base = process.env.ODYSSEY_BASE_URL;
 if (!base) {
-  const line = await readFile(fromRoot('css/line-font.css'), 'utf8') + await readFile(fromRoot('css/line.css'), 'utf8');
+  const lineFonts = await readFile(fromRoot('css/line-font.css'), 'utf8');
+  const lineTokens = await readFile(fromRoot('css/line.css'), 'utf8');
+  const line = lineFonts + lineTokens;
   const extensions = await readFile(fromRoot('css/expressions.css'), 'utf8') + await readFile(fromRoot('css/extensions.css'), 'utf8');
   const files = new Map([
     ['/examples/compositions/workspace-settings.html', ['text/html', await readFile(fromRoot('examples/compositions/workspace-settings.html'))]],
     ['/1.4.0/odyssey-font.css', ['text/css', await readFile(fromRoot('dist/odyssey-font.css'))]],
-    ['/1.4.0/odyssey-line.css', ['text/css', line]],
+    ['/1.4.0/odyssey-line-font.css', ['text/css', lineFonts]],
+    ['/1.4.0/odyssey-line.css', ['text/css', lineTokens]],
     ['/1.4.0/compositions.css', ['text/css', await readFile(fromRoot('css/compositions.css'))]],
     ['/1.4.0/compositions.js', ['application/javascript', await readFile(fromRoot('js/compositions.js'))]],
     ['/patterns.html', ['text/html', await readFile(fromRoot('site/patterns.html'))]],

@@ -8,7 +8,7 @@ Load the released assets and add the form from [workspace-settings.html](workspa
 <script src="/1.4.0/compositions.js" defer></script>
 ```
 
-`odyssey-font.css` is optional. `compositions.css` also supplies readable defaults when no Odyssey token layer is present. The standalone example applies values in memory and labels that result **Changes applied locally**. It does not persist or send requests.
+`odyssey-font.css` (Inter) and `odyssey-line-font.css` (Archivo/Azeret Mono) are optional when the host already provides those fonts. The fixture declares both font assets explicitly, separate from `odyssey-line.css`. `compositions.css` also supplies readable defaults when no Odyssey token layer is present. The standalone example applies values in memory and labels that result **Changes applied locally**. It does not persist or send requests.
 
 ## Workspace settings: the consumable composition
 
