@@ -97,7 +97,8 @@
       hidden = document.createElement('input'); hidden.type = 'hidden'; hidden.name = name;
       hidden.setAttribute('data-ody-code-value', ''); field.appendChild(hidden);
     }
-    var mode = field.dataset.mode === 'text' ? 'text' : 'numeric';
+    var mode = field.dataset.mode === 'text' ? 'text' : 'numeric', compositionTimer=0, compositionCommit;
+    function cancelComposition() {clearTimeout(compositionTimer);compositionTimer=0;compositionCommit=null;}
     function clean(value) { return mode === 'text' ? value : value.replace(/[^0-9]/g, ''); }
     function update(notify, retry) {
       var value = inputs.map(function (input) { return input.value; }).join('');
@@ -134,11 +135,21 @@
       input.addEventListener('focus', function () { input.select(); });
       input.addEventListener('input', function (event) {
         if (isComposing(event)) return;
+        cancelComposition();
         var digits = clean(input.value); input.value = digits.slice(0, 1);
         if (digits) distribute(digits, index); else update(true, true);
       });
-      input.addEventListener('compositionend', function () { distribute(input.value, index); });
-      input.addEventListener('paste', function (event) { event.preventDefault(); distribute(event.clipboardData.getData('text'), index); });
+      input.addEventListener('compositionstart',cancelComposition);
+      input.addEventListener('compositionend',function () {
+        cancelComposition();var value=input.value;
+        // Firefox sends its final input after compositionend; commit only once.
+        compositionCommit=function () {distribute(value,index);};
+        compositionTimer=setTimeout(function () {var commit=compositionCommit;cancelComposition();commit();},0);
+      });
+      input.addEventListener('paste',function (event) {
+        var value=clean(event.clipboardData.getData('text'));if(!value)return;
+        event.preventDefault();cancelComposition();distribute(value,index);
+      });
       input.addEventListener('keydown', function (event) {
         if (isComposing(event)) return;
         if (event.key === 'Backspace' && !input.value && index > 0) { event.preventDefault(); inputs[index - 1].value = ''; inputs[index - 1].focus(); update(true, true); }
@@ -148,7 +159,10 @@
     });
     var initial = field.dataset.value;
     if (initial != null) Array.from(clean(initial).slice(0, inputs.length)).forEach(function (value, index) { inputs[index].value = value; inputs[index].defaultValue = value; });
-    if (inputs[0].form) inputs[0].form.addEventListener('reset', function (event) { setTimeout(function () { if(!event.defaultPrevented)update(true, true); },0); });
+    if (inputs[0].form) inputs[0].form.addEventListener('reset',function (event) {
+      var commit=compositionCommit;cancelComposition();
+      setTimeout(function () {if(event.defaultPrevented){if(commit)commit();}else update(true,true);},0);
+    });
     refreshers.set(field, function () { update(false); });
     update(false);
   }

@@ -29,7 +29,13 @@ async function capture(page, selector, name) {
 const changes = (page, selector) => page.locator(selector).evaluate(node => node._changes);
 const payload = page => page.locator('#form').evaluate(form => new FormData(form).get('verification_code'));
 async function paste(page, selector, value) {
-  await page.locator(selector).first().evaluate((node,value)=>{const transfer=new DataTransfer();transfer.setData('text',value);node.dispatchEvent(new ClipboardEvent('paste',{bubbles:true,cancelable:true,clipboardData:transfer}));},value);
+  await page.locator(selector).first().evaluate((node,value)=>{
+    const event=new ClipboardEvent('paste',{bubbles:true,cancelable:true,clipboardData:new DataTransfer()});
+    // Firefox creates its own clipboard store instead of retaining the constructor argument.
+    event.clipboardData.setData('text/plain',value);
+    if(event.clipboardData.getData('text')!==value)throw new Error('Paste fixture must carry its supplied text');
+    node.dispatchEvent(event);
+  },value);
 }
 for (const engine of engines) {
   await test(`${engine}: extensions P2 contracts`, async t => {
@@ -64,6 +70,7 @@ for (const engine of engines) {
         await page.locator('#code input:not([type="hidden"])').first().fill(full);
         assert.equal(await payload(page),full);
         assert.equal((await changes(page,'#code')).length,1);
+        assert.equal(await page.locator('#code input:not([type="hidden"])').last().evaluate(node=>node===document.activeElement),true);
         assert.equal(await page.locator('#form').evaluate(form=>form.checkValidity()),true);
         await page.locator('#code').evaluate(node=>{node.setAttribute('aria-invalid','true');const error=node.querySelector('[data-ody-code-error]');error.textContent='Expired code';error.hidden=false;});
         await paste(page,'#code input:not([type="hidden"])','987654'.slice(0,length));
@@ -82,6 +89,32 @@ for (const engine of engines) {
         assert.equal(await page.locator('#form').evaluate(form=>new FormData(form).getAll('verification_code').length),1);
       });
     }
+    await t.test('ACT-05: composition-only commit emits once; an empty paste is not an error retry',async t=>{
+      const page=await fixture(t,browser,`<form id="form">${code(4)}<button type="reset" id="reset">Reset</button></form>`);
+      await capture(page,'#code','ody:change');
+      await page.locator('#code input').first().evaluate(node=>{
+        node.dispatchEvent(new CompositionEvent('compositionstart',{bubbles:true,data:''}));
+        node.value='4829';node.dispatchEvent(new InputEvent('input',{bubbles:true,inputType:'insertCompositionText',data:'4829',isComposing:true}));
+        node.dispatchEvent(new CompositionEvent('compositionend',{bubbles:true,data:'4829'}));
+      });
+      await page.waitForFunction(()=>document.querySelector('[data-ody-code-value]').value==='4829');
+      assert.equal((await changes(page,'#code')).length,1);
+      await page.locator('#code').evaluate(node=>node.setAttribute('aria-invalid','true'));
+      await paste(page,'#code input','');
+      assert.equal(await page.locator('#code').getAttribute('aria-invalid'),'true');
+      assert.equal((await changes(page,'#code')).length,1);
+      for(const cancelled of [true,false]) {
+        await page.locator('#code input').first().evaluate((node,cancelled)=>{
+          const form=node.form;
+          if(cancelled)form.addEventListener('reset',event=>event.preventDefault(),{once:true});
+          node.dispatchEvent(new CompositionEvent('compositionstart',{bubbles:true}));node.value='1234';
+          node.dispatchEvent(new CompositionEvent('compositionend',{bubbles:true,data:'1234'}));HTMLFormElement.prototype.reset.call(form);
+        },cancelled);
+        const expected=cancelled?'1234':'';
+        await page.waitForFunction(expected=>document.querySelector('[data-ody-code-value]').value===expected,expected);
+        assert.equal(await payload(page),expected);
+      }
+    });
     await t.test('ACT-05: preset and text code reset to defaults, custom field names remain native',async t=>{
       const page=await fixture(t,browser,`<form id="form">${code(4,'data-value="AB12" data-mode="text"')}<button type="reset" id="reset">Reset</button></form>`);
       assert.equal(await payload(page),'AB12');
@@ -101,7 +134,9 @@ for (const engine of engines) {
         assert.equal((await changes(page,'#legacy')).length,1);
         assert.equal((await changes(page,'#legacy'))[0].complete,true);
         await page.locator('#legacy').evaluate(node=>node.setAttribute('aria-invalid','true'));
-        await paste(page,'.ody-otp__cell',mode==='text'?'ZY98XW'.slice(0,length):'987654'.slice(0,length));
+        const retried=(mode==='text'?'ZY98XW':'987654').slice(0,length);
+        await paste(page,'.ody-otp__cell',retried);
+        assert.equal(await payload(page),retried);
         assert.equal(await page.locator('#legacy').getAttribute('aria-invalid'),null);
         await page.locator('#reset').click();await page.waitForFunction(value=>document.querySelector('[data-ody-otp-value]').value===value,initial);
         assert.equal(await payload(page),initial);
