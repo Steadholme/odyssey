@@ -53,7 +53,7 @@ ODYSSEY_BASE_URL=http://127.0.0.1:18300 \
 
 WebKit 测试不是每一个 Safari/iOS 版本的实机证明；320px viewport 测试也不代替真机触摸验收。
 
-## 本轮证据与待接验收
+## 本轮验证与生产部署
 
 2026-10-18，在 macOS 27.0（26A428）、Node 24.18.0 上，已从本仓 lockfile 安装所有三个引擎。本轮在 `http://127.0.0.1:18770` 的 `/1.4.0` 未冻结候选服务上执行结果：
 
@@ -63,7 +63,13 @@ WebKit 测试不是每一个 Safari/iOS 版本的实机证明；320px viewport �
 
 随后在 OVH 的隔离 Linux 候选容器验证了同一 IvwAre 资产（源码 `5112206`，测试 `bc907b2`），没有切换生产容器。官方 `mcr.microsoft.com/playwright:v1.64.1-noble`、Node 24.21.0 实际结果：**Chromium 156.0.8078.4、Firefox 157.0、WebKit 27.2 全部通过** modular、complete 和真实 Forms guide，共九条入口验收。包括本轮 custom combobox/multiselect/date 的键盘取值与 AX，以及 drop→input.files→FormData 的文件名、类型、大小和内容。
 
-Firefox 与 WebKit 实测 `interpolate-size` 不可用时，原生 disclosure 仍正常展开、收起。Linux 通过解决了本轮跨引擎验证依赖；macOS Firefox 的宿主启动限制仍保留，不把 Linux 结果冒充该宿主已修复。候选尚需真实 IME/VoiceOver 手动验收及发行负责人批准，三引擎通过不代表已冻结或已部署。候选内容变更后，只重验受影响路径。
+Firefox 与 WebKit 实测 `interpolate-size` 不可用时，原生 disclosure 仍正常展开、收起。Linux 通过解决了本轮跨引擎验证依赖；macOS Firefox 的宿主启动限制仍保留，不把 Linux 结果冒充该宿主已修复。代码的完整三引擎 [GitHub CI 39130749486](https://github.com/Steadholme/odyssey/actions/runs/39130749486) 也已通过。
+
+Safari + 原有 SCIM.ITABC 真实输入法抽验通过：Tag 的候选确认不提前创建 chip，确认后正常提交；中文“中”只创建一个 chip；Command 的合成期 Enter/Escape 不执行命令或关闭层，后续正常 Enter 可执行。VoiceOver 对 custom combo/date/tree/modal 的完整人工抽验未完成，用户明确批准直接推进生产，因此延期并保留在 TODO ENG-09，不计为通过。临时设置已恢复，VoiceOver 关闭。
+
+用户批准后，`16797915deaceb90e32ddaeab9608b2f61f559bf` 冻结的 20 文件与 IvwAre 候选逐字节相同，并仅部署到 [OVH Odyssey](https://odyssey.w33d.xyz/)。正式构建和公网固定发行资产的一年 immutable、旧快照及 compat 检查通过。切换后的独立 Chromium 通过真实 HTTPS modular/complete 空白消费者和真实 Forms guide 三入口；Patterns 入口 48 项断言通过，无应用写请求；桌面/320px 实际截图及 IAB 对话框/焦点返回已审阅。生产证据在 `/Users/w33d/.codex/visualizations/2026/10/18/01a14cce-8c61-77a1-a455-8844e22e2e39/odyssey-p1/production/`。
+
+公开消费检查只复验实际部署和 CDN 路径；三引擎组件证据来自上述相同 payload 的 Linux/CI 门禁。其他产品不推广，旧消费 URL 保持原字节。后续内容变更只重验受影响路径；已公开 immutable 发行不覆写。
 
 ## 旧线上 canary gate 的安装边界
 

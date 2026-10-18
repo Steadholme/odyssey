@@ -6,26 +6,35 @@
 
 **54 个站点不是 Odyssey 的全部能力。** 旧 guide/runtime 已有多选、Tag input、Date/Time picker、Dual-range、Rating、Notification center、Context menu、Bottom sheet、Carousel、Hover card、Calendar、Kanban 等。当前最缺的是统一能力目录、同名控件契约、Line 兼容性和稳定消费路径，而不是再做一遍这些控件。
 
-本清单共 **70 项：P1 33、P2 31、P3 6**。本轮 **P1 已完成 29 项，4 项仍待闭环**；条目勾选和“本轮结果”表示当前进展，“状态／依据”保留修复前的调查快照。“新增组合/领域扩展”是设计建议，不代表现有能力故障。
+本清单共 **70 项：P1 33、P2 31、P3 6**。本轮 **P1 已完成 32 项，ENG-09 的 VoiceOver 人工抽验延期**；用户明确决定直接推进生产，该项不计通过。条目勾选和“本轮结果”表示当前进展，“状态／依据”保留修复前的调查快照。“新增组合/领域扩展”是设计建议，不代表现有能力故障。
 
 ### 本轮 P1 执行
 
 - [x] 33 项分工和共享接口确定；Line 为主线，旧入口与冻结发行保留。
 - [x] 运行时、Line/Rust、可消费组合及必要的旧 guide 邻接修复。
 - [x] 能力目录/Pencil 同步、未冻结发行候选、统一验收与三引擎验证。
-- [ ] 真实 IME / VoiceOver 抽验（临时设置已获许可；系统级按键未生效，AppleScript 辅助方式待确认；A11Y-04、ENG-09）。
-- [ ] 完成人工抽验后冻结 1.4.0，再仅切换 OVH Odyssey；独立核对生产安装入口及恢复路径（ENG-04、ENG-05）。
+- [x] Safari + 原有 SCIM.ITABC 真实 IME 抽验通过；临时设置恢复，VoiceOver 关闭（A11Y-04）。
+- [ ] VoiceOver 对 custom combo/date/tree/modal 的真实导航抽验；按用户“直接推动生产”决定延期，不阻断本次发布（ENG-09）。
+- [x] 冻结 1.4.0，仅切换 OVH Odyssey；独立公网安装、工作流和视觉验收通过，保留本轮恢复路径（ENG-04、ENG-05）。
 
-**可用候选**：`http://localhost:18770/`，资产目录 `/tmp/odyssey-1.4.0-candidate.IvwAre`，核心来源 `5112206`；后续 `bc907b2` 增补真实 Forms 跨引擎测试，`5768c80` 仅修候选缓存。显式候选返回 `no-store`；正式冻结构建继续 `immutable`。旧浏览上下文可能已有先前 immutable 缓存，首次验收用新 origin 或隔离上下文，不清用户全局浏览数据。
+**已部署**：[Odyssey 生产站](https://odyssey.w33d.xyz/)，冻结 commit `16797915deaceb90e32ddaeab9608b2f61f559bf`，公开 `/1.4.0/`，Line 为主线。冻结 20 文件与已验收 IvwAre 候选逐字节相同；正式构建返回一年 `immutable`。
 
-**已消费的证据**：本地统一 `tools/verify.sh`（Chromium/WebKit）通过；OVH 隔离候选的 Chromium 156.0.8078.4、Firefox 157.0、WebKit 27.2 共九条 modular/complete/真实 Forms 入口通过；[GitHub CI 39130254060](https://github.com/Steadholme/odyssey/actions/runs/39130254060) 在 `bc907b2` 运行同一入口、三引擎全绿。缓存补丁的五项受影响断言及实际 HTTP 响应已通过。26 项候选 a11y 门禁和代表性实际截图已审阅；AX/合成事件不替代真实 VoiceOver/IME。
+**候选复现入口**：`http://localhost:18770/`，资产目录 `/tmp/odyssey-1.4.0-candidate.IvwAre`，核心来源 `5112206`；后续 `bc907b2` 增补真实 Forms 跨引擎测试，`5768c80` 仅修候选缓存。显式候选返回 `no-store`。旧浏览上下文可能已有先前 immutable 缓存，首次验收用新 origin 或隔离上下文，不清用户全局浏览数据。
 
-本地完整日志：`/tmp/odyssey-full-verify-20261018.log`；隔离 Linux 三引擎日志及截图：`/Users/w33d/.codex/visualizations/2026/10/18/01a14cce-8c61-77a1-a455-8844e22e2e39/odyssey-p1/`。源码保存在 `codex/odyssey-p1-20261018`，最新代码的完整三引擎 CI [39130749486](https://github.com/Steadholme/odyssey/actions/runs/39130749486) 已通过。本轮独立恢复包已就绪：OVH `/srv/ovh-migration/odyssey-line-p1-20261018/`，明确回退到当前生产镜像 `95ce746`；恢复脚本语法、镜像 guard、当前内部与直连 HTTP 健康检查通过，未执行切换/回滚。**尚未冻结 1.4.0，尚未切换生产**。旧 `/dist`、Line/extensions aliases 保持已部署版本字节，其他产品不隐式消费本轮更新。
+**已消费的证据**：本地统一 `tools/verify.sh`（Chromium/WebKit）通过；OVH 隔离候选的 Chromium 156.0.8078.4、Firefox 157.0、WebKit 27.2 共九条 modular/complete/真实 Forms 入口通过；[GitHub CI 39130254060](https://github.com/Steadholme/odyssey/actions/runs/39130254060) 在 `bc907b2` 运行同一入口、三引擎全绿。缓存补丁的五项受影响断言及实际 HTTP 响应已通过。26 项候选 a11y 门禁和代表性实际截图已审阅；真实 Safari/SCIM 输入抽验另行通过，VoiceOver 未完成。
+
+本地完整日志：`/tmp/odyssey-full-verify-20261018.log`；隔离 Linux 三引擎日志及截图：`/Users/w33d/.codex/visualizations/2026/10/18/01a14cce-8c61-77a1-a455-8844e22e2e39/odyssey-p1/`。源码保存在 `codex/odyssey-p1-20261018`，代码的完整三引擎 CI [39130749486](https://github.com/Steadholme/odyssey/actions/runs/39130749486) 已通过。
+
+**生产验收**：镜像 `9e68491db4cf98c0b7344e4948e494b028ef845bfef06741fd89e47a77cab809`，容器 `9ef0873410d88b6c2cfc7a1b52d7e2a5bee0340a4773066fae3eb10624d45eb5`，healthy、restart 0。内部/宿主 HTTP、20 正式资产及旧快照/compat 检查通过；公网 20 固定发行资产逐字节一致且为 immutable。134 个非 Odyssey 容器 ID/image 不变，五份有效 compose 仅 Odyssey image 一行改变。Cloudflare 会改写示例 email 的 HTML，CDN HTML 不作逐字节相同承诺。
+
+独立公网 Chromium 的 modular/complete/真实 Forms 三入口通过，实际请求 `/1.4.0/` CSS、JS、字体；Patterns 入口 48 项断言通过，无应用写请求。IAB 实看 54+28 能力目录、Patterns 页签、Studio 对话框及焦点返回；桌面/320px 截图已审阅。日志与截图在上述证据目录的 `production/`。
+
+本轮恢复包：OVH `/srv/ovh-migration/odyssey-line-p1-20261018/`，`receipt.json` 记录实际切换与检查；回退目标为切换前镜像 `95ce746`，恢复脚本语法及镜像 guard 已核验，本次未执行回滚。旧 `/dist`、Line/extensions aliases 保持旧部署字节，其他产品不隐式消费本轮更新。
 
 ### 调查基线和边界
 
-- 源码/测试基线：`67a2d4ec99d0f7dad632317e8d1140b4f59c6454`；已上线运行代码：`736284240c35c5722cdda154dad5272c141a7d35`。本文源文件行号按该基线定位。
-- 已只读确认 OVH Odyssey 当前镜像 healthy；调查中未修改运行代码、生产容器或消费者。
+- 调查时的源码/测试基线：`67a2d4ec99d0f7dad632317e8d1140b4f59c6454`；当时已上线运行代码：`736284240c35c5722cdda154dad5272c141a7d35`。本文“状态／依据”源文件行号按该基线定位。
+- 初始调查只读确认当时 OVH Odyssey healthy；后续修复和本次生产切换见“本轮 P1 执行”。
 - 覆盖 Rust helpers、public HTML/CSS/JS、Line/四表达、全部组件 guide、三个 Patterns、发行/CLI/gates/测试及当前 Pencil 文档。
 - 证据包括源码交叉盘点、本地真实 Chromium 控件/AX/forced-colors 探针、最小 DOM 探针、CLI 定向失败和临时 vendor 编译；已有有效验收继续复用，不把一次截图或 Axe 当成全部能力通过。
 - 保留 Line 主线、旧 API/markup/入口。修复应进入源实现与**新发行**；冻结 `releases/1.1`、`1.2`、`1.3` 不覆写。此 TODO 不授权推广到其他产品。
@@ -189,8 +198,8 @@
   - 状态／依据：**代码确认**。src/controls.rs:311–324,341–369；range label无for/input id，hint/error缺描述连接。site/forms.html:278–288同类示例也缺关联。
   - 验收：兼容旧签名，提供显式id/describedby/error连接路径，追加而非覆盖调用者描述；读屏能读名称、当前值、帮助和错误。 参考：[表单标签][wai-labels] / [错误通知][wai-notifications]。
 
-- [ ] **A11Y-04 · P1 · 中文/日文 IME 合成期不得执行命令或创建 chip**
-  - 本轮结果：部分完成。`8c8c56b` 已统一 composition/isComposing/229 防护；合成事件与非 IME 键盘回归通过。用户已允许临时输入法测试；本机原生控制通道的逐键输入仍未进入真实合成期，系统级辅助方式待确认。不能用 ASCII 输入或合成事件算完成。
+- [x] **A11Y-04 · P1 · 中文/日文 IME 合成期不得执行命令或创建 chip**
+  - 本轮结果：完成。`8c8c56b` 统一 composition/isComposing/229 防护，合成事件与非 IME 键盘回归通过。Safari + 原有 SCIM.ITABC 实际输入：Tag 的合成期 Return 只确认文字，下一次 Return 才创建一个 chip；拼音选字得到“中”后提交只创建一个中文 chip。Command 的合成期 Enter/Escape 不执行命令或关闭层，确认后普通 Enter 才执行并归还有效焦点。测试后恢复原设置；未增加或移除输入法。
   - 状态／依据：**已实测**。js/extensions.js:132–135；dist/odyssey.js:1121–1125,1989–1993；site/assets/patterns-20261018.js:293。isComposing Enter已复现命令执行/关闭及未完成zhong被创建chip。
   - 验收：统一处理composition状态；候选确认不触发业务动作，compositionend后正常提交；合成事件回归加真实IME抽验，保持已有非IME键盘路径。 参考：[UI Events isComposing][uievents-composing]。
 
@@ -287,14 +296,14 @@
   - 验收：元数据映射Cargo/internal/public/design-layer身份；列出弃用、breaking changes、迁移与本版本晋级证据；不强行统一版本号，不借旧canary窗口为新release背书。 参考：[SemVer][semver]。
   - 依赖：LIB-01。
 
-- [ ] **ENG-04 · P1 · Line/Expressions/Extensions 可 pin 的完整公开发行组合**
-  - 本轮结果：部分完成。`5112206` 实现完整 20 文件候选、原子冻结/拒绝覆写及 pin 路由；实际 modular/complete/自托管检查通过，1.1/1.2/1.3 未修改。待真实 IME/VoiceOver 验收通过后冻结并公开 1.4.0；当前不是 immutable 发行。
+- [x] **ENG-04 · P1 · Line/Expressions/Extensions 可 pin 的完整公开发行组合**
+  - 本轮结果：完成。`5112206` 实现完整候选、原子冻结/拒绝覆写及 pin 路由；`1679791` 冻结 20 文件并仅部署 OVH Odyssey。正式 `/1.4.0/` 全部资产与已验收候选及公网逐字节一致、一年 immutable；modular/complete/自托管通过，1.1/1.2/1.3 和兼容 aliases 保持原字节。VoiceOver 人工抽验按用户决定延期，见 ENG-09。
   - 状态／依据：**部分**。tools/build-public-dist.sh:14–38仅生成1.3 core/profile/canary；Line/Extensions仍可变assets，冻结1.3明确不含Line。
   - 验收：新增完整immutable资产URL及自托管文件清单；core/Line/fonts/extensions组合版本相容；冻结1.1/1.2/1.3不覆写，旧assets兼容；仅准备Odyssey发行，不自动同步消费者。
   - 依赖：ENG-03、LIB-02。
 
-- [ ] **ENG-05 · P1 · CDN/自托管/Line 安装说明指向同一明确 release**
-  - 本轮结果：部分完成。`5112206` 将 13 个 Odyssey 页面和安装说明统一 pin 到 1.4.0，模块化/complete 空白 fixture 及自托管候选通过三引擎。公开 CDN URL 需 ENG-04 冻结并切换生产后再实际验收，不能提前算线上可用。
+- [x] **ENG-05 · P1 · CDN/自托管/Line 安装说明指向同一明确 release**
+  - 本轮结果：完成。`5112206` 将 13 个 Odyssey 页面和安装说明统一 pin 到 1.4.0，模块化/complete 空白 fixture 及自托管候选通过三引擎。切换后独立 Chromium 直接请求真实 HTTPS `/1.4.0/` CSS/JS/字体，modular、complete、真实 Forms 三入口通过，运行时版本 1.4.0；生产 Patterns 入口 48 项断言通过。
   - 状态／依据：**文档不一致**。site/getting-started.html:218–222把CDN1.1和当前dist称同产物，FLEET.md:249当前dist为1.3；Line还需额外assets。
   - 验收：给出同release的完整文件列表和最小片段；复制到空白HTML、自托管及Line/extensions三条路径得到声明的组件版本/行为，无漏依赖。
   - 依赖：ENG-04、LIB-03。
@@ -317,7 +326,7 @@
   - 依赖：ENG-06、ENG-07。
 
 - [ ] **ENG-09 · P1 · 复用既有 pattern/a11y helper，扩展当前库验收**
-  - 本轮结果：部分完成。`200c8c2` 审阅并纳入既有 helper 及其失败 fixture；本候选 26 项 Axe/真实 Tab/AX/合成 IME/200%/文本间距/forced-colors/无 JS 门禁通过。用户已允许临时启用 VoiceOver；实际启动后，控制通道未能执行 VO 全局命令或取得朗读输出，未计通过，VoiceOver 已恢复关闭。四控件的真实抽验仍待有效系统级按键通道；外部四产品报告不计入本库通过。
+  - 本轮结果：部分完成。`200c8c2` 审阅并纳入既有 helper 及其失败 fixture；本候选 26 项 Axe/真实 Tab/AX/合成 IME/200%/文本间距/forced-colors/无 JS 门禁通过，真实 Safari/SCIM 输入另见 A11Y-04。VoiceOver 实际启动及 AppleScript 辅助尝试仍未取得四控件的有效朗读/导航结果；用户明确决定“直接推动生产”，本次延期，不计通过。VoiceOver 已恢复关闭，临时设置恢复。后续责任域为 a11y，恢复条件是可用的真实 VoiceOver 导航通道；外部四产品报告不计入本库通过。
   - 状态／依据：**部分/待接纳**。当前测试已有部分键盘、reduced-motion、touch/no-JS；远端另有未跟踪pattern-assertions.mjs、tests及patterns/ACCEPTANCE.md，报告四产品证据，未纳入本基线。
   - 验收：先审阅、核证并版本化现有helper，复用assertSurface(AxeBuilder)/native form/真实Tab；覆盖旧guide、AX关联、IME、200%文本/文本间距、forced-colors，并对custom combo/date/tree/modal做VoiceOver抽验。外部报告不直接算本库通过。 参考：[Text spacing][wcag-spacing] / [Reflow][wcag-reflow]。
   - 依赖：ENG-06、ENG-07、LIB-01。
