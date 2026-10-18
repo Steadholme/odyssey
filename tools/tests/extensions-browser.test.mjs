@@ -40,7 +40,7 @@ try {
     if (evidence) await page.locator('#line-3').screenshot({path:evidence+'/registry-'+expression+'-dark.png'});
   }
   await page.locator('[data-ody-expression-select]').selectOption('soft');
-  await page.locator('.line-top a[href*="getting-started"]').click();assert.equal(await page.locator('html').getAttribute('data-expression'),'soft');
+  await page.locator('.line-top a[href*="getting-started"]').click();await page.waitForLoadState('load');assert.equal(await page.locator('html').getAttribute('data-expression'),'soft');
   for(const route of ['actions','forms','data-display','feedback','navigation','typography','layout','overlays','tokens']) {
     await page.goto(base+'/'+route+'.html?expression=studio');assert.equal(await page.locator('[data-ody-expression-select]').inputValue(),'studio');
   }
