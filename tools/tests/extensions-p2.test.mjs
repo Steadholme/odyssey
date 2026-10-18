@@ -11,12 +11,13 @@ if (screenshotDir) await mkdir(screenshotDir, { recursive: true });
 const code = (length, extra = '') => `<fieldset class="ody-ext-code" id="code" data-ody-code-input data-ody-code-name="verification_code" ${extra}><legend>Verification code</legend><div>${Array.from({length}, () => '<input inputmode="numeric">').join('')}</div><small data-ody-code-help></small><small data-ody-code-error hidden></small></fieldset>`;
 const files = `<form id="form"><div id="files" class="ody-ext-file" data-ody-file-dropzone data-ody-file-max-bytes="10" data-ody-file-max-count="2"><b data-ody-file-title>Choose an attachment</b><small data-ody-file-status></small><input data-ody-file-input type="file" name="attachment" accept=".zip,image/*" multiple><button type="button" data-ody-file-browse>Browse</button><button type="button" data-ody-file-clear hidden>Clear files</button><p data-ody-file-error role="alert" hidden></p></div><button type="reset" id="reset">Reset</button></form>`;
 const file = (name = 'release.zip', size = 4, mimeType = 'application/zip') => ({ name, mimeType, buffer:Buffer.alloc(size, 65) });
-async function fixture(t, browser, markup, mode = 'after', lang = 'en') {
+async function fixture(t, browser, markup, mode = 'after', lang = 'en', beforeScripts) {
   const page = await browser.newPage({viewport:{width:1000,height:760}, reducedMotion:'reduce'});
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
   t.after(async () => { await page.close(); assert.deepEqual(errors, [], 'no uncaught browser errors'); });
   await page.setContent(`<!doctype html><html lang="${lang}" data-ody-design="line" data-theme="light"><head><style>${styles}</style><style>body{margin:20px}main{max-width:600px}button{min-height:28px}</style></head><body><main>${markup}</main></body></html>`);
+  if(beforeScripts)await page.evaluate(beforeScripts);
   if (mode === 'before' || mode === 'alone') await page.addScriptTag({content:extensions});
   if (mode !== 'alone') await page.addScriptTag({content:core});
   if (mode === 'after') await page.addScriptTag({content:extensions});
@@ -150,7 +151,17 @@ for (const engine of engines) {
     });
     for (const orientation of ['vertical','horizontal']) {
       await t.test(`ACT-07: ${orientation} constraints, keyboard, presets, numeric input and ResizeObserver`,async t=>{
-        const page=await fixture(t,browser,`<div id="split" class="ody-ext-split" data-ody-splitpane data-ody-orientation="${orientation}" data-ody-min="80" data-ody-max="300" data-ody-second-min="100" style="width:500px"><div>Explorer<button type="button" data-ody-split-preset="250">Wide</button><label>Size<input type="number" data-ody-split-value></label></div><div data-ody-splitter role="separator" tabindex="0" aria-label="Explorer size" aria-orientation="${orientation}" aria-valuenow="120"></div><div>Document</div></div>`);
+        const page=await fixture(t,browser,`<div id="split" class="ody-ext-split" data-ody-splitpane data-ody-orientation="${orientation}" data-ody-min="80" data-ody-max="300" data-ody-second-min="100" style="width:500px"><div>Explorer<button type="button" data-ody-split-preset="250">Wide</button><label>Size<input type="number" data-ody-split-value></label></div><div data-ody-splitter role="separator" tabindex="0" aria-label="Explorer size" aria-orientation="${orientation}" aria-valuenow="120"></div><div>Document</div></div>`, 'after', 'en', ()=>{
+          const NativeObserver=window.ResizeObserver, setProperty=CSSStyleDeclaration.prototype.setProperty;
+          window.splitDeliveryWrites=[];
+          window.ResizeObserver=class extends NativeObserver {
+            constructor(callback) {super((entries,observer)=>{window.inSplitDelivery=true;try{callback(entries,observer);}finally{window.inSplitDelivery=false;}});}
+          };
+          CSSStyleDeclaration.prototype.setProperty=function(name,value,priority){
+            if(window.inSplitDelivery&&name==='--explorer')window.splitDeliveryWrites.push(value);
+            return setProperty.call(this,name,value,priority);
+          };
+        });
         const separator=page.locator('[data-ody-splitter]');
         await capture(page,'#split','ody:resize');
         await separator.focus();await separator.press(orientation==='horizontal'?'ArrowDown':'ArrowRight');
@@ -166,6 +177,17 @@ for (const engine of engines) {
         assert.ok((await changes(page,'#split')).some(event=>event.source==='container'));
         await separator.press('Home');await separator.press('End');
         assert.equal(await separator.getAttribute('aria-valuenow'),'74');
+        const repeatedWrites=await page.locator('#split').evaluate(async node=>{
+          const settled=()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+          await settled();
+          const writes=[], observer=new MutationObserver(records=>writes.push(...records.map(record=>record.attributeName)));
+          observer.observe(node,{attributes:true,subtree:true});
+          OdysseyExtensions.init(node); OdysseyExtensions.init(node);
+          await settled(); observer.disconnect();
+          return writes;
+        });
+        assert.deepEqual(repeatedWrites,[],'unchanged split layout must not rewrite observed geometry or metadata');
+        assert.deepEqual(await page.evaluate(()=>window.splitDeliveryWrites),[],'split geometry writes must happen after native ResizeObserver delivery');
       });
     }
     await t.test('ACT-08: actual panel dimensions, edge flip, scroll/resize/content changes and origin',async t=>{

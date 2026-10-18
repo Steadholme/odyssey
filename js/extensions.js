@@ -210,7 +210,8 @@
     var minimum = Number(split.dataset.odyMin || divider.getAttribute('aria-valuemin') || 0);
     var maximum = Number(split.dataset.odyMax || divider.getAttribute('aria-valuemax') || Infinity);
     var secondMinimum = Number(split.dataset.odySecondMin || 160);
-    var value = Number(divider.getAttribute('aria-valuenow') || minimum);
+    var value = Number(divider.getAttribute('aria-valuenow') || minimum), resizeFrame=0;
+    function syncAttribute(node,name,next) {if(node.getAttribute(name)!==String(next))node.setAttribute(name,next);}
     function horizontal() { return (split.dataset.odyOrientation || divider.getAttribute('aria-orientation')) === 'horizontal'; }
     function resize(next, source) {
       var vertical = horizontal(), total = vertical ? split.clientHeight : split.clientWidth;
@@ -218,11 +219,11 @@
       var max = Math.max(0,Math.min(maximum,total - gutter - secondMinimum));
       var min = Math.min(minimum,max), old = value;
       value = Math.round(Math.max(min,Math.min(max,next)));
-      split.style.setProperty('--explorer',value + 'px');
-      split.dataset.odyOrientation = vertical ? 'horizontal' : 'vertical';
-      divider.setAttribute('aria-orientation',split.dataset.odyOrientation);
-      divider.setAttribute('aria-valuemin',min); divider.setAttribute('aria-valuemax',max); divider.setAttribute('aria-valuenow',value);
-      all('[data-ody-split-value]',split).forEach(function (input) { input.min=min;input.max=max;input.value=value; });
+      if(split.style.getPropertyValue('--explorer')!==value+'px')split.style.setProperty('--explorer',value+'px');
+      syncAttribute(split,'data-ody-orientation',vertical?'horizontal':'vertical');
+      syncAttribute(divider,'aria-orientation',split.dataset.odyOrientation);
+      syncAttribute(divider,'aria-valuemin',min);syncAttribute(divider,'aria-valuemax',max);syncAttribute(divider,'aria-valuenow',value);
+      all('[data-ody-split-value]',split).forEach(function (input) {syncAttribute(input,'min',min);syncAttribute(input,'max',max);if(input.value!==String(value))input.value=value;});
       if (source && value !== old) emit(split,'ody:resize',{value:value,min:min,max:max,orientation:split.dataset.odyOrientation,source:source});
     }
     divider.addEventListener('keydown', function (event) {
@@ -237,7 +238,11 @@
     });
     all('[data-ody-split-preset]',split).forEach(function (button) { button.addEventListener('click',function () { resize(Number(button.dataset.odySplitPreset),'preset'); }); });
     all('[data-ody-split-value]',split).forEach(function (input) { input.addEventListener('change',function () { if(Number.isFinite(Number(input.value)))resize(Number(input.value),'input'); }); });
-    new ResizeObserver(function () { resize(value,'container'); }).observe(split);
+    // Narrowing a pane can change its height; write after this observer delivery.
+    new ResizeObserver(function () {
+      if(resizeFrame)return;
+      resizeFrame=requestAnimationFrame(function () {resizeFrame=0;if(split.isConnected)resize(value,'container');});
+    }).observe(split);
     refreshers.set(split,function () { resize(value); }); resize(value);
   }
   function commandItems(dialog) { return all('[data-ody-command-action]', dialog).filter(function (item) { return !item.hidden; }); }
