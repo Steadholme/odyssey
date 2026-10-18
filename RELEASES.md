@@ -48,7 +48,11 @@
 
 来源 `b6e71fe53f7e84daf4ce92c5c4d2bb9889c0d68f` 的 [GitHub CI 39140867898](https://github.com/Steadholme/odyssey/actions/runs/39140867898) 已通过 Rust/helper/server/目录前置、19 项独立浏览器及预算门禁和 Rust 1.87 MSRV。Linux Chromium 156.0.8078.4、Firefox 157.0、WebKit 27.2 的关键路径全部通过；四张已接受 Linux PNG 常规比对零差分，没有重录基线。100 控件首次/重复初始化中位数为 0.7/0.6ms。
 
-本轮冻结的 27 个文件与已接受 `tB4ULx` 候选逐文件、逐字节一致，包括 `release.json`。旧 1.1、1.2、1.3、1.4.0 和 compat 快照未改写。仅 Odyssey 可晋级；恢复包 `/srv/ovh-migration/odyssey-line-p2-20261018/` 保留实际冻结 commit、镜像、容器、健康及切换 receipt，回退基线是本轮原生产 1.4.0 的 `9e68491` 镜像。
+冻结 commit `85d42fcae5c7edd85142d18df10eaee53ba3d9a4` 的 27 个文件与已接受 `tB4ULx` 候选逐文件、逐字节一致，包括 `release.json`。旧 1.1、1.2、1.3、1.4.0 和 compat 快照未改写。
+
+本轮已仅部署到 [OVH Odyssey](https://odyssey.w33d.xyz/)，不推广其他产品。独立 archive 构建的镜像 `e5ff00ab`、容器 `3d77e04b` 健康且 restart 0；正式预览及生产各 91 项 HTTP/字节/缓存检查通过，134 个其他容器的 ID/镜像与 effective compose 保持不变，只有 Odyssey image 一行变更。独立公网验收确认 27/27 发行文件与冻结快照相同且 immutable，并通过 Chromium modular/complete/Forms、93 项状态目录、真实数据定位/选择恢复及来源确认的任务取消；桌面/320px 实际画面已审阅。
+
+恢复包 `/srv/ovh-migration/odyssey-line-p2-20261018/receipt.json` 保留实际来源、镜像、健康及独立公网验收结果，回退基线是本轮原生产 1.4.0 的 `9e68491` 镜像。源码来自此冻结 commit 的独立 archive，不使用因对象写权限问题停留旧 ref 的 OVH Git 镜像；未更改该 Git 库权限。
 
 ## 1.4.0 本轮发布决定（2026-10-18）
 

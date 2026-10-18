@@ -83,6 +83,8 @@ Safari + 原有 SCIM.ITABC 真实输入法抽验通过：Tag 的候选确认不�
 
 本轮最终来源 `b6e71fe` 的 [统一 CI 39140867898](https://github.com/Steadholme/odyssey/actions/runs/39140867898) 已全绿：19/19 独立 gate 与 Rust 1.87 MSRV 均通过。固定官方 Playwright 1.64.1 noble 容器中的 Chromium 156.0.8078.4、Firefox 157.0、WebKit 27.2 覆盖 core/extensions、strict CSP、工作流及回执身份、数据/运动/稀疏图、真实 Forms 和 modular/complete 安装；state atlas 的八主题、93 项库存及 320px 也通过。常规 Linux PNG 四项零差分，冻结 27 文件与已审阅候选逐字节相同。macOS Firefox 宿主限制及 VoiceOver 延期仍按上述范围保留。
 
+`85d42fc` 已只部署到 OVH Odyssey。正式构建预览和生产宿主各通过 91 项发行/兼容字节及缓存检查；独立公网验收确认 27/27 固定发行资产与快照相同且 immutable、93 项目录及新页面/独立示例正常。真实 HTTPS Chromium 的 modular、complete、Forms 三入口通过八主题、静动效、320px、键盘及文件 FormData；states 的密度、真实 Tab、readonly、焦点返回、搜索与 Axe 通过。IAB 实际完成虚拟数据 Go 10000→选择→离开恢复，以及任务来源确认取消；负责人已审阅生产桌面/320px PNG。证据在 `/Users/w33d/.codex/visualizations/2026/10/18/01a14cce-8c61-77a1-a455-8844e22e2e39/odyssey-p2/production/`，部署与恢复信息见本轮 OVH receipt。
+
 ### 审阅视觉差异，再更新基线
 
 在已启动候选服务的同一平台执行：
@@ -103,4 +105,4 @@ ODYSSEY_BASE_URL=http://127.0.0.1:18772 ODYSSEY_ACCEPT_VISUAL=1 \
 
 新 PNG 必须与对应源码一同审阅和提交；没有接受开关时拒绝更新。`ODYSSEY_VISUAL_PROBE=1` 是测试自身的故障 fixture，会将标题改为洋红色；它必须失败，不用于接受基线。四个逻辑状态在 macOS/Linux 各保存一组，避免用跨平台字体光栅差异掩盖组件变化。保持无重试、`maxDiffPixels=0`、颜色阈值 `0.2` 与固定浏览器 runtime。
 
-本轮负责人已逐张审阅并接受 macOS/Linux 的八张 P2 初始基线。真实故障 fixture 使标题变色时差分门禁失败（1518 像素）；关闭故障 fixture 后 macOS 四项重新比对通过。最终发行候选仍需对接受的基线执行常规差分，不用更新命令覆盖失败。
+本轮负责人已逐张审阅并接受 macOS/Linux 的八张 P2 初始基线。真实故障 fixture 使标题变色时差分门禁失败（1518 像素）；关闭故障 fixture 后 macOS 四项重新比对通过。
