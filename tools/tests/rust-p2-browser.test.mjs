@@ -46,7 +46,8 @@ try {
       assert.equal(await page.locator('html').getAttribute('data-expression'), 'line');
       assert.equal(await page.locator('[style]').count(), 0, 'shell and sample markup need no style attributes');
       assert.equal(await page.evaluate(() => document.fonts.check('16px Archivo')), true, JSON.stringify({ errors, violations: await page.evaluate(() => window.cspViolations), fonts: await page.evaluate(() => [...document.fonts].map(font => ({ family: font.family, status: font.status }))) }));
-      assert.equal(await page.evaluate(() => [...document.fonts].some(font => font.family === 'Archivo' && font.status === 'loaded')), true);
+      // Firefox preserves CSS quotes in FontFace.family; compare the family name, not its serialization.
+      assert.equal(await page.evaluate(() => [...document.fonts].some(font => font.family.replace(/^(['"])(.*)\1$/, '$2') === 'Archivo' && font.status === 'loaded')), true, 'Archivo must already be loaded by the rendered heading');
       assert.equal(await page.locator('.app-tile').evaluate(element => getComputedStyle(element).getPropertyValue('--app')), '#0062ff');
       assert.equal(await page.locator('.btn-primary').first().evaluate(element => getComputedStyle(element).borderRadius !== '0px'), true);
       assert.equal(await page.evaluate(() => typeof window.OdysseySpark?.init), 'function');
