@@ -90,6 +90,9 @@ const SITE_ASSET_CSS: &str = include_str!("../../site/assets/site.css");
 const SITE_ASSET_JS: &str = include_str!("../../site/assets/site.js");
 const SITE_LINE_CSS: &str = include_str!("../../site/assets/line-site.css");
 const SITE_LINE_JS: &str = include_str!("../../site/assets/line-site.js");
+const SITE_STUDIO: &str = include_str!("../../site/studio.html");
+const SITE_STUDIO_CSS: &str = include_str!("../../site/assets/studio.css");
+const SITE_STUDIO_JS: &str = include_str!("../../site/assets/studio.js");
 
 const BRAND_TILE: &str = r#"<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/><path d="m12 7 3 5-3 5-3-5Z"/></svg>"#;
 const ICON_ATLAS: &str = r#"<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M4.5 9h15M4.5 15h15M12 4c2 2.2 3 4.9 3 8s-1 5.8-3 8c-2-2.2-3-4.9-3-8s1-5.8 3-8Z"/></svg>"#;
@@ -1048,6 +1051,31 @@ fn route_static(path: &str) -> Response {
         "/typography.html" => site_html(SITE_TYPOGRAPHY),
         "/layout.html" => site_html(SITE_LAYOUT),
         "/overlays.html" => site_html(SITE_OVERLAYS),
+        "/studio" | "/studio.html" => site_html(SITE_STUDIO),
+        "/assets/extensions.css" => static_response(
+            StatusCode::OK,
+            CONTENT_TYPE_CSS,
+            Some(CACHE_DOCS),
+            odyssey::EXTENSIONS_CSS,
+        ),
+        "/assets/extensions.js" => static_response(
+            StatusCode::OK,
+            CONTENT_TYPE_JS,
+            Some(CACHE_DOCS),
+            odyssey::EXTENSIONS_JS,
+        ),
+        "/assets/studio.css" => static_response(
+            StatusCode::OK,
+            CONTENT_TYPE_CSS,
+            Some(CACHE_DOCS),
+            SITE_STUDIO_CSS,
+        ),
+        "/assets/studio.js" => static_response(
+            StatusCode::OK,
+            CONTENT_TYPE_JS,
+            Some(CACHE_DOCS),
+            SITE_STUDIO_JS,
+        ),
         "/assets/line.css" => static_response(
             StatusCode::OK,
             CONTENT_TYPE_CSS,
@@ -1253,6 +1281,18 @@ mod tests {
             ("/assets/line.css", CONTENT_TYPE_CSS, odyssey::LINE_CSS),
             ("/assets/line-site.css", CONTENT_TYPE_CSS, SITE_LINE_CSS),
             ("/assets/line-site.js", CONTENT_TYPE_JS, SITE_LINE_JS),
+            (
+                "/assets/extensions.css",
+                CONTENT_TYPE_CSS,
+                odyssey::EXTENSIONS_CSS,
+            ),
+            (
+                "/assets/extensions.js",
+                CONTENT_TYPE_JS,
+                odyssey::EXTENSIONS_JS,
+            ),
+            ("/assets/studio.css", CONTENT_TYPE_CSS, SITE_STUDIO_CSS),
+            ("/assets/studio.js", CONTENT_TYPE_JS, SITE_STUDIO_JS),
         ] {
             let response = route_static(path);
             assert_eq!(response.status(), StatusCode::OK);
@@ -1261,10 +1301,13 @@ mod tests {
             let body = response.into_body().collect().await.unwrap().to_bytes();
             assert_eq!(body.as_ref(), expected.as_bytes());
         }
-        assert_eq!(SITE_INDEX.matches("data-station=\"").count(), 42);
+        assert_eq!(SITE_INDEX.matches("data-station=\"").count(), 54);
         assert_eq!(SITE_INDEX.matches("data-family=\"").count(), 6);
         assert!(!DIST_ODYSSEY_13_CSS.contains("data-ody-design=\"line\""));
         assert!(SITE_INDEX.contains("assets/line.css"));
+        assert!(SITE_INDEX.contains("assets/extensions.css"));
+        assert!(SITE_INDEX.contains("studio.html"));
+        assert!(SITE_STUDIO.contains("data-ody-command-menu"));
     }
 
     #[test]
@@ -1274,6 +1317,27 @@ mod tests {
         assert_eq!(response.status(), StatusCode::OK);
         assert_eq!(header(&response, header::CONTENT_TYPE), CONTENT_TYPE_HTML);
         assert_eq!(header(&response, header::CACHE_CONTROL), CACHE_DOCS);
+    }
+
+    #[test]
+    fn studio_is_a_public_site_route_with_all_motion_contracts() {
+        for path in ["/studio", "/studio.html"] {
+            let response = route_static(path);
+            assert_eq!(response.status(), StatusCode::OK);
+            assert_eq!(header(&response, header::CONTENT_TYPE), CONTENT_TYPE_HTML);
+            assert_eq!(header(&response, header::CACHE_CONTROL), CACHE_DOCS);
+        }
+        for station in [
+            "AVT", "SPL", "CMD", "TBR", "OTP", "UPL", "TRE", "TIM", "EMP", "POV", "ACD", "SID",
+        ] {
+            assert!(SITE_INDEX.contains(&format!("id=\"station-{station}\"")));
+        }
+        for expression in ["soft", "studio", "signal"] {
+            assert!(odyssey::EXTENSIONS_CSS.contains(&format!("data-expression=\"{expression}\"")));
+        }
+        assert!(!SITE_STUDIO.contains("127.0.0.1"));
+        assert!(SITE_STUDIO.contains("assets/extensions.js"));
+        assert!(SITE_STUDIO.contains("id=\"motion\""));
     }
 
     #[tokio::test]

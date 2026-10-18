@@ -16,7 +16,7 @@ try {
   page.on('pageerror', error => errors.push(error.message));
   page.on('response', response => { if (response.status() >= 400) errors.push(response.url() + ' ' + response.status()); });
   await page.goto(base); await page.evaluate(() => document.fonts.ready);
-  assert.equal(await page.locator('[data-station]').count(),42);
+  assert.equal(await page.locator('[data-station]').count(),54);
   await surface(page);
   for (const station of await page.locator('[data-station]').all()) {
     assert.equal(await station.locator('.line-specimen').evaluate(el=>Array.from(el.children).some(child=>getComputedStyle(child).display!=='none' && child.getBoundingClientRect().width>2)),true,await station.getAttribute('data-station'));
@@ -67,7 +67,7 @@ try {
     await mobile.close();
   }
   const nojs=await browser.newContext({javaScriptEnabled:false}); const p=await nojs.newPage(); await p.goto(base);
-  assert.equal(await p.locator('[data-station]').count(),42); assert.equal(await p.locator('#cover-title').isVisible(),true); await nojs.close();
+  assert.equal(await p.locator('[data-station]').count(),54); assert.equal(await p.locator('#cover-title').isVisible(),true); await nojs.close();
   assert.deepEqual(errors,[]);
-  console.log('PASS: 42 stations, six lines, search/empty, tabs keyboard, overlays/focus return, toast replacement, validation, theme, opt-in scope, 1440/768/390/320, touch, reduced motion, no-JS.');
+  console.log('PASS: 54 stations, six lines, search/empty, tabs keyboard, overlays/focus return, toast replacement, validation, theme, opt-in scope, 1440/768/390/320, touch, reduced motion, no-JS.');
 } finally { await browser.close(); }

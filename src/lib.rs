@@ -12,6 +12,12 @@ pub const LINE_CSS: &str = concat!(
     include_str!("../css/line-font.css"),
     include_str!("../css/line.css")
 );
+/// Additional Pencil expressions and stations, separate from installed product bundles.
+pub const EXTENSIONS_CSS: &str = concat!(
+    include_str!("../css/expressions.css"),
+    include_str!("../css/extensions.css")
+);
+pub const EXTENSIONS_JS: &str = include_str!("../js/extensions.js");
 pub const WIRE_JS: &str = include_str!("../js/wire.js");
 pub const SPARK_JS: &str = include_str!("../js/spark.js");
 /// Public Odyssey 1.3 canary enhancer. It is network-free and remains separate from the internal
