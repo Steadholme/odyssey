@@ -1,0 +1,25 @@
+name: Verify Odyssey release candidate
+on: [push, pull_request, workflow_dispatch]
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: 1.96.0
+          components: rustfmt
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: tools/browser-runtime/package-lock.json
+      - run: npm ci --prefix tools/browser-runtime
+      - run: npm exec --prefix tools/browser-runtime -- playwright install --with-deps chromium firefox webkit
+      - name: Prepare the explicit pre-freeze candidate when needed
+        run: |
+          if [ ! -d releases/1.4.0 ]; then
+            ./tools/build-public-dist.sh --output "$RUNNER_TEMP/odyssey-1.4.0-candidate"
+            echo "ODYSSEY_PUBLIC_RELEASE_DIR=$RUNNER_TEMP/odyssey-1.4.0-candidate" >> "$GITHUB_ENV"
+          fi
+      - run: ./tools/verify.sh

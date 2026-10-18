@@ -63,6 +63,7 @@ async function verifyEntry(browser, name, entry) {
     await page.goto(`${base}/__odyssey-compatibility`);
     await page.evaluate(() => document.fonts.ready);
     assert.equal(await page.evaluate(() => typeof window.Odyssey?.init), 'function');
+    assert.equal(await page.evaluate(() => window.Odyssey.version), '1.4.0', 'the browser must consume this public release, not a cached core');
     assert.equal(await page.evaluate(() => typeof window.OdysseyExtensions?.init), 'function');
     assert.equal(await page.locator('html').getAttribute('data-expression'), 'line');
     await fitsViewport(page);

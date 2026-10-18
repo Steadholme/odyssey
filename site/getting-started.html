@@ -5,13 +5,13 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Getting started · Odyssey UI</title>
 <meta name="description" content="安装并使用 Odyssey UI：引入样式与脚本、基本用法、主题切换、CDN 与自托管说明。">
-<link rel="stylesheet" href="../dist/odyssey.css">
-<link rel="stylesheet" href="../dist/odyssey-font.css">
+<link rel="stylesheet" href="/1.4.0/odyssey.css">
+<link rel="stylesheet" href="/1.4.0/odyssey-font.css">
 <link rel="stylesheet" href="assets/site.css">
-<link rel="stylesheet" href="assets/line.css">
-<link rel="stylesheet" href="assets/line-site.css">
-<link rel="stylesheet" href="assets/extensions.css">
-<script src="assets/extensions.js" defer></script>
+<link rel="stylesheet" href="/1.4.0/odyssey-line.css"><link rel="stylesheet" href="/1.4.0/odyssey-line-font.css">
+<link rel="stylesheet" href="/assets/line-site-20261018-p1.css">
+<link rel="stylesheet" href="/1.4.0/odyssey-expressions.css"><link rel="stylesheet" href="/1.4.0/odyssey-extensions.css">
+<script src="/1.4.0/odyssey-extensions.js" defer></script>
 </head>
 <body class="ody-scope">
 
@@ -23,7 +23,7 @@
     </span>
     <span class="ody-appbar__name">Odyssey UI</span>
   </a>
-  <span class="ody-tag ody-tag--warn ody-mono doc-appbar__ver">v1.3 canary</span>
+  <span class="ody-tag ody-tag--warn ody-mono doc-appbar__ver">PUBLIC 1.4.0</span>
   <span class="ody-appbar__spacer"></span><label class="line-expression">Style <select data-ody-expression-select aria-label="Expression"><option value="line">Line</option><option value="soft">Soft</option><option value="studio">Studio</option><option value="signal">Signal</option></select></label>
   <div class="ody-appbar__right">
     <a class="ody-iconbtn" href="https://git.w33d.xyz/holdfast/odyssey" aria-label="源码仓库" title="源码仓库">
@@ -66,30 +66,43 @@
     <header class="doc-header">
       <p class="doc-eyebrow">Guide</p>
       <h1 class="doc-title">Getting started</h1>
-      <p class="doc-lead">Odyssey UI 无需构建步骤或包管理器。引入两个文件即可获得完整的组件样式与交互 —— 全部自包含、零外链。</p>
+      <p class="doc-lead">Odyssey UI 无需应用构建步骤或包管理器。固定同一版本的完整发行组，按需加载 core、Line、字体、表达与增强组件；全部自包含、零外链。</p>
     </header>
 
-    <h2 id="line">启用 Line Specification</h2>
-    <p>先加载已有组件样式，再加载 Line 层，并给目标 root 添加 <code>data-ody-design="line"</code>。组件 HTML、Rust helper 与交互入口保持原样。Line 不会自动传播到其他产品。</p>
-    <div class="doc-code doc-code--stand"><pre><code>&lt;link rel="stylesheet" href="/dist/odyssey.css"&gt;
-&lt;link rel="stylesheet" href="/assets/line.css"&gt;
-&lt;div class="ody-scope" data-ody-design="line"&gt;
+    <h2 id="line">启用完整 Line 发行</h2>
+    <p>新页面推荐固定 <code>1.4.0</code>。下面两个文件已包含 core、可选字体、Line、四表达、增强控件和宿主可消费组合，不要再重复引入单项。</p>
+    <div class="doc-code doc-code--stand"><pre><code>&lt;html lang="zh-CN" data-ody-design="line" data-expression="line"&gt;
+&lt;head&gt;
+  &lt;meta name="viewport" content="width=device-width,initial-scale=1"&gt;
+  &lt;link rel="stylesheet" href="https://odyssey.w33d.xyz/1.4.0/odyssey-complete.css"&gt;
+  &lt;script src="https://odyssey.w33d.xyz/1.4.0/odyssey-complete.js" defer&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body class="ody-scope"&gt;
   &lt;button type="button" class="ody-btn ody-btn--primary"&gt;Save changes&lt;/button&gt;
-&lt;/div&gt;</code></pre></div>
-    <p>自托管时从同一 Odyssey 服务提供两个 CSS 文件。Rust 页面使用 <code>APP_CSS</code>，公共 HTML 单独加载 <code>LINE_CSS</code> 导出的样式层；两者都需要显式 root 属性。交互组件仍使用现有 <code>odyssey.js</code>。</p>
-    <h2 id="install">安装</h2>
-    <p>在页面 <code>&lt;head&gt;</code> 内引入样式表。<code>odyssey.css</code> 为核心（不内嵌字体，保持轻量）；<code>odyssey-font.css</code> 为可选的 Inter 字体（data-URI 内嵌，零外部请求）。</p>
-    <div class="doc-code doc-code--stand"><pre><code>&lt;head&gt;
-  &lt;!-- 核心样式，必需 --&gt;
-  &lt;link rel="stylesheet" href="https://odyssey.w33d.xyz/1.1/odyssey.css"&gt;
-
-  &lt;!-- Inter 字体，可选 --&gt;
-  &lt;link rel="stylesheet" href="https://odyssey.w33d.xyz/1.1/odyssey-font.css"&gt;
-&lt;/head&gt;</code></pre></div>
-
-    <p>在 <code>&lt;/body&gt;</code> 前引入交互脚本。它零依赖、以 <code>data-*</code> 属性渐进增强，并在 <code>DOMContentLoaded</code> 自动初始化。若你只用静态组件，脚本可以省略。</p>
-    <div class="doc-code doc-code--stand"><pre><code>  &lt;script src="https://odyssey.w33d.xyz/1.1/odyssey.js"&gt;&lt;/script&gt;
-&lt;/body&gt;</code></pre></div>
+&lt;/body&gt;
+&lt;/html&gt;</code></pre></div>
+    <p><code>data-expression</code> 可选 <code>line</code>、<code>soft</code>、<code>studio</code>、<code>signal</code>。Line 只作用于显式选择的 root，不自动传播到其他产品。公开运行时不提供应用 fetch、router 或存储。</p>
+    <h2 id="install">按需安装</h2>
+    <p>只用基础组件时加载 core；要 Line、表达或增强控件时，按下面顺序选择对应文件。静态组件可以省略脚本。字体是可选的 data-URI 自托管子集，不会请求第三方服务。</p>
+    <div class="doc-code doc-code--stand"><pre><code>&lt;!-- core --&gt;
+&lt;link rel="stylesheet" href="https://odyssey.w33d.xyz/1.4.0/odyssey.css"&gt;
+&lt;script src="https://odyssey.w33d.xyz/1.4.0/odyssey.js" defer&gt;&lt;/script&gt;
+&lt;!-- Line 与可选字体 --&gt;
+&lt;link rel="stylesheet" href="https://odyssey.w33d.xyz/1.4.0/odyssey-line.css"&gt;
+&lt;link rel="stylesheet" href="https://odyssey.w33d.xyz/1.4.0/odyssey-font.css"&gt;
+&lt;link rel="stylesheet" href="https://odyssey.w33d.xyz/1.4.0/odyssey-line-font.css"&gt;
+&lt;!-- 表达与增强控件 --&gt;
+&lt;link rel="stylesheet" href="https://odyssey.w33d.xyz/1.4.0/odyssey-expressions.css"&gt;
+&lt;link rel="stylesheet" href="https://odyssey.w33d.xyz/1.4.0/odyssey-extensions.css"&gt;
+&lt;script src="https://odyssey.w33d.xyz/1.4.0/odyssey-extensions.js" defer&gt;&lt;/script&gt;
+&lt;!-- 宿主拥有状态、保存及网络的组合 --&gt;
+&lt;link rel="stylesheet" href="https://odyssey.w33d.xyz/1.4.0/compositions.css"&gt;
+&lt;script src="https://odyssey.w33d.xyz/1.4.0/compositions.js" defer&gt;&lt;/script&gt;</code></pre></div>
+    <p>Rust 页面继续使用独立 vendor 发行线。<a class="ody-link" href="/docs/rust-line.md">Rust Line 接入指南</a>包含可编译的静态/动态 shell、locale/theme、CSRF、表达与 nonce 示例；原 <code>page_shell</code> 入口保持兼容。</p>
+    <h2 id="contracts">能力目录与契约</h2>
+    <p>从<a class="ody-link" href="/library/capabilities.json">能力 manifest</a>查找站点及 guide 中的能力、成熟度、HTML/Rust 入口、所需资产和验证链接。<a class="ody-link" href="/library/capabilities.schema.json">JSON Schema</a>用于检查目录；<a class="ody-link" href="/docs/library-contracts.md">组件契约与迁移说明</a>解释 canonical 行为、旧入口适配及宿主责任。公开快照中的同名 JSON 随 <code>/1.4.0/</code> 一起冻结，版本映射与文件清单见<a class="ody-link" href="/1.4.0/release.json">release manifest</a>。</p>
+    <h3>保留旧冻结版本</h3>
+    <p>既有 <code>/1.1</code>、<code>/1.2</code>、<code>/1.3</code> URL 不覆盖。以下 canary 示例供现有接入维护，不是新页面的默认安装方式。</p>
 
     <h3 id="canary-12">Odyssey 1.2 Canary</h3>
     <div class="ody-alert ody-alert--warn">
@@ -216,10 +229,10 @@
     </div>
 
     <h2 id="delivery">CDN 与自托管</h2>
-    <p>两种方式二选一，产物文件完全相同且自包含：</p>
+    <p>两种方式固定同一个 <code>1.4.0</code> 发行组，产物相同且自包含：</p>
     <ol>
-      <li><strong>CDN</strong> — 直接指向发行地址 <code>https://odyssey.w33d.xyz/1.1/…</code>，最省事。</li>
-      <li><strong>自托管</strong> — 把 <code>dist/</code> 下的 <code>odyssey.css</code>、<code>odyssey-font.css</code>、<code>odyssey.js</code> 拷进你的静态资源目录，改成本地路径。因为无任何外链，离线／内网／气隙环境同样可用。</li>
+      <li><strong>CDN</strong> — 直接使用 <code>https://odyssey.w33d.xyz/1.4.0/…</code> 的完整或按需文件组。</li>
+      <li><strong>自托管</strong> — 复制 <code>releases/1.4.0/</code> 完整目录至本地静态资源路径，再把上述 URL 前缀改为该路径。保留字体 notice。<code>dist/</code> 是可变 core 源，不能代替包含 Line/extensions 的完整发行组；离线／内网可使用相同冻结文件。</li>
     </ol>
     <div class="doc-example">
       <div class="doc-demo">
@@ -249,7 +262,7 @@
   </main>
 </div>
 
-<script src="../dist/odyssey.js"></script>
+<script src="/1.4.0/odyssey.js"></script>
 <script src="assets/site.js"></script>
 </body>
 </html>

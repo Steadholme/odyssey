@@ -6,3 +6,4 @@ Cargo.lock.orig
 *.swp
 /server/target
 /tools/odysseyctl/target
+/tools/browser-runtime/node_modules

@@ -73,10 +73,10 @@ $ODYSSEYCTL manifest
 输出 canonical bundle 的机器可读摘要：
 
 ```text
-release=1.3.0-canary.1
+release=1.4.0-canary.1
 channel=internal-rust
-fingerprint=fnv1a64:955b30cefb0246f3
-files=24
+fingerprint=fnv1a64:<由当前 canonical 内容计算>
+files=<当前 canonical 文件数>
 consumers=27
 surfaces=47
 ```
@@ -246,7 +246,7 @@ node /usr/local/libexec/odyssey-gate/odyssey-gate.mjs status \
 <script src="https://odyssey.w33d.xyz/1.3/odyssey.js"></script>
 ```
 
-仓库中的 `releases/1.1/`、`releases/1.2/` 与 `releases/1.3/` 都是 immutable snapshot；其文件不可被后续 release 覆盖。`dist/` 保存当前 `1.3` canary 的 byte-identical 物理发行文件，供短缓存 `/dist` 路由与 self-host pipeline 使用；`tools/build-public-dist.sh` 从冻结的 `1.1` component bank 加 canonical `css/profile.css`、`js/canary.js` 确定性生成 `1.3`，若 snapshot 已存在则只做逐字节比较。无论 CDN 还是 self-host，都必须 pin release；不要指向内部 `crates/odyssey`，也不要复制未版本化的 canonical source。
+仓库中的 `releases/1.1/`、`releases/1.2/` 与 `releases/1.3/` 都是 immutable snapshot；其文件不可被后续 release 覆盖。`dist/` 现在是公共 core 的可变工作源，不包含完整 Line/Expressions/Extensions/Compositions 发行组。HTTP `/dist` 三文件仍返回已上线 `7362842` 对应的冻结 1.3 字节；旧 Line/extensions 及被替代的私有 site aliases 从 `releases/compat-7362842/` 精确保留，不能把工作源修复通过旧 URL 隐式传播到外部产品。新页面和自托管应 pin 完整 `/1.4.0/`；从 `releases/1.4.0/` 复制同一文件组，而不是把当前 `dist/` 当成旧 1.3 快照。`tools/build-public-dist.sh --output <目录>` 准备候选，负责人批准后 `--freeze` 只创建新的 1.4.0 快照，已有版本内容不同则拒绝覆盖；`--check` 对照全部 canonical 来源。完整资产、独立版本映射和晋级要求见 [RELEASES.md](RELEASES.md)。
 
 `canary/1.2.0-canary.1.json`、systemd collector 与现有 gate 仍只属于 `1.2` 观测窗口。`1.3` 在建立独立 policy、镜像 pin、资产 hash 与批准窗口之前不得借用该证据晋级。
 

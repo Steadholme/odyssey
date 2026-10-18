@@ -1,0 +1,52 @@
+#!/bin/sh
+# One candidate, one entry point: local checks and CI use the same contracts.
+set -eu
+ROOT=$(CDPATH='' cd -- "$(dirname -- "$0")/.." && pwd)
+cd "$ROOT"
+node -e 'const [a,b]=process.versions.node.split(".").map(Number); if(a<22||(a===22&&b<12)){console.error("Odyssey verification requires Node >=22.12");process.exit(1)}'
+if [ ! -f tools/browser-runtime/node_modules/playwright/package.json ]; then
+  echo 'Install the locked test environment first: npm ci --prefix tools/browser-runtime && npm run --prefix tools/browser-runtime install:browsers' >&2
+  exit 1
+fi
+export PLAYWRIGHT_MODULE="file://$ROOT/tools/browser-runtime/node_modules/playwright/index.mjs"
+export AXE_PLAYWRIGHT_MODULE="file://$ROOT/tools/browser-runtime/node_modules/@axe-core/playwright/dist/index.mjs"
+
+cargo fmt --all -- --check
+cargo fmt --manifest-path server/Cargo.toml -- --check
+cargo fmt --manifest-path tools/odysseyctl/Cargo.toml -- --check
+cargo test --locked --all-targets
+cargo test --locked --manifest-path tools/odysseyctl/Cargo.toml
+cargo test --locked --manifest-path server/Cargo.toml
+cargo build --locked --manifest-path server/Cargo.toml
+cargo test --locked --manifest-path examples/rust-line/Cargo.toml
+cargo doc --locked --no-deps
+node --test tools/tests/release-builder.test.mjs tools/tests/odyssey-gate.test.mjs tools/tests/pattern-assertions.test.mjs
+./tools/build-public-dist.sh --check
+
+SERVER_PID=
+cleanup() { if [ -n "$SERVER_PID" ]; then kill "$SERVER_PID" 2>/dev/null || :; wait "$SERVER_PID" 2>/dev/null || :; fi; }
+trap cleanup EXIT HUP INT TERM
+if [ -z "${ODYSSEY_BASE_URL:-}" ]; then
+  PORT=${ODYSSEY_VERIFY_PORT:-18770}
+  node --input-type=module -e 'import net from "node:net";const s=net.createServer();s.on("error",e=>{console.error("Verification port is already in use; set ODYSSEY_VERIFY_PORT or ODYSSEY_BASE_URL:",e.message);process.exitCode=1});s.listen(Number(process.argv[1]),"127.0.0.1",()=>s.close())' "$PORT"
+  BIND_ADDR="127.0.0.1:$PORT" ./server/target/debug/odyssey-server &
+  SERVER_PID=$!
+  ODYSSEY_BASE_URL="http://127.0.0.1:$PORT"
+  export ODYSSEY_BASE_URL
+fi
+node --input-type=module -e 'let ready=false;for(let n=0;n<50;n++){try{const r=await fetch(process.env.ODYSSEY_BASE_URL+"/healthz");if(r.ok){ready=true;break}}catch{}await new Promise(r=>setTimeout(r,100))}if(!ready)throw new Error("candidate server did not become healthy")'
+node tools/tests/library-contracts.test.mjs
+node --test tools/tests/runtime-p1.test.mjs
+node tools/tests/line-browser.test.mjs
+node tools/tests/extensions-browser.test.mjs
+node tools/tests/patterns-browser.test.mjs
+node tools/tests/compositions-browser.test.mjs
+node tools/tests/line-p1.test.mjs
+node tools/tests/carousel-targets.test.mjs
+node tools/tests/library-a11y-p1.test.mjs
+node tools/tests/compatibility-browser.test.mjs
+if [ "${BROWSERS:-chromium,firefox,webkit}" = 'chromium,firefox,webkit' ]; then
+  printf '\nPASS: Odyssey candidate verification, including all three browser engines.\n'
+else
+  printf '\nPASS: scoped verification (browser engines: %s); remaining engines are still required for promotion.\n' "$BROWSERS"
+fi

@@ -1,0 +1,16 @@
+{
+  "schema": "odyssey.legacy-aliases.v1",
+  "sourceCommit": "736284240c35c5722cdda154dad5272c141a7d35",
+  "purpose": "Preserve the exact previously deployed legacy URL bodies; new Odyssey pages opt in to /1.4.0 and p1 site assets.",
+  "routes": {
+    "/dist/odyssey.css": "../1.3/odyssey.css",
+    "/dist/odyssey.js": "../1.3/odyssey.js",
+    "/dist/odyssey-font.css": "../1.3/odyssey-font.css",
+    "/assets/line.css": "line.css",
+    "/assets/extensions.css": "extensions.css",
+    "/assets/extensions.js": "extensions.js",
+    "/assets/line-site.css": "line-site.css",
+    "/assets/line-site-20261018.css": "line-site.css",
+    "/assets/patterns-20261018.js": "patterns.js"
+  }
+}

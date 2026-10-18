@@ -15,6 +15,8 @@ if (!base) {
     ['/1.4.0/odyssey-font.css', ['text/css', await readFile(fromRoot('dist/odyssey-font.css'))]],
     ['/1.4.0/odyssey-line-font.css', ['text/css', lineFonts]],
     ['/1.4.0/odyssey-line.css', ['text/css', lineTokens]],
+    ['/1.4.0/odyssey-expressions.css', ['text/css', await readFile(fromRoot('css/expressions.css'))]],
+    ['/1.4.0/odyssey-extensions.css', ['text/css', await readFile(fromRoot('css/extensions.css'))]],
     ['/1.4.0/compositions.css', ['text/css', await readFile(fromRoot('css/compositions.css'))]],
     ['/1.4.0/compositions.js', ['application/javascript', await readFile(fromRoot('js/compositions.js'))]],
     ['/patterns.html', ['text/html', await readFile(fromRoot('site/patterns.html'))]],

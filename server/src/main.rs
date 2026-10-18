@@ -26,6 +26,7 @@ const CONTENT_TYPE_HTML: &str = "text/html; charset=utf-8";
 const CONTENT_TYPE_CSS: &str = "text/css; charset=utf-8";
 const CONTENT_TYPE_JS: &str = "application/javascript; charset=utf-8";
 const CONTENT_TYPE_TEXT: &str = "text/plain; charset=utf-8";
+const CONTENT_TYPE_JSON: &str = "application/json; charset=utf-8";
 
 const CACHE_DOCS: &str = "no-cache";
 const CACHE_DIST: &str = "public, max-age=3600";
@@ -63,13 +64,13 @@ const DIST_ODYSSEY_12_FONT_CSS: &str = include_str!("../../releases/1.2/odyssey-
 const DIST_ODYSSEY_13_CSS: &str = include_str!("../../releases/1.3/odyssey.css");
 const DIST_ODYSSEY_13_JS: &str = include_str!("../../releases/1.3/odyssey.js");
 const DIST_ODYSSEY_13_FONT_CSS: &str = include_str!("../../releases/1.3/odyssey-font.css");
-const DIST_ODYSSEY_CURRENT_CSS: &str = include_str!("../../dist/odyssey.css");
+#[cfg(test)]
 const DIST_ODYSSEY_CURRENT_JS: &str = include_str!("../../dist/odyssey.js");
-const DIST_ODYSSEY_CURRENT_FONT_CSS: &str = include_str!("../../dist/odyssey-font.css");
+include!(concat!(env!("OUT_DIR"), "/public_release.rs"));
 
 #[derive(Clone, Copy)]
 enum DistRelease {
-    Current,
+    LegacyAlias,
     Snapshot11,
     Canary12,
     Canary13,
@@ -96,6 +97,20 @@ const SITE_STUDIO_JS: &str = include_str!("../../site/assets/studio.js");
 const SITE_PATTERNS: &str = include_str!("../../site/patterns.html");
 const SITE_PATTERNS_CSS: &str = include_str!("../../site/assets/patterns-20261018.css");
 const SITE_PATTERNS_JS: &str = include_str!("../../site/assets/patterns-20261018.js");
+const CAPABILITIES_JSON: &str = include_str!("../../library/capabilities.json");
+const CAPABILITIES_SCHEMA: &str = include_str!("../../library/capabilities.schema.json");
+const LIBRARY_CONTRACTS_JSON: &str = include_str!("../../library/contracts.json");
+const CAPABILITY_CATALOG_JS: &str = include_str!("../../site/assets/capability-catalog.js");
+const CAPABILITY_CATALOG_CSS: &str = include_str!("../../site/assets/capability-catalog.css");
+const LIBRARY_CONTRACTS_GUIDE: &str = include_str!("../../docs/library-contracts.md");
+const RUST_LINE_GUIDE: &str = include_str!("../../docs/rust-line.md");
+const COMPOSITIONS_EXAMPLE: &str =
+    include_str!("../../examples/compositions/workspace-settings.html");
+const LEGACY_LINE_CSS: &str = include_str!("../../releases/compat-7362842/line.css");
+const LEGACY_EXTENSIONS_CSS: &str = include_str!("../../releases/compat-7362842/extensions.css");
+const LEGACY_EXTENSIONS_JS: &str = include_str!("../../releases/compat-7362842/extensions.js");
+const LEGACY_LINE_SITE_CSS: &str = include_str!("../../releases/compat-7362842/line-site.css");
+const LEGACY_PATTERNS_JS: &str = include_str!("../../releases/compat-7362842/patterns.js");
 
 const BRAND_TILE: &str = r#"<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/><path d="m12 7 3 5-3 5-3-5Z"/></svg>"#;
 const ICON_ATLAS: &str = r#"<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M4.5 9h15M4.5 15h15M12 4c2 2.2 3 4.9 3 8s-1 5.8-3 8c-2-2.2-3-4.9-3-8s1-5.8 3-8Z"/></svg>"#;
@@ -1056,6 +1071,50 @@ fn route_static(path: &str) -> Response {
         "/overlays.html" => site_html(SITE_OVERLAYS),
         "/studio" | "/studio.html" => site_html(SITE_STUDIO),
         "/patterns" | "/patterns.html" => site_html(SITE_PATTERNS),
+        "/examples/compositions/workspace-settings.html"
+        | "/compositions/workspace-settings.html" => site_html(COMPOSITIONS_EXAMPLE),
+        "/library/capabilities.json" => static_response(
+            StatusCode::OK,
+            CONTENT_TYPE_JSON,
+            Some(CACHE_DOCS),
+            CAPABILITIES_JSON,
+        ),
+        "/library/capabilities.schema.json" => static_response(
+            StatusCode::OK,
+            CONTENT_TYPE_JSON,
+            Some(CACHE_DOCS),
+            CAPABILITIES_SCHEMA,
+        ),
+        "/library/contracts.json" => static_response(
+            StatusCode::OK,
+            CONTENT_TYPE_JSON,
+            Some(CACHE_DOCS),
+            LIBRARY_CONTRACTS_JSON,
+        ),
+        "/assets/capability-catalog.js" => static_response(
+            StatusCode::OK,
+            CONTENT_TYPE_JS,
+            Some(CACHE_DOCS),
+            CAPABILITY_CATALOG_JS,
+        ),
+        "/assets/capability-catalog.css" => static_response(
+            StatusCode::OK,
+            CONTENT_TYPE_CSS,
+            Some(CACHE_DOCS),
+            CAPABILITY_CATALOG_CSS,
+        ),
+        "/docs/library-contracts.md" => static_response(
+            StatusCode::OK,
+            CONTENT_TYPE_TEXT,
+            Some(CACHE_DOCS),
+            LIBRARY_CONTRACTS_GUIDE,
+        ),
+        "/docs/rust-line.md" => static_response(
+            StatusCode::OK,
+            CONTENT_TYPE_TEXT,
+            Some(CACHE_DOCS),
+            RUST_LINE_GUIDE,
+        ),
         "/assets/patterns-20261018.css" => static_response(
             StatusCode::OK,
             CONTENT_TYPE_CSS,
@@ -1066,19 +1125,25 @@ fn route_static(path: &str) -> Response {
             StatusCode::OK,
             CONTENT_TYPE_JS,
             Some(CACHE_DOCS),
+            LEGACY_PATTERNS_JS,
+        ),
+        "/assets/patterns-20261018-p1.js" => static_response(
+            StatusCode::OK,
+            CONTENT_TYPE_JS,
+            Some(CACHE_DOCS),
             SITE_PATTERNS_JS,
         ),
         "/assets/extensions.css" => static_response(
             StatusCode::OK,
             CONTENT_TYPE_CSS,
             Some(CACHE_DOCS),
-            odyssey::EXTENSIONS_CSS,
+            LEGACY_EXTENSIONS_CSS,
         ),
         "/assets/extensions.js" => static_response(
             StatusCode::OK,
             CONTENT_TYPE_JS,
             Some(CACHE_DOCS),
-            odyssey::EXTENSIONS_JS,
+            LEGACY_EXTENSIONS_JS,
         ),
         "/assets/studio.css" | "/assets/studio-20261018.css" => static_response(
             StatusCode::OK,
@@ -1096,9 +1161,15 @@ fn route_static(path: &str) -> Response {
             StatusCode::OK,
             CONTENT_TYPE_CSS,
             Some(CACHE_DOCS),
-            odyssey::LINE_CSS,
+            LEGACY_LINE_CSS,
         ),
         "/assets/line-site.css" | "/assets/line-site-20261018.css" => static_response(
+            StatusCode::OK,
+            CONTENT_TYPE_CSS,
+            Some(CACHE_DOCS),
+            LEGACY_LINE_SITE_CSS,
+        ),
+        "/assets/line-site-20261018-p1.css" => static_response(
             StatusCode::OK,
             CONTENT_TYPE_CSS,
             Some(CACHE_DOCS),
@@ -1123,8 +1194,16 @@ fn route_static(path: &str) -> Response {
             SITE_ASSET_JS,
         ),
         _ => {
-            if let Some(file) = path.strip_prefix("/dist/") {
-                dist_asset(file, CACHE_DIST, DistRelease::Current)
+            if let Some(file) = path.strip_prefix("/1.4.0/") {
+                PUBLIC_RELEASE_ASSETS
+                    .iter()
+                    .find(|(name, _, _)| *name == file)
+                    .map(|(_, mime, body)| {
+                        static_response(StatusCode::OK, mime, Some(CACHE_VERSIONED), body)
+                    })
+                    .unwrap_or_else(not_found)
+            } else if let Some(file) = path.strip_prefix("/dist/") {
+                dist_asset(file, CACHE_DIST, DistRelease::LegacyAlias)
             } else if let Some(file) = path.strip_prefix("/1.3/") {
                 dist_asset(file, CACHE_VERSIONED, DistRelease::Canary13)
             } else if let Some(file) = path.strip_prefix("/1.2/") {
@@ -1146,10 +1225,10 @@ fn site_html(body: &'static str) -> Response {
 
 fn dist_asset(file: &str, cache_control: &'static str, release: DistRelease) -> Response {
     let (content_type, body) = match (release, file) {
-        (DistRelease::Current, "odyssey.css") => (CONTENT_TYPE_CSS, DIST_ODYSSEY_CURRENT_CSS),
-        (DistRelease::Current, "odyssey.js") => (CONTENT_TYPE_JS, DIST_ODYSSEY_CURRENT_JS),
-        (DistRelease::Current, "odyssey-font.css") => {
-            (CONTENT_TYPE_CSS, DIST_ODYSSEY_CURRENT_FONT_CSS)
+        (DistRelease::LegacyAlias, "odyssey.css") => (CONTENT_TYPE_CSS, DIST_ODYSSEY_13_CSS),
+        (DistRelease::LegacyAlias, "odyssey.js") => (CONTENT_TYPE_JS, DIST_ODYSSEY_13_JS),
+        (DistRelease::LegacyAlias, "odyssey-font.css") => {
+            (CONTENT_TYPE_CSS, DIST_ODYSSEY_13_FONT_CSS)
         }
         (DistRelease::Snapshot11, "odyssey.css") => (CONTENT_TYPE_CSS, DIST_ODYSSEY_11_CSS),
         (DistRelease::Snapshot11, "odyssey.js") => (CONTENT_TYPE_JS, DIST_ODYSSEY_11_JS),
@@ -1291,6 +1370,130 @@ mod tests {
     const TEST_HOST: &str = "odyssey.test";
     const TEST_ORIGIN: &str = "https://odyssey.test";
 
+    #[tokio::test]
+    async fn legacy_aliases_keep_deployed_bytes_while_14_is_an_explicit_opt_in() {
+        for (file, expected) in [
+            ("odyssey.css", DIST_ODYSSEY_13_CSS),
+            ("odyssey.js", DIST_ODYSSEY_13_JS),
+            ("odyssey-font.css", DIST_ODYSSEY_13_FONT_CSS),
+        ] {
+            let response = route_static(&format!("/dist/{file}"));
+            assert_eq!(response.status(), StatusCode::OK);
+            assert_eq!(
+                response
+                    .into_body()
+                    .collect()
+                    .await
+                    .unwrap()
+                    .to_bytes()
+                    .as_ref(),
+                expected.as_bytes()
+            );
+        }
+        for (file, previous) in [
+            ("odyssey.js", DIST_ODYSSEY_13_JS),
+            ("odyssey-extensions.js", LEGACY_EXTENSIONS_JS),
+            ("odyssey-line.css", LEGACY_LINE_CSS),
+        ] {
+            let (_, _, current) = PUBLIC_RELEASE_ASSETS
+                .iter()
+                .find(|(name, _, _)| *name == file)
+                .unwrap();
+            assert_ne!(
+                *current, previous,
+                "new {file} must not silently replace a legacy URL"
+            );
+        }
+        assert_ne!(SITE_PATTERNS_JS, LEGACY_PATTERNS_JS);
+        assert_ne!(SITE_LINE_CSS, LEGACY_LINE_SITE_CSS);
+    }
+
+    #[test]
+    fn every_site_head_pins_public_component_assets_without_duplicate_runtimes() {
+        for source in [
+            SITE_INDEX,
+            SITE_GETTING_STARTED,
+            SITE_TOKENS,
+            SITE_ACTIONS,
+            SITE_FORMS,
+            SITE_DATA_DISPLAY,
+            SITE_FEEDBACK,
+            SITE_NAVIGATION,
+            SITE_TYPOGRAPHY,
+            SITE_LAYOUT,
+            SITE_OVERLAYS,
+            SITE_STUDIO,
+            SITE_PATTERNS,
+        ] {
+            let head = source.split("</head>").next().unwrap();
+            assert!(!head.contains("dist/odyssey"));
+            assert!(!head.contains("assets/line.css"));
+            assert!(!head.contains("assets/extensions.css"));
+            assert!(!head.contains("assets/extensions.js"));
+            if source.contains("doc-appbar__ver") {
+                assert!(source.contains("doc-appbar__ver\">PUBLIC 1.4.0</span>"));
+            }
+            for file in [
+                "odyssey-font.css",
+                "odyssey-line.css",
+                "odyssey-line-font.css",
+                "odyssey-expressions.css",
+                "odyssey-extensions.css",
+            ] {
+                assert!(
+                    head.contains(&format!("/1.4.0/{file}")),
+                    "page missing {file}"
+                );
+            }
+            assert!(source.matches("<script src=\"/1.4.0/odyssey.js\"").count() <= 1);
+        }
+    }
+
+    #[tokio::test]
+    async fn complete_public_release_and_library_entrypoints_are_live() {
+        for &(file, mime, body) in PUBLIC_RELEASE_ASSETS {
+            let response = route_static(&format!("/1.4.0/{file}"));
+            assert_eq!(response.status(), StatusCode::OK);
+            assert_eq!(header(&response, header::CONTENT_TYPE), mime);
+            assert_eq!(header(&response, header::CACHE_CONTROL), CACHE_VERSIONED);
+            assert_eq!(header(&response, header::ACCESS_CONTROL_ALLOW_ORIGIN), "*");
+            assert_eq!(
+                response
+                    .into_body()
+                    .collect()
+                    .await
+                    .unwrap()
+                    .to_bytes()
+                    .as_ref(),
+                body.as_bytes()
+            );
+        }
+        for (route, mime) in [
+            ("/library/capabilities.json", CONTENT_TYPE_JSON),
+            ("/library/capabilities.schema.json", CONTENT_TYPE_JSON),
+            ("/library/contracts.json", CONTENT_TYPE_JSON),
+            ("/assets/capability-catalog.js", CONTENT_TYPE_JS),
+            ("/assets/capability-catalog.css", CONTENT_TYPE_CSS),
+            ("/assets/line-site-20261018-p1.css", CONTENT_TYPE_CSS),
+            ("/assets/patterns-20261018-p1.js", CONTENT_TYPE_JS),
+            ("/docs/library-contracts.md", CONTENT_TYPE_TEXT),
+            ("/docs/rust-line.md", CONTENT_TYPE_TEXT),
+            (
+                "/examples/compositions/workspace-settings.html",
+                CONTENT_TYPE_HTML,
+            ),
+        ] {
+            let response = route_static(route);
+            assert_eq!(response.status(), StatusCode::OK, "{route}");
+            assert_eq!(header(&response, header::CONTENT_TYPE), mime);
+            assert_eq!(header(&response, header::CACHE_CONTROL), CACHE_DOCS);
+        }
+        assert_eq!(
+            route_static("/1.4.0/../Cargo.toml").status(),
+            StatusCode::NOT_FOUND
+        );
+    }
+
     #[test]
     fn public_init_composes_extended_forms() {
         let forms_start = DIST_ODYSSEY_CURRENT_JS
@@ -1308,18 +1511,22 @@ mod tests {
     #[tokio::test]
     async fn line_assets_are_live_and_keep_versioned_banks_separate() {
         for (path, mime, expected) in [
-            ("/assets/line.css", CONTENT_TYPE_CSS, odyssey::LINE_CSS),
-            ("/assets/line-site.css", CONTENT_TYPE_CSS, SITE_LINE_CSS),
+            ("/assets/line.css", CONTENT_TYPE_CSS, LEGACY_LINE_CSS),
+            (
+                "/assets/line-site.css",
+                CONTENT_TYPE_CSS,
+                LEGACY_LINE_SITE_CSS,
+            ),
             ("/assets/line-site.js", CONTENT_TYPE_JS, SITE_LINE_JS),
             (
                 "/assets/extensions.css",
                 CONTENT_TYPE_CSS,
-                odyssey::EXTENSIONS_CSS,
+                LEGACY_EXTENSIONS_CSS,
             ),
             (
                 "/assets/extensions.js",
                 CONTENT_TYPE_JS,
-                odyssey::EXTENSIONS_JS,
+                LEGACY_EXTENSIONS_JS,
             ),
             ("/assets/studio.css", CONTENT_TYPE_CSS, SITE_STUDIO_CSS),
             ("/assets/studio.js", CONTENT_TYPE_JS, SITE_STUDIO_JS),
@@ -1334,8 +1541,8 @@ mod tests {
         assert_eq!(SITE_INDEX.matches("data-station=\"").count(), 54);
         assert_eq!(SITE_INDEX.matches("data-family=\"").count(), 6);
         assert!(!DIST_ODYSSEY_13_CSS.contains("data-ody-design=\"line\""));
-        assert!(SITE_INDEX.contains("assets/line.css"));
-        assert!(SITE_INDEX.contains("assets/extensions.css"));
+        assert!(SITE_INDEX.contains("/1.4.0/odyssey-line.css"));
+        assert!(SITE_INDEX.contains("/1.4.0/odyssey-extensions.css"));
         assert!(SITE_INDEX.contains("studio.html"));
         assert!(SITE_STUDIO.contains("data-ody-command-menu"));
     }
@@ -1366,7 +1573,7 @@ mod tests {
             assert!(odyssey::EXTENSIONS_CSS.contains(&format!("data-expression=\"{expression}\"")));
         }
         assert!(!SITE_STUDIO.contains("127.0.0.1"));
-        assert!(SITE_STUDIO.contains("assets/extensions.js"));
+        assert!(SITE_STUDIO.contains("/1.4.0/odyssey-extensions.js"));
         assert!(SITE_STUDIO.contains("id=\"motion\""));
     }
 
@@ -1400,7 +1607,7 @@ mod tests {
             (
                 "/assets/patterns-20261018.js",
                 CONTENT_TYPE_JS,
-                SITE_PATTERNS_JS,
+                LEGACY_PATTERNS_JS,
             ),
         ] {
             let response = route_static(path);
@@ -1412,7 +1619,7 @@ mod tests {
         }
         assert!(SITE_PATTERNS.contains("data-expression=\"line\""));
         assert!(SITE_PATTERNS.contains("Demo workspace"));
-        assert!(SITE_PATTERNS.contains("/assets/extensions.css"));
+        assert!(SITE_PATTERNS.contains("/1.4.0/odyssey-extensions.css"));
         assert!(SITE_PATTERNS.contains("/studio.html"));
         assert!(SITE_INDEX.contains("href=\"patterns.html\""));
         assert!(SITE_STUDIO.contains("href=\"patterns.html\""));
@@ -1427,7 +1634,7 @@ mod tests {
             (
                 "/assets/line-site.css",
                 "/assets/line-site-20261018.css",
-                SITE_LINE_CSS,
+                LEGACY_LINE_SITE_CSS,
             ),
             (
                 "/assets/studio.css",
@@ -1444,14 +1651,14 @@ mod tests {
                 assert_eq!(body.as_ref(), expected.as_bytes());
             }
         }
-        assert!(SITE_INDEX.contains("href=\"assets/line-site-20261018.css\""));
+        assert!(SITE_INDEX.contains("href=\"/assets/line-site-20261018-p1.css\""));
         assert!(!SITE_INDEX.contains("href=\"assets/line-site.css\""));
         assert!(SITE_STUDIO.contains("href=\"assets/studio-20261018.css\""));
         assert!(!SITE_STUDIO.contains("href=\"assets/studio.css\""));
     }
 
     #[tokio::test]
-    async fn serves_current_dist_assets_with_short_cache() {
+    async fn serves_legacy_dist_assets_with_short_cache() {
         let response = route_static("/dist/odyssey.js");
 
         assert_eq!(response.status(), StatusCode::OK);
@@ -1459,7 +1666,6 @@ mod tests {
         assert_eq!(header(&response, header::CACHE_CONTROL), CACHE_DIST);
         assert_eq!(header(&response, header::ACCESS_CONTROL_ALLOW_ORIGIN), "*");
         let body = response.into_body().collect().await.unwrap().to_bytes();
-        assert_eq!(body.as_ref(), DIST_ODYSSEY_CURRENT_JS.as_bytes());
         assert_eq!(body.as_ref(), DIST_ODYSSEY_13_JS.as_bytes());
     }
 
@@ -1545,13 +1751,6 @@ mod tests {
             let body = response.into_body().collect().await.unwrap().to_bytes();
             assert_eq!(body.as_ref(), expected.as_bytes());
         }
-    }
-
-    #[test]
-    fn release_13_snapshot_matches_current_dist_byte_for_byte() {
-        assert_eq!(DIST_ODYSSEY_CURRENT_CSS, DIST_ODYSSEY_13_CSS);
-        assert_eq!(DIST_ODYSSEY_CURRENT_JS, DIST_ODYSSEY_13_JS);
-        assert_eq!(DIST_ODYSSEY_CURRENT_FONT_CSS, DIST_ODYSSEY_13_FONT_CSS);
     }
 
     #[test]

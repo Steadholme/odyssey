@@ -18,6 +18,10 @@ COPY js ./js
 COPY dist ./dist
 COPY releases ./releases
 COPY site ./site
+COPY library ./library
+COPY design ./design
+COPY docs ./docs
+COPY examples/compositions ./examples/compositions
 COPY server ./server
 
 RUN cargo build --locked --release --manifest-path server/Cargo.toml \
