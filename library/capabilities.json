@@ -36,7 +36,7 @@
           "coverage": "specimen-smoke"
         }
       ],
-      "contract": "library/contracts.json#card",
+      "contract": "library/contracts.json#/components/card",
       "openTodo": []
     },
     {
@@ -68,7 +68,7 @@
           "coverage": "specimen-smoke"
         }
       ],
-      "contract": "library/contracts.json#panel",
+      "contract": "library/contracts.json#/components/panel",
       "openTodo": []
     },
     {
@@ -100,7 +100,7 @@
           "coverage": "specimen-smoke"
         }
       ],
-      "contract": "library/contracts.json#sheet",
+      "contract": "library/contracts.json#/components/sheet",
       "openTodo": []
     },
     {
@@ -132,7 +132,7 @@
           "coverage": "specimen-smoke"
         }
       ],
-      "contract": "library/contracts.json#section-head",
+      "contract": "library/contracts.json#/components/section-head",
       "openTodo": []
     },
     {
@@ -164,7 +164,7 @@
           "coverage": "specimen-smoke"
         }
       ],
-      "contract": "library/contracts.json#tile",
+      "contract": "library/contracts.json#/components/tile",
       "openTodo": []
     },
     {
@@ -196,7 +196,7 @@
           "coverage": "specimen-smoke"
         }
       ],
-      "contract": "library/contracts.json#frame",
+      "contract": "library/contracts.json#/components/frame",
       "openTodo": []
     },
     {
@@ -228,7 +228,7 @@
           "coverage": "specimen-smoke"
         }
       ],
-      "contract": "library/contracts.json#divider",
+      "contract": "library/contracts.json#/components/divider",
       "openTodo": []
     },
     {
@@ -260,7 +260,7 @@
           "coverage": "specimen-smoke"
         }
       ],
-      "contract": "library/contracts.json#well",
+      "contract": "library/contracts.json#/components/well",
       "openTodo": []
     },
     {
@@ -293,7 +293,7 @@
           "coverage": "specimen-smoke"
         }
       ],
-      "contract": "library/contracts.json#avatar",
+      "contract": "library/contracts.json#/components/avatar",
       "openTodo": []
     },
     {
@@ -335,7 +335,7 @@
           "coverage": "interaction-contract"
         }
       ],
-      "contract": "library/contracts.json#split-pane",
+      "contract": "library/contracts.json#/components/split-pane",
       "openTodo": [
         "ACT-07"
       ]
@@ -371,7 +371,7 @@
           "coverage": "specimen-smoke"
         }
       ],
-      "contract": "library/contracts.json#button",
+      "contract": "library/contracts.json#/components/button",
       "openTodo": []
     },
     {
@@ -405,7 +405,7 @@
           "coverage": "specimen-smoke"
         }
       ],
-      "contract": "library/contracts.json#icon-button",
+      "contract": "library/contracts.json#/components/icon-button",
       "openTodo": []
     },
     {
@@ -440,7 +440,7 @@
           "coverage": "specimen-smoke"
         }
       ],
-      "contract": "library/contracts.json#link",
+      "contract": "library/contracts.json#/components/link",
       "openTodo": []
     },
     {
@@ -476,7 +476,7 @@
           "coverage": "specimen-smoke"
         }
       ],
-      "contract": "library/contracts.json#switch",
+      "contract": "library/contracts.json#/components/switch",
       "openTodo": []
     },
     {
@@ -512,7 +512,7 @@
           "coverage": "specimen-smoke"
         }
       ],
-      "contract": "library/contracts.json#checkbox",
+      "contract": "library/contracts.json#/components/checkbox",
       "openTodo": []
     },
     {
@@ -546,7 +546,7 @@
           "coverage": "specimen-smoke"
         }
       ],
-      "contract": "library/contracts.json#radio",
+      "contract": "library/contracts.json#/components/radio",
       "openTodo": []
     },
     {
@@ -578,7 +578,7 @@
           "coverage": "specimen-smoke"
         }
       ],
-      "contract": "library/contracts.json#segmented",
+      "contract": "library/contracts.json#/components/segmented",
       "openTodo": []
     },
     {
@@ -610,7 +610,7 @@
           "coverage": "specimen-smoke"
         }
       ],
-      "contract": "library/contracts.json#keycap",
+      "contract": "library/contracts.json#/components/keycap",
       "openTodo": []
     },
     {
@@ -642,7 +642,7 @@
           "coverage": "specimen-smoke"
         }
       ],
-      "contract": "library/contracts.json#fab",
+      "contract": "library/contracts.json#/components/fab",
       "openTodo": []
     },
     {
@@ -684,7 +684,7 @@
           "coverage": "interaction-contract"
         }
       ],
-      "contract": "library/contracts.json#command",
+      "contract": "library/contracts.json#/components/command",
       "openTodo": [
         "A11Y-10"
       ]
@@ -724,7 +724,7 @@
           "coverage": "specimen-smoke"
         }
       ],
-      "contract": "library/contracts.json#selection-toolbar",
+      "contract": "library/contracts.json#/components/selection-toolbar",
       "openTodo": [
         "ACT-04"
       ]
@@ -762,7 +762,7 @@
           "coverage": "specimen-smoke"
         }
       ],
-      "contract": "library/contracts.json#field",
+      "contract": "library/contracts.json#/components/field",
       "openTodo": []
     },
     {
@@ -798,7 +798,7 @@
           "coverage": "specimen-smoke"
         }
       ],
-      "contract": "library/contracts.json#input",
+      "contract": "library/contracts.json#/components/input",
       "openTodo": []
     },
     {
@@ -834,7 +834,7 @@
           "coverage": "specimen-smoke"
         }
       ],
-      "contract": "library/contracts.json#textarea",
+      "contract": "library/contracts.json#/components/textarea",
       "openTodo": []
     },
     {
@@ -870,7 +870,7 @@
           "coverage": "specimen-smoke"
         }
       ],
-      "contract": "library/contracts.json#select",
+      "contract": "library/contracts.json#/components/select",
       "openTodo": []
     },
     {
@@ -906,7 +906,7 @@
           "coverage": "specimen-smoke"
         }
       ],
-      "contract": "library/contracts.json#number-input",
+      "contract": "library/contracts.json#/components/number-input",
       "openTodo": []
     },
     {
@@ -942,7 +942,7 @@
           "coverage": "specimen-smoke"
         }
       ],
-      "contract": "library/contracts.json#range",
+      "contract": "library/contracts.json#/components/range",
       "openTodo": [
         "ACT-11"
       ]
@@ -978,7 +978,7 @@
           "coverage": "specimen-smoke"
         }
       ],
-      "contract": "library/contracts.json#date-input",
+      "contract": "library/contracts.json#/components/date-input",
       "openTodo": []
     },
     {
@@ -1018,7 +1018,7 @@
           "coverage": "interaction-contract"
         }
       ],
-      "contract": "library/contracts.json#combobox",
+      "contract": "library/contracts.json#/components/combobox",
       "openTodo": []
     },
     {
@@ -1060,7 +1060,7 @@
           "coverage": "interaction-contract"
         }
       ],
-      "contract": "library/contracts.json#otp",
+      "contract": "library/contracts.json#/components/otp",
       "openTodo": [
         "ACT-05"
       ]
@@ -1104,7 +1104,7 @@
           "coverage": "interaction-contract"
         }
       ],
-      "contract": "library/contracts.json#file-dropzone",
+      "contract": "library/contracts.json#/components/file-dropzone",
       "openTodo": [
         "ACT-06"
       ]
@@ -1148,7 +1148,7 @@
           "coverage": "interaction-contract"
         }
       ],
-      "contract": "library/contracts.json#table",
+      "contract": "library/contracts.json#/components/table",
       "openTodo": []
     },
     {
@@ -1182,7 +1182,7 @@
           "coverage": "specimen-smoke"
         }
       ],
-      "contract": "library/contracts.json#stat",
+      "contract": "library/contracts.json#/components/stat",
       "openTodo": []
     },
     {
@@ -1214,7 +1214,7 @@
           "coverage": "specimen-smoke"
         }
       ],
-      "contract": "library/contracts.json#chart",
+      "contract": "library/contracts.json#/components/chart",
       "openTodo": [
         "ACT-10"
       ]
@@ -1248,7 +1248,7 @@
           "coverage": "specimen-smoke"
         }
       ],
-      "contract": "library/contracts.json#list",
+      "contract": "library/contracts.json#/components/list",
       "openTodo": []
     },
     {
@@ -1280,7 +1280,7 @@
           "coverage": "specimen-smoke"
         }
       ],
-      "contract": "library/contracts.json#description-list",
+      "contract": "library/contracts.json#/components/description-list",
       "openTodo": []
     },
     {
@@ -1314,7 +1314,7 @@
           "coverage": "specimen-smoke"
         }
       ],
-      "contract": "library/contracts.json#pager",
+      "contract": "library/contracts.json#/components/pager",
       "openTodo": []
     },
     {
@@ -1348,7 +1348,7 @@
           "coverage": "specimen-smoke"
         }
       ],
-      "contract": "library/contracts.json#progress",
+      "contract": "library/contracts.json#/components/progress",
       "openTodo": []
     },
     {
@@ -1383,7 +1383,7 @@
           "coverage": "specimen-smoke"
         }
       ],
-      "contract": "library/contracts.json#tree",
+      "contract": "library/contracts.json#/components/tree",
       "openTodo": [
         "ACT-14"
       ]
@@ -1418,7 +1418,7 @@
           "coverage": "specimen-smoke"
         }
       ],
-      "contract": "library/contracts.json#timeline",
+      "contract": "library/contracts.json#/components/timeline",
       "openTodo": []
     },
     {
@@ -1452,7 +1452,7 @@
           "coverage": "specimen-smoke"
         }
       ],
-      "contract": "library/contracts.json#toast",
+      "contract": "library/contracts.json#/components/toast",
       "openTodo": []
     },
     {
@@ -1486,7 +1486,7 @@
           "coverage": "specimen-smoke"
         }
       ],
-      "contract": "library/contracts.json#alert",
+      "contract": "library/contracts.json#/components/alert",
       "openTodo": []
     },
     {
@@ -1528,7 +1528,7 @@
           "coverage": "interaction-contract"
         }
       ],
-      "contract": "library/contracts.json#modal",
+      "contract": "library/contracts.json#/components/modal",
       "openTodo": []
     },
     {
@@ -1568,7 +1568,7 @@
           "coverage": "interaction-contract"
         }
       ],
-      "contract": "library/contracts.json#drawer",
+      "contract": "library/contracts.json#/components/drawer",
       "openTodo": []
     },
     {
@@ -1602,7 +1602,7 @@
           "coverage": "specimen-smoke"
         }
       ],
-      "contract": "library/contracts.json#pill",
+      "contract": "library/contracts.json#/components/pill",
       "openTodo": []
     },
     {
@@ -1636,7 +1636,7 @@
           "coverage": "specimen-smoke"
         }
       ],
-      "contract": "library/contracts.json#skeleton",
+      "contract": "library/contracts.json#/components/skeleton",
       "openTodo": []
     },
     {
@@ -1671,7 +1671,7 @@
           "coverage": "specimen-smoke"
         }
       ],
-      "contract": "library/contracts.json#empty-state",
+      "contract": "library/contracts.json#/components/empty-state",
       "openTodo": [
         "ACT-12"
       ]
@@ -1708,7 +1708,7 @@
           "coverage": "specimen-smoke"
         }
       ],
-      "contract": "library/contracts.json#popover",
+      "contract": "library/contracts.json#/components/popover",
       "openTodo": [
         "ACT-08"
       ]
@@ -1748,7 +1748,7 @@
           "coverage": "specimen-smoke"
         }
       ],
-      "contract": "library/contracts.json#tabs",
+      "contract": "library/contracts.json#/components/tabs",
       "openTodo": []
     },
     {
@@ -1782,7 +1782,7 @@
           "coverage": "specimen-smoke"
         }
       ],
-      "contract": "library/contracts.json#breadcrumb",
+      "contract": "library/contracts.json#/components/breadcrumb",
       "openTodo": []
     },
     {
@@ -1822,7 +1822,7 @@
           "coverage": "interaction-contract"
         }
       ],
-      "contract": "library/contracts.json#menu",
+      "contract": "library/contracts.json#/components/menu",
       "openTodo": []
     },
     {
@@ -1854,7 +1854,7 @@
           "coverage": "specimen-smoke"
         }
       ],
-      "contract": "library/contracts.json#stepper",
+      "contract": "library/contracts.json#/components/stepper",
       "openTodo": []
     },
     {
@@ -1889,7 +1889,7 @@
           "coverage": "specimen-smoke"
         }
       ],
-      "contract": "library/contracts.json#accordion",
+      "contract": "library/contracts.json#/components/accordion",
       "openTodo": []
     },
     {
@@ -1922,7 +1922,7 @@
           "coverage": "specimen-smoke"
         }
       ],
-      "contract": "library/contracts.json#side-navigation",
+      "contract": "library/contracts.json#/components/side-navigation",
       "openTodo": []
     },
     {
@@ -1958,7 +1958,7 @@
           "coverage": "interaction-contract"
         }
       ],
-      "contract": "library/contracts.json#multiselect",
+      "contract": "library/contracts.json#/components/multiselect",
       "openTodo": []
     },
     {
@@ -1992,7 +1992,7 @@
           "coverage": "interaction-contract"
         }
       ],
-      "contract": "library/contracts.json#tag-input",
+      "contract": "library/contracts.json#/components/tag-input",
       "openTodo": []
     },
     {
@@ -2028,7 +2028,7 @@
           "coverage": "interaction-contract"
         }
       ],
-      "contract": "library/contracts.json#date-picker",
+      "contract": "library/contracts.json#/components/date-picker",
       "openTodo": []
     },
     {
@@ -2063,7 +2063,7 @@
           "coverage": "interaction-contract"
         }
       ],
-      "contract": "library/contracts.json#time-picker",
+      "contract": "library/contracts.json#/components/time-picker",
       "openTodo": []
     },
     {
@@ -2096,7 +2096,7 @@
           "coverage": "inventory"
         }
       ],
-      "contract": "library/contracts.json#dual-range",
+      "contract": "library/contracts.json#/components/dual-range",
       "openTodo": []
     },
     {
@@ -2127,7 +2127,7 @@
           "coverage": "inventory"
         }
       ],
-      "contract": "library/contracts.json#file-input",
+      "contract": "library/contracts.json#/components/file-input",
       "openTodo": []
     },
     {
@@ -2160,7 +2160,7 @@
           "coverage": "inventory"
         }
       ],
-      "contract": "library/contracts.json#rating",
+      "contract": "library/contracts.json#/components/rating",
       "openTodo": []
     },
     {
@@ -2193,7 +2193,7 @@
           "coverage": "inventory"
         }
       ],
-      "contract": "library/contracts.json#color-swatches",
+      "contract": "library/contracts.json#/components/color-swatches",
       "openTodo": []
     },
     {
@@ -2223,7 +2223,7 @@
           "coverage": "inventory"
         }
       ],
-      "contract": "library/contracts.json#input-group",
+      "contract": "library/contracts.json#/components/input-group",
       "openTodo": []
     },
     {
@@ -2260,7 +2260,7 @@
           "coverage": "interaction-contract"
         }
       ],
-      "contract": "library/contracts.json#data-table",
+      "contract": "library/contracts.json#/components/data-table",
       "openTodo": [
         "EXT-01"
       ]
@@ -2292,7 +2292,7 @@
           "coverage": "inventory"
         }
       ],
-      "contract": "library/contracts.json#calendar",
+      "contract": "library/contracts.json#/components/calendar",
       "openTodo": [
         "PAT-08"
       ]
@@ -2328,7 +2328,7 @@
           "coverage": "interaction-contract"
         }
       ],
-      "contract": "library/contracts.json#kanban",
+      "contract": "library/contracts.json#/components/kanban",
       "openTodo": []
     },
     {
@@ -2358,7 +2358,7 @@
           "coverage": "inventory"
         }
       ],
-      "contract": "library/contracts.json#comparison-table",
+      "contract": "library/contracts.json#/components/comparison-table",
       "openTodo": []
     },
     {
@@ -2388,7 +2388,7 @@
           "coverage": "inventory"
         }
       ],
-      "contract": "library/contracts.json#meter",
+      "contract": "library/contracts.json#/components/meter",
       "openTodo": []
     },
     {
@@ -2421,7 +2421,7 @@
           "coverage": "inventory"
         }
       ],
-      "contract": "library/contracts.json#tooltip",
+      "contract": "library/contracts.json#/components/tooltip",
       "openTodo": [
         "A11Y-08"
       ]
@@ -2456,7 +2456,7 @@
           "coverage": "inventory"
         }
       ],
-      "contract": "library/contracts.json#hover-card",
+      "contract": "library/contracts.json#/components/hover-card",
       "openTodo": [
         "ACT-08"
       ]
@@ -2492,7 +2492,7 @@
           "coverage": "inventory"
         }
       ],
-      "contract": "library/contracts.json#notification-center",
+      "contract": "library/contracts.json#/components/notification-center",
       "openTodo": []
     },
     {
@@ -2525,7 +2525,7 @@
           "coverage": "inventory"
         }
       ],
-      "contract": "library/contracts.json#context-menu",
+      "contract": "library/contracts.json#/components/context-menu",
       "openTodo": []
     },
     {
@@ -2558,7 +2558,7 @@
           "coverage": "inventory"
         }
       ],
-      "contract": "library/contracts.json#bottom-sheet",
+      "contract": "library/contracts.json#/components/bottom-sheet",
       "openTodo": []
     },
     {
@@ -2591,7 +2591,7 @@
           "coverage": "inventory"
         }
       ],
-      "contract": "library/contracts.json#carousel",
+      "contract": "library/contracts.json#/components/carousel",
       "openTodo": []
     },
     {
@@ -2621,7 +2621,7 @@
           "coverage": "inventory"
         }
       ],
-      "contract": "library/contracts.json#loading-overlay",
+      "contract": "library/contracts.json#/components/loading-overlay",
       "openTodo": []
     },
     {
@@ -2654,7 +2654,7 @@
           "coverage": "inventory"
         }
       ],
-      "contract": "library/contracts.json#confirm",
+      "contract": "library/contracts.json#/components/confirm",
       "openTodo": [
         "A11Y-07"
       ]
@@ -2689,7 +2689,7 @@
           "coverage": "inventory"
         }
       ],
-      "contract": "library/contracts.json#inline-editable",
+      "contract": "library/contracts.json#/components/inline-editable",
       "openTodo": []
     },
     {
@@ -2719,7 +2719,7 @@
           "coverage": "inventory"
         }
       ],
-      "contract": "library/contracts.json#stack",
+      "contract": "library/contracts.json#/components/stack",
       "openTodo": []
     },
     {
@@ -2749,7 +2749,7 @@
           "coverage": "inventory"
         }
       ],
-      "contract": "library/contracts.json#cluster",
+      "contract": "library/contracts.json#/components/cluster",
       "openTodo": []
     },
     {
@@ -2779,7 +2779,7 @@
           "coverage": "inventory"
         }
       ],
-      "contract": "library/contracts.json#grid",
+      "contract": "library/contracts.json#/components/grid",
       "openTodo": []
     },
     {
@@ -2809,7 +2809,7 @@
           "coverage": "inventory"
         }
       ],
-      "contract": "library/contracts.json#aspect-box",
+      "contract": "library/contracts.json#/components/aspect-box",
       "openTodo": []
     },
     {
@@ -2845,7 +2845,7 @@
           "coverage": "interaction-contract"
         }
       ],
-      "contract": "library/contracts.json#workspace-settings",
+      "contract": "library/contracts.json#/components/workspace-settings",
       "openTodo": []
     }
   ]

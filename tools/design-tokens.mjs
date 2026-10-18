@@ -70,6 +70,8 @@ export async function checkDesign() {
     assert.match(binding.cssProperty, /^--ody-[a-z0-9-]+$/);
     const sources = await Promise.all(binding.sources.map(path => readFile(new URL(path, root), 'utf8')));
     assert.ok(sources.some(css => css.includes(binding.cssProperty + ':')), 'CSS property missing: ' + binding.cssProperty);
+    const [docPath, anchor] = binding.documentation.split('#');
+    assert.ok((await readFile(new URL(docPath, root), 'utf8')).includes('id="' + anchor + '"'), 'Token documentation anchor missing');
   }
   return {variables: 208, nodes: 54, bindings: mapping.tokenBindings.length};
 }

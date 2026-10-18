@@ -29,6 +29,10 @@ for (const component of manifest.components) {
   for (const asset of [...component.assets.css, ...component.assets.js]) assert.ok(assets.has(asset), component.id + ': release omits ' + asset);
   const contract = contracts.components[component.id.slice(4)];
   assert.ok(contract && contract.runtime === component.runtime, component.id + ': contract drift');
+  const [contractFile, pointer] = component.contract.split('#');
+  assert.equal(contractFile, 'library/contracts.json');
+  assert.equal(pointer, '/components/' + component.id.slice(4));
+  assert.equal(pointer.slice(1).split('/').reduce((node, key) => node[key], contracts), contract);
   if (component.station) assert.equal(component.design.nodeId, map.components.find(c => c.station === component.station)?.pencilNodeId);
   if (!component.station) assert.ok(index.includes('data-search="' + component.id + ' '), component.id + ': not searchable');
 }
