@@ -29,8 +29,11 @@ const auditBuilder=engine===engines[0]?AxeBuilder:undefined;
 let checks=0;
 function check(value,message) {assert.ok(value,message);checks++;}
 async function keyboardReach(page,target,engine) {
-  // Do not assume Tab wraps: Linux Firefox retains its last content focus at the boundary.
-  const reverse=await target.evaluate(node=>!!(node.compareDocumentPosition(document.activeElement)&Node.DOCUMENT_POSITION_FOLLOWING));
+  // Match the shared helper's visibility/layout precondition before any native key traversal.
+  await target.waitFor({state:'visible'});
+  // Firefox does not wrap at the tail. WebKit retains pointer focus on this reverse path,
+  // but its forward traversal wraps and reaches the dynamically mounted controls.
+  const reverse=engine!=='webkit' && await target.evaluate(node=>!!(node.compareDocumentPosition(document.activeElement)&Node.DOCUMENT_POSITION_FOLLOWING));
   if(reverse || engine==='webkit') {
     // Option-Tab includes native macOS WebKit buttons without changing OS settings.
     const key=(engine==='webkit'?'Alt+':'')+(reverse?'Shift+Tab':'Tab');
