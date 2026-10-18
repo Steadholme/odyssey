@@ -5,13 +5,13 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Data display · Odyssey UI</title>
 <meta name="description" content="Odyssey UI 数据展示组件：卡片、表格、统计、标签、徽章、头像、列表、进度、时间线、骨架屏、工具提示等，全部走语义 token，亮暗自适应。">
-<link rel="stylesheet" href="../dist/odyssey.css">
-<link rel="stylesheet" href="../dist/odyssey-font.css">
+<link rel="stylesheet" href="/1.4.0/odyssey.css">
+<link rel="stylesheet" href="/1.4.0/odyssey-font.css">
 <link rel="stylesheet" href="assets/site.css">
-<link rel="stylesheet" href="assets/line.css">
-<link rel="stylesheet" href="assets/line-site.css">
-<link rel="stylesheet" href="assets/extensions.css">
-<script src="assets/extensions.js" defer></script>
+<link rel="stylesheet" href="/1.4.0/odyssey-line.css"><link rel="stylesheet" href="/1.4.0/odyssey-line-font.css">
+<link rel="stylesheet" href="/assets/line-site-20261018-p1.css">
+<link rel="stylesheet" href="/1.4.0/odyssey-expressions.css"><link rel="stylesheet" href="/1.4.0/odyssey-extensions.css">
+<script src="/1.4.0/odyssey-extensions.js" defer></script>
 </head>
 <body class="ody-scope">
 
@@ -96,7 +96,7 @@
           </div>
         </div>
       </div>
-      <div class="doc-code"><pre><code>&lt;div class="ody-card"&gt;
+      <div class="doc-code"><pre tabindex="0"><code>&lt;div class="ody-card"&gt;
   &lt;div class="ody-card__head"&gt;
     &lt;span class="ody-card__ico"&gt;&lt;svg …&gt;&lt;/svg&gt;&lt;/span&gt;
     &lt;div class="ody-flex-1"&gt;
@@ -130,7 +130,7 @@
           </ul>
         </div>
       </div>
-      <div class="doc-code"><pre><code>&lt;div class="ody-card ody-card--hover"&gt;
+      <div class="doc-code"><pre tabindex="0"><code>&lt;div class="ody-card ody-card--hover"&gt;
   &lt;div class="ody-card__body"&gt;…&lt;/div&gt;
 &lt;/div&gt;
 
@@ -159,7 +159,7 @@
           </table>
         </div>
       </div>
-      <div class="doc-code"><pre><code>&lt;div class="ody-table-wrap"&gt;
+      <div class="doc-code"><pre tabindex="0"><code>&lt;div class="ody-table-wrap"&gt;
   &lt;table class="ody-table ody-table--hover"&gt;
     &lt;thead&gt;
       &lt;tr&gt;&lt;th&gt;服务&lt;/th&gt;&lt;th&gt;状态&lt;/th&gt;
@@ -193,7 +193,7 @@
           </table>
         </div>
       </div>
-      <div class="doc-code"><pre><code>&lt;table class="ody-table ody-table--striped ody-table--bordered ody-table--compact"&gt;
+      <div class="doc-code"><pre tabindex="0"><code>&lt;table class="ody-table ody-table--striped ody-table--bordered ody-table--compact"&gt;
   …
 &lt;/table&gt;</code></pre></div>
     </div>
@@ -202,7 +202,7 @@
     <p><code>--sticky</code> 让 <code>thead th</code> 在容器滚动时吸顶；给包裹层限高即可看到效果。</p>
     <div class="doc-example">
       <div class="doc-demo doc-demo--stack">
-        <div class="ody-table-wrap" style="max-height:180px">
+        <div class="ody-table-wrap" style="max-height:180px" tabindex="0" role="region" aria-label="可滚动事件表格">
           <table class="ody-table ody-table--sticky ody-table--hover">
             <thead>
               <tr><th>#</th><th>事件</th><th class="ody-num">耗时</th></tr>
@@ -219,7 +219,7 @@
           </table>
         </div>
       </div>
-      <div class="doc-code"><pre><code>&lt;div class="ody-table-wrap" style="max-height:180px"&gt;
+      <div class="doc-code"><pre tabindex="0"><code>&lt;div class="ody-table-wrap" style="max-height:180px" tabindex="0" role="region" aria-label="可滚动事件表格"&gt;
   &lt;table class="ody-table ody-table--sticky ody-table--hover"&gt;…&lt;/table&gt;
 &lt;/div&gt;</code></pre></div>
     </div>
@@ -248,7 +248,7 @@
           </div>
         </div>
       </div>
-      <div class="doc-code"><pre><code>&lt;div class="ody-stat-grid"&gt;
+      <div class="doc-code"><pre tabindex="0"><code>&lt;div class="ody-stat-grid"&gt;
   &lt;div class="ody-stat"&gt;
     &lt;div class="ody-stat__label"&gt;&lt;svg …&gt;&lt;/svg&gt;可用性&lt;/div&gt;
     &lt;div class="ody-stat__value ody-stat__value--ok"&gt;99.98%&lt;/div&gt;
@@ -276,7 +276,7 @@
         <span class="ody-tag ody-tag--accent">强调</span>
         <span class="ody-tag ody-tag--neutral">中性</span>
       </div>
-      <div class="doc-code"><pre><code>&lt;span class="ody-tag"&gt;默认&lt;/span&gt;
+      <div class="doc-code"><pre tabindex="0"><code>&lt;span class="ody-tag"&gt;默认&lt;/span&gt;
 &lt;span class="ody-tag ody-tag--ok"&gt;成功&lt;/span&gt;
 &lt;span class="ody-tag ody-tag--warn"&gt;警告&lt;/span&gt;
 &lt;span class="ody-tag ody-tag--down"&gt;危险&lt;/span&gt;
@@ -295,7 +295,7 @@
           <button class="ody-tag__close" type="button" aria-label="移除标签"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
         </span>
       </div>
-      <div class="doc-code"><pre><code>&lt;span class="ody-pill ody-pill--ok"&gt;
+      <div class="doc-code"><pre tabindex="0"><code>&lt;span class="ody-pill ody-pill--ok"&gt;
   &lt;span class="ody-dot ody-dot--ok"&gt;&lt;/span&gt;运行中
 &lt;/span&gt;
 
@@ -314,7 +314,7 @@
         <span class="ody-badge">3</span>
         <span class="ody-badge ody-badge--accent">12</span>
         <span class="ody-badge ody-badge--neutral">99+</span>
-        <span class="ody-badge ody-badge--dot" aria-label="有新消息"></span>
+        <span class="ody-badge ody-badge--dot" role="img" aria-label="有新消息"></span>
         <span class="ody-badge-wrap">
           <button class="ody-iconbtn ody-iconbtn--outline" type="button" aria-label="通知"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></button>
           <span class="ody-badge">5</span>
@@ -324,7 +324,7 @@
           <span class="ody-badge ody-badge--dot"></span>
         </span>
       </div>
-      <div class="doc-code"><pre><code>&lt;span class="ody-badge"&gt;3&lt;/span&gt;
+      <div class="doc-code"><pre tabindex="0"><code>&lt;span class="ody-badge"&gt;3&lt;/span&gt;
 &lt;span class="ody-badge ody-badge--accent"&gt;12&lt;/span&gt;
 &lt;span class="ody-badge ody-badge--dot"&gt;&lt;/span&gt;
 
@@ -350,7 +350,7 @@
           <span class="ody-avatar">+4</span>
         </span>
       </div>
-      <div class="doc-code"><pre><code>&lt;span class="ody-avatar ody-avatar--sm"&gt;A&lt;/span&gt;
+      <div class="doc-code"><pre tabindex="0"><code>&lt;span class="ody-avatar ody-avatar--sm"&gt;A&lt;/span&gt;
 &lt;span class="ody-avatar"&gt;OD&lt;/span&gt;
 &lt;span class="ody-avatar ody-avatar--lg"&gt;W3&lt;/span&gt;
 &lt;span class="ody-avatar ody-avatar--square"&gt;SQ&lt;/span&gt;
@@ -379,7 +379,7 @@
           <dt class="ody-desc__term">运行时长</dt><dd class="ody-desc__val">14 天 6 小时</dd>
         </dl>
       </div>
-      <div class="doc-code"><pre><code>&lt;ul class="ody-list ody-card"&gt;
+      <div class="doc-code"><pre tabindex="0"><code>&lt;ul class="ody-list ody-card"&gt;
   &lt;li class="ody-list__item"&gt;
     &lt;span class="ody-dot ody-dot--ok"&gt;&lt;/span&gt;
     &lt;span class="ody-flex-1"&gt;API 网关&lt;/span&gt;
@@ -403,7 +403,7 @@
         <div class="ody-progress ody-progress--warn"><div class="ody-progress__bar" style="width:46%"></div></div>
         <div class="ody-progress ody-progress--down ody-progress--striped"><div class="ody-progress__bar" style="width:22%"></div></div>
       </div>
-      <div class="doc-code"><pre><code>&lt;div class="ody-progress"&gt;
+      <div class="doc-code"><pre tabindex="0"><code>&lt;div class="ody-progress"&gt;
   &lt;div class="ody-progress__bar" style="width:64%"&gt;&lt;/div&gt;
 &lt;/div&gt;
 
@@ -424,7 +424,7 @@
         <div class="ody-progress--circle" style="--ody-val:60"><span class="ody-progress__val">60%</span></div>
         <div class="ody-progress--circle" style="--ody-val:92"><span class="ody-progress__val">92%</span></div>
       </div>
-      <div class="doc-code"><pre><code>&lt;div class="ody-progress--circle" style="--ody-val:60"&gt;
+      <div class="doc-code"><pre tabindex="0"><code>&lt;div class="ody-progress--circle" style="--ody-val:60"&gt;
   &lt;span class="ody-progress__val"&gt;60%&lt;/span&gt;
 &lt;/div&gt;</code></pre></div>
     </div>
@@ -438,7 +438,7 @@
         <span class="ody-meter ody-meter--warn"><span class="ody-meter__fill" style="width:71%"></span></span>
         <span class="ody-meter ody-meter--down"><span class="ody-meter__fill" style="width:95%"></span></span>
       </div>
-      <div class="doc-code"><pre><code>&lt;span class="ody-meter"&gt;
+      <div class="doc-code"><pre tabindex="0"><code>&lt;span class="ody-meter"&gt;
   &lt;span class="ody-meter__fill" style="width:34%"&gt;&lt;/span&gt;
 &lt;/span&gt;
 
@@ -464,7 +464,7 @@
           <div class="ody-card__body" style="padding-top:0"><span class="ody-skeleton ody-skeleton--block"></span></div>
         </div>
       </div>
-      <div class="doc-code"><pre><code>&lt;span class="ody-skeleton ody-skeleton--circle"&gt;&lt;/span&gt;
+      <div class="doc-code"><pre tabindex="0"><code>&lt;span class="ody-skeleton ody-skeleton--circle"&gt;&lt;/span&gt;
 &lt;span class="ody-skeleton ody-skeleton--title"&gt;&lt;/span&gt;
 &lt;span class="ody-skeleton ody-skeleton--text"&gt;&lt;/span&gt;
 &lt;span class="ody-skeleton ody-skeleton--text" style="width:80%"&gt;&lt;/span&gt;
@@ -488,7 +488,7 @@
           </div>
         </div>
       </div>
-      <div class="doc-code"><pre><code>&lt;hr class="ody-divider"&gt;
+      <div class="doc-code"><pre tabindex="0"><code>&lt;hr class="ody-divider"&gt;
 
 &lt;div class="ody-divider__label"&gt;或者&lt;/div&gt;
 
@@ -521,7 +521,7 @@
           </li>
         </ul>
       </div>
-      <div class="doc-code"><pre><code>&lt;ul class="ody-timeline"&gt;
+      <div class="doc-code"><pre tabindex="0"><code>&lt;ul class="ody-timeline"&gt;
   &lt;li class="ody-timeline__item"&gt;
     &lt;span class="ody-timeline__dot ody-timeline__dot--ok"&gt;&lt;/span&gt;
     &lt;div class="ody-timeline__time"&gt;09:41&lt;/div&gt;
@@ -538,15 +538,15 @@
       <div class="doc-demo doc-demo--center">
         <button class="ody-btn ody-btn--secondary" type="button" data-ody-tooltip="默认在上方弹出" data-ody-placement="top">上方</button>
         <button class="ody-btn ody-btn--secondary" type="button" data-ody-tooltip="显示在下方" data-ody-placement="bottom">下方</button>
-        <span class="ody-iconbtn ody-iconbtn--outline" tabindex="0" role="button" data-ody-tooltip="也可用于图标按钮" data-ody-placement="right"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg></span>
+        <span class="ody-iconbtn ody-iconbtn--outline" tabindex="0" role="button" aria-label="图标提示示例" data-ody-tooltip="也可用于图标按钮" data-ody-placement="right"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg></span>
       </div>
-      <div class="doc-code"><pre><code>&lt;button class="ody-btn ody-btn--secondary"
+      <div class="doc-code"><pre tabindex="0"><code>&lt;button class="ody-btn ody-btn--secondary"
         data-ody-tooltip="默认在上方弹出" data-ody-placement="top"&gt;
   上方
 &lt;/button&gt;
 
 &lt;span class="ody-iconbtn ody-iconbtn--outline" tabindex="0" role="button"
-      data-ody-tooltip="也可用于图标按钮" data-ody-placement="right"&gt;
+      aria-label="图标提示示例" data-ody-tooltip="也可用于图标按钮" data-ody-placement="right"&gt;
   &lt;svg …&gt;&lt;/svg&gt;
 &lt;/span&gt;</code></pre></div>
     </div>
@@ -557,10 +557,10 @@
     <div class="doc-example">
       <div class="doc-demo doc-demo--stack">
         <p style="margin:0">运行 <code class="ody-code">npm run build</code> 后按 <kbd class="ody-kbd">Ctrl</kbd> + <kbd class="ody-kbd">C</kbd> 终止。</p>
-        <pre class="ody-pre" style="width:100%">curl -sSL https://holdfast.local/odyssey.css \
+        <pre tabindex="0" class="ody-pre" style="width:100%">curl -sSL https://holdfast.local/odyssey.css \
   -o dist/odyssey.css</pre>
       </div>
-      <div class="doc-code"><pre><code>&lt;code class="ody-code"&gt;npm run build&lt;/code&gt;
+      <div class="doc-code"><pre tabindex="0"><code>&lt;code class="ody-code"&gt;npm run build&lt;/code&gt;
 
 &lt;kbd class="ody-kbd"&gt;Ctrl&lt;/kbd&gt; + &lt;kbd class="ody-kbd"&gt;C&lt;/kbd&gt;
 
@@ -573,10 +573,10 @@
     <p>以下为 v1.1 新增的进阶数据组件，图表全部为内联 SVG / CSS 手绘（零图表库），交互由 <code>odyssey.js</code> 的 <code>data-ody-*</code> 属性驱动，亮暗双主题成立。</p>
 
   <h2 id="table-advanced">Data table 进阶 · 排序 / 选择 / 筛选 / 分页</h2>
-  <p>在既有 <code>.ody-table</code> 上加性叠加：<code>data-ody-sort</code> 让 <code>th.ody-th--sort</code> 点击排序（<code>.is-asc/.is-desc</code> + token 三角箭头）；<code>data-ody-select</code> 让表头 checkbox 全选、行 checkbox 切换 <code>tr.is-selected</code>（含 indeterminate）；<code>.ody-table__filter</code> 为筛选行；<code>.ody-table__foot</code> 承载分页。</p>
+  <p>在包裹层加 <code>data-ody-table</code> 和 <code>data-page-size</code> 启用客户端筛选、排序、分页与选择组合；变化派发 <code>ody:table-change</code>，<code>detail</code> 包含当前页、结果总数及已选 row ID。未启用的表格保留原生导航与表单。在既有 <code>.ody-table</code> 上加性叠加：<code>data-ody-sort</code> 让 <code>th.ody-th--sort</code> 点击排序（<code>.is-asc/.is-desc</code> + token 三角箭头）；<code>data-ody-select</code> 让表头 checkbox 全选、行 checkbox 切换 <code>tr.is-selected</code>（含 indeterminate）；<code>.ody-table__filter</code> 为筛选行；<code>.ody-table__foot</code> 承载分页。</p>
   <div class="doc-example">
     <div class="doc-demo doc-demo--stack">
-      <div class="ody-table-wrap" data-ody-sort data-ody-select style="max-width:560px">
+      <div class="ody-table-wrap" data-ody-table data-page-size="2" data-ody-sort data-ody-select style="max-width:560px">
         <table class="ody-table ody-table--hover">
           <thead>
             <tr>
@@ -587,8 +587,8 @@
             </tr>
             <tr class="ody-table__filter">
               <th></th>
-              <th><input class="ody-table__filter-field" placeholder="筛选服务"></th>
-              <th><input class="ody-table__filter-field" placeholder="区域"></th>
+              <th><input class="ody-table__filter-field" aria-label="筛选服务" placeholder="筛选服务"></th>
+              <th><input class="ody-table__filter-field" aria-label="筛选区域" placeholder="区域"></th>
               <th></th>
             </tr>
           </thead>
@@ -599,30 +599,34 @@
           </tbody>
         </table>
         <div class="ody-table__foot">
-          <span class="ody-table__count"><strong>3</strong> 条 · 已选 <strong>0</strong></span>
-          <nav class="ody-pager"><button type="button" class="is-disabled">上一页</button><button type="button" class="is-current">1</button><button type="button">2</button><button type="button">下一页</button></nav>
+          <span class="ody-table__count"><span data-ody-table-summary role="status"></span> · 已选 <strong data-ody-table-selected>0</strong></span><button type="button" class="ody-btn ody-btn--secondary ody-btn--sm" data-ody-table-clear>清除筛选</button>
+          <nav class="ody-pager" data-ody-table-pager aria-label="表格分页"></nav>
         </div>
       </div>
     </div>
-    <div class="doc-code"><pre><code>&lt;div class="ody-table-wrap" data-ody-sort data-ody-select&gt;
-  &lt;table class="ody-table ody-table--hover"&gt;
+    <div class="doc-code"><pre tabindex="0"><code>&lt;div class="ody-table-wrap" data-ody-table data-page-size="2" data-ody-sort data-ody-select&gt;
+  &lt;table class="ody-table"&gt;
     &lt;thead&gt;
       &lt;tr&gt;
-        &lt;th class="ody-th--check"&gt;&lt;input type="checkbox" aria-label="全选"&gt;&lt;/th&gt;
-        &lt;th class="ody-th--sort"&gt;&lt;span class="ody-th__label"&gt;服务&lt;span class="ody-th__arrow"&gt;&lt;/span&gt;&lt;/span&gt;&lt;/th&gt;
-        &lt;th class="ody-th--sort ody-num" data-sort-type="num"&gt;&lt;span class="ody-th__label"&gt;QPS&lt;span class="ody-th__arrow"&gt;&lt;/span&gt;&lt;/span&gt;&lt;/th&gt;
+        &lt;th class="ody-th--check"&gt;&lt;input type="checkbox" aria-label="Select visible rows"&gt;&lt;/th&gt;
+        &lt;th class="ody-th--sort"&gt;Service&lt;/th&gt;
+        &lt;th class="ody-th--sort ody-num" data-sort-type="num"&gt;QPS&lt;/th&gt;
       &lt;/tr&gt;
       &lt;tr class="ody-table__filter"&gt;
-        &lt;th&gt;&lt;/th&gt;&lt;th&gt;&lt;input class="ody-table__filter-field" placeholder="筛选服务"&gt;&lt;/th&gt;&lt;th&gt;&lt;/th&gt;
+        &lt;th&gt;&lt;/th&gt;&lt;th&gt;&lt;input class="ody-table__filter-field" aria-label="Filter service"&gt;&lt;/th&gt;&lt;th&gt;&lt;/th&gt;
       &lt;/tr&gt;
     &lt;/thead&gt;
     &lt;tbody&gt;
-      &lt;tr&gt;&lt;td class="ody-td--check"&gt;&lt;input type="checkbox"&gt;&lt;/td&gt;&lt;td class="ody-table__strong"&gt;relay&lt;/td&gt;&lt;td class="ody-num"&gt;1240&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr data-ody-row-id="relay"&gt;&lt;td class="ody-td--check"&gt;&lt;input type="checkbox" aria-label="Select relay"&gt;&lt;/td&gt;&lt;td&gt;relay&lt;/td&gt;&lt;td&gt;1240&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr data-ody-row-id="cortex"&gt;&lt;td class="ody-td--check"&gt;&lt;input type="checkbox" aria-label="Select cortex"&gt;&lt;/td&gt;&lt;td&gt;cortex&lt;/td&gt;&lt;td&gt;860&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr data-ody-row-id="forge"&gt;&lt;td class="ody-td--check"&gt;&lt;input type="checkbox" aria-label="Select forge"&gt;&lt;/td&gt;&lt;td&gt;forge&lt;/td&gt;&lt;td&gt;2075&lt;/td&gt;&lt;/tr&gt;
     &lt;/tbody&gt;
   &lt;/table&gt;
   &lt;div class="ody-table__foot"&gt;
-    &lt;span class="ody-table__count"&gt;&lt;strong&gt;3&lt;/strong&gt; 条&lt;/span&gt;
-    &lt;nav class="ody-pager"&gt;…&lt;/nav&gt;
+    &lt;span data-ody-table-summary role="status"&gt;&lt;/span&gt;
+    &lt;span&gt;Selected: &lt;strong data-ody-table-selected&gt;0&lt;/strong&gt;&lt;/span&gt;
+    &lt;button type="button" data-ody-table-clear&gt;Clear filters&lt;/button&gt;
+    &lt;nav class="ody-pager" data-ody-table-pager aria-label="Table pages"&gt;&lt;/nav&gt;
   &lt;/div&gt;
 &lt;/div&gt;</code></pre></div>
   </div>
@@ -646,7 +650,7 @@
         </li>
       </ul>
     </div>
-    <div class="doc-code"><pre><code>&lt;ul class="ody-tree"&gt;
+    <div class="doc-code"><pre tabindex="0"><code>&lt;ul class="ody-tree"&gt;
   &lt;li class="ody-tree__item is-open"&gt;
     &lt;div class="ody-tree__row"&gt;
       &lt;span class="ody-tree__caret"&gt;&lt;svg …chevron…&gt;&lt;/svg&gt;&lt;/span&gt;
@@ -673,7 +677,7 @@
         <div class="ody-card"><div class="ody-card__body"><span class="ody-eyebrow">Spark</span><div class="ody-flex-center ody-gap-3"><span class="ody-stat" style="font-size:var(--ody-fs-stat);font-weight:var(--ody-fw-semibold)">98.6%</span><span class="ody-chart ody-chart--spark ody-chart--ok" data-ody-chart="spark" data-values="4,6,5,8,7,9,8,11,10,12"></span></div></div></div>
       </div>
     </div>
-    <div class="doc-code"><pre><code>&lt;div class="ody-chart" data-ody-chart="bar"
+    <div class="doc-code"><pre tabindex="0"><code>&lt;div class="ody-chart" data-ody-chart="bar"
      data-values="42,68,55,90,73,61" data-labels="Mon,Tue,Wed,Thu,Fri,Sat"&gt;&lt;/div&gt;
 
 &lt;div class="ody-chart" data-ody-chart="line" data-values="12,19,15,27,22,34,30"&gt;&lt;/div&gt;
@@ -697,7 +701,7 @@
         <div class="ody-step"><div class="ody-step__dot">4</div><div class="ody-step__label">完成</div><div class="ody-step__sub">待处理</div></div>
       </div>
     </div>
-    <div class="doc-code"><pre><code>&lt;div class="ody-stepper"&gt;
+    <div class="doc-code"><pre tabindex="0"><code>&lt;div class="ody-stepper"&gt;
   &lt;div class="ody-step is-done"&gt;&lt;div class="ody-step__dot"&gt;&lt;svg …check…&gt;&lt;/svg&gt;&lt;/div&gt;&lt;div class="ody-step__label"&gt;账户&lt;/div&gt;&lt;/div&gt;
   &lt;div class="ody-step is-active"&gt;&lt;div class="ody-step__dot"&gt;3&lt;/div&gt;&lt;div class="ody-step__label"&gt;配置&lt;/div&gt;&lt;div class="ody-step__sub"&gt;进行中&lt;/div&gt;&lt;/div&gt;
   &lt;div class="ody-step"&gt;&lt;div class="ody-step__dot"&gt;4&lt;/div&gt;&lt;div class="ody-step__label"&gt;完成&lt;/div&gt;&lt;/div&gt;
@@ -717,11 +721,11 @@
           <span class="ody-cal__dow">日</span><span class="ody-cal__dow">一</span><span class="ody-cal__dow">二</span><span class="ody-cal__dow">三</span><span class="ody-cal__dow">四</span><span class="ody-cal__dow">五</span><span class="ody-cal__dow">六</span>
           <button class="ody-cal__day ody-cal__day--out">29</button><button class="ody-cal__day ody-cal__day--out">30</button><button class="ody-cal__day">1</button><button class="ody-cal__day">2</button><button class="ody-cal__day is-dot">3</button><button class="ody-cal__day is-today">4</button><button class="ody-cal__day">5</button>
           <button class="ody-cal__day">6</button><button class="ody-cal__day">7</button><button class="ody-cal__day">8</button><button class="ody-cal__day is-selected">9</button><button class="ody-cal__day">10</button><button class="ody-cal__day is-dot">11</button><button class="ody-cal__day">12</button>
-          <button class="ody-cal__day">13</button><button class="ody-cal__day">14</button><button class="ody-cal__day is-disabled">15</button><button class="ody-cal__day">16</button><button class="ody-cal__day">17</button><button class="ody-cal__day">18</button><button class="ody-cal__day">19</button>
+          <button class="ody-cal__day">13</button><button class="ody-cal__day">14</button><button class="ody-cal__day is-disabled" disabled>15</button><button class="ody-cal__day">16</button><button class="ody-cal__day">17</button><button class="ody-cal__day">18</button><button class="ody-cal__day">19</button>
         </div>
       </div>
     </div>
-    <div class="doc-code"><pre><code>&lt;div class="ody-cal"&gt;
+    <div class="doc-code"><pre tabindex="0"><code>&lt;div class="ody-cal"&gt;
   &lt;div class="ody-cal__head"&gt;
     &lt;button class="ody-cal__nav"&gt;&lt;svg …‹…&gt;&lt;/svg&gt;&lt;/button&gt;
     &lt;span class="ody-cal__title"&gt;2026 年 7 月&lt;/span&gt;
@@ -747,7 +751,7 @@
         <div class="ody-kanban__col"><div class="ody-kanban__head"><span class="ody-kanban__head-dot ody-kanban__head-dot--ok"></span>完成<span class="ody-kanban__count">1</span></div><div class="ody-kanban__list"><div class="ody-kanban__card ody-kanban__card--ok"><div class="ody-kanban__card-title">Relay seed key</div></div></div></div>
       </div>
     </div>
-    <div class="doc-code"><pre><code>&lt;div class="ody-kanban"&gt;
+    <div class="doc-code"><pre tabindex="0"><code>&lt;div class="ody-kanban"&gt;
   &lt;div class="ody-kanban__col"&gt;
     &lt;div class="ody-kanban__head"&gt;&lt;span class="ody-kanban__head-dot"&gt;&lt;/span&gt;待办&lt;span class="ody-kanban__count"&gt;2&lt;/span&gt;&lt;/div&gt;
     &lt;div class="ody-kanban__list"&gt;
@@ -777,7 +781,7 @@
         </table>
       </div>
     </div>
-    <div class="doc-code"><pre><code>&lt;div class="ody-compare-wrap"&gt;
+    <div class="doc-code"><pre tabindex="0"><code>&lt;div class="ody-compare-wrap"&gt;
   &lt;table class="ody-compare"&gt;
     &lt;thead&gt;&lt;tr&gt;&lt;th&gt;&lt;/th&gt;&lt;th&gt;&lt;span class="ody-compare__plan"&gt;Free&lt;/span&gt;&lt;/th&gt;
       &lt;th class="ody-compare__col--featured"&gt;&lt;span class="ody-compare__plan"&gt;Pro&lt;/span&gt;&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
@@ -803,7 +807,7 @@
   </main>
 </div>
 
-<script src="../dist/odyssey.js"></script>
+<script src="/1.4.0/odyssey.js"></script>
 <script src="assets/site.js"></script>
 </body>
 </html>

@@ -5,6 +5,11 @@
   var initialized = new WeakSet();
   var expressions = ['line', 'soft', 'studio', 'signal'];
   function all(selector, scope) { return Array.from((scope || document).querySelectorAll(selector)); }
+  function roots(selector, scope) { var found=all(selector,scope); if(scope&&scope.matches&&scope.matches(selector))found.unshift(scope);return found; }
+  var composing=new WeakSet();
+  document.addEventListener('compositionstart',function(event){composing.add(event.target);},true);
+  document.addEventListener('compositionend',function(event){composing.delete(event.target);},true);
+  function isComposing(event){return event.isComposing||event.keyCode===229||composing.has(event.target);}
   function one(selector, scope) { return (scope || document).querySelector(selector); }
   function emit(node, name, detail) { node.dispatchEvent(new CustomEvent(name, {bubbles:true, detail:detail})); }
   document.addEventListener('pointerdown', function () { root.dataset.input = 'pointer'; }, true);
@@ -56,6 +61,7 @@
       });
       input.addEventListener('paste', function (event) { event.preventDefault(); distribute(event.clipboardData.getData('text'), index); });
       input.addEventListener('keydown', function (event) {
+        if(isComposing(event))return;
         if (event.key === 'Backspace' && !input.value && index > 0) inputs[index - 1].focus();
         if (event.key === 'ArrowLeft' && index > 0) { event.preventDefault(); inputs[index - 1].focus(); }
         if (event.key === 'ArrowRight' && index < inputs.length - 1) { event.preventDefault(); inputs[index + 1].focus(); }
@@ -66,12 +72,13 @@
     var input = one('[data-ody-file-input]', zone);
     var browse = one('[data-ody-file-browse]', zone);
     var error = one('[data-ody-file-error]', zone) || one('[data-ody-file-error]', zone.parentElement);
-    function select(file) {
+    function select(file, dropped) {
       if (!file) return;
       var message = !file.name.toLowerCase().endsWith('.zip') ? 'Choose a ZIP archive.' : file.size > 20 * 1024 * 1024 ? 'Choose a file of 20 MB or smaller.' : '';
       if (error) { error.textContent = message; error.hidden = !message; }
       input.setAttribute('aria-invalid', String(!!message));
       if (message) return;
+      if(dropped){var transfer=new DataTransfer();transfer.items.add(file);input.files=transfer.files;input.dispatchEvent(new Event('change',{bubbles:true}));return;}
       one('[data-ody-file-title]', zone).textContent = file.name;
       one('[data-ody-file-status]', zone).textContent = (file.size / 1024).toFixed(1) + ' KB · selected on this device · not uploaded';
       emit(zone, 'ody:file-selected', {file:file});
@@ -80,7 +87,7 @@
     input.addEventListener('change', function () { select(input.files[0]); });
     zone.addEventListener('dragover', function (event) { event.preventDefault(); zone.classList.add('dragging'); });
     zone.addEventListener('dragleave', function () { zone.classList.remove('dragging'); });
-    zone.addEventListener('drop', function (event) { event.preventDefault(); zone.classList.remove('dragging'); select(event.dataTransfer.files[0]); });
+    zone.addEventListener('drop', function (event) { event.preventDefault(); zone.classList.remove('dragging'); select(event.dataTransfer.files[0],true); });
   }
   function initSplit(split) {
     var divider = one('[data-ody-splitter]', split);
@@ -130,6 +137,7 @@
     });
     input.addEventListener('input', function () { filterCommands(dialog); });
     input.addEventListener('keydown', function (event) {
+      if(isComposing(event))return;
       if (event.key === 'ArrowDown' || event.key === 'ArrowUp') { event.preventDefault(); selectCommand(dialog, Number(dialog.dataset.activeCommand) + (event.key === 'ArrowDown' ? 1 : -1)); }
       if (event.key === 'Enter') { event.preventDefault(); var item = commandItems(dialog)[Number(dialog.dataset.activeCommand)]; if (item) item.click(); }
     });
@@ -163,7 +171,7 @@
   }
   function init(scope) {
     [['[data-ody-code-input]',initCode],['[data-ody-file-dropzone]',initFile],['[data-ody-splitpane]',initSplit],['[data-ody-command-menu]',initCommand],['[data-registry-selection]',initSelection],['.ody-ext-tree',initTree],['[data-ody-native-popover]',initPopover]].forEach(function (pair) {
-      all(pair[0], scope).forEach(function (node) { if (!initialized.has(node)) { pair[1](node); initialized.add(node); } });
+      roots(pair[0], scope).forEach(function (node) { if (!initialized.has(node)) { pair[1](node); initialized.add(node); } });
     });
   }
   all('[data-ody-expression-select]').forEach(function (select) { select.addEventListener('change', function () { setExpression(select.value); }); });
@@ -173,6 +181,7 @@
     if (trigger) openCommand(document.getElementById(trigger.dataset.odyCommandOpen));
   });
   document.addEventListener('keydown', function (event) {
+    if(isComposing(event))return;
     if (!(event.metaKey || event.ctrlKey) || event.key.toLowerCase() !== 'k') return;
     var dialog = one('[data-ody-command-default]'); if (!dialog) return;
     event.preventDefault();
@@ -184,6 +193,7 @@
     if (target) { target.scrollIntoView({block:'start',behavior:'instant'}); target.tabIndex = -1; target.focus({preventScroll:true}); }
   });
   window.OdysseyExtensions = {init:init, openCommand:openCommand, setExpression:setExpression};
+  document.addEventListener('wire:after',function(event){if(window.Odyssey)return;var targets=event.detail&&event.detail.targets;if(targets&&targets.length)targets.forEach(function(selector){var node=document.querySelector(selector);if(node)init(node);});else init(event.target);});
   init(document);
   if (!root.dataset.theme) root.dataset.theme = matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light';
   setExpression(new URLSearchParams(location.search).get('expression') || root.dataset.expression || 'line');

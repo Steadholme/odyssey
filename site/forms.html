@@ -5,13 +5,13 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Forms · Odyssey UI</title>
 <meta name="description" content="Odyssey UI 表单组件参考：Field、Input、Textarea、Select、Checkbox、Radio、Switch、Range、Input group、File 与内联/堆叠表单布局。">
-<link rel="stylesheet" href="../dist/odyssey.css">
-<link rel="stylesheet" href="../dist/odyssey-font.css">
+<link rel="stylesheet" href="/1.4.0/odyssey.css">
+<link rel="stylesheet" href="/1.4.0/odyssey-font.css">
 <link rel="stylesheet" href="assets/site.css">
-<link rel="stylesheet" href="assets/line.css">
-<link rel="stylesheet" href="assets/line-site.css">
-<link rel="stylesheet" href="assets/extensions.css">
-<script src="assets/extensions.js" defer></script>
+<link rel="stylesheet" href="/1.4.0/odyssey-line.css"><link rel="stylesheet" href="/1.4.0/odyssey-line-font.css">
+<link rel="stylesheet" href="/assets/line-site-20261018-p1.css">
+<link rel="stylesheet" href="/1.4.0/odyssey-expressions.css"><link rel="stylesheet" href="/1.4.0/odyssey-extensions.css">
+<script src="/1.4.0/odyssey-extensions.js" defer></script>
 </head>
 <body class="ody-scope">
 
@@ -79,38 +79,38 @@
     <div class="doc-example">
       <div class="doc-demo doc-demo--stack">
         <div class="ody-field">
-          <label class="ody-label">邮箱</label>
-          <input class="ody-input" type="email" placeholder="you@example.com">
-          <span class="ody-hint">我们不会公开你的邮箱地址。</span>
+          <label class="ody-label" for="field-email">邮箱</label>
+          <input class="ody-input" type="email" placeholder="you@example.com" id="field-email" aria-describedby="email-help">
+          <span id="email-help" class="ody-hint">我们不会公开你的邮箱地址。</span>
         </div>
         <div class="ody-field ody-field--required">
-          <label class="ody-label">用户名</label>
-          <input class="ody-input" type="text" placeholder="必填">
+          <label class="ody-label" for="field-username">用户名</label>
+          <input class="ody-input" type="text" placeholder="必填" id="field-username">
         </div>
         <div class="ody-field has-error">
-          <label class="ody-label">密码</label>
-          <input class="ody-input is-invalid" type="password" value="123" aria-invalid="true">
-          <span class="ody-error">密码至少需要 8 位字符。</span>
+          <label class="ody-label" for="field-password">密码</label>
+          <input class="ody-input is-invalid" type="password" value="123" aria-invalid="true" id="field-password" aria-describedby="password-error">
+          <span id="password-error" class="ody-error">密码至少需要 8 位字符。</span>
         </div>
       </div>
-      <div class="doc-code"><pre><code>&lt;!-- 带提示 --&gt;
+      <div class="doc-code"><pre tabindex="0"><code>&lt;!-- 带提示 --&gt;
 &lt;div class="ody-field"&gt;
-  &lt;label class="ody-label"&gt;邮箱&lt;/label&gt;
-  &lt;input class="ody-input" type="email" placeholder="you@example.com"&gt;
-  &lt;span class="ody-hint"&gt;我们不会公开你的邮箱地址。&lt;/span&gt;
+  &lt;label class="ody-label" for="field-email"&gt;邮箱&lt;/label&gt;
+  &lt;input class="ody-input" type="email" placeholder="you@example.com" id="field-email" aria-describedby="email-help"&gt;
+  &lt;span id="email-help" class="ody-hint"&gt;我们不会公开你的邮箱地址。&lt;/span&gt;
 &lt;/div&gt;
 
 &lt;!-- 必填（字段级标记） --&gt;
 &lt;div class="ody-field ody-field--required"&gt;
-  &lt;label class="ody-label"&gt;用户名&lt;/label&gt;
-  &lt;input class="ody-input" type="text" placeholder="必填"&gt;
+  &lt;label class="ody-label" for="field-username"&gt;用户名&lt;/label&gt;
+  &lt;input class="ody-input" type="text" placeholder="必填" id="field-username"&gt;
 &lt;/div&gt;
 
 &lt;!-- 校验失败 --&gt;
 &lt;div class="ody-field has-error"&gt;
-  &lt;label class="ody-label"&gt;密码&lt;/label&gt;
-  &lt;input class="ody-input is-invalid" type="password" value="123" aria-invalid="true"&gt;
-  &lt;span class="ody-error"&gt;密码至少需要 8 位字符。&lt;/span&gt;
+  &lt;label class="ody-label" for="field-password"&gt;密码&lt;/label&gt;
+  &lt;input class="ody-input is-invalid" type="password" value="123" aria-invalid="true" id="field-password" aria-describedby="password-error"&gt;
+  &lt;span id="password-error" class="ody-error"&gt;密码至少需要 8 位字符。&lt;/span&gt;
 &lt;/div&gt;</code></pre></div>
     </div>
 
@@ -122,13 +122,13 @@
     <div class="doc-example">
       <div class="doc-demo doc-demo--stack">
         <input class="ody-input" type="text" placeholder="文本 · text">
-        <input class="ody-input" type="number" value="42">
-        <input class="ody-input" type="password" value="secret">
+        <input class="ody-input" type="number" value="42" aria-label="数量示例">
+        <input class="ody-input" type="password" value="secret" aria-label="密码示例">
         <input class="ody-input" type="search" placeholder="搜索 · search">
       </div>
-      <div class="doc-code"><pre><code>&lt;input class="ody-input" type="text" placeholder="文本 · text"&gt;
-&lt;input class="ody-input" type="number" value="42"&gt;
-&lt;input class="ody-input" type="password" value="secret"&gt;
+      <div class="doc-code"><pre tabindex="0"><code>&lt;input class="ody-input" type="text" placeholder="文本 · text"&gt;
+&lt;input class="ody-input" type="number" value="42" aria-label="数量示例"&gt;
+&lt;input class="ody-input" type="password" value="secret" aria-label="密码示例"&gt;
 &lt;input class="ody-input" type="search" placeholder="搜索 · search"&gt;</code></pre></div>
     </div>
 
@@ -139,7 +139,7 @@
         <input class="ody-input" placeholder="Default">
         <input class="ody-input ody-input--lg" placeholder="Large · --lg">
       </div>
-      <div class="doc-code"><pre><code>&lt;input class="ody-input ody-input--sm" placeholder="Small · --sm"&gt;
+      <div class="doc-code"><pre tabindex="0"><code>&lt;input class="ody-input ody-input--sm" placeholder="Small · --sm"&gt;
 &lt;input class="ody-input" placeholder="Default"&gt;
 &lt;input class="ody-input ody-input--lg" placeholder="Large · --lg"&gt;</code></pre></div>
     </div>
@@ -148,10 +148,10 @@
     <div class="doc-example">
       <div class="doc-demo doc-demo--stack">
         <input class="ody-input" placeholder="禁用 · disabled" disabled>
-        <input class="ody-input is-invalid" value="非法输入" aria-invalid="true">
+        <input class="ody-input is-invalid" value="非法输入" aria-invalid="true" aria-label="校验失败示例">
       </div>
-      <div class="doc-code"><pre><code>&lt;input class="ody-input" placeholder="禁用 · disabled" disabled&gt;
-&lt;input class="ody-input is-invalid" value="非法输入" aria-invalid="true"&gt;</code></pre></div>
+      <div class="doc-code"><pre tabindex="0"><code>&lt;input class="ody-input" placeholder="禁用 · disabled" disabled&gt;
+&lt;input class="ody-input is-invalid" value="非法输入" aria-invalid="true" aria-label="校验失败示例"&gt;</code></pre></div>
     </div>
 
     <!-- ============================== Textarea ============================== -->
@@ -160,11 +160,11 @@
     <div class="doc-example">
       <div class="doc-demo doc-demo--stack">
         <textarea class="ody-textarea" placeholder="写点什么…"></textarea>
-        <textarea class="ody-textarea is-invalid" aria-invalid="true">内容过短</textarea>
+        <textarea class="ody-textarea is-invalid" aria-invalid="true" aria-label="内容校验示例">内容过短</textarea>
         <textarea class="ody-textarea" placeholder="禁用" disabled></textarea>
       </div>
-      <div class="doc-code"><pre><code>&lt;textarea class="ody-textarea" placeholder="写点什么…"&gt;&lt;/textarea&gt;
-&lt;textarea class="ody-textarea is-invalid" aria-invalid="true"&gt;内容过短&lt;/textarea&gt;
+      <div class="doc-code"><pre tabindex="0"><code>&lt;textarea class="ody-textarea" placeholder="写点什么…"&gt;&lt;/textarea&gt;
+&lt;textarea class="ody-textarea is-invalid" aria-invalid="true" aria-label="内容校验示例"&gt;内容过短&lt;/textarea&gt;
 &lt;textarea class="ody-textarea" placeholder="禁用" disabled&gt;&lt;/textarea&gt;</code></pre></div>
     </div>
 
@@ -173,28 +173,28 @@
     <p><code>.ody-select</code> 抹掉原生箭头，用内联 SVG 重绘统一的下拉指示符（data-URI，无外链）。支持 <code>disabled</code> 与 <code>.is-invalid</code>。</p>
     <div class="doc-example">
       <div class="doc-demo doc-demo--stack">
-        <select class="ody-select">
+        <select class="ody-select" aria-label="区域选择">
           <option value="">选择区域…</option>
           <option>华北 · Beijing</option>
           <option>华东 · Shanghai</option>
           <option>华南 · Shenzhen</option>
         </select>
-        <select class="ody-select is-invalid" aria-invalid="true">
+        <select class="ody-select is-invalid" aria-invalid="true" aria-label="区域选择">
           <option>请选择一项</option>
         </select>
-        <select class="ody-select" disabled>
+        <select class="ody-select" disabled aria-label="区域选择">
           <option>已锁定</option>
         </select>
       </div>
-      <div class="doc-code"><pre><code>&lt;select class="ody-select"&gt;
+      <div class="doc-code"><pre tabindex="0"><code>&lt;select class="ody-select" aria-label="区域选择"&gt;
   &lt;option value=""&gt;选择区域…&lt;/option&gt;
   &lt;option&gt;华北 · Beijing&lt;/option&gt;
   &lt;option&gt;华东 · Shanghai&lt;/option&gt;
   &lt;option&gt;华南 · Shenzhen&lt;/option&gt;
 &lt;/select&gt;
 
-&lt;select class="ody-select is-invalid" aria-invalid="true"&gt;…&lt;/select&gt;
-&lt;select class="ody-select" disabled&gt;…&lt;/select&gt;</code></pre></div>
+&lt;select class="ody-select is-invalid" aria-invalid="true" aria-label="区域选择"&gt;…&lt;/select&gt;
+&lt;select class="ody-select" disabled aria-label="区域选择"&gt;…&lt;/select&gt;</code></pre></div>
     </div>
 
     <!-- ============================== Checkbox ============================== -->
@@ -206,7 +206,7 @@
         <label class="ody-checkbox"><input type="checkbox"> 订阅产品更新</label>
         <label class="ody-checkbox is-disabled"><input type="checkbox" disabled> 已锁定选项</label>
       </div>
-      <div class="doc-code"><pre><code>&lt;label class="ody-checkbox"&gt;&lt;input type="checkbox" checked&gt; 记住我&lt;/label&gt;
+      <div class="doc-code"><pre tabindex="0"><code>&lt;label class="ody-checkbox"&gt;&lt;input type="checkbox" checked&gt; 记住我&lt;/label&gt;
 &lt;label class="ody-checkbox"&gt;&lt;input type="checkbox"&gt; 订阅产品更新&lt;/label&gt;
 &lt;label class="ody-checkbox is-disabled"&gt;&lt;input type="checkbox" disabled&gt; 已锁定选项&lt;/label&gt;</code></pre></div>
     </div>
@@ -220,7 +220,7 @@
         <label class="ody-radio"><input type="radio" name="plan"> 年付</label>
         <label class="ody-radio is-disabled"><input type="radio" name="plan" disabled> 企业版（暂不可选）</label>
       </div>
-      <div class="doc-code"><pre><code>&lt;label class="ody-radio"&gt;&lt;input type="radio" name="plan" checked&gt; 月付&lt;/label&gt;
+      <div class="doc-code"><pre tabindex="0"><code>&lt;label class="ody-radio"&gt;&lt;input type="radio" name="plan" checked&gt; 月付&lt;/label&gt;
 &lt;label class="ody-radio"&gt;&lt;input type="radio" name="plan"&gt; 年付&lt;/label&gt;
 &lt;label class="ody-radio is-disabled"&gt;&lt;input type="radio" name="plan" disabled&gt; 企业版（暂不可选）&lt;/label&gt;</code></pre></div>
     </div>
@@ -252,7 +252,7 @@
           <span>强制开启（禁用）</span>
         </label>
       </div>
-      <div class="doc-code"><pre><code>&lt;label class="ody-switch"&gt;
+      <div class="doc-code"><pre tabindex="0"><code>&lt;label class="ody-switch"&gt;
   &lt;span class="ody-switch__control"&gt;
     &lt;input type="checkbox" checked&gt;
     &lt;span class="ody-switch__track"&gt;&lt;/span&gt;
@@ -276,25 +276,25 @@
     <div class="doc-example">
       <div class="doc-demo doc-demo--stack">
         <div class="ody-field">
-          <label class="ody-label">音量</label>
+          <label class="ody-label" for="range-volume">音量</label>
           <div class="ody-field__row">
-            <input class="ody-range" type="range" min="0" max="100" value="60" oninput="this.parentNode.querySelector('.ody-field__out').textContent=this.value">
+            <input class="ody-range" type="range" min="0" max="100" value="60" oninput="this.parentNode.querySelector('.ody-field__out').textContent=this.value" id="range-volume">
             <span class="ody-field__out">60</span>
           </div>
         </div>
         <div class="ody-field">
-          <label class="ody-label">质量</label>
+          <label class="ody-label" for="range-quality">质量</label>
           <div class="ody-field__row">
-            <input class="ody-range" type="range" min="0" max="10" value="8" oninput="this.parentNode.querySelector('.ody-field__out').textContent=this.value">
+            <input class="ody-range" type="range" min="0" max="10" value="8" oninput="this.parentNode.querySelector('.ody-field__out').textContent=this.value" id="range-quality">
             <span class="ody-field__out">8</span>
           </div>
         </div>
       </div>
-      <div class="doc-code"><pre><code>&lt;div class="ody-field"&gt;
-  &lt;label class="ody-label"&gt;音量&lt;/label&gt;
+      <div class="doc-code"><pre tabindex="0"><code>&lt;div class="ody-field"&gt;
+  &lt;label class="ody-label" for="range-volume"&gt;音量&lt;/label&gt;
   &lt;div class="ody-field__row"&gt;
     &lt;input class="ody-range" type="range" min="0" max="100" value="60"
-           oninput="this.parentNode.querySelector('.ody-field__out').textContent=this.value"&gt;
+           oninput="this.parentNode.querySelector('.ody-field__out').textContent=this.value" id="range-volume"&gt;
     &lt;span class="ody-field__out"&gt;60&lt;/span&gt;
   &lt;/div&gt;
 &lt;/div&gt;</code></pre></div>
@@ -307,29 +307,29 @@
       <div class="doc-demo doc-demo--stack">
         <div class="ody-input-group">
           <span class="ody-input-group__addon">https://</span>
-          <input class="ody-input" placeholder="your-site">
+          <input class="ody-input" placeholder="your-site" aria-label="站点名称">
           <span class="ody-input-group__addon">.w33d.xyz</span>
         </div>
         <div class="ody-input-group">
           <span class="ody-input-group__addon">¥</span>
-          <input class="ody-input" type="number" value="99">
+          <input class="ody-input" type="number" value="99" aria-label="金额">
         </div>
         <div class="ody-input-group ody-input-group--icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
           <input class="ody-input" type="search" placeholder="搜索…">
         </div>
       </div>
-      <div class="doc-code"><pre><code>&lt;!-- 前缀 + 后缀 --&gt;
+      <div class="doc-code"><pre tabindex="0"><code>&lt;!-- 前缀 + 后缀 --&gt;
 &lt;div class="ody-input-group"&gt;
   &lt;span class="ody-input-group__addon"&gt;https://&lt;/span&gt;
-  &lt;input class="ody-input" placeholder="your-site"&gt;
+  &lt;input class="ody-input" placeholder="your-site" aria-label="站点名称"&gt;
   &lt;span class="ody-input-group__addon"&gt;.w33d.xyz&lt;/span&gt;
 &lt;/div&gt;
 
 &lt;!-- 仅前缀 --&gt;
 &lt;div class="ody-input-group"&gt;
   &lt;span class="ody-input-group__addon"&gt;¥&lt;/span&gt;
-  &lt;input class="ody-input" type="number" value="99"&gt;
+  &lt;input class="ody-input" type="number" value="99" aria-label="金额"&gt;
 &lt;/div&gt;
 
 &lt;!-- 框内前置图标 --&gt;
@@ -344,13 +344,13 @@
     <p><code>.ody-file</code> 皮肤化原生 <code>type="file"</code> 的 <code>::file-selector-button</code>，让「选择文件」按钮与库内其它控件同风格。支持 <code>multiple</code> 与 <code>disabled</code>。</p>
     <div class="doc-example">
       <div class="doc-demo doc-demo--stack">
-        <input class="ody-file" type="file">
-        <input class="ody-file" type="file" multiple>
-        <input class="ody-file" type="file" disabled>
+        <input class="ody-file" type="file" name="attachment" aria-label="选择文件">
+        <input class="ody-file" type="file" name="attachments" multiple aria-label="选择多个文件">
+        <input class="ody-file" type="file" disabled aria-label="不可用的文件选择">
       </div>
-      <div class="doc-code"><pre><code>&lt;input class="ody-file" type="file"&gt;
-&lt;input class="ody-file" type="file" multiple&gt;
-&lt;input class="ody-file" type="file" disabled&gt;</code></pre></div>
+      <div class="doc-code"><pre tabindex="0"><code>&lt;input class="ody-file" type="file" name="attachment" aria-label="选择文件"&gt;
+&lt;input class="ody-file" type="file" name="attachments" multiple aria-label="选择多个文件"&gt;
+&lt;input class="ody-file" type="file" disabled aria-label="不可用的文件选择"&gt;</code></pre></div>
     </div>
 
     <!-- ============================== Form layouts ============================== -->
@@ -362,12 +362,12 @@
       <div class="doc-demo doc-demo--stack">
         <form class="ody-form--inline" onsubmit="return false">
           <div class="ody-field">
-            <label class="ody-label">关键词</label>
-            <input class="ody-input" placeholder="搜索…">
+            <label class="ody-label" for="filter-keyword">关键词</label>
+            <input class="ody-input" placeholder="搜索…" id="filter-keyword">
           </div>
           <div class="ody-field">
-            <label class="ody-label">状态</label>
-            <select class="ody-select">
+            <label class="ody-label" for="filter-status">状态</label>
+            <select class="ody-select" id="filter-status">
               <option>全部</option>
               <option>启用</option>
               <option>停用</option>
@@ -376,14 +376,14 @@
           <button class="ody-btn ody-btn--primary" type="submit">筛选</button>
         </form>
       </div>
-      <div class="doc-code"><pre><code>&lt;form class="ody-form--inline"&gt;
+      <div class="doc-code"><pre tabindex="0"><code>&lt;form class="ody-form--inline"&gt;
   &lt;div class="ody-field"&gt;
-    &lt;label class="ody-label"&gt;关键词&lt;/label&gt;
-    &lt;input class="ody-input" placeholder="搜索…"&gt;
+    &lt;label class="ody-label" for="filter-keyword"&gt;关键词&lt;/label&gt;
+    &lt;input class="ody-input" placeholder="搜索…" id="filter-keyword"&gt;
   &lt;/div&gt;
   &lt;div class="ody-field"&gt;
-    &lt;label class="ody-label"&gt;状态&lt;/label&gt;
-    &lt;select class="ody-select"&gt;
+    &lt;label class="ody-label" for="filter-status"&gt;状态&lt;/label&gt;
+    &lt;select class="ody-select" id="filter-status"&gt;
       &lt;option&gt;全部&lt;/option&gt;
       &lt;option&gt;启用&lt;/option&gt;
       &lt;option&gt;停用&lt;/option&gt;
@@ -398,13 +398,13 @@
       <div class="doc-demo doc-demo--stack">
         <form onsubmit="return false">
           <div class="ody-field ody-field--required">
-            <label class="ody-label">项目名称</label>
-            <input class="ody-input" placeholder="例如 holdfast-web">
+            <label class="ody-label" for="project-name">项目名称</label>
+            <input class="ody-input" placeholder="例如 holdfast-web" id="project-name">
           </div>
           <div class="ody-field">
-            <label class="ody-label">描述</label>
-            <textarea class="ody-textarea" placeholder="一句话说明…"></textarea>
-            <span class="ody-hint">可选，最多 140 字。</span>
+            <label class="ody-label" for="project-description">描述</label>
+            <textarea class="ody-textarea" placeholder="一句话说明…" id="project-description" aria-describedby="project-description-help"></textarea>
+            <span id="project-description-help" class="ody-hint">可选，最多 140 字。</span>
           </div>
           <label class="ody-switch">
             <span class="ody-switch__control">
@@ -419,15 +419,15 @@
           </div>
         </form>
       </div>
-      <div class="doc-code"><pre><code>&lt;form&gt;
+      <div class="doc-code"><pre tabindex="0"><code>&lt;form&gt;
   &lt;div class="ody-field ody-field--required"&gt;
-    &lt;label class="ody-label"&gt;项目名称&lt;/label&gt;
-    &lt;input class="ody-input" placeholder="例如 holdfast-web"&gt;
+    &lt;label class="ody-label" for="project-name"&gt;项目名称&lt;/label&gt;
+    &lt;input class="ody-input" placeholder="例如 holdfast-web" id="project-name"&gt;
   &lt;/div&gt;
   &lt;div class="ody-field"&gt;
-    &lt;label class="ody-label"&gt;描述&lt;/label&gt;
-    &lt;textarea class="ody-textarea" placeholder="一句话说明…"&gt;&lt;/textarea&gt;
-    &lt;span class="ody-hint"&gt;可选，最多 140 字。&lt;/span&gt;
+    &lt;label class="ody-label" for="project-description"&gt;描述&lt;/label&gt;
+    &lt;textarea class="ody-textarea" placeholder="一句话说明…" id="project-description" aria-describedby="project-description-help"&gt;&lt;/textarea&gt;
+    &lt;span id="project-description-help" class="ody-hint"&gt;可选，最多 140 字。&lt;/span&gt;
   &lt;/div&gt;
   &lt;label class="ody-switch"&gt;
     &lt;span class="ody-switch__control"&gt;
@@ -454,7 +454,8 @@
 <div class="doc-example">
   <div class="doc-demo doc-demo--stack">
     <div class="ody-combobox" data-ody-combobox style="max-width:320px">
-      <input class="ody-input ody-combobox__input" type="text" placeholder="搜索框架…" autocomplete="off">
+      <label class="ody-label" for="framework-combobox">框架</label>
+      <input id="framework-combobox" class="ody-input ody-combobox__input" type="text" placeholder="搜索框架…" autocomplete="off">
       <div class="ody-combobox__list" role="listbox">
         <div class="ody-combobox__opt" role="option">React</div>
         <div class="ody-combobox__opt" role="option">Vue</div>
@@ -465,7 +466,7 @@
       </div>
     </div>
   </div>
-  <div class="doc-code"><pre><code>&lt;div class="ody-combobox" data-ody-combobox&gt;
+  <div class="doc-code"><pre tabindex="0"><code>&lt;div class="ody-combobox" data-ody-combobox&gt;
   &lt;input class="ody-input ody-combobox__input" type="text" placeholder="搜索框架…" autocomplete="off"&gt;
   &lt;div class="ody-combobox__list" role="listbox"&gt;
     &lt;div class="ody-combobox__opt" role="option"&gt;React&lt;/div&gt;
@@ -480,7 +481,7 @@
 <p><code>.ody-multiselect</code> 点击控件展开选项浮层，点选项在 <code>.is-selected</code> 间切换并把已选项渲染成可删除的 chip；点 chip 上的 ✕ 或再次点选项即取消。已选值通过 <code>Odyssey.multiselectValue(el)</code> 读取，变更派发 <code>ody:change</code>（<code>detail.value</code> 为数组）。初始已选项加 <code>.is-selected</code> 即可。</p>
 <div class="doc-example">
   <div class="doc-demo doc-demo--stack">
-    <div class="ody-multiselect" data-ody-multiselect data-placeholder="选择技术栈…" style="max-width:340px">
+    <div class="ody-multiselect" data-ody-multiselect data-placeholder="选择技术栈…" aria-label="技术栈" style="max-width:340px">
       <div class="ody-multiselect__control" tabindex="0" role="button" aria-haspopup="listbox">
         <div class="ody-multiselect__values"></div>
         <svg class="ody-multiselect__caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
@@ -494,7 +495,7 @@
       </div>
     </div>
   </div>
-  <div class="doc-code"><pre><code>&lt;div class="ody-multiselect" data-ody-multiselect data-placeholder="选择技术栈…"&gt;
+  <div class="doc-code"><pre tabindex="0"><code>&lt;div class="ody-multiselect" data-ody-multiselect data-placeholder="选择技术栈…"&gt;
   &lt;div class="ody-multiselect__control" tabindex="0" role="button"&gt;
     &lt;div class="ody-multiselect__values"&gt;&lt;/div&gt;
     &lt;svg class="ody-multiselect__caret" …&gt;&lt;/svg&gt;
@@ -517,7 +518,7 @@
       <input class="ody-taginput__field" type="text" placeholder="回车添加标签…">
     </div>
   </div>
-  <div class="doc-code"><pre><code>&lt;div class="ody-taginput" data-ody-taginput&gt;
+  <div class="doc-code"><pre tabindex="0"><code>&lt;div class="ody-taginput" data-ody-taginput&gt;
   &lt;span class="ody-taginput__chip" data-value="infra"&gt;infra
     &lt;button type="button" class="ody-taginput__chip-x" aria-label="删除"&gt;✕&lt;/button&gt;
   &lt;/span&gt;
@@ -535,7 +536,7 @@
       <div class="ody-datepicker__panel"></div>
     </div>
   </div>
-  <div class="doc-code"><pre><code>&lt;div class="ody-datepicker" data-ody-datepicker&gt;
+  <div class="doc-code"><pre tabindex="0"><code>&lt;div class="ody-datepicker" data-ody-datepicker&gt;
   &lt;input class="ody-input ody-datepicker__input" type="text" readonly
          placeholder="选择日期" value="2026-07-05"&gt;
   &lt;div class="ody-datepicker__panel"&gt;&lt;/div&gt;
@@ -552,7 +553,7 @@
       <div class="ody-timepicker__panel"></div>
     </div>
   </div>
-  <div class="doc-code"><pre><code>&lt;div class="ody-timepicker" data-ody-timepicker data-minute-step="5"&gt;
+  <div class="doc-code"><pre tabindex="0"><code>&lt;div class="ody-timepicker" data-ody-timepicker data-minute-step="5"&gt;
   &lt;input class="ody-input ody-timepicker__input" type="text" readonly
          placeholder="选择时间" value="09:30"&gt;
   &lt;div class="ody-timepicker__panel"&gt;&lt;/div&gt;
@@ -572,7 +573,7 @@
       </div>
     </div>
   </div>
-  <div class="doc-code"><pre><code>&lt;div class="ody-dualrange" data-ody-dualrange
+  <div class="doc-code"><pre tabindex="0"><code>&lt;div class="ody-dualrange" data-ody-dualrange
      data-min="0" data-max="1000" data-low="200" data-high="800" data-step="10"&gt;&lt;/div&gt;
 &lt;div class="ody-flex-between ody-mt-2"&gt;
   &lt;span class="ody-muted ody-num"&gt;¥&lt;span data-ody-dr-low&gt;&lt;/span&gt;&lt;/span&gt;
@@ -593,7 +594,7 @@
     </label>
     <div class="ody-dropzone__files" data-ody-dropzone-files></div>
   </div>
-  <div class="doc-code"><pre><code>&lt;label class="ody-dropzone" data-ody-dropzone&gt;
+  <div class="doc-code"><pre tabindex="0"><code>&lt;label class="ody-dropzone" data-ody-dropzone&gt;
   &lt;input type="file" multiple&gt;
   &lt;svg class="ody-dropzone__ico" …&gt;&lt;/svg&gt;
   &lt;div class="ody-dropzone__title"&gt;拖拽文件到此处&lt;/div&gt;
@@ -613,7 +614,7 @@
       <div class="ody-rating ody-rating--lg" data-ody-rating data-value="2" data-max="5"></div>
     </div>
   </div>
-  <div class="doc-code"><pre><code>&lt;div class="ody-rating" data-ody-rating data-value="3" data-max="5"&gt;&lt;/div&gt;
+  <div class="doc-code"><pre tabindex="0"><code>&lt;div class="ody-rating" data-ody-rating data-value="3" data-max="5"&gt;&lt;/div&gt;
 &lt;div class="ody-rating ody-rating--sm" data-ody-rating data-value="4" data-readonly&gt;&lt;/div&gt;
 &lt;div class="ody-rating ody-rating--lg" data-ody-rating data-value="2"&gt;&lt;/div&gt;</code></pre></div>
 </div>
@@ -635,7 +636,7 @@
       </div>
     </div>
   </div>
-  <div class="doc-code"><pre><code>&lt;div class="ody-segment" data-ody-segment role="radiogroup" aria-label="视图"&gt;
+  <div class="doc-code"><pre tabindex="0"><code>&lt;div class="ody-segment" data-ody-segment role="radiogroup" aria-label="视图"&gt;
   &lt;button type="button" class="ody-segment__item is-active" data-value="day" role="radio"&gt;日&lt;/button&gt;
   &lt;button type="button" class="ody-segment__item" data-value="week" role="radio"&gt;周&lt;/button&gt;
   &lt;button type="button" class="ody-segment__item" data-value="month" role="radio"&gt;月&lt;/button&gt;
@@ -650,7 +651,7 @@
     <div class="ody-otp" data-ody-otp data-len="6"></div>
     <div class="ody-otp ody-otp--sm" data-ody-otp data-len="4"></div>
   </div>
-  <div class="doc-code"><pre><code>&lt;div class="ody-otp" data-ody-otp data-len="6"&gt;&lt;/div&gt;
+  <div class="doc-code"><pre tabindex="0"><code>&lt;div class="ody-otp" data-ody-otp data-len="6"&gt;&lt;/div&gt;
 &lt;div class="ody-otp ody-otp--sm" data-ody-otp data-len="4"&gt;&lt;/div&gt;
 &lt;!-- 取值：Odyssey.otpValue(el) --&gt;</code></pre></div>
 </div>
@@ -669,7 +670,7 @@
       <button type="button" class="ody-swatch" data-value="ink" role="radio" aria-checked="false" style="--ody-sw:var(--ody-ink-2)" aria-label="墨色"></button>
     </div>
   </div>
-  <div class="doc-code"><pre><code>&lt;div class="ody-swatches" data-ody-swatches role="radiogroup"&gt;
+  <div class="doc-code"><pre tabindex="0"><code>&lt;div class="ody-swatches" data-ody-swatches role="radiogroup"&gt;
   &lt;button type="button" class="ody-swatch is-active" data-value="accent"
           role="radio" style="--ody-sw:var(--ody-accent)" aria-label="靛蓝"&gt;&lt;/button&gt;
   &lt;button type="button" class="ody-swatch" data-value="ok"
@@ -689,7 +690,7 @@
   </main>
 </div>
 
-<script src="../dist/odyssey.js"></script>
+<script src="/1.4.0/odyssey.js"></script>
 <script src="assets/site.js"></script>
 </body>
 </html>

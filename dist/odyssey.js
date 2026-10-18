@@ -59,6 +59,15 @@
     if (/^[#.\[]/.test(ref)) { try { return $(ref, ctx); } catch (e) { return null; } }
     return document.getElementById(ref);
   }
+  function roots(root, selector) {
+    var found = $all(selector, root);
+    if (root && root.matches && root.matches(selector)) found.unshift(root);
+    return found;
+  }
+  var composing = new WeakSet();
+  on(document, 'compositionstart', function (event) { composing.add(event.target); }, true);
+  on(document, 'compositionend', function (event) { composing.delete(event.target); }, true);
+  function isComposing(event) { return event.isComposing || event.keyCode === 229 || composing.has(event.target); }
   var generatedId = 0;
   function ensureId(el, prefix) {
     if (el.id) return el.id;
@@ -105,7 +114,29 @@
   /* ==================================================== 2/3. OVERLAYS */
   /* Shared engine for .ody-modal and .ody-drawer */
   var scrollLocks = 0;
-  var lastFocused = null;
+  var layers = [];
+  function topLayer() { return layers.length ? layers[layers.length - 1].node : null; }
+  function registerLayer(node, trigger) {
+    var z=layers.reduce(function(value,frame){return Math.max(value,parseInt(window.getComputedStyle(frame.node).zIndex,10)||0);},99);
+    var originalZ=node.style.zIndex;
+    node.style.zIndex=String(Math.max(z+1,parseInt(window.getComputedStyle(node).zIndex,10)||100));
+    layers.push({node:node,last:trigger||document.activeElement,z:originalZ});document.body.classList.add('ody-scroll-lock');
+  }
+  function visible(node) { return node && node.isConnected && !node.disabled && !closest(node, '[hidden],[inert]') && node.getClientRects().length > 0; }
+  function restoreFocus(preferred) {
+    var top = topLayer(), target = visible(preferred) && (!top || top.contains(preferred)) ? preferred : null;
+    if (!target && top) target = focusables(top)[0] || top;
+    if (!target) target = document.querySelector('main') || document.body;
+    if (!target.hasAttribute('tabindex') && !target.matches(FOCUSABLE)) target.setAttribute('tabindex', '-1');
+    target.focus({preventScroll:true});
+  }
+  function releaseLayer(node, returnFocus) {
+    var frame = layers.find(function (item) { return item.node === node; });
+    layers = layers.filter(function (item) { return item.node !== node; });
+    if(frame){if(frame.z)node.style.zIndex=frame.z;else node.style.removeProperty('z-index');}
+    document.body.classList.toggle('ody-scroll-lock',layers.length>0);
+    if (returnFocus && frame) restoreFocus(frame.last);
+  }
 
   function lockScroll() {
     if (scrollLocks === 0) document.body.classList.add('ody-scroll-lock');
@@ -123,7 +154,7 @@
   }
   function openModal(overlay, trigger) {
     if (!overlay || overlay.classList.contains('is-open')) return;
-    lastFocused = trigger || document.activeElement;
+    registerLayer(overlay, trigger);
     overlay.hidden = false;
     overlay.removeAttribute('hidden');
     // reflow so a CSS transition off [hidden]→.is-open can play
@@ -131,8 +162,15 @@
     overlay.classList.add('is-open');
     var panel = panelOf(overlay);
     if (panel) {
-      panel.setAttribute('role', panel.getAttribute('role') || 'dialog');
-      panel.setAttribute('aria-modal', 'true');
+      var semantic = overlay.hasAttribute('role') ? overlay : panel;
+      if (semantic !== panel && panel.getAttribute('role') === 'dialog') { panel.removeAttribute('role'); panel.removeAttribute('aria-modal'); }
+      semantic.setAttribute('role', semantic.getAttribute('role') || 'dialog');
+      semantic.setAttribute('aria-modal', 'true');
+      if (!semantic.hasAttribute('aria-labelledby') && !semantic.hasAttribute('aria-label')) {
+        var title = panel.querySelector('h1,h2,h3');
+        if (title) semantic.setAttribute('aria-labelledby', ensureId(title, 'ody-dialog-title-'));
+      }
+      if (!panel.hasAttribute('tabindex')) panel.setAttribute('tabindex', '-1');
     }
     lockScroll();
     var f = focusables(panel);
@@ -141,17 +179,17 @@
   }
   function closeModal(overlay) {
     if (!overlay || !overlay.classList.contains('is-open')) return;
+    var shouldReturn = overlay.contains(document.activeElement) || document.activeElement === document.body;
     overlay.classList.remove('is-open');
     overlay.setAttribute('hidden', '');
     overlay.hidden = true;
     unlockScroll();
-    if (lastFocused && lastFocused.focus) { try { lastFocused.focus(); } catch (e) {} }
-    lastFocused = null;
+    releaseLayer(overlay, shouldReturn);
     overlay.dispatchEvent(new CustomEvent('ody:close', { bubbles: true }));
   }
   function topOverlay() {
-    var o = openOverlays();
-    return o.length ? o[o.length - 1] : null;
+    var top = topLayer();
+    return top && top.matches('.ody-modal,.ody-drawer') ? top : null;
   }
   function trapFocus(e, overlay) {
     if (e.key !== 'Tab') return;
@@ -165,13 +203,15 @@
   }
 
   /* ==================================================== 4. DROPDOWN/MENU */
-  function closeAllMenus(except) {
+  function closeAllMenus(except, returnFocus) {
     $all('.ody-dropdown .ody-menu.is-open').forEach(function (menu) {
       if (menu === except) return;
+      var hadFocus = menu.contains(document.activeElement);
       menu.classList.remove('is-open');
       var dd = closest(menu, '.ody-dropdown');
       var btn = dd && $('[data-ody-toggle]', dd);
       if (btn) btn.setAttribute('aria-expanded', 'false');
+      if (returnFocus && hadFocus && !topLayer() && !document.querySelector('dialog:modal')) restoreFocus(btn);
     });
   }
   function toggleMenu(btn) {
@@ -470,7 +510,7 @@
     var opener = closest(t, '[data-ody-open]');
     if (opener) {
       var overlay = byRef(attr(opener, 'data-ody-open'));
-      if (overlay) { e.preventDefault(); openModal(overlay, opener); return; }
+      if (overlay) { e.preventDefault(); var fromMenu=closest(opener,'.ody-menu'),drop=fromMenu&&closest(fromMenu,'.ody-dropdown'),returnTarget=drop&&$('[data-ody-toggle]',drop);if(fromMenu)closeAllMenus(null);openModal(overlay,returnTarget||opener);return; }
     }
 
     // overlay dismiss button
@@ -504,7 +544,7 @@
     var mItem = closest(t, '.ody-menu__item');
     if (mItem) {
       var m = closest(mItem, '.ody-menu');
-      setTimeout(function () { closeAllMenus(null); }, 0);
+      queueMicrotask(function () { closeAllMenus(null, mItem.tagName !== 'A'); });
       // fall through — allow the item's own handler/link to run
     }
 
@@ -528,10 +568,15 @@
   }
 
   function onKeydown(e) {
+    if (isComposing(e) || e.defaultPrevented) return;
     var t = e.target;
+    if (document.querySelector('dialog:modal')) return;
+    if((e.key==='Escape'||e.key==='Esc')&&closest(t,'.ody-datepicker.is-open,.ody-timepicker.is-open,.ody-multiselect.is-open,.ody-combobox.is-open'))return;
 
     // Esc closes top overlay / menu / popover / tooltip
     if (e.key === 'Escape' || e.key === 'Esc') {
+      var focusedMenu=closest(t,'.ody-menu.is-open');
+      if(focusedMenu){e.preventDefault();closeAllMenus(null,true);return;}
       var ov = topOverlay();
       if (ov) { e.preventDefault(); closeModal(ov); return; }
       if ($('.ody-dropdown .ody-menu.is-open')) {
@@ -555,6 +600,7 @@
       else if (e.key === 'ArrowUp') { e.preventDefault(); moveMenuFocus(menu, -1); }
       else if (e.key === 'Home') { e.preventDefault(); var mi = menuItems(menu); mi[0] && mi[0].focus(); }
       else if (e.key === 'End') { e.preventDefault(); var me = menuItems(menu); me[me.length - 1] && me[me.length - 1].focus(); }
+      else if(e.key==='Tab'){e.preventDefault();var dropdown=closest(menu,'.ody-dropdown'),trigger=$('[data-ody-toggle]',dropdown),outside=focusables(document).filter(function(node){return !dropdown.contains(node)||node===trigger;}),index=outside.indexOf(trigger);closeAllMenus(null);var next=e.shiftKey?trigger:outside[index+1];if(next)next.focus();else restoreFocus(trigger);}
       return;
     }
     // open menu from toggle with arrow/enter/space
@@ -629,6 +675,7 @@
   /* ================================================================ INIT */
   function init(root) {
     root = root || document;
+    if (window.OdysseyExtensions) window.OdysseyExtensions.init(root);
     bindGlobals();
     initTheme();
     $all('[data-ody-tabs]', root).forEach(initTabs);
@@ -636,7 +683,7 @@
     $all('[data-ody-accordion]', root).forEach(initAccordion);
     if (root.matches && root.matches('[data-ody-accordion]')) initAccordion(root);
     // ensure overlays start hidden unless flagged open
-    $all('.ody-modal, .ody-drawer', root).forEach(function (ov) {
+    roots(root, '.ody-modal, .ody-drawer').forEach(function (ov) {
       if (!ov.classList.contains('is-open') && !ov.hasAttribute('hidden')) ov.setAttribute('hidden', '');
     });
     // wire toggle buttons' aria default
@@ -650,6 +697,7 @@
       var content = byRef(attr(b, 'data-ody-popover'));
       if (content) b.setAttribute('aria-controls', ensureId(content, 'ody-popover-'));
     });
+    if(window.OdysseyCompositions)window.OdysseyCompositions.init(root);
     return Odyssey;
   }
 
@@ -657,6 +705,12 @@
   var Odyssey = {
     version: VERSION,
     init: init,
+    isComposing: isComposing,
+    roots: roots,
+    registerLayer: registerLayer,
+    releaseLayer: releaseLayer,
+    topLayer: topLayer,
+    restoreFocus: restoreFocus,
     toast: toast,
     setTheme: setTheme,
     toggleTheme: toggleTheme,
@@ -677,6 +731,11 @@
   };
 
   window.Odyssey = Odyssey;
+  on(document, 'wire:after', function (event) {
+    var targets = event.detail && event.detail.targets;
+    if (!targets || !targets.length) { Odyssey.init(event.target); return; }
+    targets.forEach(function (selector) { var root = byRef(selector); if (root) Odyssey.init(root); });
+  });
 
   if (document.readyState === 'loading') {
     on(document, 'DOMContentLoaded', function () { init(document); });
@@ -720,77 +779,99 @@
   var CX = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>';
   var STAR = '<svg viewBox="0 0 24 24"><path d="m12 2 2.9 6.26 6.85.72-5.1 4.62 1.44 6.7L12 17.6 5.91 20.3l1.44-6.7-5.1-4.62 6.85-.72z"/></svg>';
 
+  var fieldId = 0;
+  function stableId(node, prefix) { if (!node.id) { do { fieldId++; node.id = prefix + fieldId; } while (document.getElementById(node.id) && document.getElementById(node.id) !== node); } return node.id; }
+  function controlName(input, root, fallback) {
+    if (!input.hasAttribute('aria-label') && !input.hasAttribute('aria-labelledby') && !(input.labels && input.labels.length)) {
+      input.setAttribute('aria-label', attr(root, 'aria-label') || attr(root, 'data-label') || fallback);
+    }
+  }
+  function changed(node, value) { node.dispatchEvent(new CustomEvent('ody:change', {bubbles:true, detail:{value:value}})); }
+
   /* ============================================================ COMBOBOX */
   function cbxOpts(cb) { return $$('.ody-combobox__opt', cb); }
-  function cbxLabel(opt) {
-    if (opt.dataset.odyLabel == null) opt.dataset.odyLabel = (opt.textContent || '').trim();
-    return opt.dataset.odyLabel;
+  function cbxLabel(opt) { if (opt.dataset.odyLabel == null) opt.dataset.odyLabel = (opt.textContent || '').trim(); return opt.dataset.odyLabel; }
+  function cbxInit(cb) {
+    var input = $('.ody-combobox__input', cb), list = $('.ody-combobox__list', cb);
+    input.setAttribute('role', 'combobox'); input.setAttribute('aria-autocomplete', 'list');
+    input.setAttribute('aria-controls', stableId(list, 'ody-options-'));
+    input.setAttribute('aria-expanded', String(cb.classList.contains('is-open')));
+    controlName(input, cb, 'Choose an option'); list.setAttribute('role', 'listbox');
+    cbxOpts(cb).forEach(function (opt) { stableId(opt, 'ody-option-'); opt.setAttribute('role','option'); opt.setAttribute('aria-selected', String(opt.classList.contains('is-active') || opt===cb._odySelected)); });
+  }
+  function cbxSetActive(cb, option) {
+    cbxOpts(cb).forEach(function (opt) { var active = opt === option; opt.classList.toggle('is-active', active); opt.setAttribute('aria-selected', String(active || (!cb.classList.contains('is-open') && opt===cb._odySelected))); });
+    var input = $('.ody-combobox__input', cb);
+    if (option) { input.setAttribute('aria-activedescendant', option.id); option.scrollIntoView({block:'nearest'}); }
+    else input.removeAttribute('aria-activedescendant');
   }
   function cbxFilter(cb) {
-    var input = $('.ody-combobox__input', cb);
-    var q = (input.value || '').trim().toLowerCase();
+    var input = $('.ody-combobox__input', cb), q = input.value.trim().toLowerCase();
     var list = $('.ody-combobox__list', cb), shown = 0;
     cbxOpts(cb).forEach(function (opt) {
-      var label = cbxLabel(opt), i = label.toLowerCase().indexOf(q);
-      var hit = q === '' || i >= 0;
-      opt.hidden = !hit;
-      opt.classList.remove('is-active');
-      if (hit) {
+      var label = cbxLabel(opt), index = label.toLowerCase().indexOf(q);
+      opt.hidden = q !== '' && index < 0; opt.textContent = '';
+      if (!opt.hidden) {
         shown++;
-        opt.innerHTML = (q && i >= 0)
-          ? label.slice(0, i) + '<mark>' + label.slice(i, i + q.length) + '</mark>' + label.slice(i + q.length)
-          : label;
+        if (q) { opt.appendChild(document.createTextNode(label.slice(0,index))); var mark = document.createElement('mark'); mark.textContent = label.slice(index,index+q.length); opt.appendChild(mark); opt.appendChild(document.createTextNode(label.slice(index+q.length))); }
+        else opt.textContent = label;
       }
     });
+    cbxSetActive(cb, null);
     var empty = $('.ody-combobox__empty', list);
-    if (!empty) { empty = document.createElement('div'); empty.className = 'ody-combobox__empty'; empty.textContent = 'No matches'; list.appendChild(empty); }
+    if (!empty) { empty = document.createElement('div'); empty.className='ody-combobox__empty'; empty.textContent='No matches'; empty.setAttribute('role','status'); list.appendChild(empty); }
     empty.hidden = shown > 0;
   }
-  function cbxOpen(cb) { cbxFilter(cb); cb.classList.add('is-open'); var inp = $('.ody-combobox__input', cb); inp && inp.setAttribute('aria-expanded', 'true'); }
-  function cbxClose(cb) { cb.classList.remove('is-open'); var inp = $('.ody-combobox__input', cb); inp && inp.setAttribute('aria-expanded', 'false'); cbxOpts(cb).forEach(function (o) { o.classList.remove('is-active'); }); }
-  function cbxActive(cb) { return $('.ody-combobox__opt.is-active', cb); }
-  function cbxVisible(cb) { return cbxOpts(cb).filter(function (o) { return !o.hidden; }); }
-  function cbxMove(cb, dir) {
-    var vis = cbxVisible(cb); if (!vis.length) return;
-    var cur = cbxActive(cb), i = cur ? vis.indexOf(cur) : -1;
-    if (cur) cur.classList.remove('is-active');
-    i = (i + dir + vis.length) % vis.length;
-    vis[i].classList.add('is-active');
-    vis[i].scrollIntoView({ block: 'nearest' });
+  function cbxOpen(cb) { cb.classList.add('is-open'); cbxInit(cb); cbxFilter(cb); $('.ody-combobox__input', cb).setAttribute('aria-expanded','true'); }
+  function cbxClose(cb) { cb.classList.remove('is-open'); $('.ody-combobox__input', cb).setAttribute('aria-expanded','false'); cbxSetActive(cb,null); }
+  function cbxActive(cb) { return $('.ody-combobox__opt.is-active',cb); }
+  function cbxVisible(cb) { return cbxOpts(cb).filter(function (opt) { return !opt.hidden && opt.getAttribute('aria-disabled') !== 'true'; }); }
+  function cbxMove(cb, direction) {
+    var items=cbxVisible(cb); if (!items.length) return;
+    var index=items.indexOf(cbxActive(cb));
+    if (index < 0) index=direction > 0 ? 0 : items.length-1;
+    else index=Math.max(0,Math.min(items.length-1,index+direction));
+    cbxSetActive(cb,items[index]);
   }
-  function cbxPick(cb, opt) {
-    var input = $('.ody-combobox__input', cb);
-    input.value = opt.dataset.value != null ? opt.dataset.value : cbxLabel(opt);
-    cbxClose(cb);
-    input.dispatchEvent(new Event('change', { bubbles: true }));
+  function cbxPick(cb,opt) {
+    if (!opt || opt.getAttribute('aria-disabled') === 'true') return;
+    cb._odySelected=opt;
+    var input=$('.ody-combobox__input',cb); input.value=opt.dataset.value != null ? opt.dataset.value : cbxLabel(opt);
+    cbxClose(cb); input.focus(); input.dispatchEvent(new Event('change',{bubbles:true}));
   }
 
   /* ========================================================= MULTISELECT */
-  function msOpts(ms) { return $$('.ody-multiselect__opt', ms); }
+  function msOpts(ms) { return $$('.ody-multiselect__opt',ms); }
+  function msValue(ms) { return msOpts(ms).filter(function (opt) { return opt.classList.contains('is-selected'); }).map(function (opt) { return opt.dataset.value != null ? opt.dataset.value : opt.textContent.trim(); }); }
   function msRender(ms) {
-    var box = $('.ody-multiselect__values', ms);
-    var sel = msOpts(ms).filter(function (o) { return o.classList.contains('is-selected'); });
-    box.innerHTML = '';
-    if (!sel.length) {
-      var ph = document.createElement('span'); ph.className = 'ody-multiselect__ph';
-      ph.textContent = attr(ms, 'data-placeholder') || 'Select…';
-      box.appendChild(ph); return;
-    }
-    sel.forEach(function (o) {
-      var chip = document.createElement('span'); chip.className = 'ody-multiselect__chip';
-      chip.appendChild(document.createTextNode((o.textContent || '').trim()));
-      var x = document.createElement('button');
-      x.type = 'button'; x.className = 'ody-multiselect__chip-x'; x.innerHTML = CX;
-      x.setAttribute('aria-label', 'Remove'); x.dataset.odyMsRemove = o.dataset.value != null ? o.dataset.value : (o.textContent || '').trim();
-      chip.appendChild(x); box.appendChild(chip);
+    var box=$('.ody-multiselect__values',ms), restore=box.contains(document.activeElement), selected=msOpts(ms).filter(function (opt) { return opt.classList.contains('is-selected'); });
+    box.textContent='';
+    if (!selected.length) { var placeholder=document.createElement('span'); placeholder.className='ody-multiselect__ph'; placeholder.textContent=attr(ms,'data-placeholder') || 'Select…'; box.appendChild(placeholder); }
+    selected.forEach(function (opt) {
+      var chip=document.createElement('span'); chip.className='ody-multiselect__chip'; chip.appendChild(document.createTextNode(opt.textContent.trim()));
+      var remove=document.createElement('button'); remove.type='button'; remove.className='ody-multiselect__chip-x'; remove.innerHTML=CX;
+      remove.setAttribute('aria-label','Remove '+opt.textContent.trim()); remove.dataset.odyMsRemove=opt.dataset.value != null ? opt.dataset.value : opt.textContent.trim(); chip.appendChild(remove); box.appendChild(chip);
     });
+    msOpts(ms).forEach(function (opt) { opt.setAttribute('aria-selected',String(opt.classList.contains('is-selected'))); });
+    if(restore)$('.ody-multiselect__control',ms).focus();
   }
-  function msValue(ms) {
-    return msOpts(ms).filter(function (o) { return o.classList.contains('is-selected'); })
-      .map(function (o) { return o.dataset.value != null ? o.dataset.value : (o.textContent || '').trim(); });
+  function msInit(ms) {
+    var control=$('.ody-multiselect__control',ms), list=$('.ody-multiselect__menu',ms);
+    control.setAttribute('role','combobox'); control.setAttribute('aria-haspopup','listbox'); control.setAttribute('aria-expanded',String(ms.classList.contains('is-open')));
+    control.setAttribute('aria-controls',stableId(list,'ody-multi-list-')); controlName(control,ms,'Choose options');
+    list.setAttribute('role','listbox'); list.setAttribute('aria-multiselectable','true');
+    msOpts(ms).forEach(function (opt) { stableId(opt,'ody-multi-option-'); opt.setAttribute('role','option'); opt.setAttribute('tabindex','-1'); }); msRender(ms);
   }
-  function msToggle(ms, opt) { opt.classList.toggle('is-selected'); opt.setAttribute('aria-selected', opt.classList.contains('is-selected') ? 'true' : 'false'); msRender(ms); ms.dispatchEvent(new CustomEvent('ody:change', { bubbles: true, detail: { value: msValue(ms) } })); }
-  function msClose(ms) { ms.classList.remove('is-open'); }
+  function msActive(ms,opt) {
+    msOpts(ms).forEach(function (item) { item.classList.toggle('is-active',item===opt); });
+    var control=$('.ody-multiselect__control',ms);
+    if (opt) { control.setAttribute('aria-activedescendant',opt.id); opt.scrollIntoView({block:'nearest'}); }
+    else control.removeAttribute('aria-activedescendant');
+  }
+  function msOpen(ms) { ms.classList.add('is-open'); $('.ody-multiselect__control',ms).setAttribute('aria-expanded','true'); msActive(ms,msOpts(ms).find(function (opt) { return opt.classList.contains('is-selected'); }) || msOpts(ms)[0]); }
+  function msClose(ms) { ms.classList.remove('is-open'); $('.ody-multiselect__control',ms).setAttribute('aria-expanded','false'); msActive(ms,null); }
+  function msToggle(ms,opt) { if (opt.getAttribute('aria-disabled')==='true') return; opt.classList.toggle('is-selected'); msRender(ms); changed(ms,msValue(ms)); }
+  function msRemove(ms,value) { msOpts(ms).forEach(function (opt) { if ((opt.dataset.value != null ? opt.dataset.value : opt.textContent.trim())===value) opt.classList.remove('is-selected'); }); msRender(ms); $('.ody-multiselect__control',ms).focus(); changed(ms,msValue(ms)); }
 
   /* ============================================================ TAGINPUT */
   function tiValues(ti) { return $$('.ody-taginput__chip', ti).map(function (c) { return (c.dataset.value || '').trim(); }); }
@@ -808,71 +889,104 @@
   function tiRemove(ti, chip) { if (chip) { chip.parentNode.removeChild(chip); ti.dispatchEvent(new CustomEvent('ody:change', { bubbles: true, detail: { value: tiValues(ti) } })); } }
 
   /* =========================================================== DATEPICKER */
-  var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-  var DOW = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
+  function dateValue(date) { return date.getFullYear()+'-'+pad2(date.getMonth()+1)+'-'+pad2(date.getDate()); }
+  function parseDate(value) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(value || '')) return null;
+    var parts=value.split('-').map(Number), date=new Date(0); date.setHours(0,0,0,0); date.setFullYear(parts[0],parts[1]-1,parts[2]);
+    return dateValue(date)===value ? date : null;
+  }
+  function dateAllowed(dp,date) {
+    var input=$('.ody-datepicker__input',dp), value=dateValue(date), min=parseDate(attr(input,'min')), max=parseDate(attr(input,'max'));
+    return (!min||date>=min)&&(!max||date<=max)&&(attr(dp,'data-disabled-dates')||'').split(',').indexOf(value)<0;
+  }
+  function boundedDate(dp,date) {
+    var input=$('.ody-datepicker__input',dp), min=parseDate(attr(input,'min')), max=parseDate(attr(input,'max'));
+    return min&&date<min ? min : max&&date>max ? max : date;
+  }
   function dpState(dp) {
-    if (dp._ody) return dp._ody;
-    var input = $('.ody-datepicker__input', dp), sel = null, base = new Date();
-    if (input && /^\d{4}-\d{2}-\d{2}$/.test(input.value)) {
-      var p = input.value.split('-'); sel = new Date(+p[0], +p[1] - 1, +p[2]); base = new Date(sel);
-    }
-    return (dp._ody = { y: base.getFullYear(), m: base.getMonth(), sel: sel });
+    var input=$('.ody-datepicker__input',dp);
+    if (dp._odyDate && dp._odyDate.raw===input.value) return dp._odyDate;
+    var parsed=parseDate(input.value),selected=parsed&&dateAllowed(dp,parsed)?parsed:null,base=boundedDate(dp,parsed||new Date());
+    if (input.value) input.setAttribute('aria-invalid',String(!selected));
+    return (dp._odyDate={raw:input.value,y:base.getFullYear(),m:base.getMonth(),sel:selected,focus:base});
   }
-  function dpRender(dp) {
-    var st = dpState(dp), panel = $('.ody-datepicker__panel', dp);
-    var first = new Date(st.y, st.m, 1), start = (first.getDay() + 6) % 7;
-    var days = new Date(st.y, st.m + 1, 0).getDate();
-    var today = new Date(); today.setHours(0, 0, 0, 0);
-    var cells = '';
-    for (var i = 0; i < 7; i++) cells += '<div class="ody-datepicker__dow">' + DOW[i] + '</div>';
-    for (var b = 0; b < start; b++) cells += '<span></span>';
-    for (var d = 1; d <= days; d++) {
-      var dt = new Date(st.y, st.m, d), cls = 'ody-datepicker__day';
-      if (dt.getTime() === today.getTime()) cls += ' is-today';
-      if (st.sel && dt.getTime() === new Date(st.sel).setHours(0, 0, 0, 0)) cls += ' is-selected';
-      cells += '<button type="button" class="' + cls + '" data-ody-dp-day="' + d + '">' + d + '</button>';
-    }
-    panel.innerHTML =
-      '<div class="ody-datepicker__head">' +
-      '<button type="button" class="ody-datepicker__nav" data-ody-dp-nav="-1" aria-label="Previous month"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>' +
-      '<span class="ody-datepicker__title">' + MONTHS[st.m] + ' ' + st.y + '</span>' +
-      '<button type="button" class="ody-datepicker__nav" data-ody-dp-nav="1" aria-label="Next month"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>' +
-      '</div><div class="ody-datepicker__grid">' + cells + '</div>';
+  function dpInit(dp) {
+    var input=$('.ody-datepicker__input',dp), panel=$('.ody-datepicker__panel',dp);
+    if (input.type==='date') return;
+    input.setAttribute('role','combobox'); input.setAttribute('aria-haspopup','dialog'); input.setAttribute('aria-expanded',String(dp.classList.contains('is-open')));
+    input.setAttribute('aria-controls',stableId(panel,'ody-calendar-')); controlName(input,dp,'Choose a date');
   }
-  function dpOpen(dp) { dpRender(dp); dp.classList.add('is-open'); }
-  function dpClose(dp) { dp.classList.remove('is-open'); }
-  function dpPick(dp, day) {
-    var st = dpState(dp); st.sel = new Date(st.y, st.m, day);
-    var input = $('.ody-datepicker__input', dp);
-    if (input) { input.value = st.y + '-' + pad2(st.m + 1) + '-' + pad2(day); input.dispatchEvent(new Event('change', { bubbles: true })); }
-    dpClose(dp);
+  function dpRender(dp,focus) {
+    var state=dpState(dp), panel=$('.ody-datepicker__panel',dp), locale=document.documentElement.lang||'en';
+    var first=new Date(state.y,state.m,1), start=(first.getDay()+6)%7, days=new Date(state.y,state.m+1,0).getDate();
+    var titleId=stableId(panel,'ody-calendar-')+'-title', today=dateValue(new Date());
+    panel.textContent=''; panel.setAttribute('role','dialog'); panel.setAttribute('aria-labelledby',titleId);
+    var head=document.createElement('div'); head.className='ody-datepicker__head';
+    [-1,1].forEach(function (direction) {
+      var button=document.createElement('button'); button.type='button'; button.className='ody-datepicker__nav'; button.dataset.odyDpNav=direction; button.setAttribute('aria-label',direction<0?'Previous month':'Next month'); button.textContent=direction<0?'‹':'›';
+      if(direction<0)head.appendChild(button); else {
+        var title=document.createElement('span'); title.id=titleId; title.className='ody-datepicker__title'; title.setAttribute('aria-live','polite'); title.textContent=new Intl.DateTimeFormat(locale,{month:'long',year:'numeric'}).format(first); head.appendChild(title); head.appendChild(button);
+      }
+    }); panel.appendChild(head);
+    var grid=document.createElement('div'); grid.className='ody-datepicker__grid'; grid.setAttribute('role','grid'); grid.setAttribute('aria-labelledby',titleId);
+    var row=document.createElement('div'); row.setAttribute('role','row'); row.style.display='contents'; grid.appendChild(row);
+    for(var dow=0;dow<7;dow++){var dayName=document.createElement('span'); dayName.setAttribute('role','columnheader'); dayName.className='ody-datepicker__dow'; dayName.textContent=new Intl.DateTimeFormat(locale,{weekday:'short'}).format(new Date(2024,0,1+dow)); row.appendChild(dayName);}
+    var rowCount=Math.ceil((start+days)/7);
+    for(var week=0;week<rowCount;week++){
+      row=document.createElement('div'); row.setAttribute('role','row'); row.style.display='contents'; grid.appendChild(row);
+      for(var column=0;column<7;column++){
+        var day=week*7+column-start+1;
+        if(day<1||day>days){var blank=document.createElement('span'); blank.setAttribute('role','gridcell'); row.appendChild(blank); continue;}
+        var date=new Date(state.y,state.m,day), value=dateValue(date), button=document.createElement('button'); button.type='button'; button.className='ody-datepicker__day'; button.dataset.odyDpDay=day; button.dataset.date=value; button.textContent=day;
+        button.setAttribute('role','gridcell'); button.setAttribute('aria-label',new Intl.DateTimeFormat(locale,{weekday:'long',year:'numeric',month:'long',day:'numeric'}).format(date)); button.setAttribute('aria-selected',String(!!state.sel&&dateValue(state.sel)===value));
+        if(value===today){button.classList.add('is-today');button.setAttribute('aria-current','date');}
+        if(state.sel&&dateValue(state.sel)===value)button.classList.add('is-selected');
+        button.disabled=!dateAllowed(dp,date); button.tabIndex=!button.disabled&&value===dateValue(state.focus)?0:-1; row.appendChild(button);
+      }
+    }
+    panel.appendChild(grid);
+    var active=panel.querySelector('[data-date="'+dateValue(state.focus)+'"]:not(:disabled)')||panel.querySelector('[data-ody-dp-day]:not(:disabled)');
+    if(active){active.tabIndex=0;if(focus)active.focus();}
+  }
+  function dpOpen(dp) { dpInit(dp); var state=dpState(dp); state.focus=boundedDate(dp,state.sel||new Date()); state.y=state.focus.getFullYear();state.m=state.focus.getMonth();dpRender(dp,true);dp.classList.add('is-open');$('.ody-datepicker__input',dp).setAttribute('aria-expanded','true'); var active=$('[data-ody-dp-day][tabindex="0"]',dp);if(active)active.focus(); }
+  function dpClose(dp,restore) { dp.classList.remove('is-open');var input=$('.ody-datepicker__input',dp);input.setAttribute('aria-expanded','false');if(restore)input.focus(); }
+  function dpFocus(dp,date) {
+    var state=dpState(dp),direction=date>=state.focus?1:-1,blocked=(attr(dp,'data-disabled-dates')||'').split(',');
+    date=boundedDate(dp,date);
+    for(var index=0;!dateAllowed(dp,date)&&index<=blocked.length;index++){
+      var next=new Date(date);next.setDate(next.getDate()+direction);next=boundedDate(dp,next);
+      if(dateValue(next)===dateValue(date)){date=state.focus;break;}date=next;
+    }
+    if(!dateAllowed(dp,date))return;
+    state.focus=date;state.y=date.getFullYear();state.m=date.getMonth();dpRender(dp,true);
+  }
+  function dpMonth(dp,direction) { var state=dpState(dp), date=new Date(state.y,state.m+direction,1);date.setDate(Math.min(state.focus.getDate(),new Date(date.getFullYear(),date.getMonth()+1,0).getDate()));dpFocus(dp,date); }
+  function dpPick(dp,day) {
+    var state=dpState(dp), date=new Date(state.y,state.m,day);if(!dateAllowed(dp,date))return;
+    var input=$('.ody-datepicker__input',dp);input.value=dateValue(date);input.setAttribute('aria-invalid','false');state.raw=input.value;state.sel=date;state.focus=date;dpClose(dp,true);input.dispatchEvent(new Event('change',{bubbles:true}));
   }
 
   /* =========================================================== TIMEPICKER */
+  function timeValue(value) { var match=/^(\d{2}):(\d{2})$/.exec(value||'');return match&&+match[1]<24&&+match[2]<60 ? +match[1]*60 + +match[2] : null; }
+  function tpInit(tp) { var input=$('.ody-timepicker__input',tp),panel=$('.ody-timepicker__panel',tp);if(input.type==='time')return;input.setAttribute('role','combobox');input.setAttribute('aria-haspopup','dialog');input.setAttribute('aria-expanded',String(tp.classList.contains('is-open')));input.setAttribute('aria-controls',stableId(panel,'ody-time-'));controlName(input,tp,'Choose a time');var value=timeValue(input.value);if(input.value)input.setAttribute('aria-invalid',String(value===null||!timeAllowed(tp,Math.floor(value/60),value%60))); }
+  function timeAllowed(tp,hour,minute) { var input=$('.ody-timepicker__input',tp),value=hour*60+minute,min=timeValue(attr(input,'min')),max=timeValue(attr(input,'max'));return(min===null||value>=min)&&(max===null||value<=max); }
   function tpBuild(tp) {
-    if (tp._ody) return;
-    tp._ody = true;
-    var panel = $('.ody-timepicker__panel', tp);
-    var step = parseInt(attr(tp, 'data-minute-step'), 10) || 5, h = '', mm = '';
-    for (var i = 0; i < 24; i++) h += '<button type="button" class="ody-timepicker__opt" data-ody-tp-h="' + i + '">' + pad2(i) + '</button>';
-    for (var m = 0; m < 60; m += step) mm += '<button type="button" class="ody-timepicker__opt" data-ody-tp-m="' + m + '">' + pad2(m) + '</button>';
-    panel.innerHTML = '<div class="ody-timepicker__col" data-col="h">' + h + '</div><div class="ody-timepicker__col" data-col="m">' + mm + '</div>';
+    var panel=$('.ody-timepicker__panel',tp),step=Math.max(1,Math.min(60,parseInt(attr(tp,'data-minute-step'),10)||5));panel.textContent='';panel.setAttribute('role','dialog');panel.setAttribute('aria-label','Choose a time');
+    ['h','m'].forEach(function(kind){var col=document.createElement('div');col.className='ody-timepicker__col';col.dataset.col=kind;col.setAttribute('role','group');col.setAttribute('aria-label',kind==='h'?'Hours':'Minutes');for(var value=0;value<(kind==='h'?24:60);value+=kind==='h'?1:step){var button=document.createElement('button');button.type='button';button.className='ody-timepicker__opt';button.setAttribute('data-ody-tp-'+kind,value);button.textContent=pad2(value);button.setAttribute('aria-label',(kind==='h'?'Hour ':'Minute ')+pad2(value));col.appendChild(button);}panel.appendChild(col);});
   }
   function tpSync(tp) {
-    var input = $('.ody-timepicker__input', tp), parts = /^(\d{1,2}):(\d{1,2})$/.exec(input && input.value || '');
-    $$('.ody-timepicker__opt', tp).forEach(function (o) { o.classList.remove('is-active'); });
-    if (!parts) return;
-    var hb = $('[data-ody-tp-h="' + +parts[1] + '"]', tp), mb = $('[data-ody-tp-m="' + +parts[2] + '"]', tp);
-    if (hb) { hb.classList.add('is-active'); hb.scrollIntoView({ block: 'nearest' }); }
-    if (mb) { mb.classList.add('is-active'); mb.scrollIntoView({ block: 'nearest' }); }
+    var input=$('.ody-timepicker__input',tp),value=timeValue(input.value),hour=value===null?0:Math.floor(value/60),minute=value===null?0:value%60;
+    $$('.ody-timepicker__opt',tp).forEach(function(button){var isHour=button.hasAttribute('data-ody-tp-h'),number=+(isHour?button.dataset.odyTpH:button.dataset.odyTpM),selected=number===(isHour?hour:minute);button.classList.toggle('is-active',selected);button.setAttribute('aria-pressed',String(selected));button.disabled=isHour?!$$('[data-ody-tp-m]',tp).some(function(m){return timeAllowed(tp,number,+m.dataset.odyTpM);}):!timeAllowed(tp,hour,number);});
   }
-  function tpOpen(tp) { tpBuild(tp); tpSync(tp); tp.classList.add('is-open'); }
-  function tpClose(tp) { tp.classList.remove('is-open'); }
+  function tpOpen(tp) {tpInit(tp);tpBuild(tp);tp.classList.add('is-open');$('.ody-timepicker__input',tp).setAttribute('aria-expanded','true');tpSync(tp);var active=$('.ody-timepicker__opt.is-active:not(:disabled)',tp)||$('.ody-timepicker__opt:not(:disabled)',tp);if(active)active.focus();}
+  function tpClose(tp,restore) {tp.classList.remove('is-open');var input=$('.ody-timepicker__input',tp);input.setAttribute('aria-expanded','false');if(restore)input.focus();}
   function tpSet(tp) {
-    var input = $('.ody-timepicker__input', tp);
-    var hb = $('.ody-timepicker__opt.is-active[data-ody-tp-h]', tp), mb = $('.ody-timepicker__opt.is-active[data-ody-tp-m]', tp);
-    var hh = hb ? +hb.dataset.odyTpH : 0, min = mb ? +mb.dataset.odyTpM : 0;
-    if (input) { input.value = pad2(hh) + ':' + pad2(min); input.dispatchEvent(new Event('change', { bubbles: true })); }
+    var input=$('.ody-timepicker__input',tp),h=$('.is-active[data-ody-tp-h]',tp),m=$('.is-active[data-ody-tp-m]',tp),hour=h?+h.dataset.odyTpH:0,minute=m?+m.dataset.odyTpM:0;
+    if(!timeAllowed(tp,hour,minute)){
+      var available=$$('[data-ody-tp-m]',tp).find(function(button){return timeAllowed(tp,hour,+button.dataset.odyTpM);});
+      if(!available)return;minute=+available.dataset.odyTpM;
+    }
+    input.value=pad2(hour)+':'+pad2(minute);input.setAttribute('aria-invalid','false');input.dispatchEvent(new Event('change',{bubbles:true}));
   }
 
   /* ============================================================ DUALRANGE */
@@ -1005,11 +1119,13 @@
   /* ========================================================= INIT (build) */
   function initExt(root) {
     root = root || document;
-    $$('[data-ody-dualrange]', root).forEach(drInit);
-    $$('[data-ody-rating]', root).forEach(rtInit);
-    $$('[data-ody-otp]', root).forEach(otpInit);
-    $$('.ody-combobox__input', root).forEach(function (i) { i.setAttribute('role', 'combobox'); i.setAttribute('aria-autocomplete', 'list'); i.setAttribute('aria-expanded', 'false'); });
-    $$('[data-ody-multiselect]', root).forEach(msRender);
+    API.roots(root, '[data-ody-dualrange]').forEach(drInit);
+    API.roots(root, '[data-ody-rating]').forEach(rtInit);
+    API.roots(root, '[data-ody-otp]').forEach(otpInit);
+    API.roots(root, '.ody-combobox').forEach(cbxInit);
+    API.roots(root, '[data-ody-multiselect]').forEach(msInit);
+    API.roots(root, '.ody-datepicker').forEach(dpInit);
+    API.roots(root, '.ody-timepicker').forEach(tpInit);
     return API;
   }
 
@@ -1042,14 +1158,14 @@
     /* multiselect */
     var msX = closest(t, '[data-ody-ms-remove]');
     if (msX) {
-      var msW = closest(msX, '.ody-multiselect'), val = msX.dataset.odyMsRemove;
-      msOpts(msW).forEach(function (o) { var ov = o.dataset.value != null ? o.dataset.value : (o.textContent || '').trim(); if (ov === val) { o.classList.remove('is-selected'); o.setAttribute('aria-selected', 'false'); } });
-      msRender(msW); e.stopPropagation(); return;
+      msRemove(closest(msX,'.ody-multiselect'),msX.dataset.odyMsRemove); e.stopPropagation(); return;
     }
+    var msClear = closest(t,'[data-ody-ms-clear]');
+    if (msClear) { var clearMs=closest(msClear,'.ody-multiselect'); msOpts(clearMs).forEach(function (opt) { opt.classList.remove('is-selected'); }); msRender(clearMs); $('.ody-multiselect__control',clearMs).focus(); changed(clearMs,[]); return; }
     var msOpt = closest(t, '.ody-multiselect__opt');
-    if (msOpt) { msToggle(closest(msOpt, '.ody-multiselect'), msOpt); return; }
+    if (msOpt) { var optionMs=closest(msOpt,'.ody-multiselect'); msToggle(optionMs,msOpt); $('.ody-multiselect__control',optionMs).focus(); return; }
     var msCtl = closest(t, '.ody-multiselect__control');
-    if (msCtl) { var ms = closest(msCtl, '.ody-multiselect'); ms.classList.toggle('is-open'); return; }
+    if (msCtl) { var ms=closest(msCtl,'.ody-multiselect'); ms.classList.contains('is-open') ? msClose(ms) : msOpen(ms); return; }
 
     /* taginput */
     var tiX = closest(t, '.ody-taginput__chip-x');
@@ -1059,20 +1175,20 @@
 
     /* datepicker */
     var dpIn = closest(t, '.ody-datepicker__input');
-    if (dpIn) { var dp = closest(dpIn, '.ody-datepicker'); dp.classList.contains('is-open') ? dpClose(dp) : dpOpen(dp); return; }
+    if (dpIn && dpIn.type!=='date') { var dp=closest(dpIn,'.ody-datepicker');dp.classList.contains('is-open')?dpClose(dp):dpOpen(dp);return;}
     var dpNav = closest(t, '[data-ody-dp-nav]');
-    if (dpNav) { var dpn = closest(dpNav, '.ody-datepicker'), st = dpState(dpn); st.m += +dpNav.dataset.odyDpNav; if (st.m < 0) { st.m = 11; st.y--; } else if (st.m > 11) { st.m = 0; st.y++; } dpRender(dpn); return; }
+    if(dpNav){dpMonth(closest(dpNav,'.ody-datepicker'),+dpNav.dataset.odyDpNav);return;}
     var dpDay = closest(t, '[data-ody-dp-day]');
     if (dpDay) { dpPick(closest(dpDay, '.ody-datepicker'), +dpDay.dataset.odyDpDay); return; }
 
     /* timepicker */
     var tpIn = closest(t, '.ody-timepicker__input');
-    if (tpIn) { var tp = closest(tpIn, '.ody-timepicker'); tp.classList.contains('is-open') ? tpClose(tp) : tpOpen(tp); return; }
+    if(tpIn&&tpIn.type!=='time'){var tp=closest(tpIn,'.ody-timepicker');tp.classList.contains('is-open')?tpClose(tp):tpOpen(tp);return;}
     var tpOpt = closest(t, '.ody-timepicker__opt');
     if (tpOpt) {
       var tpw = closest(tpOpt, '.ody-timepicker'), col = closest(tpOpt, '.ody-timepicker__col');
       $$('.ody-timepicker__opt', col).forEach(function (o) { o.classList.remove('is-active'); });
-      tpOpt.classList.add('is-active'); tpSet(tpw); return;
+      tpOpt.classList.add('is-active'); tpSet(tpw); tpSync(tpw); return;
     }
 
     /* dropzone remove */
@@ -1104,17 +1220,43 @@
   }
 
   function onKeydown(e) {
+    if (API.isComposing(e)) return;
     var t = e.target, k = e.key;
 
     /* combobox */
     var cbxIn = closest(t, '.ody-combobox__input');
     if (cbxIn) {
       var cb = closest(cbxIn, '.ody-combobox');
-      if (k === 'ArrowDown') { e.preventDefault(); if (!cb.classList.contains('is-open')) cbxOpen(cb); else cbxMove(cb, 1); }
-      else if (k === 'ArrowUp') { e.preventDefault(); cbxMove(cb, -1); }
+      if (k === 'ArrowDown') { e.preventDefault(); if (!cb.classList.contains('is-open')) cbxOpen(cb); cbxMove(cb, 1); }
+      else if (k === 'ArrowUp') { e.preventDefault(); if (!cb.classList.contains('is-open')) cbxOpen(cb); cbxMove(cb, -1); }
       else if (k === 'Enter') { var a = cbxActive(cb); if (a) { e.preventDefault(); cbxPick(cb, a); } }
       else if (k === 'Escape') { if (cb.classList.contains('is-open')) { e.preventDefault(); cbxClose(cb); } }
       return;
+    }
+
+    var msControl=closest(t,'.ody-multiselect__control');
+    if (msControl && !closest(t,'[data-ody-ms-remove]')) {
+      var ms=closest(msControl,'.ody-multiselect'), items=msOpts(ms).filter(function (opt) { return opt.getAttribute('aria-disabled')!=='true'; }), active=$('.ody-multiselect__opt.is-active',ms);
+      if (k==='Enter'||k===' ') { e.preventDefault(); if (!ms.classList.contains('is-open')) msOpen(ms); else if (active) msToggle(ms,active); }
+      else if (k==='ArrowDown'||k==='ArrowUp'||k==='Home'||k==='End') { e.preventDefault(); if (!ms.classList.contains('is-open')) msOpen(ms); else { var index=items.indexOf(active); index=k==='Home'?0:k==='End'?items.length-1:Math.max(0,Math.min(items.length-1,index+(k==='ArrowDown'?1:-1))); msActive(ms,items[index]); } }
+      else if (k==='Escape') { e.preventDefault(); msClose(ms); msControl.focus(); }
+      else if (k==='Tab') msClose(ms);
+      return;
+    }
+
+    var dateInput=closest(t,'.ody-datepicker__input'), datePicker=closest(t,'.ody-datepicker');
+    if(dateInput&&dateInput.type!=='date'&&(k==='Enter'||k===' '||k==='ArrowDown')){e.preventDefault();dpOpen(datePicker);return;}
+    if(datePicker&&datePicker.classList.contains('is-open')){
+      if(k==='Escape'){e.preventDefault();dpClose(datePicker,true);return;}
+      var dayButton=closest(t,'[data-ody-dp-day]');
+      if(dayButton){var date=parseDate(dayButton.dataset.date),delta=0;if(k==='ArrowLeft')delta=-1;else if(k==='ArrowRight')delta=1;else if(k==='ArrowUp')delta=-7;else if(k==='ArrowDown')delta=7;else if(k==='Home')delta=-((date.getDay()+6)%7);else if(k==='End')delta=6-((date.getDay()+6)%7);else if(k==='PageUp'||k==='PageDown'){e.preventDefault();dpMonth(datePicker,(k==='PageDown'?1:-1)*(e.shiftKey?12:1));return;}if(delta||k==='Home'||k==='End'){e.preventDefault();date.setDate(date.getDate()+delta);dpFocus(datePicker,date);return;}}
+    }
+    var timeInput=closest(t,'.ody-timepicker__input'),timePicker=closest(t,'.ody-timepicker');
+    if(timeInput&&timeInput.type!=='time'&&(k==='Enter'||k===' '||k==='ArrowDown')){e.preventDefault();tpOpen(timePicker);return;}
+    if(timePicker&&timePicker.classList.contains('is-open')){
+      if(k==='Escape'){e.preventDefault();tpClose(timePicker,true);return;}
+      var timeOption=closest(t,'.ody-timepicker__opt');
+      if(timeOption){var column=closest(timeOption,'.ody-timepicker__col'),options=$$('.ody-timepicker__opt:not(:disabled)',column),index=options.indexOf(timeOption);if(k==='ArrowDown'||k==='ArrowUp'||k==='Home'||k==='End'){e.preventDefault();index=k==='Home'?0:k==='End'?options.length-1:Math.max(0,Math.min(options.length-1,index+(k==='ArrowDown'?1:-1)));if(options[index])options[index].focus();return;}if(k==='ArrowLeft'||k==='ArrowRight'){e.preventDefault();var other=$('.ody-timepicker__col[data-col="'+(column.dataset.col==='h'?'m':'h')+'"]',timePicker),next=$('.is-active:not(:disabled)',other)||$('.ody-timepicker__opt:not(:disabled)',other);if(next)next.focus();return;}if(k==='Enter'||k===' '){e.preventDefault();timeOption.click();if(timeOption.hasAttribute('data-ody-tp-m'))tpClose(timePicker,true);else{var minute=$('[data-ody-tp-m].is-active:not(:disabled)',timePicker)||$('[data-ody-tp-m]:not(:disabled)',timePicker);if(minute)minute.focus();}return;}}
     }
 
     /* taginput */
@@ -1311,6 +1453,8 @@
     else if (type === 'spark') svg = sparkChart(el, vals);
     else svg = barChart(vals, labels, max, min);
     el.innerHTML = '';
+    if(el.getAttribute('aria-hidden')==='true'||el.hasAttribute('data-ody-decorative')){svg.setAttribute('aria-hidden','true');svg.removeAttribute('role');}
+    else svg.setAttribute('aria-label',el.getAttribute('aria-label')||el.getAttribute('data-label')||type+' chart: '+vals.map(function(value,index){return(labels[index]?labels[index]+': ':'')+value;}).join(', '));
     el.appendChild(svg);
     el.setAttribute('data-ody-chart-ready', '1');
   }
@@ -1413,11 +1557,15 @@
     var open = item.classList.toggle('is-open');
     row.setAttribute('aria-expanded', open ? 'true' : 'false');
   }
+  var treeId=0;
   function initTree(root) {
+    O.roots(root,'.ody-tree').forEach(function(tree){tree.setAttribute('role','tree');if(!tree.hasAttribute('aria-label')&&!tree.hasAttribute('aria-labelledby'))tree.setAttribute('aria-label','Files');});
     $all('.ody-tree__item', root).forEach(function (item) {
       var row = item.querySelector('.ody-tree__row');
       if (!row) return;
+      item.setAttribute('role','none');row.setAttribute('role','treeitem');row.setAttribute('aria-selected',String(row.classList.contains('is-active')));
       var kids = item.querySelector('.ody-tree__children');
+      if(kids){kids.setAttribute('role','group');if(!kids.id){do{treeId++;kids.id='ody-tree-group-'+treeId;}while(document.getElementById(kids.id)&&document.getElementById(kids.id)!==kids);}var owns=(row.getAttribute('aria-owns')||'').split(/\s+/).filter(Boolean);if(owns.indexOf(kids.id)<0)owns.push(kids.id);row.setAttribute('aria-owns',owns.join(' '));}
       var leaf = item.classList.contains('is-leaf') || !kids || !kids.querySelector('.ody-tree__item, .ody-tree__row');
       if (leaf) { item.classList.add('is-leaf'); }
       else {
@@ -1425,6 +1573,34 @@
       }
       if (!row.hasAttribute('tabindex')) row.setAttribute('tabindex', '0');
     });
+  }
+
+  /* Client-side table adapter is opt-in; unenhanced tables keep native links/forms. */
+  function tableHost(table) { return closestEl(table,'[data-ody-table]'); }
+  function tableRows(table) { return Array.prototype.slice.call(table.tBodies[0].rows).filter(function(row){return !row.hasAttribute('data-ody-table-empty')&&!row.classList.contains('ody-table__empty');}); }
+  function tableRender(host) {
+    var state=host.__odyTable, table=state.table, filters=$all('.ody-table__filter input',host);
+    var matches=state.rows.filter(function(row){return filters.every(function(input){var cell=closestEl(input,'th,td'),index=Array.prototype.indexOf.call(cell.parentNode.children,cell),query=input.value.trim().toLowerCase();return !query||(row.cells[index]&&row.cells[index].textContent.toLowerCase().indexOf(query)>=0);});});
+    var pages=Math.max(1,Math.ceil(matches.length/state.size));state.page=Math.max(1,Math.min(state.page,pages));
+    state.rows.forEach(function(row){var index=matches.indexOf(row);row.hidden=index<0||index<(state.page-1)*state.size||index>=state.page*state.size;});
+    var selected=state.rows.filter(function(row){var box=row.querySelector('.ody-td--check input[type="checkbox"]');return box&&box.checked;}).map(function(row){return row.dataset.odyRowId;});
+    var summary=host.querySelector('[data-ody-table-summary]');if(summary)summary.textContent=matches.length+' results · Page '+state.page+' of '+pages;
+    var selectedCount=host.querySelector('[data-ody-table-selected]');if(selectedCount)selectedCount.textContent=selected.length;
+    var empty=table.querySelector('[data-ody-table-empty]');empty.hidden=matches.length>0;
+    var pager=host.querySelector('[data-ody-table-pager],.ody-pager');
+    if(pager){var focused=pager.contains(document.activeElement)?document.activeElement.dataset.odyPage:null;pager.textContent='';['prev'].concat(Array.from({length:pages},function(_,i){return String(i+1);}),'next').forEach(function(value){var button=document.createElement('button');button.type='button';button.dataset.odyPage=value;button.textContent=value==='prev'?'Previous':value==='next'?'Next':value;button.disabled=value==='prev'&&state.page===1||value==='next'&&state.page===pages;if(+value===state.page){button.className='is-current';button.setAttribute('aria-current','page');}pager.appendChild(button);});if(focused){var next=pager.querySelector('[data-ody-page="'+focused+'"]:not(:disabled)')||pager.querySelector('[aria-current="page"]');if(next)next.focus();}}
+    syncSelectAll(table);
+    host.dispatchEvent(new CustomEvent('ody:table-change',{bubbles:true,detail:{page:state.page,pages:pages,total:matches.length,selected:selected}}));
+  }
+  function initTable(host) {
+    var table=host.matches('table')?host:host.querySelector('table');if(!table||!table.tBodies[0])return;
+    var previous=host.__odyTable,rows=tableRows(table);
+    rows.forEach(function(row,index){if(!row.dataset.odyRowId)row.dataset.odyRowId='row-'+(index+1);});
+    host.__odyTable={table:table,rows:rows,page:previous?previous.page:1,size:Math.max(1,parseInt(host.dataset.pageSize,10)||10)};
+    if(!table.querySelector('[data-ody-table-empty]')){
+      var empty=document.createElement('tr');empty.className='ody-table__empty';empty.setAttribute('data-ody-table-empty','');var cell=document.createElement('td');cell.colSpan=table.rows[0]?table.rows[0].cells.length:1;cell.textContent='No matching results.';empty.appendChild(cell);table.tBodies[0].appendChild(empty);
+    }
+    $all('th.ody-th--sort',table).forEach(function(th){th.tabIndex=0;if(!th.hasAttribute('aria-sort'))th.setAttribute('aria-sort','none');});tableRender(host);
   }
 
   /* -------------------------------------------------------- TABLE SORT */
@@ -1448,6 +1624,7 @@
       return asc ? av.localeCompare(bv) : bv.localeCompare(av);
     });
     rows.forEach(function (r) { tbody.appendChild(r); });
+    var host=tableHost(table);if(host&&host.__odyTable){host.__odyTable.rows=tableRows(table);host.__odyTable.page=1;tableRender(host);}
   }
   function cellSortVal(cell) {
     if (!cell) return '';
@@ -1459,41 +1636,59 @@
   function toggleRowSelect(cb) {
     var tr = closestEl(cb, 'tr');
     if (tr) tr.classList.toggle('is-selected', cb.checked);
-    syncSelectAll(closestEl(cb, 'table'));
+    var table=closestEl(cb,'table'),host=tableHost(table);if(host&&host.__odyTable)tableRender(host);else syncSelectAll(table);
   }
   function toggleSelectAll(master) {
     var table = closestEl(master, 'table'); if (!table) return;
     var tbody = table.tBodies[0]; if (!tbody) return;
     $all('.ody-td--check input[type="checkbox"]', tbody).forEach(function (cb) {
+      if(cb.disabled||(tableHost(table)&&closestEl(cb,'tr').hidden))return;
       cb.checked = master.checked;
       var tr = closestEl(cb, 'tr'); if (tr) tr.classList.toggle('is-selected', master.checked);
     });
     master.indeterminate = false;
+    var host=tableHost(table);if(host&&host.__odyTable)tableRender(host);
   }
   function syncSelectAll(table) {
     if (!table) return;
     var master = table.querySelector('.ody-th--check input[type="checkbox"]');
     if (!master) return;
     var boxes = $all('.ody-td--check input[type="checkbox"]', table.tBodies[0] || table);
+    if(tableHost(table))boxes=boxes.filter(function(box){return !closestEl(box,'tr').hidden&&!box.disabled;});
     var checked = boxes.filter(function (b) { return b.checked; }).length;
     master.checked = checked > 0 && checked === boxes.length;
     master.indeterminate = checked > 0 && checked < boxes.length;
+    if(tableHost(table))master.disabled=boxes.length===0;
   }
 
   /* --------------------------------------------------------- KANBAN DND */
-  var dragCard = null;
+  var dragCard=null, dragOrigin=null, dragDropped=false;
   function initKanban(root) {
-    $all('.ody-kanban__card', root).forEach(function (c) { if (!c.hasAttribute('draggable')) c.setAttribute('draggable', 'true'); });
+    O.roots(root,'.ody-kanban__card').forEach(function(card){
+      if(!card.hasAttribute('draggable'))card.setAttribute('draggable','true');
+      if(!card.hasAttribute('tabindex'))card.tabIndex=0;
+      if(card.querySelector('[data-ody-kanban-move]'))return;
+      var board=closestEl(card,'.ody-kanban'),lists=$all('.ody-kanban__list',board),controls=document.createElement('div');controls.className='ody-kanban__actions ody-cluster ody-cluster--sm';
+      var move=document.createElement('select');move.className='ody-select';move.setAttribute('data-ody-kanban-move','');move.setAttribute('aria-label','Move '+(card.querySelector('.ody-kanban__card-title')||card).textContent.trim()+' to column');
+      lists.forEach(function(list,index){var option=document.createElement('option'),col=closestEl(list,'.ody-kanban__col'),head=col.querySelector('.ody-kanban__head');option.value=index;option.textContent=head?head.childNodes.length?Array.prototype.filter.call(head.childNodes,function(node){return node.nodeType===3;}).map(function(node){return node.textContent;}).join('').trim()||'Column '+(index+1):'Column '+(index+1):'Column '+(index+1);move.appendChild(option);});controls.appendChild(move);
+      ['up','down'].forEach(function(direction){var button=document.createElement('button');button.type='button';button.className='ody-btn ody-btn--secondary ody-btn--sm';button.setAttribute('data-ody-kanban-'+direction,'');button.textContent=direction==='up'?'Move up':'Move down';controls.appendChild(button);});card.appendChild(controls);
+      if(!board.querySelector('[data-ody-kanban-status]')){var status=document.createElement('p');status.setAttribute('data-ody-kanban-status','');status.setAttribute('role','status');status.className='ody-sr-only';board.appendChild(status);}
+      kanbanSync(board);
+    });
   }
+  function kanbanSync(board){updateKanbanCounts(board);var lists=$all('.ody-kanban__list',board);lists.forEach(function(list,index){$all('.ody-kanban__card',list).forEach(function(card){var move=card.querySelector('[data-ody-kanban-move]');if(move)move.value=String(index);});});}
+  function kanbanChanged(card){var board=closestEl(card,'.ody-kanban');kanbanSync(board);var lists=$all('.ody-kanban__list',board),list=card.parentElement,status=board.querySelector('[data-ody-kanban-status]'),detail={card:card,column:lists.indexOf(list),index:$all('.ody-kanban__card',list).indexOf(card)};if(status)status.textContent=(card.querySelector('.ody-kanban__card-title')||card).textContent.trim()+' moved to column '+(detail.column+1)+', position '+(detail.index+1)+'.';board.dispatchEvent(new CustomEvent('ody:kanban-change',{bubbles:true,detail:detail}));}
   function onDragStart(e) {
-    var card = closestEl(e.target, '.ody-kanban__card'); if (!card) return;
-    dragCard = card; card.classList.add('is-dragging');
+    var card=closestEl(e.target,'.ody-kanban__card');if(!card)return;
+    if(closestEl(e.target,'button,select,input,a')){e.preventDefault();return;}
+    dragCard=card;dragOrigin={parent:card.parentElement,next:card.nextSibling};dragDropped=false;card.classList.add('is-dragging');
     if (e.dataTransfer) { e.dataTransfer.effectAllowed = 'move'; try { e.dataTransfer.setData('text/plain', ''); } catch (x) {} }
   }
   function onDragEnd() {
+    if(dragCard&&!dragDropped&&dragOrigin){dragOrigin.parent.insertBefore(dragCard,dragOrigin.next&&dragOrigin.next.parentElement===dragOrigin.parent?dragOrigin.next:null);kanbanSync(closestEl(dragCard,'.ody-kanban'));}
     if (dragCard) dragCard.classList.remove('is-dragging');
     $all('.ody-kanban__list.is-over').forEach(function (l) { l.classList.remove('is-over'); });
-    dragCard = null;
+    dragCard=null;dragOrigin=null;
   }
   function afterElement(list, y) {
     var items = $all('.ody-kanban__card:not(.is-dragging)', list);
@@ -1521,7 +1716,8 @@
   function onDrop(e) {
     var list = closestEl(e.target, '.ody-kanban__list'); if (!list) return;
     e.preventDefault(); list.classList.remove('is-over');
-    updateKanbanCounts(closestEl(list, '.ody-kanban'));
+    dragDropped=true;
+    if(dragCard)kanbanChanged(dragCard);else updateKanbanCounts(closestEl(list,'.ody-kanban'));
   }
   function updateKanbanCounts(board) {
     if (!board) return;
@@ -1534,14 +1730,18 @@
 
   /* ---------------------------------------------------------- DELEGATION */
   function onClick(e) {
-    var t = e.target;
+    var t=e.target,pageButton=closestEl(t,'[data-ody-page]'),clear=closestEl(t,'[data-ody-table-clear]');
+    if(pageButton){var host=closestEl(pageButton,'[data-ody-table]');if(host&&host.__odyTable){var state=host.__odyTable,value=pageButton.dataset.odyPage;state.page=value==='prev'?state.page-1:value==='next'?state.page+1:+value;tableRender(host);}return;}
+    if(clear){var clearHost=closestEl(clear,'[data-ody-table]');$all('.ody-table__filter input',clearHost).forEach(function(input){input.value='';});clearHost.__odyTable.page=1;tableRender(clearHost);return;}
+    var up=closestEl(t,'[data-ody-kanban-up]'),down=closestEl(t,'[data-ody-kanban-down]');
+    if(up||down){var card=closestEl(up||down,'.ody-kanban__card'),list=card.parentElement,sibling=up?card.previousElementSibling:card.nextElementSibling;if(sibling){if(up)list.insertBefore(card,sibling);else list.insertBefore(sibling,card);kanbanChanged(card);}return;}
     var caretRow = closestEl(t, '.ody-tree__caret') ? closestEl(t, '.ody-tree__row') : null;
     var treeRow = caretRow || closestEl(t, '.ody-tree__row');
     if (treeRow) {
       var item = closestEl(treeRow, '.ody-tree__item');
       if (item && !item.classList.contains('is-leaf')) { e.preventDefault(); toggleTreeNode(treeRow); }
-      $all('.ody-tree__row.is-active', closestEl(treeRow, '.ody-tree')).forEach(function (r) { r.classList.remove('is-active'); });
-      treeRow.classList.add('is-active');
+      $all('.ody-tree__row.is-active', closestEl(treeRow, '.ody-tree')).forEach(function (r) { r.classList.remove('is-active');r.setAttribute('aria-selected','false'); });
+      treeRow.classList.add('is-active');treeRow.setAttribute('aria-selected','true');
       return;
     }
     var sortTh = closestEl(t, 'th.ody-th--sort');
@@ -1560,11 +1760,12 @@
     }
   }
   function onKeydown(e) {
-    var t = e.target;
+    var t=e.target,sort=closestEl(t,'th.ody-th--sort');
+    if(sort&&(e.key==='Enter'||e.key===' ')&&!O.isComposing(e)){e.preventDefault();sortTable(sort);return;}
     var row = closestEl(t, '.ody-tree__row');
     if (row) {
       var item = closestEl(row, '.ody-tree__item');
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); if (item && !item.classList.contains('is-leaf')) toggleTreeNode(row); row.click(); }
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); row.click(); }
       else if (e.key === 'ArrowRight') { if (item && !item.classList.contains('is-leaf') && !item.classList.contains('is-open')) { e.preventDefault(); toggleTreeNode(row); } }
       else if (e.key === 'ArrowLeft') { if (item && item.classList.contains('is-open')) { e.preventDefault(); toggleTreeNode(row); } }
     }
@@ -1572,7 +1773,8 @@
 
   function initExt(root) {
     root = root || document;
-    $all('[data-ody-chart]', root).forEach(renderChart);
+    O.roots(root,'[data-ody-chart]').forEach(renderChart);
+    O.roots(root,'[data-ody-table]').forEach(initTable);
     initTree(root);
     initKanban(root);
     $all('table[data-ody-select]', root).forEach(syncSelectAll);
@@ -1582,6 +1784,8 @@
   function bind() {
     if (bound) return; bound = true;
     document.addEventListener('click', onClick, false);
+    document.addEventListener('input',function(event){var host=closestEl(event.target,'[data-ody-table]');if(host&&host.__odyTable&&event.target.matches('.ody-table__filter input')){host.__odyTable.page=1;tableRender(host);}},false);
+    document.addEventListener('change',function(event){var move=closestEl(event.target,'[data-ody-kanban-move]');if(move){var card=closestEl(move,'.ody-kanban__card'),board=closestEl(card,'.ody-kanban'),lists=$all('.ody-kanban__list',board);if(lists[+move.value]){lists[+move.value].appendChild(card);kanbanChanged(card);move.focus();}}},false);
     document.addEventListener('keydown', onKeydown, false);
     document.addEventListener('dragstart', onDragStart, false);
     document.addEventListener('dragend', onDragEnd, false);
@@ -1640,6 +1844,7 @@
   function extOpen(node, onClose) {
     if (!node || node.classList.contains('is-open')) return;
     node.__extLast = document.activeElement;
+    O.registerLayer(node, node.__extLast);
     node.__extClose = onClose || null;
     node.hidden = false; node.removeAttribute('hidden');
     void node.offsetWidth;
@@ -1649,15 +1854,16 @@
   }
   function extClose(node) {
     if (!node || !node.classList.contains('is-open')) return;
+    var shouldReturn = node.contains(document.activeElement) || document.activeElement === document.body;
     node.classList.remove('is-open');
     node.setAttribute('hidden', ''); node.hidden = true;
     extStack = extStack.filter(function (n) { return n !== node; });
     unlock();
     var last = node.__extLast; node.__extLast = null;
-    if (last && last.focus) { try { last.focus(); } catch (e) {} }
+    O.releaseLayer(node, shouldReturn);
     if (node.__extClose) { var f = node.__extClose; node.__extClose = null; f(); }
   }
-  function extTop() { return extStack.length ? extStack[extStack.length - 1] : null; }
+  function extTop() { var top = O.topLayer(); return extStack.indexOf(top) >= 0 ? top : null; }
   function extTrap(e, node) {
     if (e.key !== 'Tab') return;
     var f = $all(FOCUSABLE, node).filter(function (n) { return n.offsetWidth > 0 || n.offsetHeight > 0; });
@@ -1830,6 +2036,8 @@
     if (!gutter || !first) return;
     var vert = pane.classList.contains('ody-split-pane--vert');
     var min = parseInt(attr(pane, 'data-ody-min') || '80', 10);
+    function syncValues(){var total=vert?pane.clientHeight:pane.clientWidth,current=vert?first.offsetHeight:first.offsetWidth;gutter.setAttribute('aria-orientation',vert?'horizontal':'vertical');gutter.setAttribute('aria-valuemin',String(min));gutter.setAttribute('aria-valuemax',String(Math.max(min,total-min-(vert?gutter.offsetHeight:gutter.offsetWidth))));gutter.setAttribute('aria-valuenow',String(Math.round(current)));}
+    syncValues();
     function down(e) {
       e.preventDefault();
       pane.classList.add('is-dragging'); gutter.classList.add('is-dragging');
@@ -1839,8 +2047,9 @@
       var r = pane.getBoundingClientRect();
       var pos = vert ? (e.clientY - r.top) : (e.clientX - r.left);
       var total = vert ? r.height : r.width;
-      pos = Math.max(min, Math.min(pos, total - min - gutter.offsetWidth));
+      pos = Math.max(min, Math.min(pos, total - min - (vert ? gutter.offsetHeight : gutter.offsetWidth)));
       first.style.flex = '0 0 ' + pos + 'px';
+      syncValues();
     }
     function up() {
       pane.classList.remove('is-dragging'); gutter.classList.remove('is-dragging');
@@ -1854,7 +2063,8 @@
       var r = pane.getBoundingClientRect(); var total = vert ? r.height : r.width;
       var cur = (vert ? first.offsetHeight : first.offsetWidth);
       if (e.key === (vert ? 'ArrowUp' : 'ArrowLeft')) { e.preventDefault(); first.style.flex = '0 0 ' + Math.max(min, cur - step) + 'px'; }
-      else if (e.key === (vert ? 'ArrowDown' : 'ArrowRight')) { e.preventDefault(); first.style.flex = '0 0 ' + Math.min(total - min - gutter.offsetWidth, cur + step) + 'px'; }
+      else if (e.key === (vert ? 'ArrowDown' : 'ArrowRight')) { e.preventDefault(); first.style.flex = '0 0 ' + Math.min(total - min - (vert ? gutter.offsetHeight : gutter.offsetWidth), cur + step) + 'px'; }
+      syncValues();
     });
   }
 
@@ -1867,6 +2077,7 @@
     var loop = car.hasAttribute('data-ody-carousel-loop');
     var idx = 0;
     var dotsWrap = $('.ody-carousel__dots', car);
+    if(dotsWrap)dotsWrap.removeAttribute('aria-hidden');
     if (dotsWrap && !dotsWrap.children.length) {
       slides.forEach(function (s, i) {
         var d = el('button', 'ody-carousel__dot'); d.type = 'button';
@@ -1987,6 +2198,7 @@
       if (save && val !== ed.__prev) ed.dispatchEvent(new CustomEvent('ody:change', { bubbles: true, detail: { value: val } }));
     }
     on(input, 'keydown', function (e) {
+      if (O.isComposing(e)) return;
       if (e.key === 'Enter') { e.preventDefault(); commit(true); }
       else if (e.key === 'Escape') { e.preventDefault(); commit(false); }
     });
@@ -2030,6 +2242,7 @@
   });
 
   on(document, 'keydown', function (e) {
+    if (O.isComposing(e) || e.defaultPrevented || document.querySelector('dialog:modal')) return;
     if ((e.metaKey || e.ctrlKey) && (e.key === 'k' || e.key === 'K')) {
       var pal = $('[data-ody-cmdk-default]') || $('.ody-cmdk');
       if (pal) { e.preventDefault(); pal.classList.contains('is-open') ? closeCmdk(pal) : openCmdk(pal); return; }
@@ -2056,12 +2269,12 @@
   /* ==================================================== INIT */
   function initExt(root) {
     root = root || document;
-    $all('.ody-sheet', root).forEach(function (s) { if (!s.classList.contains('is-open') && !s.hasAttribute('hidden')) s.setAttribute('hidden', ''); initSheetDrag(s); });
-    $all('.ody-cmdk', root).forEach(function (c) { if (!c.classList.contains('is-open') && !c.hasAttribute('hidden')) c.setAttribute('hidden', ''); });
-    $all('.ody-split-pane', root).forEach(initSplit);
-    $all('[data-ody-carousel]', root).forEach(initCarousel);
-    $all('.ody-notif', root).forEach(notifSync);
-    $all('[data-ody-editable]', root).forEach(function (ed) {
+    O.roots(root,'.ody-sheet').forEach(function (s) { if (!s.classList.contains('is-open') && !s.hasAttribute('hidden')) s.setAttribute('hidden', ''); initSheetDrag(s); });
+    O.roots(root,'.ody-cmdk').forEach(function (c) { if (!c.classList.contains('is-open') && !c.hasAttribute('hidden')) c.setAttribute('hidden', ''); });
+    O.roots(root,'.ody-split-pane').forEach(initSplit);
+    O.roots(root,'[data-ody-carousel]').forEach(initCarousel);
+    O.roots(root,'.ody-notif').forEach(notifSync);
+    O.roots(root,'[data-ody-editable]').forEach(function (ed) {
       if (!$('.ody-editable__text', ed) && !ed.querySelector('.ody-editable__input')) {
         var txt = ed.textContent.trim(); ed.textContent = '';
         var span = el('span', 'ody-editable__text'); span.textContent = txt || (attr(ed, 'data-ody-editable-placeholder') || '');
