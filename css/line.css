@@ -187,6 +187,11 @@
 [data-ody-design="line"] .ody-segment input:checked + span { background:var(--ody-ink); color:var(--ody-surface); }
 [data-ody-design="line"] .ody-segment input:focus-visible + span { outline:2px solid var(--ody-line-1); outline-offset:0; }
 [data-ody-design="line"] .ody-fab { width:52px; height:52px; display:grid; place-items:center; background:var(--ody-ink); color:var(--ody-surface); border:0; border-radius:50%; font-size:24px; cursor:pointer; }
+/* Keep compact pagination marks inside separate, usable pointer targets. */
+[data-ody-design="line"] .ody-carousel__dot { display:grid; place-items:center; width:24px; height:24px; flex:0 0 24px; border-radius:0; background:transparent; transition:none; }
+[data-ody-design="line"] .ody-carousel__dot::before { content:""; width:8px; height:8px; border-radius:var(--ody-r-pill); background:var(--ody-border-2); transition:background var(--ody-dur) var(--ody-ease),width var(--ody-dur) var(--ody-ease); }
+[data-ody-design="line"] .ody-carousel__dot:hover::before { background:var(--ody-ink-4); }
+[data-ody-design="line"] .ody-carousel__dot.is-active::before { width:22px; background:var(--ody-accent); }
 [data-ody-design="line"] .ody-chart--bars { display:flex; align-items:end; gap:8px; height:88px; }
 [data-ody-design="line"] .ody-chart--bars > span { flex:1; height:var(--value); background:var(--ody-line-4); }
 [data-ody-design="line"] .ody-steps { display:flex; gap:12px; list-style:none; padding:0; margin:0; }
@@ -216,6 +221,7 @@
   [data-ody-design="line"] :is(.ody-iconbtn,.iconbtn) { min-width:44px; }
   [data-ody-design="line"] :is(.ody-multiselect__chip-x,.ody-taginput__chip-x) { width:44px; height:44px; min-width:44px; flex-basis:44px; }
   [data-ody-design="line"] :is(.ody-input,.ody-select,.input,.select,.ody-toolbar,.toolbar) { min-height:44px; }
+  [data-ody-design="line"] .ody-carousel__dot { width:44px; height:44px; flex-basis:44px; }
   [data-ody-design="line"] .ody-switch { min-height:44px; }
   [data-ody-design="line"] .ody-switch::after { content:""; position:absolute; inset:-12px -3px; }
 }
@@ -225,6 +231,8 @@
 }
 @media (forced-colors:active) {
   [data-ody-design="line"] :is(button,input,select,textarea,a):focus-visible { outline:2px solid Highlight; }
+  [data-ody-design="line"] .ody-carousel__dot::before { background:ButtonText; forced-color-adjust:none; }
+  [data-ody-design="line"] .ody-carousel__dot.is-active::before { background:Highlight; }
   [data-ody-design="line"] .ody-chart--bars > span { background:Highlight; forced-color-adjust:none; }
   [data-ody-design="line"] .ody-switch__track { border:1px solid ButtonText; background:Canvas; forced-color-adjust:none; }
   [data-ody-design="line"] .ody-switch__track::before { background:ButtonText; box-shadow:none; width:14px; height:14px; top:3px; left:3px; }
