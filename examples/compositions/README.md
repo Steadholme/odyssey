@@ -3,9 +3,9 @@
 Load the released assets and add the form from [workspace-settings.html](workspace-settings.html). It works without the Patterns shell, private IDs, a bundler, or the core JavaScript runtime:
 
 ```html
-<link rel="stylesheet" href="/1.4.0/odyssey-line.css">
-<link rel="stylesheet" href="/1.4.0/compositions.css">
-<script src="/1.4.0/compositions.js" defer></script>
+<link rel="stylesheet" href="/1.5.0/odyssey-line.css">
+<link rel="stylesheet" href="/1.5.0/compositions.css">
+<script src="/1.5.0/compositions.js" defer></script>
 ```
 
 `odyssey-font.css` (Inter) and `odyssey-line-font.css` (Archivo/Azeret Mono) are optional when the host already provides those fonts. The fixture declares both font assets explicitly, separate from `odyssey-line.css`. `compositions.css` also supplies readable defaults when no Odyssey token layer is present. The standalone example applies values in memory and labels that result **Changes applied locally**. It does not persist or send requests.

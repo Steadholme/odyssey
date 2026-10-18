@@ -342,12 +342,14 @@
         {
           "path": "tools/tests/runtime-p1.test.mjs",
           "coverage": "interaction-contract"
+        },
+        {
+          "path": "tools/tests/extensions-p2.test.mjs",
+          "coverage": "interaction-contract"
         }
       ],
       "contract": "library/contracts.json#/components/split-pane",
-      "openTodo": [
-        "ACT-07"
-      ]
+      "openTodo": []
     },
     {
       "id": "ody.button",
@@ -384,6 +386,10 @@
         {
           "path": "tools/tests/line-browser.test.mjs",
           "coverage": "specimen-smoke"
+        },
+        {
+          "path": "tools/tests/rust-p2-browser.test.mjs",
+          "coverage": "interaction-contract"
         }
       ],
       "contract": "library/contracts.json#/components/button",
@@ -465,6 +471,10 @@
         {
           "path": "tools/tests/line-browser.test.mjs",
           "coverage": "specimen-smoke"
+        },
+        {
+          "path": "tools/tests/rust-p2-browser.test.mjs",
+          "coverage": "interaction-contract"
         }
       ],
       "contract": "library/contracts.json#/components/link",
@@ -735,12 +745,14 @@
         {
           "path": "tools/tests/runtime-p1.test.mjs",
           "coverage": "interaction-contract"
+        },
+        {
+          "path": "tools/tests/extensions-p2.test.mjs",
+          "coverage": "interaction-contract"
         }
       ],
       "contract": "library/contracts.json#/components/command",
-      "openTodo": [
-        "A11Y-10"
-      ]
+      "openTodo": []
     },
     {
       "id": "ody.selection-toolbar",
@@ -777,12 +789,14 @@
         {
           "path": "tools/tests/line-browser.test.mjs",
           "coverage": "specimen-smoke"
+        },
+        {
+          "path": "tools/tests/extensions-p2.test.mjs",
+          "coverage": "interaction-contract"
         }
       ],
       "contract": "library/contracts.json#/components/selection-toolbar",
-      "openTodo": [
-        "ACT-04"
-      ]
+      "openTodo": []
     },
     {
       "id": "ody.field",
@@ -985,6 +999,10 @@
         {
           "path": "tools/tests/line-browser.test.mjs",
           "coverage": "specimen-smoke"
+        },
+        {
+          "path": "tools/tests/rust-p2-browser.test.mjs",
+          "coverage": "interaction-contract"
         }
       ],
       "contract": "library/contracts.json#/components/number-input",
@@ -1023,12 +1041,14 @@
         {
           "path": "tools/tests/line-browser.test.mjs",
           "coverage": "specimen-smoke"
+        },
+        {
+          "path": "tools/tests/rust-p2-browser.test.mjs",
+          "coverage": "interaction-contract"
         }
       ],
       "contract": "library/contracts.json#/components/range",
-      "openTodo": [
-        "ACT-11"
-      ]
+      "openTodo": []
     },
     {
       "id": "ody.date-input",
@@ -1152,12 +1172,14 @@
         {
           "path": "tools/tests/runtime-p1.test.mjs",
           "coverage": "interaction-contract"
+        },
+        {
+          "path": "tools/tests/extensions-p2.test.mjs",
+          "coverage": "interaction-contract"
         }
       ],
       "contract": "library/contracts.json#/components/otp",
-      "openTodo": [
-        "ACT-05"
-      ]
+      "openTodo": []
     },
     {
       "id": "ody.file-dropzone",
@@ -1200,12 +1222,14 @@
         {
           "path": "tools/tests/runtime-p1.test.mjs",
           "coverage": "interaction-contract"
+        },
+        {
+          "path": "tools/tests/extensions-p2.test.mjs",
+          "coverage": "interaction-contract"
         }
       ],
       "contract": "library/contracts.json#/components/file-dropzone",
-      "openTodo": [
-        "ACT-06"
-      ]
+      "openTodo": []
     },
     {
       "id": "ody.table",
@@ -1315,12 +1339,14 @@
         {
           "path": "tools/tests/line-browser.test.mjs",
           "coverage": "specimen-smoke"
+        },
+        {
+          "path": "tools/tests/core-p2.test.mjs",
+          "coverage": "interaction-contract"
         }
       ],
       "contract": "library/contracts.json#/components/chart",
-      "openTodo": [
-        "ACT-10"
-      ]
+      "openTodo": []
     },
     {
       "id": "ody.list",
@@ -1498,12 +1524,14 @@
         {
           "path": "tools/tests/line-browser.test.mjs",
           "coverage": "specimen-smoke"
+        },
+        {
+          "path": "tools/tests/core-p2.test.mjs",
+          "coverage": "interaction-contract"
         }
       ],
       "contract": "library/contracts.json#/components/tree",
-      "openTodo": [
-        "ACT-14"
-      ]
+      "openTodo": []
     },
     {
       "id": "ody.timeline",
@@ -1792,12 +1820,14 @@
         {
           "path": "tools/tests/line-browser.test.mjs",
           "coverage": "specimen-smoke"
+        },
+        {
+          "path": "tools/tests/rust-p2-browser.test.mjs",
+          "coverage": "interaction-contract"
         }
       ],
       "contract": "library/contracts.json#/components/empty-state",
-      "openTodo": [
-        "ACT-12"
-      ]
+      "openTodo": []
     },
     {
       "id": "ody.popover",
@@ -1832,9 +1862,7 @@
         }
       ],
       "contract": "library/contracts.json#/components/popover",
-      "openTodo": [
-        "ACT-08"
-      ]
+      "openTodo": []
     },
     {
       "id": "ody.tabs",
@@ -2429,9 +2457,7 @@
         }
       ],
       "contract": "library/contracts.json#/components/data-table",
-      "openTodo": [
-        "EXT-01"
-      ]
+      "openTodo": []
     },
     {
       "id": "ody.calendar",
@@ -2462,9 +2488,7 @@
         }
       ],
       "contract": "library/contracts.json#/components/calendar",
-      "openTodo": [
-        "PAT-08"
-      ]
+      "openTodo": []
     },
     {
       "id": "ody.kanban",
@@ -2591,12 +2615,14 @@
         {
           "path": "tools/tests/library-contracts.test.mjs",
           "coverage": "inventory"
+        },
+        {
+          "path": "tools/tests/core-p2.test.mjs",
+          "coverage": "interaction-contract"
         }
       ],
       "contract": "library/contracts.json#/components/tooltip",
-      "openTodo": [
-        "A11Y-08"
-      ]
+      "openTodo": []
     },
     {
       "id": "ody.hover-card",
@@ -2629,9 +2655,7 @@
         }
       ],
       "contract": "library/contracts.json#/components/hover-card",
-      "openTodo": [
-        "ACT-08"
-      ]
+      "openTodo": []
     },
     {
       "id": "ody.notification-center",
@@ -2832,12 +2856,14 @@
         {
           "path": "tools/tests/library-contracts.test.mjs",
           "coverage": "inventory"
+        },
+        {
+          "path": "tools/tests/core-p2.test.mjs",
+          "coverage": "interaction-contract"
         }
       ],
       "contract": "library/contracts.json#/components/confirm",
-      "openTodo": [
-        "A11Y-07"
-      ]
+      "openTodo": []
     },
     {
       "id": "ody.inline-editable",
@@ -3075,9 +3101,7 @@
         }
       ],
       "contract": "library/contracts.json#/components/task-workflow",
-      "openTodo": [
-        "PAT-01"
-      ]
+      "openTodo": []
     },
     {
       "id": "ody.auth-flow",
@@ -3117,9 +3141,7 @@
         }
       ],
       "contract": "library/contracts.json#/components/auth-flow",
-      "openTodo": [
-        "PAT-02"
-      ]
+      "openTodo": []
     },
     {
       "id": "ody.form-wizard",
@@ -3160,9 +3182,7 @@
         }
       ],
       "contract": "library/contracts.json#/components/form-wizard",
-      "openTodo": [
-        "PAT-03"
-      ]
+      "openTodo": []
     },
     {
       "id": "ody.file-queue",
@@ -3202,9 +3222,7 @@
         }
       ],
       "contract": "library/contracts.json#/components/file-queue",
-      "openTodo": [
-        "PAT-05"
-      ]
+      "openTodo": []
     },
     {
       "id": "ody.access-preferences",
@@ -3246,9 +3264,7 @@
         }
       ],
       "contract": "library/contracts.json#/components/access-preferences",
-      "openTodo": [
-        "PAT-09"
-      ]
+      "openTodo": []
     },
     {
       "id": "ody.saved-views",
@@ -3286,9 +3302,7 @@
         }
       ],
       "contract": "library/contracts.json#/components/saved-views",
-      "openTodo": [
-        "PAT-04"
-      ]
+      "openTodo": []
     },
     {
       "id": "ody.code-log-diff",
@@ -3325,9 +3339,7 @@
         }
       ],
       "contract": "library/contracts.json#/components/code-log-diff",
-      "openTodo": [
-        "PAT-06"
-      ]
+      "openTodo": []
     },
     {
       "id": "ody.calendar-agenda",
@@ -3366,9 +3378,7 @@
         }
       ],
       "contract": "library/contracts.json#/components/calendar-agenda",
-      "openTodo": [
-        "PAT-08"
-      ]
+      "openTodo": []
     },
     {
       "id": "ody.resource-picker",
@@ -3406,9 +3416,7 @@
         }
       ],
       "contract": "library/contracts.json#/components/resource-picker",
-      "openTodo": [
-        "PAT-10"
-      ]
+      "openTodo": []
     },
     {
       "id": "ody.virtual-collection",
@@ -3446,9 +3454,7 @@
         }
       ],
       "contract": "library/contracts.json#/components/virtual-collection",
-      "openTodo": [
-        "EXT-01"
-      ]
+      "openTodo": []
     },
     {
       "id": "ody.analysis-chart",
@@ -3486,9 +3492,7 @@
         }
       ],
       "contract": "library/contracts.json#/components/analysis-chart",
-      "openTodo": [
-        "EXT-03"
-      ]
+      "openTodo": []
     }
   ]
 }

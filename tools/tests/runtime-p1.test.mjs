@@ -417,7 +417,7 @@ async function guidePage(t){
     const pathname=new URL(route.request().url()).pathname;
     let content,type;
     const releaseFiles={'odyssey.css':'dist/odyssey.css','odyssey.js':'dist/odyssey.js','odyssey-font.css':'dist/odyssey-font.css','odyssey-line.css':'css/line.css','odyssey-line-font.css':'css/line-font.css','odyssey-expressions.css':'css/expressions.css','odyssey-extensions.css':'css/extensions.css','odyssey-extensions.js':'js/extensions.js','odyssey-compositions.css':'css/compositions.css','odyssey-compositions.js':'js/compositions.js'};
-    if(pathname.startsWith('/1.4.0/')&&releaseFiles[pathname.split('/').pop()]){const relative=releaseFiles[pathname.split('/').pop()];content=await readFile(new URL('../../'+relative,import.meta.url),'utf8');type=relative.endsWith('.css')?'text/css':'application/javascript';}
+    if(pathname.startsWith('/1.5.0/')&&releaseFiles[pathname.split('/').pop()]){const relative=releaseFiles[pathname.split('/').pop()];content=await readFile(new URL('../../'+relative,import.meta.url),'utf8');type=relative.endsWith('.css')?'text/css':'application/javascript';}
     else if(pathname==='/assets/line.css'){content=(await readFile(new URL('../../css/line-font.css',import.meta.url),'utf8'))+await readFile(new URL('../../css/line.css',import.meta.url),'utf8');type='text/css';}
     else if(pathname==='/assets/extensions.css'){content=(await readFile(new URL('../../css/expressions.css',import.meta.url),'utf8'))+await readFile(new URL('../../css/extensions.css',import.meta.url),'utf8');type='text/css';}
     else if(pathname==='/assets/extensions.js'){content=extensions;type='application/javascript';}

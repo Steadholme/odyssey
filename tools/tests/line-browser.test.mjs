@@ -53,7 +53,7 @@ try {
   await page.goto(base+'/actions.html');
   await page.locator('html').evaluate(el=>{el.removeAttribute('data-ody-design'); void el.offsetWidth; document.getAnimations().filter(a=>a.effect.getTiming().iterations!==Infinity).forEach(a=>a.finish());});
   const before = await page.locator('.ody-btn--primary').first().evaluate(el=>({background:getComputedStyle(el).backgroundColor,radius:getComputedStyle(el).borderRadius}));
-  await page.locator('link[href="/1.4.0/odyssey-line.css"]').evaluate(el=>el.remove());
+  await page.locator('link[href="/1.5.0/odyssey-line.css"]').evaluate(el=>el.remove());
   const after = await page.locator('.ody-btn--primary').first().evaluate(el=>({background:getComputedStyle(el).backgroundColor,radius:getComputedStyle(el).borderRadius}));
   assert.deepEqual(before,after);
   await context.close();

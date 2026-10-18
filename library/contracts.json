@@ -95,17 +95,18 @@
     },
     "split-pane": {
       "runtime": "extensions",
-      "canonical": "registry [data-ody-split]",
+      "canonical": "[data-ody-splitpane]",
       "rustParity": "html-only-intentional",
       "rust": [],
       "adapter": "host owns business data, network, permissions and persistence",
-      "events": [],
-      "limits": [
-        "ACT-07: resize constraints, click preset and state events remain P2"
+      "events": [
+        "ody:resize {value, min, max, orientation, source}"
       ],
+      "limits": [],
       "compatibility": [
         "old .ody-split remains supported"
-      ]
+      ],
+      "value": "Bounded first-pane pixels; orientation, preset/input/pointer/keyboard and container resize share one value."
     },
     "button": {
       "runtime": "css",
@@ -139,7 +140,10 @@
       ],
       "adapter": "host owns business data, network, permissions and persistence",
       "events": [],
-      "limits": []
+      "limits": [],
+      "stateConditions": {
+        "disabled": "Rust link options remove href and Wire activation; enabled navigation keeps link semantics and destination."
+      }
     },
     "switch": {
       "runtime": "native",
@@ -201,20 +205,19 @@
     },
     "command": {
       "runtime": "extensions",
-      "canonical": "registry dialog [data-ody-command]",
+      "canonical": "dialog[data-ody-command-menu]",
       "rustParity": "html-only-intentional",
       "rust": [],
       "adapter": "host owns business data, network, permissions and persistence",
       "events": [
         "ody:command"
       ],
-      "limits": [
-        "A11Y-10"
-      ],
+      "limits": [],
       "compatibility": [
         "old public command palette remains supported"
       ],
-      "composition": "Enter and global shortcuts do not execute while IME is composing"
+      "composition": "Enter and global shortcuts do not execute while IME is composing",
+      "status": "Associated polite empty-result status; composition confirmation and cancellation do not execute a command or close the layer."
     },
     "selection-toolbar": {
       "runtime": "extensions",
@@ -222,10 +225,12 @@
       "rustParity": "html-only-intentional",
       "rust": [],
       "adapter": "host owns business data, network, permissions and persistence",
-      "events": [],
-      "limits": [
-        "ACT-04"
-      ]
+      "events": [
+        "ody:selection-change {value, count, selected}",
+        "ody:change {value, count, selected}"
+      ],
+      "limits": [],
+      "value": "Initial checkbox values, select-all, item changes and Clear share the same selection snapshot."
     },
     "field": {
       "runtime": "css",
@@ -238,7 +243,10 @@
       ],
       "adapter": "host owns business data, network, permissions and persistence",
       "events": [],
-      "limits": []
+      "limits": [],
+      "stateConditions": {
+        "value": "Readonly, invalid and disabled belong to the associated native control; label and hint remain connected."
+      }
     },
     "input": {
       "runtime": "native",
@@ -293,9 +301,7 @@
       ],
       "adapter": "host owns business data, network, permissions and persistence",
       "events": [],
-      "limits": [
-        "ACT-11"
-      ]
+      "limits": []
     },
     "date-input": {
       "runtime": "native",
@@ -317,38 +323,36 @@
     },
     "otp": {
       "runtime": "extensions",
-      "canonical": "site/forms.html#otp",
+      "canonical": ".ody-otp or [data-ody-code-input]",
       "rustParity": "html-only-intentional",
       "rust": [],
       "adapter": "host owns business data, network, permissions and persistence",
       "events": [
-        "ody:change (legacy .ody-otp)",
-        "ody:code-change (extension {value, complete})"
+        "ody:change {value, complete}",
+        "ody:code-change {value, complete} (extension)"
       ],
-      "limits": [
-        "ACT-05: native serialization/reset remains next-stage work"
-      ],
+      "limits": [],
       "compatibility": [
-        "registry [data-ody-otp] is supported through OdysseyExtensions; old .ody-otp remains supported by public core"
-      ]
+        "Legacy .ody-otp remains public-core; enhanced OTP stays independently usable through OdysseyExtensions."
+      ],
+      "value": "Opt-in data-ody-code-name serializes one complete hidden value; visible digit fields remain unnamed. Native reset restores initial values."
     },
     "file-dropzone": {
       "runtime": "extensions",
-      "canonical": "site/forms.html#dropzone",
+      "canonical": "[data-ody-file-dropzone]",
       "rustParity": "html-only-intentional",
       "rust": [],
       "adapter": "host owns business data, network, permissions and persistence",
       "events": [
         "change",
-        "ody:file-selected"
+        "ody:file-selected {file}",
+        "ody:file-change {file, files, valid}"
       ],
-      "limits": [
-        "ACT-06"
-      ],
+      "limits": [],
       "compatibility": [
         "registry [data-ody-upload] adapter is supported; old .ody-dropzone remains supported"
       ],
-      "value": "input.files and FormData contain the displayed accepted file; no network upload is implied"
+      "value": "Accepted files enter input.files and native FormData; accept, max bytes, multiple, clear/reselect/reset and status stay synchronized. The host owns upload transport."
     },
     "table": {
       "runtime": "public",
@@ -379,9 +383,20 @@
       "rust": [],
       "adapter": "host owns business data, network, permissions and persistence",
       "events": [],
-      "limits": [
-        "ACT-10"
-      ]
+      "limits": [],
+      "enhancement": {
+        "runtime": "public",
+        "selector": "[data-ody-chart]",
+        "assets": [
+          "odyssey.js"
+        ],
+        "api": [
+          "renderChart(el)",
+          "updateChart(el, {values, labels, name, summary, decorative, type})",
+          "describeChart(el, {name, summary, columns, rows, decorative})"
+        ],
+        "ownership": "replaces only enhancer-owned SVG and description; static station bars remain CSS-only"
+      }
     },
     "list": {
       "runtime": "css",
@@ -430,12 +445,27 @@
       "rust": [],
       "adapter": "host owns business data, network, permissions and persistence",
       "events": [],
-      "limits": [
-        "ACT-14: legacy ARIA Tree keyboard parity remains P2"
-      ],
+      "limits": [],
       "compatibility": [
-        "old ARIA tree remains legacy; complete arrow-key model is tracked separately"
-      ]
+        "Registry details keep native disclosure/Tab behavior.",
+        "Legacy .ody-tree uses the complete ARIA Tree keyboard model through public core."
+      ],
+      "enhancement": {
+        "runtime": "public",
+        "selector": ".ody-tree",
+        "events": [
+          "ody:tree-change {row, label}"
+        ],
+        "keyboard": [
+          "ArrowUp",
+          "ArrowDown",
+          "ArrowLeft",
+          "ArrowRight",
+          "Home",
+          "End",
+          "typeahead"
+        ]
+      }
     },
     "timeline": {
       "runtime": "css",
@@ -519,9 +549,7 @@
       ],
       "adapter": "host owns business data, network, permissions and persistence",
       "events": [],
-      "limits": [
-        "ACT-12"
-      ]
+      "limits": []
     },
     "popover": {
       "runtime": "native",
@@ -530,9 +558,7 @@
       "rust": [],
       "adapter": "host owns business data, network, permissions and persistence",
       "events": [],
-      "limits": [
-        "ACT-08"
-      ]
+      "limits": []
     },
     "tabs": {
       "runtime": "public",
@@ -685,9 +711,7 @@
       "events": [
         "ody:table-change"
       ],
-      "limits": [
-        "EXT-01"
-      ],
+      "limits": [],
       "value": "client filter → sort → page; selected rows retained across views; visible/total/page/selected state comes from adapter"
     },
     "calendar": {
@@ -697,9 +721,7 @@
       "rust": [],
       "adapter": "host owns business data, network, permissions and persistence",
       "events": [],
-      "limits": [
-        "PAT-08"
-      ]
+      "limits": []
     },
     "kanban": {
       "runtime": "public",
@@ -738,9 +760,8 @@
       "rust": [],
       "adapter": "host owns business data, network, permissions and persistence",
       "events": [],
-      "limits": [
-        "A11Y-08"
-      ]
+      "limits": [],
+      "description": "Appends and removes only its own describedby token; pointer can enter and select content; Escape dismisses tooltip before surrounding layers."
     },
     "hover-card": {
       "runtime": "public",
@@ -749,9 +770,7 @@
       "rust": [],
       "adapter": "host owns business data, network, permissions and persistence",
       "events": [],
-      "limits": [
-        "ACT-08"
-      ]
+      "limits": []
     },
     "notification-center": {
       "runtime": "public",
@@ -805,9 +824,8 @@
       "rust": [],
       "adapter": "host owns business data, network, permissions and persistence",
       "events": [],
-      "limits": [
-        "A11Y-07"
-      ]
+      "limits": [],
+      "focus": "Unique title/description; danger starts on Cancel; confirm/cancel/Escape/close restore valid trigger focus."
     },
     "inline-editable": {
       "runtime": "public",
@@ -874,10 +892,14 @@
       "rustParity": "html-only-intentional",
       "rust": [],
       "adapter": "host owns data, persistence, permissions and confirmed source outcomes",
-      "events": [],
+      "events": [
+        "ody:workflow-task"
+      ],
       "limits": [
-        "Host adapter is required for business actions; demonstration data stays local."
-      ]
+        "Host adapter owns confirmed outcomes, permission checks and persistence."
+      ],
+      "api": "OdysseyWorkflows.mountTask(root, {adapter, ...options})",
+      "terminal": "Success requires the matching source operation identity and a receipt; cancellation stays pending until confirmed; unknown-result is recoverable with the same identity."
     },
     "auth-flow": {
       "runtime": "composition",
@@ -885,10 +907,13 @@
       "rustParity": "html-only-intentional",
       "rust": [],
       "adapter": "host owns data, persistence, permissions and confirmed source outcomes",
-      "events": [],
+      "events": [
+        "ody:workflow-auth"
+      ],
       "limits": [
-        "Host adapter is required for business actions; demonstration data stays local."
-      ]
+        "Host adapter owns confirmed outcomes, permission checks and persistence."
+      ],
+      "api": "OdysseyWorkflows.mountAuth(root, {adapter, ...options})"
     },
     "form-wizard": {
       "runtime": "composition",
@@ -896,10 +921,13 @@
       "rustParity": "html-only-intentional",
       "rust": [],
       "adapter": "host owns data, persistence, permissions and confirmed source outcomes",
-      "events": [],
+      "events": [
+        "ody:workflow-wizard"
+      ],
       "limits": [
-        "Host adapter is required for business actions; demonstration data stays local."
-      ]
+        "Host adapter owns confirmed outcomes, permission checks and persistence."
+      ],
+      "api": "OdysseyWorkflows.mountWizard(root, {adapter, ...options})"
     },
     "file-queue": {
       "runtime": "composition",
@@ -907,10 +935,14 @@
       "rustParity": "html-only-intentional",
       "rust": [],
       "adapter": "host owns data, persistence, permissions and confirmed source outcomes",
-      "events": [],
+      "events": [
+        "ody:workflow-queue"
+      ],
       "limits": [
-        "Host adapter is required for business actions; demonstration data stays local."
-      ]
+        "Host adapter owns confirmed outcomes, permission checks and persistence."
+      ],
+      "api": "OdysseyWorkflows.mountQueue(root, {adapter, ...options})",
+      "identity": "Each file attempt has its own identity; late cancelled/retried outcomes cannot complete another attempt."
     },
     "access-preferences": {
       "runtime": "composition",
@@ -918,10 +950,13 @@
       "rustParity": "html-only-intentional",
       "rust": [],
       "adapter": "host owns data, persistence, permissions and confirmed source outcomes",
-      "events": [],
+      "events": [
+        "ody:workflow-access"
+      ],
       "limits": [
-        "Host adapter is required for business actions; demonstration data stays local."
-      ]
+        "Host adapter owns confirmed outcomes, permission checks and persistence."
+      ],
+      "api": "OdysseyWorkflows.mountAccess(root, {adapter, ...options})"
     },
     "saved-views": {
       "runtime": "composition",
@@ -931,8 +966,9 @@
       "adapter": "host owns data, persistence, permissions and confirmed source outcomes",
       "events": [],
       "limits": [
-        "Host adapter is required for business actions; demonstration data stays local."
-      ]
+        "Optional module; host owns data and persistence."
+      ],
+      "api": "OdysseyDataTools.mountFilters(root, options)"
     },
     "code-log-diff": {
       "runtime": "composition",
@@ -942,8 +978,9 @@
       "adapter": "host owns data, persistence, permissions and confirmed source outcomes",
       "events": [],
       "limits": [
-        "Host adapter is required for business actions; demonstration data stays local."
-      ]
+        "Optional module; host owns data and persistence."
+      ],
+      "api": "OdysseyDataTools.mountText(root, options)"
     },
     "calendar-agenda": {
       "runtime": "composition",
@@ -953,8 +990,10 @@
       "adapter": "host owns data, persistence, permissions and confirmed source outcomes",
       "events": [],
       "limits": [
-        "Host adapter is required for business actions; demonstration data stays local."
-      ]
+        "Optional module; host owns data and persistence."
+      ],
+      "api": "OdysseyDataTools.mountCalendar(root, options)",
+      "value": "Calendar dates use YYYY-MM-DD date-only identity; timed agenda entries retain the host-provided timezone."
     },
     "resource-picker": {
       "runtime": "composition",
@@ -964,8 +1003,9 @@
       "adapter": "host owns data, persistence, permissions and confirmed source outcomes",
       "events": [],
       "limits": [
-        "Host adapter is required for business actions; demonstration data stays local."
-      ]
+        "Optional module; host owns data and persistence."
+      ],
+      "api": "OdysseyDataTools.mountResources(root, options)"
     },
     "virtual-collection": {
       "runtime": "composition",
@@ -975,8 +1015,10 @@
       "adapter": "host owns data, persistence, permissions and confirmed source outcomes",
       "events": [],
       "limits": [
-        "Host adapter is required for business actions; demonstration data stays local."
-      ]
+        "Optional module; host owns data and persistence."
+      ],
+      "api": "OdysseyDataTools.mountVirtualList(root, options)",
+      "semantics": "list, read-only table/grid, or host-flattened tree with total/index metadata; variable-height measurements, retained focus and selection, snapshot restore; not an editable TreeGrid."
     },
     "analysis-chart": {
       "runtime": "composition",
@@ -986,8 +1028,10 @@
       "adapter": "host owns data, persistence, permissions and confirmed source outcomes",
       "events": [],
       "limits": [
-        "Host adapter is required for business actions; demonstration data stays local."
-      ]
+        "Optional module; host owns data and persistence."
+      ],
+      "api": "OdysseyDataTools.mountPlot(root, options)",
+      "renderer": "Default lightweight SVG; optional host renderer; Odyssey.describeChart supplies the named summary and complete multi-series alternative table."
     }
   }
 }

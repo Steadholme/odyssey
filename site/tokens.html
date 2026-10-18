@@ -5,13 +5,13 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Design tokens · Odyssey UI</title>
 <meta name="description" content="Odyssey UI 设计 token 参考：语义色板、间距梯、圆角、阴影、字号与字重，亮暗对照。">
-<link rel="stylesheet" href="/1.4.0/odyssey.css">
-<link rel="stylesheet" href="/1.4.0/odyssey-font.css">
+<link rel="stylesheet" href="/1.5.0/odyssey.css">
+<link rel="stylesheet" href="/1.5.0/odyssey-font.css">
 <link rel="stylesheet" href="assets/site.css">
-<link rel="stylesheet" href="/1.4.0/odyssey-line.css"><link rel="stylesheet" href="/1.4.0/odyssey-line-font.css">
+<link rel="stylesheet" href="/1.5.0/odyssey-line.css"><link rel="stylesheet" href="/1.5.0/odyssey-line-font.css">
 <link rel="stylesheet" href="/assets/line-site-20261018-p1.css">
-<link rel="stylesheet" href="/1.4.0/odyssey-expressions.css"><link rel="stylesheet" href="/1.4.0/odyssey-extensions.css">
-<script src="/1.4.0/odyssey-extensions.js" defer></script>
+<link rel="stylesheet" href="/1.5.0/odyssey-expressions.css"><link rel="stylesheet" href="/1.5.0/odyssey-extensions.css">
+<script src="/1.5.0/odyssey-extensions.js" defer></script>
 </head>
 <body class="ody-scope">
 
@@ -23,7 +23,7 @@
     </span>
     <span class="ody-appbar__name">Odyssey UI</span>
   </a>
-  <span class="ody-tag ody-tag--warn ody-mono doc-appbar__ver">PUBLIC 1.4.0</span>
+  <span class="ody-tag ody-tag--warn ody-mono doc-appbar__ver">PUBLIC 1.5.0</span>
   <span class="ody-appbar__spacer"></span><label class="line-expression">Style <select data-ody-expression-select aria-label="Expression"><option value="line">Line</option><option value="soft">Soft</option><option value="studio">Studio</option><option value="signal">Signal</option></select></label>
   <div class="ody-appbar__right">
     <a class="ody-iconbtn" href="https://git.w33d.xyz/holdfast/odyssey" aria-label="源码仓库" title="源码仓库">
@@ -184,7 +184,7 @@
 --ody-mono: "Azeret Mono",ui-monospace,"SFMono-Regular",monospace;</code></pre></div>
 
     <h2 id="sync">Pencil ↔ CSS 同步</h2>
-    <p>1.4.0 的 <a href="/1.4.0/tokens.json">typed token exchange</a> 保留 208 个 Pencil 变量（原 207 个加必要控件边界），<a href="/1.4.0/design-map.json">节点与角色映射</a> 关联 54 个 reusable、48 个 CSS 绑定和四表达×亮暗。未映射的历史探索变量不会注入运行样式。</p>
+    <p>1.5.0 的 <a href="/1.5.0/tokens.json">typed token exchange</a> 保留 208 个 Pencil 变量（原 207 个加必要控件边界），<a href="/1.5.0/design-map.json">节点与角色映射</a> 关联 54 个 reusable、48 个 CSS 绑定和四表达×亮暗。未映射的历史探索变量不会注入运行样式。</p>
     <p><code>--ody-control-border</code> 用于输入框等必要边界；<code>--ody-hairline</code> 仍用于装饰分隔。组件、运行时、guide 与测试入口见 <a href="/library/capabilities.json">能力目录</a>，设计交换与导入步骤见 <a href="/docs/library-contracts.md">同步合同</a>。</p>
     <div class="doc-code doc-code--stand"><pre><code>node tools/design-tokens.mjs
 node tools/design-tokens.mjs --diff new-pencil-export.json
@@ -201,7 +201,7 @@ node tools/design-tokens.mjs --import design/tokens.json</code></pre></div>
   </main>
 </div>
 
-<script src="/1.4.0/odyssey.js"></script>
+<script src="/1.5.0/odyssey.js"></script>
 <script src="assets/site.js"></script>
 </body>
 </html>

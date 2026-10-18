@@ -12,16 +12,18 @@
 
 目标：完成 31 项 P2，Line 为主线；新公开版本 **1.5.0**，验证后仅部署 OVH Odyssey。1.4.0 与更早冻结资产、旧消费者 URL 保留；P1 VoiceOver 延期状态不变，P3 不在本轮。
 
-- [ ] 公共 core：Chart 更新/替代数据、完整 Tree、Confirm/Tooltip、en/zh/ja（p2_core）。
-- [ ] 增强输入：Selection、OTP、文件、Split、Popover、Command 状态与 locale 字体（p2_extensions）。
-- [ ] Rust：disabled/step/Range、Empty、链接语义和严格 CSP opt-in（p2_rust）。
-- [ ] 工作流：任务/恢复、认证、分步表单、文件队列、成员与通知偏好（p2_workflows）。
-- [ ] 数据组合：过滤/视图、Code/Log/Diff、日历/Agenda、资源选择、虚拟化和分析图表入口（p2_data）。
-- [ ] 状态矩阵、设计源、目录/契约和站点入口统一（root）。
-- [ ] 真正视觉差分、消费预算、MIT/元数据和跨平台构建检查（p2_engineering；项目 owner 已确认 MIT，字体 OFL 保留）。
+- [x] 公共 core：Chart 更新/替代数据、完整 Tree、Confirm/Tooltip、en/zh/ja（p2_core）。
+- [x] 增强输入：Selection、OTP、文件、Split、Popover、Command 状态与 locale 字体（p2_extensions）。
+- [x] Rust：disabled/step/Range、Empty、链接语义和严格 CSP opt-in（p2_rust）。
+- [x] 工作流：任务/恢复、认证、分步表单、文件队列、成员与通知偏好（p2_workflows）。
+- [x] 数据组合：过滤/视图、Code/Log/Diff、日历/Agenda、资源选择、虚拟化和分析图表入口（p2_data）。
+- [x] 状态矩阵、设计源、目录/契约和站点入口统一（root）。
+- [x] 真正视觉差分、消费预算、MIT/元数据和跨平台构建检查（p2_engineering；项目 owner 已确认 MIT，字体 OFL 保留）。
 - [ ] 整合候选、三引擎/键盘/a11y/动效/窄屏验收，冻结后仅 Odyssey 切换；独立公网复验和本轮回滚基线（p2_engineering + root）。
 
-所有实现保持原调用条件；新增工作流只通过宿主 adapter 消费状态，不在组件库内实现认证、上传存储或业务授权。责任人完成实际行为验证后更新对应条目。
+31 项 P2 已完成源码与定向验证；完整三引擎整合门禁、冻结和生产消费仍待最后一项执行。组件/扩展/工作流/数据在 Chromium 与 WebKit 的真实交互与恢复路径通过；Firefox 由同一 CI 入口验证。
+
+所有实现保持原调用条件；新增工作流只通过宿主 adapter 消费状态，不在组件库内实现认证、上传存储或业务授权。当前生产仍为下述 1.4.0 基线，新版尚未冻结或切换。
 
 ### P1 已部署基线
 
@@ -129,27 +131,32 @@
   - 状态／依据：**已复现**。site/forms.html:483–493；dist/odyssey.js:792–793,1042–1052。Enter不开、option只有点击；chip删除不发选择时约定的ody:change，删除名称仅Remove。
   - 验收：选定一致的listbox/combobox模型；Enter/Space、方向键、Escape可完成选择；删除名称含项目名；点选/移除/清空均发一次一致values事件，移除后焦点有效。 参考：[Listbox][apg-listbox]。
 
-- [ ] **ACT-04 · P2 · Selection toolbar 初始化、Clear 与批量变更同步**
+- [x] **ACT-04 · P2 · Selection toolbar 初始化、Clear 与批量变更同步**
+  - 本轮结果：`897ec48`。初值/全选/Clear 统一 selection-change 与 change；真实事件和宿主值检查通过。
   - 状态／依据：**代码确认**。js/extensions.js:138–149未在init调用update；Clear直接改checked，不发change或选择事件。
   - 验收：从真实checkbox初值计算0/N计数和显隐；单项、全选、Clear共用选择事件；宿主集合与UI一致。
   - 依赖：ACT-01、LIB-02。
 
-- [ ] **ACT-05 · P2 · OTP 原生提交、reset 与错误恢复**
+- [x] **ACT-05 · P2 · OTP 原生提交、reset 与错误恢复**
+  - 本轮结果：`897ec48、ce2f268、065940b`。增强与旧 OTP 的单一原生提交值、4/6 位、粘贴/自动填充、错误恢复与 reset（含取消 reset）通过。
   - 状态／依据：**补全**。site/index.html:579六格无name；js/extensions.js:34–63仅发JS value且帮助文案固定six；旧forms已有4/6位和text模式。
   - 验收：在canonical OTP上提供完整值的序列化与reset；4/6位、粘贴、自动填充、错误重试及form reset后格子、帮助和FormData一致，不再造第三套。
   - 依赖：LIB-02。
 
-- [ ] **ACT-06 · P2 · 文件验证配置、清除、重选与可读屏状态**
+- [x] **ACT-06 · P2 · 文件验证配置、清除、重选与可读屏状态**
+  - 本轮结果：`897ec48`。accept/大小/数量/多文件、清除/重选、input.files/FormData、无效恢复及关联状态通过。
   - 状态／依据：**补全**。js/extensions.js:71–77硬编码ZIP/20MB，缺清除/重选状态；成功文件名仅修改普通文本。
   - 验收：accept/大小/多选限制可配置；有效→无效→重选同文件→清除路径的文案、input值和宿主状态一致；selected/not-uploaded及恢复以适当status播报。 参考：[Status messages][wcag-status]。
   - 依赖：ACT-02、LIB-07。
 
-- [ ] **ACT-07 · P2 · Split pane 的 resize 约束、尺寸事件和点击替代**
+- [x] **ACT-07 · P2 · Split pane 的 resize 约束、尺寸事件和点击替代**
+  - 本轮结果：`897ec48`。双方向约束、容器 resize、尺寸事件及 preset/数值/指针/键盘共用路径通过；registry 源码同步。
   - 状态／依据：**补全**。js/extensions.js:85–104只在拖动/按键时clamp，硬编码另一侧160px，无容器resize同步；pointer路径仅拖动。
   - 验收：统一min/max/orientation；拖宽后缩容器不溢出；尺寸事件可供宿主保存；保留键盘并提供可点击preset或数值入口。 参考：[Dragging movements][wcag-drag]。
   - 依赖：LIB-02。
 
-- [ ] **ACT-08 · P2 · Popover 用真实尺寸定位并跟随环境变化**
+- [x] **ACT-08 · P2 · Popover 用真实尺寸定位并跟随环境变化**
+  - 本轮结果：`897ec48`。原生 Popover 测量实际面板，跟随 resize/scroll 并限制视口边界；长内容/320px 通过。
   - 状态／依据：**补全**。js/extensions.js:155–162按固定266/220估算，只在beforetoggle定位。
   - 验收：统一定位策略，测实际面板；短/长内容、视口边角、打开后的resize/scroll均不越界且不脱离触发器；保留原生Popover入口。
   - 依赖：LIB-02。
@@ -159,17 +166,20 @@
   - 状态／依据：**已复现/补全**。dist/odyssey.js:810–875,1060–1075；readonly输入Enter不开，日期按钮只有数字；现有自定义日历无min/max/不可选日。
   - 验收：优先复用原生date/time；保留custom时完成打开、日期导航、完整日期名称、选中/今日语义、翻月焦点、Escape恢复；支持min/max、无效初值、闰日及跨月边界。 参考：[Date picker/Combobox][apg-combo]。
 
-- [ ] **ACT-10 · P2 · Chart 可更新，并提供摘要及替代数据**
+- [x] **ACT-10 · P2 · Chart 可更新，并提供摘要及替代数据**
+  - 本轮结果：`ce2f268`。updateChart/describeChart 更新既有 SVG、具名结论和可展开替代数据，保留宿主内容/焦点；装饰 spark 保持原 28px。
   - 状态／依据：**补全**。dist/odyssey.js:1298–1315遇ready直接return；SVG为role=img但无具名摘要；现有四类图表没有label-value数据替代。
   - 验收：明确update或重绘API；数据与标签更新不复制SVG；有意义图表提供名称、结论和可读数据表，装饰spark明确隐藏。 参考：[Non-text content][wcag-nontext]。
   - 依赖：FIX-02。
 
-- [ ] **ACT-11 · P2 · Rust 基础 helper 的普通 disabled、step 和 Range 输出**
+- [x] **ACT-11 · P2 · Rust 基础 helper 的普通 disabled、step 和 Range 输出**
+  - 本轮结果：`414fdb3`。兼容式 _with/opts、非 busy disabled、小数 step/attrs、Range input/reset 输出；真实 CSP/FormData 夹具通过。
   - 状态／依据：**补全**。src/controls.rs:25–29,146–159按钮仅busy禁用；:384–391 NumberInput缺step/attrs；:341–369 Range值仅初始徽章。
   - 验收：兼容式新增opts/helper，保留现有struct literal；覆盖非busy禁用、小数step、Range实时输出及调用者属性传递。
   - 依赖：A11Y-03。
 
-- [ ] **ACT-12 · P2 · Rust Empty state 可配置上下文与恢复动作**
+- [x] **ACT-12 · P2 · Rust Empty state 可配置上下文与恢复动作**
+  - 本轮结果：`414fdb3`。EmptyStateOpts 可配标题/说明/CTA，保留默认 locale；首次使用/无结果/失败恢复及真实 GET/POST+CSRF 通过。
   - 状态／依据：**补全**。src/data.rs:90–102固定no-data文案且不能传CTA；public feedback已有上下文与动作。
   - 验收：保留旧本地化默认；新增可选标题、说明和CTA配置，至少展示首次使用、无搜索结果、失败恢复三种真实状态。 参考：[Empty states][carbon-empty]。
 
@@ -178,7 +188,8 @@
   - 状态／依据：**代码确认**。site/data-display.html:575–603展示筛选/分页且已选计数硬编码0；dist/odyssey.js:1431–1480仅实现排序/checkbox；site/assets/line-site.js:36–44只切页码标签。
   - 验收：定义客户端数据表或服务端adapter；真实数据完成筛选→排序→分页→选择，显示行/总数/页码/选中数同步；排序可键盘操作并暴露状态；空结果可清除恢复。
 
-- [ ] **ACT-14 · P2 · 旧 ARIA Tree 的完整层级与键盘模型**
+- [x] **ACT-14 · P2 · 旧 ARIA Tree 的完整层级与键盘模型**
+  - 本轮结果：`ce2f268`。旧 ARIA Tree 层级、单 Tab、上下/首尾/左右和 typeahead 通过；原生 details 不受影响。
   - 状态／依据：**代码确认**。site/data-display.html:634–642容器无tree且部分row无treeitem；dist/odyssey.js:1416–1427,1562–1570所有row tabindex=0，缺上下/Home/End。
   - 验收：保留旧入口时选完整ARIA tree或原生disclosure模型，统一层级/选中/焦点；registry原生details不强加不必要的tree箭头键规则。 参考：[Tree view][apg-tree]。
   - 依赖：LIB-02。
@@ -229,21 +240,25 @@
   - 验收：普通动作回trigger；导航/开层交给目的地；Escape、Tab离开和鼠标选择一致，不抢新层焦点。 参考：[Menu button][apg-menu]。
   - 依赖：A11Y-05。
 
-- [ ] **A11Y-07 · P2 · Promise Confirm 的名称、说明与安全初始焦点**
+- [x] **A11Y-07 · P2 · Promise Confirm 的名称、说明与安全初始焦点**
+  - 本轮结果：`ce2f268`。Confirm 唯一名称/描述、危险操作初焦 Cancel，各关闭路径均恢复有效焦点。
   - 状态／依据：**已实测**。dist/odyssey.js:1938–1960。alertdialog无可访问名称；danger初始focus在Confirm。
   - 验收：唯一labelledby/describedby；不可逆操作初始focus选Cancel；结果、Escape及关闭均恢复有效焦点。 参考：[Alert dialog][apg-alertdialog]。
   - 依赖：A11Y-05。
 
-- [ ] **A11Y-08 · P2 · Tooltip 不丢既有描述，并可移入阅读**
+- [x] **A11Y-08 · P2 · Tooltip 不丢既有描述，并可移入阅读**
+  - 本轮结果：`ce2f268`。Tooltip 保留既有描述，可移入/选择文本；Escape 优先关闭 tooltip，长内容回归通过。
   - 状态／依据：**已复现**。dist/odyssey.js:370–394,593–598覆盖并删除aria-describedby；原external-help实测丢失；dist/odyssey.css:2172–2177禁止指针进入。
   - 验收：追加/恢复已有描述；指针进入tooltip仍保持，Escape可关闭；长文本可读不截断，不能把必要操作藏在tooltip里。 参考：[Hover/focus content][wcag-hover]。
   - 依赖：ACT-08。
 
-- [ ] **A11Y-09 · P2 · 导航链接保留语义，busy/disabled 同时约束键盘与指针**
+- [x] **A11Y-09 · P2 · 导航链接保留语义，busy/disabled 同时约束键盘与指针**
+  - 本轮结果：`414fdb3`。Rust 导航保留 link 语义；busy/disabled 不生成可激活 href/Wire，真实指针与 Enter 均不能执行。
   - 状态／依据：**代码确认**。src/controls.rs:185–199统一role=button；busy仅aria-disabled且href仍存在，pointer-events不能拦键盘Enter。
   - 验收：导航仍是link，动作使用button；约定disabled/busy在两输入方式都不重复动作；保留原有可用href与正常导航条件。 参考：[Button][apg-button] / [aria-disabled][aria-disabled]。
 
-- [ ] **A11Y-10 · P2 · Command 无结果及状态变化可被读屏获知**
+- [x] **A11Y-10 · P2 · Command 无结果及状态变化可被读屏获知**
+  - 本轮结果：`897ec48`。Command 空结果关联 polite status，保持输入焦点和既有 IME 保护；真实键盘/AX 通过。
   - 状态／依据：**代码确认**。js/extensions.js:114–118；site/index.html:421。空结果只改普通p，输入未关联该状态。
   - 验收：用适当status或描述告知无结果与纠正方式；不移动focus、不逐键重复读整列表；复用已具有status的station/selection计数。 参考：[Status messages][wcag-status]。
   - 依赖：LIB-07。
@@ -275,7 +290,8 @@
   - 验收：保留现有Line方向；明确token/组件语义来源、稳定节点ID及typed token映射；采用兼容DTCG的交换层或明确等价schema；检查别名/类型/差异，设计与代码共同审阅后进入新release。 参考：[DTCG 2025.10交换格式][dtcg]。
   - 依赖：LIB-01。
 
-- [ ] **LIB-05 · P2 · 组件状态矩阵、Line 尺寸与文档例子保持一致**
+- [x] **LIB-05 · P2 · 组件状态矩阵、Line 尺寸与文档例子保持一致**
+  - 本轮结果：`d2d828e`。93 能力适用状态、实际尺寸/密度/八主题图谱及源码片段一致；Pencil vwF4F 延展既有矩阵，变量/reusable 保留。18772 实际93行、Axe、Tab/readonly、焦点及320px通过，截图已审阅。
   - 状态／依据：**补全**。现有Pencil States画板存在；site/actions.html:97仍写Large46px，Line为48；site/layout.html:230–246间距说明落后。54站与guide状态未由manifest连结。
   - 验收：按组件适用范围列default/hover/focus/active/selected/disabled/readonly/invalid/busy/empty及长内容；四表达亮暗/密度引用同一token；示例锚点精确，尺寸说明和复制片段可验证。
   - 依赖：LIB-01、LIB-04、FIX-05。
@@ -286,7 +302,8 @@
   - 验收：保留三流程，列出库组件映射、最小组合、宿主数据/状态接口；至少一个流程仅加载声明资产即可运行，不依赖整页私有selector；示例状态不冒充后端授权或真实部署。
   - 依赖：LIB-02、ACT-01、ACT-13。
 
-- [ ] **LIB-07 · P2 · 运行时文案和 Line 字体接回 en/zh/ja locale**
+- [x] **LIB-07 · P2 · 运行时文案和 Line 字体接回 en/zh/ja locale**
+  - 本轮结果：`ce2f268、897ec48`。共享 locale/t/register 接动态系统文案 en/zh/ja 和最近 lang 字体顺序；月份、移除名称、OTP/文件/选择/Command 状态均验证，用户内容保持原值。
   - 状态／依据：**补全**。js/extensions.js:40,71,76,142及dist/odyssey.js多处硬编码英文；css/tokens.css:58–64已有ja字体顺序，但Line输入实测PingFang先于Hiragino。
   - 验收：复用现有catalog/字符串注入；月份、状态、删除名称、OTP描述本地化；Line保留locale字体顺序；用户内容不翻译。 参考：[语言标签][w3c-language]。
   - 依赖：LIB-02。
@@ -346,26 +363,31 @@
   - 验收：先审阅、核证并版本化现有helper，复用assertSurface(AxeBuilder)/native form/真实Tab；覆盖旧guide、AX关联、IME、200%文本/文本间距、forced-colors，并对custom combo/date/tree/modal做VoiceOver抽验。外部报告不直接算本库通过。 参考：[Text spacing][wcag-spacing] / [Reflow][wcag-reflow]。
   - 依赖：ENG-06、ENG-07、LIB-01。
 
-- [ ] **ENG-10 · P2 · 已有截图升级为可审阅的视觉回归**
+- [x] **ENG-10 · P2 · 已有截图升级为可审阅的视觉回归**
+  - 本轮结果：`a47b346、e018b33`。现有 Playwright 真正 PNG 差分：macOS/Linux 各4张人工接受基线；像素故障 fixture 实际失败，缺图和未授权 -u 不会自动更新。
   - 状态／依据：**部分**。tools/tests/line-browser.test.mjs:24,50,66及tools/tests/extensions-browser.test.mjs:32–40,64已有可选截图，未见图像差分断言。
   - 验收：少量关键基线经人工接受；固定字体/数据/运动，覆盖代表性表达/主题/宽度/浮层；有差异审阅和更新流程，复用现有截图而非另造平台。
   - 依赖：ENG-06、ENG-07、LIB-05。
 
-- [ ] **ENG-11 · P2 · 按真实消费建立字节/初始化预算与按需组合**
+- [x] **ENG-11 · P2 · 按真实消费建立字节/初始化预算与按需组合**
+  - 本轮结果：`a47b346`。按需/core/fonts/complete/可选模块的实际字节与初始化/reinit预算已接统一门禁；实测中位0.2/0.1ms，最终整合门禁复核阈值。
   - 状态／依据：**部分**。src/lib.rs:1–29已有全量与可选常量；:182–185,233约束JS行数。当前未压缩core CSS/JS约168506/105406 bytes，Line字体层82365 bytes。
   - 验收：测量必要字节、初始化与重复初始化成本；明确core/fonts/Line/extensions/runtime组合；基于真实页面制定预算；旧全量入口可用，不预设npm/bundler。
   - 依赖：ENG-04、LIB-01。
 
-- [ ] **ENG-12 · P2 · 严格 CSP 有完整可选接入路径**
+- [x] **ENG-12 · P2 · 严格 CSP 有完整可选接入路径**
+  - 本轮结果：`414fdb3`。CspShellOpts/csp_page_shell 完整 nonce CSS/字体/scripts 与品牌样式，默认旧入口不变；真实 HTTP/Wire/Motion/表单与320px通过。
   - 状态／依据：**部分**。src/lib.rs:61–114已有script nonce；src/shell.rs:200–203,229仍生成style属性及无nonce style block。
   - 验收：提供完整CSP示例及浏览器fixture，样式/字体/交互都可用；标准shell增加兼容式opt-in，默认调用保持可用；不能只给JS nonce就宣称整页通过。
   - 依赖：LIB-03、ENG-07。
 
-- [ ] **ENG-13 · P2 · 确认项目许可及发行元数据**
+- [x] **ENG-13 · P2 · 确认项目许可及发行元数据**
+  - 本轮结果：`a47b346`。项目 owner 明确确认 MIT；LICENSE、repository/MSRV 1.87 与 Inter/Archivo/Azeret OFL 随新发行保留，旧 immutable 不变。
   - 状态／依据：**占位信息**。dist/odyssey.css:9写MIT placeholder；Cargo.toml:1–7无license/repository/rust-version；tracked无项目LICENSE，两份字体OFL已存在。
   - 验收：由项目owner确认许可后写入新发行和元数据，保留字体notice；历史immutable snapshot不覆写，所需补充notice另行发布。许可选项由owner决定，TODO不代替授权。
 
-- [ ] **ENG-14 · P2 · 构建脚本不能静默保留旧版本标记**
+- [x] **ENG-14 · P2 · 构建脚本不能静默保留旧版本标记**
+  - 本轮结果：`a47b346`。核实既有 Node wrapper 已消除 sed 平台差异；新 CSS/JS RELEASE 身份缺失会拒绝构建，macOS 与 Linux 构建/读取实证通过。
   - 状态／依据：**最小复现**。tools/build-public-dist.sh:23–34使用sed的0,/…/地址；macOS /usr/bin/sed实测exit0但版本仍v1.1.0。Docker已pin Rust镜像，Cargo未声明最低版本。
   - 验收：使用支持平台兼容的替换，或显式检查GNU工具前提；生成后断言release identity；记录Rust/Node/shell支持范围，版本替换失败必须报错。
   - 依赖：ENG-03、ENG-06。
@@ -374,32 +396,38 @@
 
 责任域：pattern / forms / application integration。
 
-- [ ] **PAT-01 · P2 · 异步/长任务状态与错误恢复模板**
+- [x] **PAT-01 · P2 · 异步/长任务状态与错误恢复模板**
+  - 本轮结果：`ef36897`。mountTask 的 queued/running/cancelling/unknown-result/error/offline/denied/retry 可消费；成功须匹配来源 receipt，取消须确认，竞态通过。
   - 状态／依据：**组合缺口**。Patterns仅本地demo状态；既有Wire已处理请求错误，远端application-interactions.md已有queued/running/cancelling/unknown-result及receipt语义。
   - 验收：接纳并链接现有契约；提供可配置loading/empty/error/permission/offline/unknown-result/cancel/retry组合与fake adapter；仅源确认终态显示成功，不从计时猜百分比；宿主负责数据/权限/操作身份。 参考：[Loading][carbon-loading]。
   - 依赖：LIB-06、ENG-09。
 
-- [ ] **PAT-02 · P2 · 登录、MFA、凭据恢复与会话过期界面模板**
+- [x] **PAT-02 · P2 · 登录、MFA、凭据恢复与会话过期界面模板**
+  - 本轮结果：`ef36897`。原生密码管理器字段、MFA/恢复/过期返回、提交拒绝与重试，宿主 auth adapter 独立消费通过。
   - 状态／依据：**新增组合**。forms已有password及OTP，i18n已有sign_in文案，但当前site/patterns仅三流程，无完整账户入口与恢复模板。
   - 验收：组合已有字段/OTP/通知，覆盖提交中、错误、MFA重试、恢复、过期后返回；支持密码管理器/自动填充；认证、SSO及passkey调用由宿主adapter处理，不在UI库新造认证服务。 参考：[Login pattern][carbon-login]。
   - 依赖：ACT-05、A11Y-03、LIB-07。
 
-- [ ] **PAT-03 · P2 · 多步骤表单、Onboarding 和问卷状态编排**
+- [x] **PAT-03 · P2 · 多步骤表单、Onboarding 和问卷状态编排**
+  - 本轮结果：`ef36897`。mountWizard 关联 Stepper/fieldset、可跳过步骤、校验焦点、返回保留答案、草稿恢复和最终来源确认通过。
   - 状态／依据：**已有Step指示/缺编排**。site/data-display.html:689–707有Stepper/Wizard指示，dist:1554–1556只切步骤状态；缺关联分步字段、校验、返回和完成流程。
   - 验收：复用Stepper/原生fieldset；明确当前步骤、可返回/可跳过、验证失败焦点、保留答案与最终提交；草稿持久化和分支由宿主决定。 参考：[Questionnaire组合参考][questionnaire]。
   - 依赖：A11Y-03、LIB-06。
 
-- [ ] **PAT-04 · P2 · 多字段过滤、Query chips 与保存视图**
+- [x] **PAT-04 · P2 · 多字段过滤、Query chips 与保存视图**
+  - 本轮结果：`4fe71e3、f77463c`。复合过滤/query chips、白名单字段序列化、结果数、命名保存/恢复视图与 URL 返回通过。
   - 状态／依据：**补全组合**。已有Multi-select/Tag input及Inbox筛选；ACT-13处理表格基本数据流，尚无跨列表的复合过滤/保存视图契约。
   - 验收：给出可复制filter toolbar与序列化状态模型：条件增删、清除、结果数、保存/恢复视图、URL返回；query字段白名单与后端查询均宿主拥有。 参考：[Search pattern][carbon-search]。
   - 依赖：ACT-03、ACT-13、LIB-06。
 
-- [ ] **PAT-05 · P2 · 文件队列的进度、取消、重试与恢复 UI**
+- [x] **PAT-05 · P2 · 文件队列的进度、取消、重试与恢复 UI**
+  - 本轮结果：`ef36897`。文件任务逐项 queued/running/success/error/cancelling，来源进度、确认取消/重试、同名身份与晚回包隔离通过。
   - 状态／依据：**输入已有/缺任务展示**。旧/新dropzone都有本地选择；现有库未提供可绑定真实上传状态的多文件任务队列。
   - 验收：在ACT-06基础上显示每文件queued/uploading/success/error/cancelling；进度仅取adapter，取消确认后才终止显示；失败可重试且同文件状态不混淆；不内置存储服务。
   - 依赖：ACT-06、PAT-01。
 
-- [ ] **PAT-06 · P2 · 可复用 Code / Log / Diff 展示组件**
+- [x] **PAT-06 · P2 · 可复用 Code / Log / Diff 展示组件**
+  - 本轮结果：`4fe71e3、f77463c`。安全纯文本 Code/Log/Diff、行号/换行/折叠/复制不带装饰、追加日志保持阅读位置通过；不引入基础高亮引擎。
   - 状态／依据：**页面私有/待抽取**。css/components.css:642–654已有Markdown排版；Patterns有私有diff和checks日志，guide有pre/code/copy，但缺独立内容/行/状态契约。
   - 验收：抽取纯文本安全默认、行号/换行/折叠/复制/新增删除标记；复制不混入行号和diff装饰；长日志增量更新不抢滚动，语法高亮可选且不拖入基础包。 参考：[Code Block][code-block]。
   - 依赖：LIB-06、ENG-11。
@@ -409,17 +437,20 @@
   - 验收：先按内容产品需求选成熟编辑内核或提供adapter；完成工具栏键盘、selection/undo、粘贴与安全内容边界、mention/attachment状态；不自行实现通用编辑引擎。
   - 依赖：PAT-06、ACT-06。
 
-- [ ] **PAT-08 · P2 · Calendar 的事件、范围与 Agenda**
+- [x] **PAT-08 · P2 · Calendar 的事件、范围与 Agenda**
+  - 本轮结果：`4fe71e3、f77463c`。月切换、Shift 范围、事件/空态/Agenda 同步；date-only 与宿主时区标签、键盘取值通过。
   - 状态／依据：**静态展示/待产品化**。site/data-display.html:710–737有静态月网格，日期输入已有picker；它们尚非可绑定事件的排期视图。
   - 验收：复用日期值契约；月切换、选中范围、事件列表/空态与agenda同步；明确date-only和时区时间，不在UI层发明时区换算；资源排期作为后续可选变体。
   - 依赖：ACT-09、LIB-07。
 
-- [ ] **PAT-09 · P2 · 成员、角色权限与通知偏好面板**
+- [x] **PAT-09 · P2 · 成员、角色权限与通知偏好面板**
+  - 本轮结果：`ef36897`。源返回成员/角色矩阵、邀请、拒绝/只读、通知渠道/频率，保存失败保留草稿和恢复通过。
   - 状态／依据：**新增组合**。现有Settings仅workspace名/slug/appearance；已有Inbox和旧Notification center，不等于权限编辑/偏好工作流。
   - 验收：提供角色矩阵、成员邀请状态、只读/拒绝及通知渠道/频率组合；展示源返回权限，不能把隐藏按钮或本地选项当授权；保存/失败恢复和不可修改状态清楚。
   - 依赖：LIB-06、PAT-01。
 
-- [ ] **PAT-10 · P2 · 资源选择、版本固定与来源可用性模板**
+- [x] **PAT-10 · P2 · 资源选择、版本固定与来源可用性模板**
+  - 本轮结果：`4fe71e3、f77463c`。资源搜索/分页/来源不可用/权限拒绝、follow-current 或 pin 真实版本身份；重试与来源恢复通过。
   - 状态／依据：**外部已有参考/库中待接纳**。远端patterns/application-interactions.md及ACCEPTANCE.md报告Workspaces/resource-kit参考路径；当前tracked Odyssey无可消费picker组合。
   - 验收：先核实并复用参考，再抽取搜索/分页/来源不可用/权限拒绝/跟随当前或pin版本组合；保留真实资源身份，不将不可用来源当成功空列表；仅新增Odyssey示例，不推广其他产品。
   - 依赖：LIB-06、ENG-09、PAT-01。
@@ -428,7 +459,8 @@
 
 责任域：advanced data / content / i18n。
 
-- [ ] **EXT-01 · P2 · 长列表/表格/Tree 的可访问虚拟化**
+- [x] **EXT-01 · P2 · 长列表/表格/Tree 的可访问虚拟化**
+  - 本轮结果：`4fe71e3、f77463c`。真实10,000行与初始11行DOM对比；list/read-only table-grid/host-flattened tree 的动态高度、键盘定位、总数/索引、选中焦点和返回恢复通过；WebKit RO 同步重建循环已修。
   - 状态／依据：**新增规模能力**。现有TBL/LST/TRE已实现基础展示/部分行为；当前src/JS/发行API未见virtualizer，缺大集合消费契约。
   - 验收：先用真实大集合测基线，再选可选adapter/实现；约束DOM/初始化预算，支持动态高度、键盘定位、总行数/索引及返回位置，不因虚拟化丢焦点或选择。 参考：[Virtualizer参考][virtualizer]。
   - 依赖：ACT-13、ACT-14、ENG-11。
@@ -438,7 +470,8 @@
   - 验收：有实际层级表格需求再启动；支持展开行、单元格/行导航、选择与编辑模式切换及正确层级语义；不把普通导航Tree升级成复杂grid。 参考：[APG Treegrid][apg-treegrid]。
   - 依赖：ACT-13、ACT-14。
 
-- [ ] **EXT-03 · P2 · 多序列、轴、图例、时间域和专业图表入口**
+- [x] **EXT-03 · P2 · 多序列、轴、图例、时间域和专业图表入口**
+  - 本轮结果：`4fe71e3、f77463c`。多序列/轴/单位/图例、时间/数值域、空段/负值与可选宿主 renderer，复用 core 摘要及完整替代表；真实交互通过。
   - 状态／依据：**补全图表体系**。已有bar/line/donut/spark不缺基础图表；现有data-values只覆盖轻量统计，缺分析图表的统一数据/交互契约。
   - 验收：先补轴/单位/图例与多序列、时间/数值域、空值/负值；按场景评估scatter/heatmap/histogram等可选adapter，数据摘要与替代读取沿用ACT-10，不把完整图表引擎塞进core。 参考：[Carbon图表范围][carbon-charts]。
   - 依赖：ACT-10、ENG-11。
