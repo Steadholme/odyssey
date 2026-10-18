@@ -61,6 +61,10 @@ export async function checkDesign() {
   assert.equal(Object.keys(snapshot.variables).length, 208, '207 original variables plus control boundary');
   assert.equal(mapping.components.length, 54);
   assert.equal(new Set(mapping.components.map(c => c.pencilNodeId)).size, 54);
+  for (const component of mapping.components) {
+    const saved = snapshot.components.find(node => node.id === component.pencilNodeId);
+    assert.ok(saved && saved.name === component.name, 'Pencil component identity drift: ' + component.station);
+  }
   for (const binding of mapping.tokenBindings) {
     assert.ok(tokens.pencil[binding.pencilVariable], binding.pencilVariable);
     assert.match(binding.cssProperty, /^--ody-[a-z0-9-]+$/);
