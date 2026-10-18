@@ -1,8 +1,10 @@
 import { defineConfig } from '../browser-runtime/node_modules/playwright/test.mjs';
-if (process.argv.some(arg => arg.startsWith('--update-snapshots')) && process.env.ODYSSEY_ACCEPT_VISUAL !== '1') {
+const updating = process.argv.some(arg => arg === '-u' || arg.startsWith('-u=') || arg.startsWith('--update-snapshots'));
+if (updating && process.env.ODYSSEY_ACCEPT_VISUAL !== '1') {
   throw new Error('Inspect the actual/diff images first; approved baseline updates require ODYSSEY_ACCEPT_VISUAL=1.');
 }
 export default defineConfig({
+  updateSnapshots: updating ? 'all' : 'none',
   testDir: '.', testMatch: 'visual-regression.spec.mjs', workers: 1, retries: 0,
   outputDir: process.env.ODYSSEY_VISUAL_OUTPUT || '/tmp/odyssey-visual-results',
   snapshotPathTemplate: '{testDir}/visual-baselines/{platform}/{arg}{ext}',
