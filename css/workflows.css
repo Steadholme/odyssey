@@ -1,0 +1,69 @@
+/* Optional Line workflow surfaces; all rules stay within the explicit root. */
+.ody-workflow{font:14px/1.6 var(--ody-font,system-ui,sans-serif);color:var(--ody-ink,#111418);min-width:0;display:grid;gap:16px}
+.ody-workflow [hidden]{display:none!important}
+.ody-workflow :is(input,select,button,progress){box-sizing:border-box;font:inherit}
+.ody-workflow :is(h2,h3,p,ol,ul){margin:0}
+.ody-workflow :is(form,fieldset,label){min-width:0}
+.ody-workflow form{display:grid;gap:16px}
+.ody-workflow fieldset{margin:0;padding:16px;border:1px solid var(--ody-hairline,#dde2e8);display:grid;gap:16px}
+.ody-workflow legend{font-weight:600;padding:0 6px}
+.ody-workflow label{display:grid;gap:6px;font-size:13px;font-weight:550}
+.ody-workflow :is(input:not([type=checkbox]):not([type=radio]):not([type=hidden]),select){width:100%;min-width:0;min-height:44px;border:1px solid var(--ody-hairline,#dde2e8);background:var(--ody-surface,#fff);color:inherit;border-radius:var(--ody-r,2px);padding:8px 10px}
+.ody-workflow input[type=file]{padding:8px;overflow:hidden}
+.ody-workflow input[type=checkbox]{width:20px;height:20px}
+.ody-workflow :is(input,button,select):focus-visible{outline:2px solid var(--ody-ring,#0062ff);outline-offset:3px}
+.ody-workflow :is([tabindex="-1"],legend):focus{outline:2px solid var(--ody-ring,#0062ff);outline-offset:4px}
+.ody-workflow button{min-height:44px;padding:8px 14px;border:1px solid var(--ody-hairline,#dde2e8);border-radius:var(--ody-r,2px);background:var(--ody-surface,#fff);color:inherit;cursor:pointer}
+.ody-workflow button[data-primary]{background:var(--ody-primary-fill,#111418);color:var(--ody-primary-label,#fff);border-color:var(--ody-primary-fill,#111418)}
+.ody-workflow button:disabled{opacity:.5;cursor:not-allowed}
+.ody-workflow small,.ody-workflow .ody-workflow__muted{font-size:12px;color:var(--ody-ink-muted,#5d6878)}
+.ody-workflow__actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.ody-workflow__status{border-inline-start:2px solid var(--ody-accent-ink,#0062ff);padding-inline-start:12px;min-height:24px}
+.ody-workflow [data-ody-wf-error]{color:var(--ody-down-ink,#b72c32);overflow-wrap:anywhere}
+.ody-workflow progress{width:100%;height:8px;accent-color:var(--ody-accent-ink,#0062ff)}
+.ody-workflow [data-ody-wf-receipt]{font-family:var(--ody-mono,monospace);font-size:12px;overflow-wrap:anywhere}
+.ody-workflow__steps{list-style:none;display:flex;gap:12px;padding:0}
+.ody-workflow .ody-workflow__steps .ody-step{position:static;display:block;text-align:start;flex:1;border-block-start:2px solid var(--ody-hairline,#dde2e8);padding-block-start:8px;color:var(--ody-ink-muted,#5d6878);font-size:12px;min-width:0;overflow-wrap:anywhere}
+.ody-workflow .ody-workflow__steps .ody-step::before{display:none}.ody-workflow .ody-workflow__steps .ody-step__dot{display:inline;width:auto;height:auto;margin:0 4px 0 0;border:0;border-radius:0;background:transparent;color:inherit;box-shadow:none;transition:none;font:inherit;font-family:var(--ody-mono,monospace)}.ody-workflow .ody-workflow__steps .ody-step__label{display:inline;margin:0;font:inherit;color:inherit}
+.ody-workflow__steps [aria-current=step]{border-color:var(--ody-accent-ink,#0062ff);color:var(--ody-ink,#111418);font-weight:600}
+.ody-workflow__steps [data-ody-step-state]{display:block;font-weight:400;font-size:12px}
+.ody-workflow :is([data-ody-wf-list],[data-ody-wf-members]){list-style:none;padding:0;display:grid;gap:0}
+.ody-workflow__file,.ody-workflow [data-ody-wf-members]>li{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding-block:14px;border-block-end:1px solid var(--ody-hairline,#dde2e8)}
+.ody-workflow__file strong,.ody-workflow [data-ody-wf-members] strong{flex:1;min-width:120px;overflow-wrap:anywhere}
+.ody-workflow__file span,.ody-workflow [data-ody-wf-members] span{font-size:12px;color:var(--ody-ink-muted,#5d6878);overflow-wrap:anywhere}
+.ody-workflow__file progress{flex-basis:100%}
+.ody-workflow__table-wrap{overflow:auto;max-width:100%}
+.ody-workflow table{border-collapse:collapse;text-align:start;width:100%;font-size:13px}
+.ody-workflow :is(th,td){border-block-end:1px solid var(--ody-hairline,#dde2e8);padding:10px 8px;overflow-wrap:anywhere}
+.ody-workflow th{font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--ody-ink-muted,#5d6878)}
+.ody-workflow .ody-ext-code>div{display:flex;gap:6px}
+.ody-workflow .ody-ext-code input{width:36px;min-width:0;text-align:center;padding:8px 0}
+/* Feedback, not delayed navigation: source completion gets one subtle acknowledgment. */
+@media(prefers-reduced-motion:no-preference){.ody-workflow[data-ody-workflow-state=success] .ody-workflow__status{animation:ody-workflow-confirm var(--ody-dur-2,160ms) var(--ody-ease-out,ease-out)}}
+@keyframes ody-workflow-confirm{from{opacity:.4;transform:translateY(2px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:640px){.ody-workflow :is(input,select){font-size:16px}.ody-workflow fieldset{padding:12px}.ody-workflow__actions>button{flex:1}.ody-workflow__steps{gap:8px}}
+@media(forced-colors:active){.ody-workflows-page{background:Canvas;color:CanvasText;--ody-bg:Canvas;--ody-surface:Canvas;--ody-surface-2:Canvas;--ody-ink:CanvasText;--ody-ink-2:CanvasText;--ody-ink-muted:CanvasText;--ody-accent-ink:LinkText;--ody-hairline:ButtonBorder;--ody-primary-fill:ButtonFace;--ody-primary-label:ButtonText}.ody-workflow button[data-primary]{border:1px solid ButtonText}.ody-workflow__status{border-color:Highlight}.ody-workflow button:disabled{color:GrayText;opacity:1}}
+/* The following layout belongs only to the optional workflow reference page. */
+.ody-workflows-page{margin:0;background:var(--ody-bg,#fff);color:var(--ody-ink,#111418);font:14px/1.6 var(--ody-font,system-ui,sans-serif)}
+.ody-workflows-page *{box-sizing:border-box}
+.ody-workflows-page a{color:inherit;text-underline-offset:4px}
+.ody-workflows-page .wf-nav{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;padding:20px 5vw;border-bottom:1px solid var(--ody-hairline,#dde2e8);font-size:12px}
+.ody-workflows-page .wf-controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.ody-workflows-page .wf-controls select{font:inherit;color:inherit;background:var(--ody-surface,#fff);border:1px solid var(--ody-hairline,#dde2e8);padding:8px;min-height:40px}
+.ody-workflows-page main{max-width:1240px;margin:auto;padding:56px 5vw 80px}
+.ody-workflows-page .wf-hero{max-width:800px;margin-bottom:56px}
+.ody-workflows-page .wf-eyebrow{font:11px/1.4 var(--ody-mono,monospace);letter-spacing:.12em;text-transform:uppercase;color:var(--ody-accent-ink,#0062ff)}
+.ody-workflows-page h1{font-size:clamp(38px,6vw,68px);line-height:1.08;letter-spacing:-.055em;font-weight:550;margin:16px 0 20px}
+.ody-workflows-page .wf-hero>p{font-size:17px;max-width:640px;color:var(--ody-ink-muted,#5d6878)}
+.ody-workflows-page .wf-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:48px 40px}
+.ody-workflows-page .wf-section{min-width:0;border-top:1px solid var(--ody-ink,#111418);padding-top:16px}
+.ody-workflows-page .wf-section.wf-wide{grid-column:1/-1}
+.ody-workflows-page h2{font-size:23px;line-height:1.25;letter-spacing:-.035em;margin:8px 0 12px;font-weight:550}
+.ody-workflows-page .wf-description{color:var(--ody-ink-muted,#5d6878);font-size:13px;margin-bottom:24px;max-width:540px}
+.ody-workflows-page .wf-demo-controls{border-top:1px dashed var(--ody-hairline,#dde2e8);padding-top:16px;margin-top:16px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:12px}
+.ody-workflows-page .wf-demo-controls button{font:inherit;padding:6px 10px;min-height:36px;background:var(--ody-surface,#fff);color:inherit;border:1px solid var(--ody-hairline,#dde2e8);cursor:pointer}
+.ody-workflows-page .wf-demo-controls label{display:flex;gap:6px;align-items:center}
+.ody-workflows-page .wf-api{margin-top:56px;border-top:1px solid var(--ody-hairline,#dde2e8);padding-top:24px}
+.ody-workflows-page pre{font:12px/1.7 var(--ody-mono,monospace);overflow:auto;max-width:100%;padding:20px;background:var(--ody-surface-2,#f6f8fa);border:1px solid var(--ody-hairline,#dde2e8)}
+.ody-workflows-page .wf-skip{position:absolute;top:-60px;left:8px;background:var(--ody-surface,#fff);padding:10px;z-index:10}.ody-workflows-page .wf-skip:focus{top:8px}
+@media(max-width:760px){.ody-workflows-page .wf-grid{grid-template-columns:1fr;gap:36px}.ody-workflows-page main{padding-top:32px}.ody-workflows-page .wf-hero{margin-bottom:36px}}
