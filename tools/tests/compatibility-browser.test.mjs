@@ -3,7 +3,7 @@ import { mkdir } from 'node:fs/promises';
 
 const playwright = await import(process.env.PLAYWRIGHT_MODULE || '../browser-runtime/node_modules/playwright/index.mjs');
 const base = (process.env.ODYSSEY_BASE_URL || 'http://127.0.0.1:18300').replace(/\/$/, '');
-const release = (process.env.ODYSSEY_RELEASE || '/1.4.0').replace(/\/$/, '');
+const release = (process.env.ODYSSEY_RELEASE || '/1.5.0').replace(/\/$/, '');
 const engines = (process.env.BROWSERS || 'chromium,firefox,webkit').split(',').map(value => value.trim());
 assert.ok(engines.length && engines.every(name => ['chromium', 'firefox', 'webkit'].includes(name)), 'BROWSERS must contain chromium, firefox and/or webkit');
 const evidence = process.env.ODYSSEY_SCREENSHOTS;
@@ -63,7 +63,7 @@ async function verifyEntry(browser, name, entry) {
     await page.goto(`${base}/__odyssey-compatibility`);
     await page.evaluate(() => document.fonts.ready);
     assert.equal(await page.evaluate(() => typeof window.Odyssey?.init), 'function');
-    assert.equal(await page.evaluate(() => window.Odyssey.version), '1.4.0', 'the browser must consume this public release, not a cached core');
+    assert.equal(await page.evaluate(() => window.Odyssey.version), release.slice(1), 'the browser must consume this public release, not a cached core');
     assert.equal(await page.evaluate(() => typeof window.OdysseyExtensions?.init), 'function');
     assert.equal(await page.locator('html').getAttribute('data-expression'), 'line');
     await fitsViewport(page);
@@ -161,7 +161,7 @@ async function verifyFormsGuide(browser, name) {
     const response = await page.goto(`${base}/forms.html`);
     assert.equal(response.status(), 200);
     await page.evaluate(() => document.fonts.ready);
-    assert.equal(await page.evaluate(() => window.Odyssey.version), '1.4.0');
+    assert.equal(await page.evaluate(() => window.Odyssey.version), release.slice(1));
 
     const combo = page.getByRole('combobox', { name: '框架', exact: true });
     const options = page.locator('.ody-combobox__list').first();

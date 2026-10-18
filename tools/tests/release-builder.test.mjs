@@ -3,7 +3,7 @@ import { mkdtemp, mkdir, writeFile, readFile, rm } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
-import { buildAssets, checkRelease, freezeRelease, SOURCE_FILES, RELEASE } from '../build-public-dist.mjs';
+import { buildAssets, checkRelease, freezeRelease, SOURCE_FILES, RELEASE, assertNodeVersion } from '../build-public-dist.mjs';
 
 test('public release composes the complete source inventory and locks its identity', async () => {
   const root = await mkdtemp(path.join(os.tmpdir(), 'odyssey-release-'));
@@ -15,18 +15,22 @@ test('public release composes the complete source inventory and locks its identi
       if (file === 'odyssey.js') body += "Odyssey UI JS · v1.3.0-canary.1\nvar VERSION = '1.3.0-canary.1';\nvar RELEASE = '1.3.0-canary.1';\n";
       await writeFile(path.join(root, source), body);
     }
-    await writeFile(path.join(root, 'Cargo.toml'), '[package]\nversion = "0.1.0"\n');
-    await writeFile(path.join(root, 'distribution.toml'), 'release = "1.4.0-canary.1"\n');
+    await writeFile(path.join(root, 'Cargo.toml'), '[package]\nversion = "0.1.0"\nrust-version = "1.87"\n');
+    await writeFile(path.join(root, 'distribution.toml'), 'release = "1.5.0-canary.1"\n');
     const assets = await buildAssets(root);
-    assert.match(assets.get('odyssey.css'), /Version : v1\.4\.0/);
-    assert.match(assets.get('odyssey.js'), /var VERSION = '1\.4\.0';/);
-    assert.match(assets.get('odyssey.js'), /var RELEASE = '1\.4\.0';/);
+    assert.match(assets.get('odyssey.css'), /Version : v1\.5\.0/);
+    assert.match(assets.get('odyssey.js'), /var VERSION = '1\.5\.0';/);
+    assert.match(assets.get('odyssey.js'), /var RELEASE = '1\.5\.0';/);
     for (const file of ['odyssey-line.css', 'odyssey-line-font.css', 'odyssey-expressions.css', 'odyssey-extensions.css', 'compositions.css']) assert.ok(assets.get('odyssey-complete.css').includes(assets.get(file)));
     for (const file of ['odyssey.js', 'odyssey-extensions.js', 'compositions.js']) assert.ok(assets.get('odyssey-complete.js').includes(assets.get(file)));
     const manifest = JSON.parse(assets.get('release.json'));
-    assert.deepEqual(manifest.identities, { cargo: '0.1.0', internalRust: '1.4.0-canary.1', publicAssets: RELEASE, design: 'line', shellContract: '1.3' });
+    assert.deepEqual(manifest.identities, { cargo: '0.1.0', internalRust: '1.5.0-canary.1', publicAssets: RELEASE, design: 'line', shellContract: '1.3' });
     assert.equal(manifest.files.length, assets.size - 1);
     assert.equal(manifest.promotion.inheritsCanaryEvidence, false);
+    assert.equal(manifest.license.spdx, 'MIT');
+    assert.deepEqual(manifest.modules.dataTools.requires, ['core']);
+    assert.ok(!assets.get('odyssey-complete.js').includes(assets.get('data-tools.js')));
+    assert.ok(!assets.get('odyssey-complete.js').includes(assets.get('workflows.js')));
     const release = path.join(root, 'candidate');
     await mkdir(release);
     for (const [file, body] of assets) await writeFile(path.join(release, file), body);
@@ -44,7 +48,16 @@ test('public release composes the complete source inventory and locks its identi
     await writeFile(path.join(release, 'odyssey-line.css'), 'unexpected drift');
     await assert.rejects(checkRelease(release, assets), /immutable release differs: odyssey-line.css/);
     assert.equal(await readFile(path.join(root, 'dist/odyssey.js'), 'utf8'), "/* fixture: odyssey.js */\nOdyssey UI JS · v1.3.0-canary.1\nvar VERSION = '1.3.0-canary.1';\nvar RELEASE = '1.3.0-canary.1';\n");
+    await writeFile(path.join(root, 'dist/odyssey.js'), "var VERSION = '1.1.0';");
+    await assert.rejects(buildAssets(root), /JS release identity missing/);
     await writeFile(path.join(root, 'dist/odyssey.js'), 'missing runtime identity');
     await assert.rejects(buildAssets(root), /JS release identity missing/);
   } finally { await rm(root, { recursive: true, force: true }); }
+});
+
+test('the POSIX wrapper delegates portable identity replacement to a supported Node runtime', () => {
+  assert.doesNotThrow(() => assertNodeVersion('22.12.0'));
+  assert.doesNotThrow(() => assertNodeVersion('24.18.0'));
+  assert.throws(() => assertNodeVersion('22.11.9'), /Node >=22.12.0/);
+  assert.throws(() => assertNodeVersion('20.19.0'), /Node >=22.12.0/);
 });

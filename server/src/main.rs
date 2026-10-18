@@ -94,6 +94,16 @@ const SITE_LINE_JS: &str = include_str!("../../site/assets/line-site.js");
 const SITE_STUDIO: &str = include_str!("../../site/studio.html");
 const SITE_STUDIO_CSS: &str = include_str!("../../site/assets/studio.css");
 const SITE_STUDIO_JS: &str = include_str!("../../site/assets/studio.js");
+const SITE_WORKFLOWS: &str = include_str!("../../site/workflows.html");
+const SITE_WORKFLOWS_DEMO: &str = include_str!("../../site/assets/workflows-demo.js");
+const WORKFLOWS_EXAMPLE: &str = include_str!("../../examples/workflows/standalone.html");
+const WORKFLOWS_ADAPTER: &str = include_str!("../../examples/workflows/adapter.js");
+const SITE_DATA_TOOLS: &str = include_str!("../../site/data-tools.html");
+const SITE_DATA_TOOLS_DEMO: &str = include_str!("../../site/assets/data-tools-demo.js");
+const DATA_TOOLS_EXAMPLE: &str = include_str!("../../examples/data-tools/standalone.html");
+const SITE_STATES: &str = include_str!("../../site/states.html");
+const SITE_STATES_CSS: &str = include_str!("../../site/assets/states.css");
+const SITE_STATES_JS: &str = include_str!("../../site/assets/states.js");
 const SITE_PATTERNS: &str = include_str!("../../site/patterns.html");
 const SITE_PATTERNS_CSS: &str = include_str!("../../site/assets/patterns-20261018.css");
 const SITE_PATTERNS_JS: &str = include_str!("../../site/assets/patterns-20261018.js");
@@ -1193,8 +1203,51 @@ fn route_static(path: &str) -> Response {
             Some(CACHE_DOCS),
             SITE_ASSET_JS,
         ),
+        "/workflows" | "/workflows.html" => site_html(SITE_WORKFLOWS),
+        "/data-tools" | "/data-tools.html" => site_html(SITE_DATA_TOOLS),
+        "/states" | "/states.html" => site_html(SITE_STATES),
+        "/assets/workflows-demo.js" => static_response(
+            StatusCode::OK,
+            CONTENT_TYPE_JS,
+            Some(CACHE_DOCS),
+            SITE_WORKFLOWS_DEMO,
+        ),
+        "/assets/data-tools-demo.js" => static_response(
+            StatusCode::OK,
+            CONTENT_TYPE_JS,
+            Some(CACHE_DOCS),
+            SITE_DATA_TOOLS_DEMO,
+        ),
+        "/assets/states.css" => static_response(
+            StatusCode::OK,
+            CONTENT_TYPE_CSS,
+            Some(CACHE_DOCS),
+            SITE_STATES_CSS,
+        ),
+        "/assets/states.js" => static_response(
+            StatusCode::OK,
+            CONTENT_TYPE_JS,
+            Some(CACHE_DOCS),
+            SITE_STATES_JS,
+        ),
+        "/examples/workflows/standalone.html" => site_html(WORKFLOWS_EXAMPLE),
+        "/examples/workflows/adapter.js" => static_response(
+            StatusCode::OK,
+            CONTENT_TYPE_JS,
+            Some(CACHE_DOCS),
+            WORKFLOWS_ADAPTER,
+        ),
+        "/examples/data-tools/standalone.html" => site_html(DATA_TOOLS_EXAMPLE),
         _ => {
             if let Some(file) = path.strip_prefix("/1.4.0/") {
+                FROZEN_14_ASSETS
+                    .iter()
+                    .find(|(name, _, _)| *name == file)
+                    .map(|(_, mime, body)| {
+                        static_response(StatusCode::OK, mime, Some(CACHE_VERSIONED), body)
+                    })
+                    .unwrap_or_else(not_found)
+            } else if let Some(file) = path.strip_prefix("/1.5.0/") {
                 PUBLIC_RELEASE_ASSETS
                     .iter()
                     .find(|(name, _, _)| *name == file)
@@ -1446,6 +1499,9 @@ mod tests {
             SITE_OVERLAYS,
             SITE_STUDIO,
             SITE_PATTERNS,
+            SITE_WORKFLOWS,
+            SITE_DATA_TOOLS,
+            SITE_STATES,
         ] {
             let head = source.split("</head>").next().unwrap();
             assert!(!head.contains("dist/odyssey"));
@@ -1453,28 +1509,38 @@ mod tests {
             assert!(!head.contains("assets/extensions.css"));
             assert!(!head.contains("assets/extensions.js"));
             if source.contains("doc-appbar__ver") {
-                assert!(source.contains("doc-appbar__ver\">PUBLIC 1.4.0</span>"));
+                assert!(source.contains("doc-appbar__ver\">PUBLIC 1.5.0</span>"));
+            }
+            if head.contains("/1.5.0/odyssey-complete.css") {
+                assert!(head.contains("/1.5.0/odyssey-complete.js"));
+                assert!(
+                    !head.contains("/1.5.0/odyssey.js"),
+                    "complete must not duplicate the core runtime"
+                );
+                continue;
+            }
+            if head.contains("/1.5.0/odyssey-extensions.js") {
+                assert!(head.contains("/1.5.0/odyssey-extensions.css"));
             }
             for file in [
                 "odyssey-font.css",
                 "odyssey-line.css",
                 "odyssey-line-font.css",
                 "odyssey-expressions.css",
-                "odyssey-extensions.css",
             ] {
                 assert!(
-                    head.contains(&format!("/1.4.0/{file}")),
+                    head.contains(&format!("/1.5.0/{file}")),
                     "page missing {file}"
                 );
             }
-            assert!(source.matches("<script src=\"/1.4.0/odyssey.js\"").count() <= 1);
+            assert!(source.matches("<script src=\"/1.5.0/odyssey.js\"").count() <= 1);
         }
     }
 
     #[tokio::test]
     async fn complete_public_release_and_library_entrypoints_are_live() {
         for &(file, mime, body) in PUBLIC_RELEASE_ASSETS {
-            let response = route_static(&format!("/1.4.0/{file}"));
+            let response = route_static(&format!("/1.5.0/{file}"));
             assert_eq!(response.status(), StatusCode::OK);
             assert_eq!(header(&response, header::CONTENT_TYPE), mime);
             assert_eq!(
@@ -1494,6 +1560,16 @@ mod tests {
             );
         }
         for (route, mime) in [
+            ("/workflows.html", CONTENT_TYPE_HTML),
+            ("/data-tools.html", CONTENT_TYPE_HTML),
+            ("/states.html", CONTENT_TYPE_HTML),
+            ("/assets/workflows-demo.js", CONTENT_TYPE_JS),
+            ("/assets/data-tools-demo.js", CONTENT_TYPE_JS),
+            ("/assets/states.css", CONTENT_TYPE_CSS),
+            ("/assets/states.js", CONTENT_TYPE_JS),
+            ("/examples/workflows/standalone.html", CONTENT_TYPE_HTML),
+            ("/examples/workflows/adapter.js", CONTENT_TYPE_JS),
+            ("/examples/data-tools/standalone.html", CONTENT_TYPE_HTML),
             ("/library/capabilities.json", CONTENT_TYPE_JSON),
             ("/library/capabilities.schema.json", CONTENT_TYPE_JSON),
             ("/library/contracts.json", CONTENT_TYPE_JSON),
@@ -1512,6 +1588,31 @@ mod tests {
             assert_eq!(response.status(), StatusCode::OK, "{route}");
             assert_eq!(header(&response, header::CONTENT_TYPE), mime);
             assert_eq!(header(&response, header::CACHE_CONTROL), CACHE_DOCS);
+        }
+        assert_eq!(
+            route_static("/1.5.0/../Cargo.toml").status(),
+            StatusCode::NOT_FOUND
+        );
+    }
+
+    #[tokio::test]
+    async fn frozen_14_remains_byte_identical_and_immutable() {
+        assert_eq!(FROZEN_14_ASSETS.len(), 20);
+        for &(file, mime, body) in FROZEN_14_ASSETS {
+            let response = route_static(&format!("/1.4.0/{file}"));
+            assert_eq!(response.status(), StatusCode::OK);
+            assert_eq!(header(&response, header::CONTENT_TYPE), mime);
+            assert_eq!(header(&response, header::CACHE_CONTROL), CACHE_VERSIONED);
+            assert_eq!(
+                response
+                    .into_body()
+                    .collect()
+                    .await
+                    .unwrap()
+                    .to_bytes()
+                    .as_ref(),
+                body.as_bytes()
+            );
         }
         assert_eq!(
             route_static("/1.4.0/../Cargo.toml").status(),
@@ -1566,8 +1667,8 @@ mod tests {
         assert_eq!(SITE_INDEX.matches("data-station=\"").count(), 54);
         assert_eq!(SITE_INDEX.matches("data-family=\"").count(), 6);
         assert!(!DIST_ODYSSEY_13_CSS.contains("data-ody-design=\"line\""));
-        assert!(SITE_INDEX.contains("/1.4.0/odyssey-line.css"));
-        assert!(SITE_INDEX.contains("/1.4.0/odyssey-extensions.css"));
+        assert!(SITE_INDEX.contains("/1.5.0/odyssey-line.css"));
+        assert!(SITE_INDEX.contains("/1.5.0/odyssey-extensions.css"));
         assert!(SITE_INDEX.contains("studio.html"));
         assert!(SITE_STUDIO.contains("data-ody-command-menu"));
     }
@@ -1598,7 +1699,7 @@ mod tests {
             assert!(odyssey::EXTENSIONS_CSS.contains(&format!("data-expression=\"{expression}\"")));
         }
         assert!(!SITE_STUDIO.contains("127.0.0.1"));
-        assert!(SITE_STUDIO.contains("/1.4.0/odyssey-extensions.js"));
+        assert!(SITE_STUDIO.contains("/1.5.0/odyssey-extensions.js"));
         assert!(SITE_STUDIO.contains("id=\"motion\""));
     }
 
@@ -1644,7 +1745,7 @@ mod tests {
         }
         assert!(SITE_PATTERNS.contains("data-expression=\"line\""));
         assert!(SITE_PATTERNS.contains("Demo workspace"));
-        assert!(SITE_PATTERNS.contains("/1.4.0/odyssey-extensions.css"));
+        assert!(SITE_PATTERNS.contains("/1.5.0/odyssey-extensions.css"));
         assert!(SITE_PATTERNS.contains("/studio.html"));
         assert!(SITE_INDEX.contains("href=\"patterns.html\""));
         assert!(SITE_STUDIO.contains("href=\"patterns.html\""));

@@ -22,7 +22,7 @@ ODYSSEY_BASE_URL=http://127.0.0.1:18300 \
 ### Runner 接口
 
 - `ODYSSEY_BASE_URL`：候选服务 origin，默认 `http://127.0.0.1:18300`。
-- `ODYSSEY_RELEASE`：该服务上的发行路径，默认 `/1.4.0`。
+- `ODYSSEY_RELEASE`：该服务上的发行路径，默认 `/1.5.0`。
 - `PLAYWRIGHT_MODULE`：可选模块路径或 `file:` URL，默认导入本仓 `tools/browser-runtime/node_modules/playwright/index.mjs`。
 - `ODYSSEY_SCREENSHOTS`：可选截图目录，按引擎和安装入口输出 320px 全页图。
 - `BROWSERS`：逗号分隔的引擎名，默认 `chromium,firefox,webkit`。例如 `BROWSERS=chromium,webkit` 仅用于明确标注的定向诊断，不能代替三引擎发行门禁。
@@ -53,7 +53,7 @@ ODYSSEY_BASE_URL=http://127.0.0.1:18300 \
 
 WebKit 测试不是每一个 Safari/iOS 版本的实机证明；320px viewport 测试也不代替真机触摸验收。
 
-## 本轮验证与生产部署
+## 1.4.0 验证与生产部署
 
 2026-10-18，在 macOS 27.0（26A428）、Node 24.18.0 上，已从本仓 lockfile 安装所有三个引擎。本轮在 `http://127.0.0.1:18770` 的 `/1.4.0` 未冻结候选服务上执行结果：
 
@@ -76,3 +76,29 @@ Safari + 原有 SCIM.ITABC 真实输入法抽验通过：Tag 的候选确认不�
 `tools/install-canary-gate.sh` 现在从本仓 package/lock 运行 `npm ci`，不再读取 Siteflow 的依赖。它仍保留既有 system Chromium、1.2 canary policy 和 implementation pins 的校验契约。
 
 新的依赖树不能继承旧 `browserRuntimeSha256`。旧 policy 会拒绝不匹配的 runtime；部署新的线上 gate 需要该候选独立的 policy、runtime pin 和验收窗口。本地浏览器验证不执行这个 root/systemd 安装器。
+
+## P2 工程门禁（1.5.0）
+
+`tools/verify.sh` 同时运行 P2 core/extensions、Rust strict-CSP、workflows、data-tools、state atlas、字节/初始化预算和视觉差分。默认明确选择三个引擎；`BROWSERS=chromium,webkit` 只作为 macOS 宿主上的定向证据。最低 Rust 1.87 有独立 CI 检查，生产构建仍固定 Rust 1.96；构建入口采用 POSIX sh 与 Node >=22.12，不要求 GNU sed。
+
+### 审阅视觉差异，再更新基线
+
+在已启动候选服务的同一平台执行：
+
+```sh
+ODYSSEY_BASE_URL=http://127.0.0.1:18772 \
+  node tools/browser-runtime/node_modules/playwright/cli.js test \
+  --config tools/tests/visual.config.mjs
+```
+
+失败会在 `/tmp/odyssey-visual-results/` 保存实际图、预期图和差分图；CI 失败时上传相同目录。确认组件值、布局、主题与浮层正确后，明确接受更新：
+
+```sh
+ODYSSEY_BASE_URL=http://127.0.0.1:18772 ODYSSEY_ACCEPT_VISUAL=1 \
+  node tools/browser-runtime/node_modules/playwright/cli.js test \
+  --config tools/tests/visual.config.mjs --update-snapshots
+```
+
+新 PNG 必须与对应源码一同审阅和提交；没有接受开关时拒绝更新。`ODYSSEY_VISUAL_PROBE=1` 是测试自身的故障 fixture，会将标题改为洋红色；它必须失败，不用于接受基线。四个逻辑状态在 macOS/Linux 各保存一组，避免用跨平台字体光栅差异掩盖组件变化。保持无重试、`maxDiffPixels=0`、颜色阈值 `0.2` 与固定浏览器 runtime。
+
+本轮负责人已逐张审阅并接受 macOS/Linux 的八张 P2 初始基线。真实故障 fixture 使标题变色时差分门禁失败（1518 像素）；关闭故障 fixture 后 macOS 四项重新比对通过。最终发行候选仍需对接受的基线执行常规差分，不用更新命令覆盖失败。

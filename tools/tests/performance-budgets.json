@@ -1,0 +1,90 @@
+{
+  "schema": "odyssey.performance-budgets.v1",
+  "release": "1.5.0",
+  "groups": {
+    "core": {
+      "files": [
+        "odyssey.css",
+        "odyssey.js"
+      ],
+      "raw": 360000,
+      "gzip": 78000
+    },
+    "fonts": {
+      "files": [
+        "odyssey-font.css",
+        "odyssey-line-font.css"
+      ],
+      "raw": 155000,
+      "gzip": 115000
+    },
+    "line": {
+      "files": [
+        "odyssey-line.css",
+        "odyssey-expressions.css"
+      ],
+      "raw": 40000,
+      "gzip": 9000
+    },
+    "extensions": {
+      "files": [
+        "odyssey-extensions.css",
+        "odyssey-extensions.js"
+      ],
+      "raw": 52000,
+      "gzip": 14000
+    },
+    "compositions": {
+      "files": [
+        "compositions.css",
+        "compositions.js"
+      ],
+      "raw": 15000,
+      "gzip": 5000
+    },
+    "workflows": {
+      "files": [
+        "workflows.css",
+        "workflows.js"
+      ],
+      "raw": 50000,
+      "gzip": 14000
+    },
+    "dataTools": {
+      "files": [
+        "data-tools.css",
+        "data-tools.js"
+      ],
+      "raw": 65000,
+      "gzip": 20000
+    },
+    "complete": {
+      "files": [
+        "odyssey-complete.css",
+        "odyssey-complete.js"
+      ],
+      "raw": 610000,
+      "gzip": 215000
+    },
+    "lineInteractive": {
+      "files": [
+        "odyssey.css",
+        "odyssey.js",
+        "odyssey-font.css",
+        "odyssey-line-font.css",
+        "odyssey-line.css",
+        "odyssey-expressions.css",
+        "odyssey-extensions.css",
+        "odyssey-extensions.js"
+      ],
+      "raw": 580000,
+      "gzip": 210000
+    }
+  },
+  "initialization": {
+    "controls": 100,
+    "samples": 7,
+    "firstMedianMs": 10,
+    "repeatMedianMs": 5
+  }
+}

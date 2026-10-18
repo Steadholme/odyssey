@@ -21,7 +21,7 @@ COPY site ./site
 COPY library ./library
 COPY design ./design
 COPY docs ./docs
-COPY examples/compositions ./examples/compositions
+COPY examples ./examples
 COPY server ./server
 
 RUN cargo build --locked --release --manifest-path server/Cargo.toml \

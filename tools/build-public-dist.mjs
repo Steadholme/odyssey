@@ -4,7 +4,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-export const RELEASE = '1.4.0';
+export const RELEASE = '1.5.0';
 export const SOURCE_FILES = {
   'odyssey.css': 'dist/odyssey.css',
   'odyssey.js': 'dist/odyssey.js',
@@ -21,20 +21,36 @@ export const SOURCE_FILES = {
   'contracts.json': 'library/contracts.json',
   'tokens.json': 'design/tokens.json',
   'design-map.json': 'design/design-map.json',
+  'Inter-OFL.txt': 'css/fonts/Inter-OFL.txt',
   'Archivo-OFL.txt': 'css/fonts/Archivo-OFL.txt',
   'AzeretMono-OFL.txt': 'css/fonts/AzeretMono-OFL.txt',
+  'LICENSE.txt': 'LICENSE',
+  'workflows.css': 'css/workflows.css',
+  'workflows.js': 'js/workflows.js',
+  'data-tools.css': 'css/data-tools.css',
+  'data-tools.js': 'js/data-tools.js',
+  'state-matrix.json': 'design/state-matrix.json',
 };
+
+export function assertNodeVersion(version = process.versions.node) {
+  const [major, minor] = version.split('.').map(Number);
+  if (major < 22 || (major === 22 && minor < 12)) throw new Error('Odyssey public build requires Node >=22.12.0');
+}
 
 function identity(text, file) {
   if (file === 'odyssey.css') {
     if (!/Version : v[^\r\n]+/.test(text)) throw new Error('public CSS release identity missing');
-    return text.replace(/Version : v[^\r\n]+/, `Version : v${RELEASE}`);
+    const generated = text.replace(/Version : v[^\r\n]+/, `Version : v${RELEASE}`);
+    if (!generated.includes(`Version : v${RELEASE}`)) throw new Error('generated CSS identity differs');
+    return generated;
   }
   if (file === 'odyssey.js') {
-    if (!/var VERSION = '[^']+';/.test(text)) throw new Error('public JS release identity missing');
-    return text.replace(/Odyssey UI JS · v[^\r\n]+/, `Odyssey UI JS · v${RELEASE}`)
+    if (!/var VERSION = '[^']+';/.test(text) || !/var RELEASE = '[^']+';/.test(text)) throw new Error('public JS release identity missing');
+    const generated = text.replace(/Odyssey UI JS · v[^\r\n]+/, `Odyssey UI JS · v${RELEASE}`)
       .replace(/var VERSION = '[^']+';/, `var VERSION = '${RELEASE}';`)
       .replace(/var RELEASE = '[^']+';/, `var RELEASE = '${RELEASE}';`);
+    if (!generated.includes(`var VERSION = '${RELEASE}';`) || !generated.includes(`var RELEASE = '${RELEASE}';`)) throw new Error('generated JS identity differs');
+    return generated;
   }
   return text;
 }
@@ -50,6 +66,18 @@ export async function buildAssets(root = ROOT) {
   assets.set('release.json', JSON.stringify({
     schema: 'odyssey.public-release.v1', release: RELEASE, baseUrl: `/${RELEASE}/`,
     identities: { cargo: cargo.match(/^version\s*=\s*"([^"]+)"/m)[1], internalRust: distribution.match(/^release\s*=\s*"([^"]+)"/m)[1], publicAssets: RELEASE, design: 'line', shellContract: '1.3' },
+    license: { spdx: 'MIT', notice: 'LICENSE.txt', fonts: ['Inter-OFL.txt', 'Archivo-OFL.txt', 'AzeretMono-OFL.txt'] },
+    toolchain: { rustVersion: cargo.match(/^rust-version\s*=\s*"([^"]+)"/m)[1], node: '>=22.12.0', shell: 'POSIX sh; no GNU sed dependency' },
+    modules: {
+      core: { files: ['odyssey.css', 'odyssey.js'], requires: [] },
+      line: { files: ['odyssey-line.css'], requires: ['core'] },
+      fonts: { files: ['odyssey-font.css', 'odyssey-line-font.css'], requires: [] },
+      extensions: { files: ['odyssey-extensions.css', 'odyssey-extensions.js'], requires: ['core'] },
+      compositions: { files: ['compositions.css', 'compositions.js'], requires: ['core', 'extensions'] },
+      workflows: { files: ['workflows.css', 'workflows.js'], requires: ['core', 'extensions'] },
+      dataTools: { files: ['data-tools.css', 'data-tools.js'], requires: ['core'] },
+      complete: { files: ['odyssey-complete.css', 'odyssey-complete.js'], requires: [], optional: ['workflows', 'dataTools'] },
+    },
     runtimeBoundary: { public: 'network-free', internalOnly: ['Wire', 'Spark', 'Motion'], compositions: 'host-owned state, persistence and transport' },
     promotion: { approval: 'manual after this candidate passes tools/verify.sh', inheritsCanaryEvidence: false },
     files: [...assets].map(([file, body]) => ({ path: file, url: `/${RELEASE}/${file}`, bytes: Buffer.byteLength(body), source: SOURCE_FILES[file] || 'generated composition' })),
@@ -83,6 +111,7 @@ export async function freezeRelease(snapshot, assets) {
 }
 
 async function main() {
+  assertNodeVersion();
   const args = process.argv.slice(2), assets = await buildAssets(), snapshot = path.join(ROOT, 'releases', RELEASE);
   if (args.length === 0 || (args.length === 1 && args[0] === '--check')) {
     const target = process.env.ODYSSEY_PUBLIC_RELEASE_DIR || snapshot;

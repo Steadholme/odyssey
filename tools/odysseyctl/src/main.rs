@@ -660,7 +660,7 @@ fn compare_file(target: &Path, relative: &Path, wanted: &[u8], failures: &mut Ve
 }
 
 fn canonical_files(root: &Path) -> io::Result<Vec<PathBuf>> {
-    let mut files = vec![PathBuf::from("Cargo.toml")];
+    let mut files = vec![PathBuf::from("Cargo.toml"), PathBuf::from("LICENSE")];
     collect_files_from(root, Path::new("css"), &mut files)?;
     collect_files_from(root, Path::new("js"), &mut files)?;
     collect_files_from(root, Path::new("src"), &mut files)?;
@@ -733,6 +733,9 @@ fn stamped_content(root: &Path, relative: &Path) -> io::Result<Vec<u8>> {
 }
 
 fn stamp_for(path: &Path) -> &'static str {
+    if path == Path::new("LICENSE") {
+        return "";
+    }
     match path.extension().and_then(OsStr::to_str) {
         Some("rs") => "// GENERATED FROM odyssey — DO NOT EDIT\n",
         Some("css") => "/* GENERATED FROM odyssey — DO NOT EDIT */\n",
@@ -809,7 +812,7 @@ mod tests {
         let distribution = load_distribution(&root).unwrap();
 
         assert_eq!(distribution.schema, 1);
-        assert_eq!(distribution.release, "1.4.0-canary.1");
+        assert_eq!(distribution.release, "1.5.0-canary.1");
         assert_eq!(distribution.consumers.len(), 27);
         assert_eq!(
             distribution
@@ -835,27 +838,33 @@ mod tests {
         let distribution = load_distribution(&root).unwrap();
         let files = canonical_files(&root).unwrap();
 
-        assert_eq!(distribution.release, "1.4.0-canary.1");
+        assert_eq!(distribution.release, "1.5.0-canary.1");
         let expected: Vec<PathBuf> = [
             "Cargo.toml",
+            "LICENSE",
             "css/components.css",
             "css/compositions.css",
+            "css/data-tools.css",
             "css/expressions.css",
             "css/extensions.css",
             "css/font.css",
             "css/fonts/Archivo-OFL.txt",
             "css/fonts/AzeretMono-OFL.txt",
+            "css/fonts/Inter-OFL.txt",
             "css/line-font.css",
             "css/line.css",
             "css/motion.css",
             "css/profile.css",
             "css/tokens.css",
+            "css/workflows.css",
             "js/canary.js",
             "js/compositions.js",
+            "js/data-tools.js",
             "js/extensions.js",
             "js/motion.js",
             "js/spark.js",
             "js/wire.js",
+            "js/workflows.js",
             "src/controls.rs",
             "src/data.rs",
             "src/feedback.rs",
@@ -882,7 +891,7 @@ mod tests {
         let fingerprint = bundle_fingerprint(&root, &files).unwrap();
 
         let manifest = vendor_manifest(&root, &distribution.release, &files).unwrap();
-        assert!(manifest.contains("release=1.4.0-canary.1\n"));
+        assert!(manifest.contains("release=1.5.0-canary.1\n"));
         assert!(manifest.contains(&format!("fingerprint=fnv1a64:{fingerprint:016x}\n")));
         assert!(manifest.contains(&format!("files={}\n", files.len())));
     }

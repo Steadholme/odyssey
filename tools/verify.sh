@@ -3,6 +3,8 @@
 set -eu
 ROOT=$(CDPATH='' cd -- "$(dirname -- "$0")/.." && pwd)
 cd "$ROOT"
+BROWSERS=${BROWSERS:-chromium,firefox,webkit}
+export BROWSERS
 node -e 'const [a,b]=process.versions.node.split(".").map(Number); if(a<22||(a===22&&b<12)){console.error("Odyssey verification requires Node >=22.12");process.exit(1)}'
 if [ ! -f tools/browser-runtime/node_modules/playwright/package.json ]; then
   echo 'Install the locked test environment first: npm ci --prefix tools/browser-runtime && npm run --prefix tools/browser-runtime install:browsers' >&2
@@ -44,6 +46,13 @@ node tools/tests/compositions-browser.test.mjs
 node tools/tests/line-p1.test.mjs
 node tools/tests/carousel-targets.test.mjs
 node tools/tests/library-a11y-p1.test.mjs
+node --test tools/tests/core-p2.test.mjs tools/tests/extensions-p2.test.mjs
+node tools/tests/rust-p2-browser.test.mjs
+node tools/tests/workflows-browser.test.mjs
+node tools/tests/data-tools-browser.test.mjs
+node tools/tests/states-browser.test.mjs
+node tools/tests/performance-budget.test.mjs
+node tools/browser-runtime/node_modules/playwright/cli.js test --config tools/tests/visual.config.mjs
 node tools/tests/compatibility-browser.test.mjs
 if [ "${BROWSERS:-chromium,firefox,webkit}" = 'chromium,firefox,webkit' ]; then
   printf '\nPASS: Odyssey candidate verification, including all three browser engines.\n'

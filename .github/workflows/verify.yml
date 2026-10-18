@@ -18,8 +18,34 @@ jobs:
       - run: npm exec --prefix tools/browser-runtime -- playwright install --with-deps chromium firefox webkit
       - name: Prepare the explicit pre-freeze candidate when needed
         run: |
-          if [ ! -d releases/1.4.0 ]; then
-            ./tools/build-public-dist.sh --output "$RUNNER_TEMP/odyssey-1.4.0-candidate"
-            echo "ODYSSEY_PUBLIC_RELEASE_DIR=$RUNNER_TEMP/odyssey-1.4.0-candidate" >> "$GITHUB_ENV"
+          if [ ! -d releases/1.5.0 ]; then
+            ./tools/build-public-dist.sh --output "$RUNNER_TEMP/odyssey-1.5.0-candidate"
+            echo "ODYSSEY_PUBLIC_RELEASE_DIR=$RUNNER_TEMP/odyssey-1.5.0-candidate" >> "$GITHUB_ENV"
           fi
       - run: ./tools/verify.sh
+
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: visual-differences
+          path: /tmp/odyssey-visual-results
+          if-no-files-found: ignore
+  msrv:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: 1.87.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: cargo test --locked --all-targets
+      - run: cargo test --locked --manifest-path tools/odysseyctl/Cargo.toml
+      - name: Check the server against the declared minimum Rust version
+        run: |
+          if [ ! -d releases/1.5.0 ]; then
+            ./tools/build-public-dist.sh --output "$RUNNER_TEMP/odyssey-1.5.0-msrv"
+            export ODYSSEY_PUBLIC_RELEASE_DIR="$RUNNER_TEMP/odyssey-1.5.0-msrv"
+          fi
+          cargo check --locked --manifest-path server/Cargo.toml
