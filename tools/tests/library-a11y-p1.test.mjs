@@ -59,7 +59,10 @@ test('ENG-09/ACT-16: real Tab reaches the legacy guide combobox; browser AX and 
   assert.equal(await input.getAttribute('aria-expanded'), 'false');
   assert.equal(await input.getAttribute('aria-activedescendant'), null);
   await input.fill('no such framework');
-  await assertFeedback(page.locator('.ody-combobox__empty').first(), { text: 'No matches' });
+  const locale = await input.evaluate(el => (el.closest('[lang]')?.lang || document.documentElement.lang || 'en').toLowerCase().split(/[-_]/)[0]);
+  const noMatches = { en: 'No matches', zh: '没有匹配项', ja: '一致する項目はありません' }[locale];
+  assert.ok(noMatches, `the guide uses a supported runtime locale: ${locale}`);
+  await assertFeedback(page.locator('.ody-combobox__empty').first(), { text: noMatches });
   await page.keyboard.press('Escape');
   await assertValidFocus(page, { within: '[data-ody-combobox]' });
 });
@@ -86,8 +89,16 @@ test('ENG-09/ACT-09: legacy guide custom date is named, keyboard-operable and re
 
 test('ENG-09: legacy tree exposes hierarchy, expand state and real keyboard focus', async t => {
   const page = await candidate(t, '/data-display.html');
-  const row = page.locator('.ody-tree__row').first();
-  await assertKeyboardReachable(page, row, { maxTabs: 200 });
+  const tree = page.getByRole('tree');
+  assert.equal(await tree.count(), 1);
+  const entry = tree.locator('.ody-tree__row[tabindex="0"]');
+  assert.equal(await entry.count(), 1, 'the roving tree has exactly one Tab entry');
+  await assertKeyboardReachable(page, entry, { maxTabs: 200 });
+  await page.keyboard.press('Home');
+  const row = tree.locator('.ody-tree__row').first();
+  assert.equal(await row.evaluate(el => el === document.activeElement && el.matches(':focus-visible')), true, 'Home moves keyboard focus to the first tree row');
+  assert.equal(await row.getAttribute('tabindex'), '0');
+  assert.equal(await tree.locator('.ody-tree__row[tabindex="0"]').count(), 1);
   assert.equal(await row.getAttribute('role'), 'treeitem');
   assert.match(await row.ariaSnapshot(), /src/);
   assert.equal(await page.getByRole('tree').count(), 1);
