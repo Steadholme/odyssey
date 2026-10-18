@@ -6,7 +6,21 @@
 
 **54 个站点不是 Odyssey 的全部能力。** 旧 guide/runtime 已有多选、Tag input、Date/Time picker、Dual-range、Rating、Notification center、Context menu、Bottom sheet、Carousel、Hover card、Calendar、Kanban 等。当前最缺的是统一能力目录、同名控件契约、Line 兼容性和稳定消费路径，而不是再做一遍这些控件。
 
-本清单共 **70 项：P1 33、P2 31、P3 6**。条目已合并重复发现；“已复现”指问题已得到证据，仍是未修复待办。“新增组合/领域扩展”是设计建议，不代表现有能力故障。
+本清单共 **70 项：P1 33、P2 31、P3 6**。本轮 **P1 已完成 29 项，4 项仍待闭环**；条目勾选和“本轮结果”表示当前进展，“状态／依据”保留修复前的调查快照。“新增组合/领域扩展”是设计建议，不代表现有能力故障。
+
+### 本轮 P1 执行
+
+- [x] 33 项分工和共享接口确定；Line 为主线，旧入口与冻结发行保留。
+- [x] 运行时、Line/Rust、可消费组合及必要的旧 guide 邻接修复。
+- [x] 能力目录/Pencil 同步、未冻结发行候选、统一验收与三引擎验证。
+- [ ] 真实 IME / VoiceOver 抽验（临时系统设置许可待用户确认；A11Y-04、ENG-09）。
+- [ ] 完成人工抽验后冻结 1.4.0，再仅切换 OVH Odyssey；独立核对生产安装入口及恢复路径（ENG-04、ENG-05）。
+
+**可用候选**：`http://localhost:18770/`，资产目录 `/tmp/odyssey-1.4.0-candidate.IvwAre`，核心来源 `5112206`；后续 `bc907b2` 增补真实 Forms 跨引擎测试，`5768c80` 仅修候选缓存。显式候选返回 `no-store`；正式冻结构建继续 `immutable`。旧浏览上下文可能已有先前 immutable 缓存，首次验收用新 origin 或隔离上下文，不清用户全局浏览数据。
+
+**已消费的证据**：本地统一 `tools/verify.sh`（Chromium/WebKit）通过；OVH 隔离候选的 Chromium 156.0.8078.4、Firefox 157.0、WebKit 27.2 共九条 modular/complete/真实 Forms 入口通过；[GitHub CI 39130254060](https://github.com/Steadholme/odyssey/actions/runs/39130254060) 在 `bc907b2` 运行同一入口、三引擎全绿。缓存补丁的五项受影响断言及实际 HTTP 响应已通过。26 项候选 a11y 门禁和代表性实际截图已审阅；AX/合成事件不替代真实 VoiceOver/IME。
+
+本地完整日志：`/tmp/odyssey-full-verify-20261018.log`；隔离 Linux 三引擎日志及截图：`/Users/w33d/.codex/visualizations/2026/10/18/01a14cce-8c61-77a1-a455-8844e22e2e39/odyssey-p1/`。源码保存在 `codex/odyssey-p1-20261018`。**尚未冻结 1.4.0，尚未切换生产**。旧 `/dist`、Line/extensions aliases 保持已部署版本字节，其他产品不隐式消费本轮更新。
 
 ### 调查基线和边界
 
@@ -41,27 +55,33 @@
 
 责任域：Line CSS / token / Rust 样式。
 
-- [ ] **FIX-01 · P1 · 修复带可见标签的 Switch 布局**
+- [x] **FIX-01 · P1 · 修复带可见标签的 Switch 布局**
+  - 本轮结果：完成。`7cc1486` 将轨道与可见标签分离；长中英文、旧/标准 markup、forced-colors 和文本间距候选回归通过。
   - 状态／依据：**已复现**。css/line.css:117–122；site/forms.html:229–270。整个 label 被固定为38×20；六字标签实测被挤成约12.94×124.78px竖列并重叠。
   - 验收：尺寸限制只落在轨道；标准__control结构及registry简化结构均支持长中英文、换行、checked/disabled/focus，不破坏旧markup。 参考：[Reflow][wcag-reflow]。
 
-- [ ] **FIX-02 · P1 · 隔离简例 Chart 样式，恢复四类 SVG 图表布局**
+- [x] **FIX-02 · P1 · 隔离简例 Chart 样式，恢复四类 SVG 图表布局**
+  - 本轮结果：完成。`7cc1486` 将简例柱图限定为专用作用域；guide 四类 SVG 保留比例、名称与窄容器布局，实际页面 Axe/重排通过。
   - 状态／依据：**已复现**。css/line.css:164–165；site/data-display.html:665–674。bar/line容器高88但SVG高149，donut为88/140；行内spark也被撑高88。
   - 验收：registry柱状简例使用专用作用域；已有bar/line/donut/spark保持各自比例、标题间距及行内尺寸，亮暗和窄容器均不重叠。
 
-- [ ] **FIX-03 · P1 · 补全 Rust/public Line 角色映射，保留语义 Tone**
+- [x] **FIX-03 · P1 · 补全 Rust/public Line 角色映射，保留语义 Tone**
+  - 本轮结果：完成。`7cc1486`、`de7576c` 映射 Rust/public 语义角色；四表达亮暗 48 个绑定共 384 个实际值检查通过。
   - 状态／依据：**代码确认**。css/line.css:69–84未映射--brand/--info*；:147将Alert轨道统一warning，:151将Progress统一Line蓝；css/components.css:297,659。
   - 验收：Rust/public两入口的Button、Pill、Alert、Progress、Empty角色一致；ok/warn/down/info语义不被线路家族色覆盖，不能只依赖颜色表达状态。
 
-- [ ] **FIX-04 · P1 · 修复 Rust Line busy spinner 的关键帧引用**
+- [x] **FIX-04 · P1 · 修复 Rust Line busy spinner 的关键帧引用**
+  - 本轮结果：完成。`7cc1486` 修正 APP_CSS 自有旋转关键帧并保留 reduced-motion busy 状态；Rust/helper 与 Line 浏览器回归通过。
   - 状态／依据：**代码确认**。css/line.css:170–172使用ody-spin；css/components.css:278–284只定义odyssey-spin；src/lib.rs:1–9的APP_CSS不含public dist关键帧。
   - 验收：仅加载APP_CSS的busy按钮能旋转；减少动效时仍有可辨识busy状态且不旋转，避免为此要求加载public全量包。
 
-- [ ] **FIX-05 · P1 · 统一 root / table / 旧 modifier 三种 density 入口**
+- [x] **FIX-05 · P1 · 统一 root / table / 旧 modifier 三种 density 入口**
+  - 本轮结果：完成。`7cc1486` 统一 root、table 和旧 modifier 密度入口；粗指针目标下限与统一候选回归通过。
   - 状态／依据：**已复现**。css/line.css:139–140仅识别table自身data-density=compact；旧.ody-table--compact实测仍44px；Patterns使用root density。
   - 验收：明确可继承的comfortable/compact契约；兼容旧modifier；表格、列表、字段和工具栏在同一偏好下按约定缩放，触摸目标不随视觉密度失去可用性。
 
-- [ ] **FIX-06 · P1 · 恢复 Rust 表格窄容器中的完整数据可读性**
+- [x] **FIX-06 · P1 · 恢复 Rust 表格窄容器中的完整数据可读性**
+  - 本轮结果：完成。`7cc1486` 恢复可聚焦的横向表格滚动区域；320px、真实键盘和页面重排回归通过。
   - 状态／依据：**代码确认**。src/data.rs:43输出.table-wrap；css/components.css:315为overflow:hidden，public .ody-table-wrap为overflow:auto。
   - 验收：320px容器内长表能横向读取全部列；宿主页不被撑开；键盘用户能进入滚动区域，既有表格入口保持可用。
 
@@ -69,16 +89,19 @@
 
 责任域：组件 runtime / forms / data。
 
-- [ ] **ACT-01 · P1 · 扩展组件支持 root 自身、动态子树和幂等初始化**
+- [x] **ACT-01 · P1 · 扩展组件支持 root 自身、动态子树和幂等初始化**
+  - 本轮结果：完成。`8c8c56b` 支持 root 自身/后代、动态插入、幂等初始化及 Wire 接线；21 项运行时浏览器回归通过。
   - 状态／依据：**已复现**。js/extensions.js:164–187只扫描后代；最小DOM探针init(otpRoot)绑定0监听，传父容器绑定24。
   - 验收：沿用已有root自身+后代扫描模式；明确与Odyssey.init/Wire更新的接线；初始页面、根自身、动态插入、重复init均正确，监听不重复。
   - 依赖：LIB-02。
 
-- [ ] **ACT-02 · P1 · 拖入文件必须进入原生 input / FormData**
+- [x] **ACT-02 · P1 · 拖入文件必须进入原生 input / FormData**
+  - 本轮结果：完成。`8c8c56b` 使 drop 回写 input.files；共享旧/增强 fixture 及三引擎真实 guide 均校验 FormData 文件名、类型、大小和内容。
   - 状态／依据：**已复现**。js/extensions.js:69–83仅更新文案与ody:file-selected；有效ZIP拖入后input.files仍0。旧dist/odyssey.js:939–947已有DataTransfer回写。
   - 验收：优先复用成熟文件输入契约；browse/drop产生相同FormData及变更事件；原生提交真的携带已显示文件。网络上传仍由宿主提供。
 
-- [ ] **ACT-03 · P1 · 修复 Multi-select 的键盘模型与 chip 变更事件**
+- [x] **ACT-03 · P1 · 修复 Multi-select 的键盘模型与 chip 变更事件**
+  - 本轮结果：完成。`8c8c56b` 统一键盘选择、具名删除/清空及单次 detail.value 数组事件；真实 guide 三引擎和运行时回归通过。
   - 状态／依据：**已复现**。site/forms.html:483–493；dist/odyssey.js:792–793,1042–1052。Enter不开、option只有点击；chip删除不发选择时约定的ody:change，删除名称仅Remove。
   - 验收：选定一致的listbox/combobox模型；Enter/Space、方向键、Escape可完成选择；删除名称含项目名；点选/移除/清空均发一次一致values事件，移除后焦点有效。 参考：[Listbox][apg-listbox]。
 
@@ -107,7 +130,8 @@
   - 验收：统一定位策略，测实际面板；短/长内容、视口边角、打开后的resize/scroll均不越界且不脱离触发器；保留原生Popover入口。
   - 依赖：LIB-02。
 
-- [ ] **ACT-09 · P1 · 旧 Date/Time picker 的键盘、日期值和约束契约**
+- [x] **ACT-09 · P1 · 旧 Date/Time picker 的键盘、日期值和约束契约**
+  - 本轮结果：完成。`8c8c56b` 补齐 custom date/time 键盘、完整日期名称及约束；闰日/无效初值/边界回归与三引擎真实日期取值通过。
   - 状态／依据：**已复现/补全**。dist/odyssey.js:810–875,1060–1075；readonly输入Enter不开，日期按钮只有数字；现有自定义日历无min/max/不可选日。
   - 验收：优先复用原生date/time；保留custom时完成打开、日期导航、完整日期名称、选中/今日语义、翻月焦点、Escape恢复；支持min/max、无效初值、闰日及跨月边界。 参考：[Date picker/Combobox][apg-combo]。
 
@@ -125,7 +149,8 @@
   - 状态／依据：**补全**。src/data.rs:90–102固定no-data文案且不能传CTA；public feedback已有上下文与动作。
   - 验收：保留旧本地化默认；新增可选标题、说明和CTA配置，至少展示首次使用、无搜索结果、失败恢复三种真实状态。 参考：[Empty states][carbon-empty]。
 
-- [ ] **ACT-13 · P1 · 数据表真实筛选、分页、选择计数与状态组合**
+- [x] **ACT-13 · P1 · 数据表真实筛选、分页、选择计数与状态组合**
+  - 本轮结果：完成。`8c8c56b` 将筛选、排序、分页和选择接到同一数据流；实际行/计数、空结果恢复与键盘排序回归通过。
   - 状态／依据：**代码确认**。site/data-display.html:575–603展示筛选/分页且已选计数硬编码0；dist/odyssey.js:1431–1480仅实现排序/checkbox；site/assets/line-site.js:36–44只切页码标签。
   - 验收：定义客户端数据表或服务端adapter；真实数据完成筛选→排序→分页→选择，显示行/总数/页码/选中数同步；排序可键盘操作并暴露状态；空结果可清除恢复。
 
@@ -134,11 +159,13 @@
   - 验收：保留旧入口时选完整ARIA tree或原生disclosure模型，统一层级/选中/焦点；registry原生details不强加不必要的tree箭头键规则。 参考：[Tree view][apg-tree]。
   - 依赖：LIB-02。
 
-- [ ] **ACT-15 · P1 · Kanban 除拖拽外可用点击和键盘移动**
+- [x] **ACT-15 · P1 · Kanban 除拖拽外可用点击和键盘移动**
+  - 本轮结果：完成。`8c8c56b` 为原 board 增加移动到列、上移/下移及状态反馈；键盘/点击路径与既有拖拽回归通过。
   - 状态／依据：**代码确认**。site/data-display.html:740–747；dist/odyssey.js:1483–1529仅HTML5 DnD，卡片不可键盘聚焦。
   - 验收：复用既有board与事件；提供移动到列/上移下移操作，键盘及单指点击均能完成且播报结果，列计数一致。 参考：[Dragging movements][wcag-drag]。
 
-- [ ] **ACT-16 · P1 · 旧 custom Combobox 完成名称及 ARIA 状态同步**
+- [x] **ACT-16 · P1 · 旧 custom Combobox 完成名称及 ARIA 状态同步**
+  - 本轮结果：完成。`8c8c56b` 补齐稳定名称/controls/activedescendant/selected；过滤与空态回归、三引擎真实 guide 键盘及 AX 通过。
   - 状态／依据：**已复现**。site/forms.html:456–463；dist/odyssey.js:729–765,1011,1110–1117。方向键仅改视觉active，缺controls/activedescendant/option selected及名称连接。
   - 验收：稳定ID和可访问名称连接input/popup/option；过滤、活动项、选中、空结果、Escape的AX状态一致；保留native datalist入口。 参考：[Combobox][apg-combo]。
 
@@ -146,28 +173,34 @@
 
 责任域：a11y / controls / overlay runtime。
 
-- [ ] **A11Y-01 · P1 · 输入框边界不能复用低对比装饰分隔线**
+- [x] **A11Y-01 · P1 · 输入框边界不能复用低对比装饰分隔线**
+  - 本轮结果：完成。`7cc1486`、`de7576c` 分离 control-border/hairline 并修文字角色；八主题控件边界对比最低 5.58:1，384 个浏览器 token 值检查通过。
   - 状态／依据：**已实测**。css/line.css:45,105–106；css/expressions.css:2–7。边界/背景对比实测Line暗2.18:1，Soft亮1.62/暗2.58，Studio亮1.78/暗2.84。
   - 验收：拆分交互边界token和装饰hairline；空输入框必要边界在实际相邻背景上达到3:1；覆盖四表达亮暗，不以加粗全部分隔线代替。 参考：[Non-text contrast][wcag-contrast]。
 
-- [ ] **A11Y-02 · P1 · forced-colors 下 Switch 本体可见**
+- [x] **A11Y-02 · P1 · forced-colors 下 Switch 本体可见**
+  - 本轮结果：完成。`7cc1486` 的 Switch 使用系统色边框/滑块；forced-colors checked/unchecked/disabled/focus 实测与截图审阅通过。
   - 状态／依据：**已实测**。dist/odyssey.css:388–398；css/line.css:117–122,196–199。track/thumb均白且无边框，原input opacity=0，SWT只剩空白。
   - 验收：使用系统色边框/滑块或恢复原生；checked/unchecked/disabled/focus均可辨识，不能只检查焦点环。 参考：[Forced colors][forced-colors]。
   - 依赖：FIX-01。
 
-- [ ] **A11Y-03 · P1 · Rust label、hint、error 与字段真实关联**
+- [x] **A11Y-03 · P1 · Rust label、hint、error 与字段真实关联**
+  - 本轮结果：完成。`7cc1486` 新增兼容式 FieldOpts/field_with 并补旧 guide 关联；73 项 Rust 测试、真实字段 AX/文本重排门禁通过。
   - 状态／依据：**代码确认**。src/controls.rs:311–324,341–369；range label无for/input id，hint/error缺描述连接。site/forms.html:278–288同类示例也缺关联。
   - 验收：兼容旧签名，提供显式id/describedby/error连接路径，追加而非覆盖调用者描述；读屏能读名称、当前值、帮助和错误。 参考：[表单标签][wai-labels] / [错误通知][wai-notifications]。
 
 - [ ] **A11Y-04 · P1 · 中文/日文 IME 合成期不得执行命令或创建 chip**
+  - 本轮结果：部分完成。`8c8c56b` 已统一 composition/isComposing/229 防护；合成事件与非 IME 键盘回归通过。真实中/日输入法候选确认抽验仍待用户同意临时切换输入法，不能用 ASCII 输入或合成事件算完成。
   - 状态／依据：**已实测**。js/extensions.js:132–135；dist/odyssey.js:1121–1125,1989–1993；site/assets/patterns-20261018.js:293。isComposing Enter已复现命令执行/关闭及未完成zhong被创建chip。
   - 验收：统一处理composition状态；候选确认不触发业务动作，compositionend后正常提交；合成事件回归加真实IME抽验，保持已有非IME键盘路径。 参考：[UI Events isComposing][uievents-composing]。
 
-- [ ] **A11Y-05 · P1 · 旧 Modal/Drawer 单一语义节点与逐层焦点恢复**
+- [x] **A11Y-05 · P1 · 旧 Modal/Drawer 单一语义节点与逐层焦点恢复**
+  - 本轮结果：完成。`8c8c56b` 移除重复 dialog 语义并逐层记录返回焦点；嵌套/移除触发器恢复和三引擎 modal 关键路径通过。
   - 状态／依据：**已实测**。dist/odyssey.js:108,124–149。命名dialog内再次生成无名dialog；modal→drawer逆序关闭后焦点留在隐藏modal按钮。
   - 验收：每层一个具名dialog；按层记录返回焦点；嵌套、触发器删除、反向切换均回到有效目标，与既有原生dialog路径协调。 参考：[Modal dialog][apg-dialog]。
 
-- [ ] **A11Y-06 · P1 · Menu 动作关闭后交还有效焦点**
+- [x] **A11Y-06 · P1 · Menu 动作关闭后交还有效焦点**
+  - 本轮结果：完成。`8c8c56b` 区分普通动作、导航和新层焦点归属；关闭后有效焦点及 Escape/Tab 路径回归通过。
   - 状态／依据：**已实测**。dist/odyssey.js:168–175,503–508。registry MNU的Duplicate执行后菜单关闭，焦点仍在隐藏项。
   - 验收：普通动作回trigger；导航/开层交给目的地；Escape、Tab离开和鼠标选择一致，不抢新层焦点。 参考：[Menu button][apg-menu]。
   - 依赖：A11Y-05。
@@ -195,21 +228,25 @@
 
 责任域：library API / design / docs。
 
-- [ ] **LIB-01 · P1 · 建立 canonical 能力目录与可校验组件 manifest**
+- [x] **LIB-01 · P1 · 建立 canonical 能力目录与可校验组件 manifest**
+  - 本轮结果：完成。`a0015a1`、`ebea7a2` 建立 82 能力（54 站＋28 guide/组合）的 schema/manifest 与可搜索目录；Ajv、锚点/导出/发行库存检查通过，fleet 原义不变。
   - 状态／依据：**缺失统一索引**。site/index.html:30维护54站；site/forms.html:447–683、site/feedback.html:414–784另有大量成熟站外能力；distribution.toml:1–13仅是consumer/fleet语义。
   - 验收：schema记录稳定ID、成熟度、HTML/Rust入口、CSS/JS依赖、状态、guide/设计/测试链接；搜索找到站外组件，目录/导出/发行遗漏可校验；fleet manifest保留原义。
 
-- [ ] **LIB-02 · P1 · 统一同名组件契约，明确 HTML/Rust 有意的 parity**
+- [x] **LIB-02 · P1 · 统一同名组件契约，明确 HTML/Rust 有意的 parity**
+  - 本轮结果：完成。`a0015a1`、`ebea7a2` 明确 native/增强/页面私有/Rust parity 与有效 JSON Pointer；共享 old/new FormData fixture、生命周期及消费契约回归通过。
   - 状态／依据：**部分/双实现**。site/forms.html:646–661与js/extensions.js:34–63是两套OTP；File/Tree/Split/Command也有双入口；src/lib.rs:42–59只导出部分Rust helper。
   - 验收：选择canonical行为并保留旧入口适配；说明native/增强/页面私有及runtime边界；共享fixture验证状态/语义/事件；不强求每个HTML组件都有Rust helper或名称完全相同。
   - 依赖：LIB-01。
 
-- [ ] **LIB-03 · P1 · 提供可编译、可复制的 Rust Line 接入与 API 指南**
+- [x] **LIB-03 · P1 · 提供可编译、可复制的 Rust Line 接入与 API 指南**
+  - 本轮结果：完成。`7cc1486` 增加兼容的 Line shell builder/API 指南及最小 path-dependency 示例；静态/动态、locale/theme、CSRF/nonce 编译与 Rust 73 项测试通过。
   - 状态／依据：**部分**。src/shell.rs:177–210无design opt-in；examples/gallery.rs:16–69已有旧gallery；src/lib.rs已有资产/helper，现有站点主要讲HTML/data API。
   - 验收：最小path-dependency示例覆盖静态/动态shell、Line root、extensions、locale/theme、CSRF及nonce；链接Rust API参考并持续编译；无需手改完整HTML字符串，旧shell输出兼容。
   - 依赖：LIB-02、ACT-01、FIX-03。
 
-- [ ] **LIB-04 · P1 · Pencil token → CSS → 组件 → 文档可追踪同步**
+- [x] **LIB-04 · P1 · Pencil token → CSS → 组件 → 文档可追踪同步**
+  - 本轮结果：完成。`a0015a1`、`b1c5b34`、`de7576c` 建立 typed 交换/来源映射；Pencil 保留 54 reusable、原 207 变量并新增 control-border，实际读回 208 变量；8 模式边界、Line 亮暗 pigments、类型/别名/round-trip 与 384 个 CSS 值通过。
   - 状态／依据：**已有基础/缺同步契约**。Pencil现有54 reusable、207变量、四expression×亮暗及States/Extensions/Patterns画板；css/line.css:3–37、site/tokens.html:68–80仍分别维护值，tracked库无重放映射。
   - 验收：保留现有Line方向；明确token/组件语义来源、稳定节点ID及typed token映射；采用兼容DTCG的交换层或明确等价schema；检查别名/类型/差异，设计与代码共同审阅后进入新release。 参考：[DTCG 2025.10交换格式][dtcg]。
   - 依赖：LIB-01。
@@ -219,7 +256,8 @@
   - 验收：按组件适用范围列default/hover/focus/active/selected/disabled/readonly/invalid/busy/empty及长内容；四表达亮暗/密度引用同一token；示例锚点精确，尺寸说明和复制片段可验证。
   - 依赖：LIB-01、LIB-04、FIX-05。
 
-- [ ] **LIB-06 · P1 · 三套 Patterns 提供可消费的组合与状态接口**
+- [x] **LIB-06 · P1 · 三套 Patterns 提供可消费的组合与状态接口**
+  - 本轮结果：完成。`7cc1486`、`42fb20a` 抽取 OdysseyCompositions 的 Workspace Settings 宿主状态/保存接口；最小声明资产示例、50 项消费检查及三引擎 complete 路径通过，三 Patterns 保留。
   - 状态／依据：**已有演示/待抽取**。site/patterns.html:3加载专用CSS/JS；site/assets/patterns-20261018.js:168–225依赖页面私有结构。Release/Inbox/Settings实际已上线并完成交互验收。
   - 验收：保留三流程，列出库组件映射、最小组合、宿主数据/状态接口；至少一个流程仅加载声明资产即可运行，不依赖整页私有selector；示例状态不冒充后端授权或真实部署。
   - 依赖：LIB-02、ACT-01、ACT-13。
@@ -233,44 +271,53 @@
 
 责任域：release / tooling / QA。
 
-- [ ] **ENG-01 · P1 · 修复 CLI canonical-bundle 测试基线**
+- [x] **ENG-01 · P1 · 修复 CLI canonical-bundle 测试基线**
+  - 本轮结果：完成。`807a145` 以核准的完整 canonical 文件列表取代过期数量；6 项 CLI 测试包含精确清单与相关指纹断言，统一验收通过。
   - 状态／依据：**已执行失败**。tools/odysseyctl/src/main.rs:838–853锁28文件，:662–668当前实际31；定向测试exit101，left31/right28。
   - 验收：核对新增文件后更新明确清单/基线，保留断言；定向及相关CLI测试通过；旧指纹断言尚未执行，更新时核对而不预先断言其结果。
 
-- [ ] **ENG-02 · P1 · vendored crate 的单测输入完整**
+- [x] **ENG-02 · P1 · vendored crate 的单测输入完整**
+  - 本轮结果：完成。`807a145` 将 public dist 专属测试移至 server 边界；实际临时 vendor 的 cargo check 与完整 lib 单测通过，没有跳过失败测试。
   - 状态／依据：**已执行失败**。src/lib.rs:272–280读取../dist/odyssey.js；canonical vendor只带Cargo/css/js/src。等价临时fixture的cargo test --lib --no-run缺文件，cargo check --lib通过。
   - 验收：正常消费构建与vendor自身单测编译均通过；将public dist专属测试放到正确边界，或明确测试输入；保持既有vendor payload/入口，不能靠跳过测试。
 
-- [ ] **ENG-03 · P1 · 明确发行身份、兼容/迁移及 stable/canary 条件**
+- [x] **ENG-03 · P1 · 明确发行身份、兼容/迁移及 stable/canary 条件**
+  - 本轮结果：完成。`5112206` 在 release manifest/RELEASES.md 映射 Cargo 0.1.0、Rust 1.4.0-canary.1、public 1.4.0、Line 与 shell 1.3；兼容/弃用/晋级条件及候选身份一致性检查通过。
   - 状态／依据：**部分**。Cargo.toml:3为0.1.0；distribution.toml:2为1.4 canary；公开build仍1.3。FLEET.md:249–257已有immutable和runtime边界。
   - 验收：元数据映射Cargo/internal/public/design-layer身份；列出弃用、breaking changes、迁移与本版本晋级证据；不强行统一版本号，不借旧canary窗口为新release背书。 参考：[SemVer][semver]。
   - 依赖：LIB-01。
 
 - [ ] **ENG-04 · P1 · Line/Expressions/Extensions 可 pin 的完整公开发行组合**
+  - 本轮结果：部分完成。`5112206` 实现完整 20 文件候选、原子冻结/拒绝覆写及 pin 路由；实际 modular/complete/自托管检查通过，1.1/1.2/1.3 未修改。待真实 IME/VoiceOver 验收通过后冻结并公开 1.4.0；当前不是 immutable 发行。
   - 状态／依据：**部分**。tools/build-public-dist.sh:14–38仅生成1.3 core/profile/canary；Line/Extensions仍可变assets，冻结1.3明确不含Line。
   - 验收：新增完整immutable资产URL及自托管文件清单；core/Line/fonts/extensions组合版本相容；冻结1.1/1.2/1.3不覆写，旧assets兼容；仅准备Odyssey发行，不自动同步消费者。
   - 依赖：ENG-03、LIB-02。
 
 - [ ] **ENG-05 · P1 · CDN/自托管/Line 安装说明指向同一明确 release**
+  - 本轮结果：部分完成。`5112206` 将 13 个 Odyssey 页面和安装说明统一 pin 到 1.4.0，模块化/complete 空白 fixture 及自托管候选通过三引擎。公开 CDN URL 需 ENG-04 冻结并切换生产后再实际验收，不能提前算线上可用。
   - 状态／依据：**文档不一致**。site/getting-started.html:218–222把CDN1.1和当前dist称同产物，FLEET.md:249当前dist为1.3；Line还需额外assets。
   - 验收：给出同release的完整文件列表和最小片段；复制到空白HTML、自托管及Line/extensions三条路径得到声明的组件版本/行为，无漏依赖。
   - 依赖：ENG-04、LIB-03。
 
-- [ ] **ENG-06 · P1 · 浏览器测试环境在 Odyssey 内可独立复现**
+- [x] **ENG-06 · P1 · 浏览器测试环境在 Odyssey 内可独立复现**
+  - 本轮结果：完成。`3c54755`、`bc907b2` 固定本仓 Node/Playwright/Axe/Ajv 与 lockfile、安装/运行入口；干净 GitHub runner 和 Linux 官方浏览器镜像实际安装并运行，不依赖其他产品 node_modules。
   - 状态／依据：**部分**。tools/browser-runtime/package.json:1–5无依赖/脚本；tools/install-canary-gate.sh:25,109–112从别的产品复制Playwright。既有安装器已有runtime pin。
   - 验收：在本项目声明支持Node/Playwright/browser版本及安装执行入口；干净环境可跑已有测试，不依赖其他产品node_modules；复用Playwright，不要求换框架。
 
-- [ ] **ENG-07 · P1 · 将现有测试连成一个仓库持续验收入口**
+- [x] **ENG-07 · P1 · 将现有测试连成一个仓库持续验收入口**
+  - 本轮结果：完成。`5112206` 的 tools/verify.sh 串联格式/Rust/CLI/vendor/server/发行/契约/浏览器，GitHub CI 调用同入口；真实 run 39130254060 全绿，systemd collector 职责保留。
   - 状态／依据：**tracked配置缺失**。Dockerfile:23–24只build；Rust/CLI/Node gate和browser测试已存在但分散，tracked基线未见CI或统一任务入口。
   - 验收：统一入口执行约定format/build/test、发行一致性及消费fixture；CI调用同入口并阻止失败发行；保留systemd collector的线上观察职责。
   - 依赖：ENG-01、ENG-02、ENG-06。
 
-- [ ] **ENG-08 · P1 · 声明浏览器支持范围并验证跨引擎降级**
+- [x] **ENG-08 · P1 · 声明浏览器支持范围并验证跨引擎降级**
+  - 本轮结果：完成。`bc907b2`、`4aa91d1` 声明锁定引擎支持基线；Linux Chromium/Firefox/WebKit 九条入口通过，Firefox/WebKit 无 interpolate-size 时 disclosure 正常；macOS Firefox 宿主启动问题单独保留。
   - 状态／依据：**未验证**。line/extensions/patterns-browser.test.mjs仅Chromium；css/extensions.css:36–54用details-content/interpolate-size/popover/discrete transitions。
   - 验收：明确最低支持范围；对承诺引擎验证关键控件、键盘和progressive fallback。未测写成未验证，而非直接宣称不支持。
   - 依赖：ENG-06、ENG-07。
 
 - [ ] **ENG-09 · P1 · 复用既有 pattern/a11y helper，扩展当前库验收**
+  - 本轮结果：部分完成。`200c8c2` 审阅并纳入既有 helper 及其失败 fixture；本候选 26 项 Axe/真实 Tab/AX/合成 IME/200%/文本间距/forced-colors/无 JS 门禁通过。custom combo/date/tree/modal 的真实 VoiceOver 抽验仍待用户允许临时启用；外部四产品报告不计入本库通过。
   - 状态／依据：**部分/待接纳**。当前测试已有部分键盘、reduced-motion、touch/no-JS；远端另有未跟踪pattern-assertions.mjs、tests及patterns/ACCEPTANCE.md，报告四产品证据，未纳入本基线。
   - 验收：先审阅、核证并版本化现有helper，复用assertSurface(AxeBuilder)/native form/真实Tab；覆盖旧guide、AX关联、IME、200%文本/文本间距、forced-colors，并对custom combo/date/tree/modal做VoiceOver抽验。外部报告不直接算本库通过。 参考：[Text spacing][wcag-spacing] / [Reflow][wcag-reflow]。
   - 依赖：ENG-06、ENG-07、LIB-01。
