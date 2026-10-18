@@ -3,7 +3,12 @@ on: [push, pull_request, workflow_dispatch]
 jobs:
   verify:
     runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.64.1-noble@sha256:7852dc5a7d72f5fe458a597d690f6c42fbc8e9e26ddfa95f8e6ef552558d9bbf
+      options: --ipc=host
     steps:
+      - name: Install the Rust linker and Git
+        run: apt-get update && apt-get install -y --no-install-recommends gcc libc6-dev git
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
         with:
@@ -15,7 +20,7 @@ jobs:
           cache: npm
           cache-dependency-path: tools/browser-runtime/package-lock.json
       - run: npm ci --prefix tools/browser-runtime
-      - run: npm exec --prefix tools/browser-runtime -- playwright install --with-deps chromium firefox webkit
+      # The accepted Linux PNGs and browsers come from this exact Playwright image.
       - name: Prepare the explicit pre-freeze candidate when needed
         run: |
           if [ ! -d releases/1.5.0 ]; then
