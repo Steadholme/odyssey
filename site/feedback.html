@@ -713,7 +713,7 @@ Odyssey.loading(document.body, true, { fixed:true });  // 全屏</code></pre></d
 
 <!-- ============================================================ CONFIRM DIALOG -->
 <h2 id="confirm">Confirm dialog</h2>
-<p>Promise 版确认框：<code>Odyssey.confirm({title, message, confirmText, cancelText, tone})</code> 返回 <code>Promise&lt;boolean&gt;</code> —— 确认 <code>true</code>，取消 / 背景 / Esc <code>false</code>。<code>tone</code> 取 <code>info</code>（默认）/ <code>warn</code> / <code>danger</code>，危险场景自动换红色图标与主按钮。</p>
+<p>Promise 版确认框：<code>Odyssey.confirm({title, message, confirmText, cancelText, tone})</code> 返回 <code>Promise&lt;boolean&gt;</code> —— 确认 <code>true</code>，取消 / 背景 / Esc <code>false</code>。<code>tone</code> 取 <code>info</code>（默认）/ <code>warn</code> / <code>danger</code>，危险场景自动换红色图标与主按钮，并先聚焦取消。标题与说明分别关联 alertdialog；确认、取消、Esc 和背景关闭都归还有效焦点。默认按钮文案沿用触发区域的 en/zh/ja；传入文案保持原样。</p>
 <div class="doc-example">
   <div class="doc-demo">
     <div class="ody-flex ody-gap-2 ody-flex-wrap">

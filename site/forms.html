@@ -645,7 +645,7 @@
 
 <!-- ============================== OTP ============================== -->
 <h2 id="otp">OTP / PIN · 分格验证码</h2>
-<p><code>.ody-otp</code> 由 <code>data-len</code>（默认 6）声明格数，JS 生成单字符输入格：填字自动前进、<kbd>Backspace</kbd> 回退、<kbd>←</kbd>/<kbd>→</kbd> 移动、整段粘贴自动分发。默认只收数字（<code>data-mode="text"</code> 允许字母）。取值 <code>Odyssey.otpValue(el)</code>，变更派发 <code>ody:change</code>；错误态加 <code>.is-invalid</code>。</p>
+<p><code>.ody-otp</code> 由 <code>data-len</code>（默认 6）声明格数，JS 生成单字符输入格：填字自动前进、<kbd>Backspace</kbd> 回退、<kbd>←</kbd>/<kbd>→</kbd> 移动、整段粘贴自动分发。默认只收数字（<code>data-mode="text"</code> 允许字母）。取值 <code>Odyssey.otpValue(el)</code>，变更派发 <code>ody:change</code>（value、complete）；加 <code>data-name="verification_code"</code> 后完整值通过单个 hidden 字段参与原生 FormData，表单 reset 恢复初值。默认逐格名称及输入说明沿用最近的 <code>lang="en|zh|ja"</code>；错误态加 <code>.is-invalid</code>。</p>
 <div class="doc-example">
   <div class="doc-demo doc-demo--stack">
     <div class="ody-otp" data-ody-otp data-len="6"></div>

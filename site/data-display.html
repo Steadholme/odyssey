@@ -533,10 +533,11 @@
 
     <!-- ==================================================== Tooltip -->
     <h2 id="tooltip">Tooltip 工具提示</h2>
+    <p id="tooltip-existing-help">气泡补充既有说明，不覆盖原有描述；必要操作请放在按钮或 Popover 中。</p>
     <p>任意元素加 <code>data-ody-tooltip="文本"</code> 即可 hover / focus 显示气泡（纯 CSS 兜底），<code>odyssey.js</code> 会升级为可定位浮层，<code>data-ody-placement</code> 指定方向（top / bottom / left / right）。</p>
     <div class="doc-example">
       <div class="doc-demo doc-demo--center">
-        <button class="ody-btn ody-btn--secondary" type="button" data-ody-tooltip="默认在上方弹出" data-ody-placement="top">上方</button>
+        <button class="ody-btn ody-btn--secondary" type="button" aria-describedby="tooltip-existing-help" data-ody-tooltip="默认在上方弹出。你可以把指针移入气泡阅读，按 Escape 关闭。" data-ody-placement="top">上方</button>
         <button class="ody-btn ody-btn--secondary" type="button" data-ody-tooltip="显示在下方" data-ody-placement="bottom">下方</button>
         <span class="ody-iconbtn ody-iconbtn--outline" tabindex="0" role="button" aria-label="图标提示示例" data-ody-tooltip="也可用于图标按钮" data-ody-placement="right"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg></span>
       </div>
@@ -632,10 +633,10 @@
   </div>
 
   <h2 id="tree">Tree view 树形</h2>
-  <p><code>.ody-tree</code> 用嵌套 <code>.ody-tree__item</code> 表达层级：点 <code>.ody-tree__row</code> 或 <code>.ody-tree__caret</code> 切换 <code>.is-open</code>；叶子加 <code>.is-leaf</code>（caret 自动隐藏）；<code>.is-active</code> 标记选中行。键盘 Enter/Space 展开、←/→ 折叠展开。</p>
+  <p><code>.ody-tree</code> 用嵌套 <code>.ody-tree__item</code> 表达层级：点 <code>.ody-tree__row</code> 或 <code>.ody-tree__caret</code> 切换 <code>.is-open</code>；叶子加 <code>.is-leaf</code>（caret 自动隐藏）；<code>.is-active</code> 标记选中行。键盘 ↑/↓ 遍历可见行，Home/End 到首尾；→ 展开或进入子项，← 折叠或返回父项，Enter/Space 选择并切换。只有一行进入 Tab 顺序，焦点与选中状态分开；普通 details 保留原生键盘。</p>
   <div class="doc-example">
     <div class="doc-demo doc-demo--stack">
-      <ul class="ody-tree" style="max-width:300px">
+      <ul class="ody-tree" aria-label="项目文件" style="max-width:300px">
         <li class="ody-tree__item is-open">
           <div class="ody-tree__row" role="treeitem"><span class="ody-tree__caret"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span><span class="ody-tree__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h6l2 2h10v9a2 2 0 0 1-2 2H3z"/></svg></span><span class="ody-tree__label">src</span><span class="ody-tree__meta">12</span></div>
           <ul class="ody-tree__children">
@@ -667,17 +668,18 @@
   </div>
 
   <h2 id="charts">Stat charts 手绘图表</h2>
-  <p>纯内联 SVG，颜色只来自 <code>--ody-*</code> token，无任何图表库。给容器 <code>data-ody-chart="bar|line|donut|spark"</code> 与 <code>data-values="…"</code>，JS 自动渲染；<code>--ok/--warn/--down</code> 整图换色，donut 支持 <code>data-tones</code> 逐段配色 + <code>data-center</code> 中心文案。</p>
+  <p>纯内联 SVG，颜色只来自 <code>--ody-*</code> token，无任何图表库。给容器 <code>data-ody-chart="bar|line|donut|spark"</code> 与 <code>data-values="…"</code>，JS 自动渲染；<code>--ok/--warn/--down</code> 整图换色，donut 支持 <code>data-tones</code> 逐段配色 + <code>data-center</code> 中心文案。有意义的图表提供 <code>data-label</code> 名称、<code>data-summary</code> 结论与可展开数据表；仅作装饰的 spark 标记 <code>data-ody-decorative</code>；旧的未命名 spark 继续保持 28px 装饰布局，提供名称或摘要后才展示替代数据。</p>
   <div class="doc-example">
     <div class="doc-demo doc-demo--stack">
-      <div class="ody-grid ody-grid--2" style="width:100%;max-width:680px">
-        <div class="ody-card"><div class="ody-card__body"><span class="ody-eyebrow">Bar</span><div class="ody-chart" data-ody-chart="bar" data-values="42,68,55,90,73,61" data-labels="Mon,Tue,Wed,Thu,Fri,Sat"></div></div></div>
-        <div class="ody-card"><div class="ody-card__body"><span class="ody-eyebrow">Line</span><div class="ody-chart" data-ody-chart="line" data-values="12,19,15,27,22,34,30" data-labels="W1,W2,W3,W4,W5,W6,W7"></div></div></div>
-        <div class="ody-card"><div class="ody-card__body"><span class="ody-eyebrow">Donut</span><div class="ody-flex-center ody-gap-4"><div class="ody-chart ody-chart--donut" style="max-width:140px" data-ody-chart="donut" data-values="62,24,14" data-tones="ok,warn,down" data-center="62%" data-center-sub="healthy"></div><div class="ody-chart-legend" style="flex-direction:column"><span class="ody-chart-legend__item"><span class="ody-chart-legend__swatch ody-chart-legend__swatch--ok"></span>正常</span><span class="ody-chart-legend__item"><span class="ody-chart-legend__swatch ody-chart-legend__swatch--warn"></span>降级</span><span class="ody-chart-legend__item"><span class="ody-chart-legend__swatch ody-chart-legend__swatch--down"></span>宕机</span></div></div></div></div>
-        <div class="ody-card"><div class="ody-card__body"><span class="ody-eyebrow">Spark</span><div class="ody-flex-center ody-gap-3"><span class="ody-stat" style="font-size:var(--ody-fs-stat);font-weight:var(--ody-fw-semibold)">98.6%</span><span class="ody-chart ody-chart--spark ody-chart--ok" data-ody-chart="spark" data-values="4,6,5,8,7,9,8,11,10,12"></span></div></div></div>
+      <div class="ody-grid ody-grid--2" style="width:100%;max-width:680px;align-items:start">
+        <div class="ody-card"><div class="ody-card__body"><span class="ody-eyebrow">Bar</span><div class="ody-chart" id="activity-chart" data-label="每周请求量" data-summary="周四请求量最高，为90；周一最低，为42。" data-ody-chart="bar" data-values="42,68,55,90,73,61" data-labels="Mon,Tue,Wed,Thu,Fri,Sat"></div><button type="button" class="ody-btn ody-btn--secondary ody-btn--sm" onclick="Odyssey.updateChart('#activity-chart',{values:[48,76,62,94,81,70],labels:['Mon','Tue','Wed','Thu','Fri','Sat'],summary:'下周样例：周四最高，为94；周一最低，为48。'})">加载下周样例</button></div></div>
+        <div class="ody-card"><div class="ody-card__body"><span class="ody-eyebrow">Line</span><div class="ody-chart" data-label="每周完成任务" data-summary="七周内完成任务从12上升至30，最高34。" data-ody-chart="line" data-values="12,19,15,27,22,34,30" data-labels="W1,W2,W3,W4,W5,W6,W7"></div></div></div>
+        <div class="ody-card"><div class="ody-card__body"><span class="ody-eyebrow">Donut</span><div class="ody-flex-center ody-gap-4"><div class="ody-chart ody-chart--donut" style="max-width:140px" data-label="服务健康分布" data-summary="62%正常，24%降级，14%宕机。" data-labels="正常,降级,宕机" data-ody-chart="donut" data-values="62,24,14" data-tones="ok,warn,down" data-center="62%" data-center-sub="healthy"></div><div class="ody-chart-legend" style="flex-direction:column"><span class="ody-chart-legend__item"><span class="ody-chart-legend__swatch ody-chart-legend__swatch--ok"></span>正常</span><span class="ody-chart-legend__item"><span class="ody-chart-legend__swatch ody-chart-legend__swatch--warn"></span>降级</span><span class="ody-chart-legend__item"><span class="ody-chart-legend__swatch ody-chart-legend__swatch--down"></span>宕机</span></div></div></div></div>
+        <div class="ody-card"><div class="ody-card__body"><span class="ody-eyebrow">Spark</span><div class="ody-flex-center ody-gap-3"><span class="ody-stat" style="font-size:var(--ody-fs-stat);font-weight:var(--ody-fw-semibold)">98.6%</span><span class="ody-chart ody-chart--spark ody-chart--ok" data-ody-decorative data-ody-chart="spark" data-values="4,6,5,8,7,9,8,11,10,12"></span></div></div></div>
       </div>
     </div>
-    <div class="doc-code"><pre tabindex="0"><code>&lt;div class="ody-chart" data-ody-chart="bar"
+    <div class="doc-code"><pre tabindex="0"><code>&lt;div id="activity-chart" class="ody-chart" data-ody-chart="bar"
+     data-label="每周请求量" data-summary="周四最高，为90。"
      data-values="42,68,55,90,73,61" data-labels="Mon,Tue,Wed,Thu,Fri,Sat"&gt;&lt;/div&gt;
 
 &lt;div class="ody-chart" data-ody-chart="line" data-values="12,19,15,27,22,34,30"&gt;&lt;/div&gt;
@@ -687,7 +689,13 @@
      data-center="62%" data-center-sub="healthy"&gt;&lt;/div&gt;
 
 &lt;span class="ody-chart ody-chart--spark ody-chart--ok"
-      data-ody-chart="spark" data-values="4,6,5,8,7,9,8,11,10,12"&gt;&lt;/span&gt;</code></pre></div>
+      data-ody-decorative data-ody-chart="spark" data-values="4,6,5,8,7,9,8,11,10,12"&gt;&lt;/span&gt;
+
+// 更新数据、标签与结论，不复制 SVG；也可改属性后 renderChart(el)。
+Odyssey.updateChart(document.querySelector('#activity-chart'), {
+  values: [46, 72, 61], labels: ['Mon', 'Tue', 'Wed'],
+  name: '每周请求量', summary: '周二最高，为72。'
+});</code></pre></div>
   </div>
 
   <h2 id="stepper">Stepper / Wizard 步骤条</h2>
