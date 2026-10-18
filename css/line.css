@@ -1,6 +1,6 @@
 /* Odyssey Line Specification. Opt in on a root with data-ody-design="line".
    This layer changes presentation only. Frozen releases and product runtimes stay independent. */
-[data-ody-design="line"] {
+:root[data-ody-design="line"], [data-ody-design="line"] {
   --ody-on-line-1:#fff; --ody-on-line-2:#111418; --ody-on-line-3:#111418; --ody-on-line-4:#fff; --ody-on-line-5:#111418; --ody-on-line-6:#fff;
   --ody-line-1:#0062ff; --ody-line-2:#10b981; --ody-line-3:#f59e0b;
   --ody-line-4:#7c3aed; --ody-line-5:#e5484d; --ody-line-6:#64748b;
@@ -113,9 +113,15 @@
 [data-ody-design="line"] :is(.ody-input,.ody-textarea,.input,.textarea)::placeholder { color:var(--ody-ink-muted); }
 [data-ody-design="line"] :is(.ody-input,.ody-select,.ody-textarea,.input,.select,.textarea)[aria-invalid="true"] { border-color:var(--ody-down-ink); }
 [data-ody-design="line"] :is(.ody-label,.field__label) { font-size:12px; font-weight:600; }
-[data-ody-design="line"] :is(.ody-hint,.ody-muted,.ody-desc__term,.ody-card__sub,.ody-stat__label,.ody-empty__ico,.ody-empty__text) { color:var(--ody-ink-muted); }
+[data-ody-design="line"] :is(.ody-hint,.ody-muted,.ody-desc__term,.ody-card__sub,.ody-stat__label,.ody-stat__meta,.ody-empty__ico,.ody-empty__text,.ody-nav__label,.doc-footer,
+  .ody-input-group__addon,.ody-dropzone__hint,.ody-table__count,.ody-kanban__card-meta,.ody-compare__hint,.ody-compare__txt--muted) { color:var(--ody-ink-muted); }
+[data-ody-design="line"] .ody-breadcrumb [aria-current="page"] { color:var(--ody-ink); }
+[data-ody-design="line"] .ody-cal__day--out { opacity:1; }
+[data-ody-design="line"] .ody-cal__day--out:not(.is-selected) { color:var(--ody-ink-muted); }
+[data-ody-design="line"] :is(.ody-compare__price,.ody-compare__group td) { color:var(--ody-ink); }
 [data-ody-design="line"] :is(.ody-checkbox,.ody-radio) { min-height:40px; }
 [data-ody-design="line"] :is(input[type="checkbox"],input[type="radio"],input[type="range"]) { accent-color:var(--ody-line-1); }
+[data-ody-design="line"] :is(.ody-multiselect__chip-x,.ody-taginput__chip-x) { width:24px; height:24px; min-width:24px; flex:0 0 24px; }
 [data-ody-design="line"] .ody-switch { width:auto; height:auto; min-height:22px; max-width:100%; overflow:visible; }
 [data-ody-design="line"] .ody-switch__control { width:38px; height:22px; flex:0 0 38px; }
 [data-ody-design="line"] .ody-switch > input + .ody-switch__track { position:relative; display:inline-block; width:38px; height:22px; flex:0 0 38px; }
@@ -208,6 +214,7 @@
 @media (pointer:coarse) {
   [data-ody-design="line"] :is(.ody-btn,.btn,.ody-iconbtn,.iconbtn,.ody-menu__item,.ody-tab,.ody-pager button,.ody-pager a,.ody-segment span,.ody-checkbox,.ody-radio) { min-height:44px; }
   [data-ody-design="line"] :is(.ody-iconbtn,.iconbtn) { min-width:44px; }
+  [data-ody-design="line"] :is(.ody-multiselect__chip-x,.ody-taginput__chip-x) { width:44px; height:44px; min-width:44px; flex-basis:44px; }
   [data-ody-design="line"] :is(.ody-input,.ody-select,.input,.select,.ody-toolbar,.toolbar) { min-height:44px; }
   [data-ody-design="line"] .ody-switch { min-height:44px; }
   [data-ody-design="line"] .ody-switch::after { content:""; position:absolute; inset:-12px -3px; }
