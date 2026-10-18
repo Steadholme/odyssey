@@ -42,3 +42,6 @@ body.ody-data-page{margin:0;background:var(--ody-surface,#fff);color:var(--ody-i
 .ody-virtual-header{display:grid;position:sticky;top:0;z-index:1;background:var(--ody-surface-2,#f3f5f8);border-bottom:1px solid var(--ody-hairline,#d9dde3);padding:10px 16px;font-size:11px;font-weight:550;gap:12px}.ody-virtual-row[role=row]{gap:12px}.ody-virtual-row[role=row]>div{min-width:0;overflow-wrap:anywhere}.ody-virtual-row[role=row][data-active=true]>[role=gridcell]{outline:none}
 .ody-virtual-viewport:focus-visible [data-active-cell=true]{outline:2px solid var(--ody-ring,#0062ff);outline-offset:2px}
 .ody-virtual-row[role=treeitem]{display:flex;align-items:flex-start;gap:8px}.ody-virtual-row[role=treeitem]>div{flex:1;min-width:0}
+
+.ody-plot-point{fill:var(--ody-accent-ink,#064cc0);stroke:var(--ody-surface,#fff);stroke-width:1.5}.ody-plot-point[data-color="1"]{fill:var(--ody-ok-ink,#187047)}.ody-plot-point[data-color="2"]{fill:var(--ody-down-ink,#b72c32)}.ody-plot-point[data-color="3"]{fill:var(--ody-ink,#111418)}
+@media(forced-colors:active){.ody-plot-point{fill:CanvasText;stroke:Canvas}}
