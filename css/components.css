@@ -442,6 +442,7 @@ input[type="range"]:focus-visible { box-shadow:0 0 0 4px var(--ring); border-rad
 .empty__ico svg { width:26px; height:26px; }
 .empty h3 { font-size:var(--fs-h2); }
 .empty p { margin:var(--sp-2) auto var(--sp-4); color:var(--ink-3); max-width:360px; font-size:var(--fs-body); }
+.empty__action { display:flex; flex-wrap:wrap; justify-content:center; gap:var(--sp-2); margin-top:var(--sp-4); }
 
 /* ============ 12 · Toast / flash ============ */
 :is(.toast-region,.toast-host,.toasts) {

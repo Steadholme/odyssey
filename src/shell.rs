@@ -155,6 +155,59 @@ impl<'a> LineShellOpts<'a> {
     }
 }
 
+/// Complete strict-CSP shell opt-in. The host sends the matching HTTP CSP header per response.
+/// No legacy `ShellOpts`, `WireShellOpts` or `LineShellOpts` literal changes are required.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct CspShellOpts<'a> {
+    nonce: &'a str,
+    wire: Option<WireShellOpts<'a>>,
+    profile: Option<Profile>,
+    line: Option<LineShellOpts<'a>>,
+}
+
+impl<'a> CspShellOpts<'a> {
+    pub const fn new(nonce: &'a str) -> Self {
+        Self {
+            nonce,
+            wire: None,
+            profile: None,
+            line: None,
+        }
+    }
+    pub const fn with_wire(mut self, wire: WireShellOpts<'a>) -> Self {
+        self.wire = Some(wire);
+        self
+    }
+    pub const fn with_profile(mut self, profile: Profile) -> Self {
+        self.profile = Some(profile);
+        self
+    }
+    pub const fn with_line(mut self, line: LineShellOpts<'a>) -> Self {
+        self.line = Some(line);
+        self
+    }
+}
+
+/// Render a nonce-authorized shell with no shell-generated style attributes.
+/// Inline fonts require `font-src data:`; host body/head HTML must follow the same CSP.
+/// See `docs/rust-line.md` and the runnable `csp` example for the full response policy.
+pub fn csp_page_shell(
+    chrome: PageChrome<'_>,
+    body: Html,
+    opts: ShellOpts,
+    csp: CspShellOpts<'_>,
+) -> String {
+    page_shell_impl(
+        chrome,
+        body,
+        opts,
+        csp.wire,
+        csp.profile,
+        csp.line,
+        Some(csp.nonce),
+    )
+}
+
 pub struct PageHead<'a> {
     pub eyebrow: Option<&'a str>,
     pub glyph: Option<Html>,
@@ -172,7 +225,7 @@ pub struct PageChrome<'a> {
 }
 
 pub fn page_shell(chrome: PageChrome<'_>, body: Html, opts: ShellOpts) -> String {
-    page_shell_impl(chrome, body, opts, None, None, None)
+    page_shell_impl(chrome, body, opts, None, None, None, None)
 }
 
 /// Render the standard shell with the Odyssey 1.3 profile root contract.
@@ -187,7 +240,7 @@ pub fn page_shell_with_profile(
     opts: ShellOpts,
     profile: Profile,
 ) -> String {
-    page_shell_impl(chrome, body, opts, None, Some(profile), None)
+    page_shell_impl(chrome, body, opts, None, Some(profile), None, None)
 }
 
 /// Render the standard shell with Wire-boosted app navigation and the internal runtime bundle.
@@ -201,7 +254,7 @@ pub fn wire_page_shell(
     opts: ShellOpts,
     wire: WireShellOpts<'_>,
 ) -> String {
-    page_shell_impl(chrome, body, opts, Some(wire), None, None)
+    page_shell_impl(chrome, body, opts, Some(wire), None, None, None)
 }
 
 /// Combine Wire navigation with the Odyssey 1.3 profile root contract.
@@ -215,7 +268,7 @@ pub fn wire_page_shell_with_profile(
     wire: WireShellOpts<'_>,
     profile: Profile,
 ) -> String {
-    page_shell_impl(chrome, body, opts, Some(wire), Some(profile), None)
+    page_shell_impl(chrome, body, opts, Some(wire), Some(profile), None, None)
 }
 
 /// Static Rust helper shell with an opt-in Line expression and optional extensions.
@@ -225,7 +278,7 @@ pub fn line_page_shell(
     opts: ShellOpts,
     line: LineShellOpts<'_>,
 ) -> String {
-    page_shell_impl(chrome, body, opts, None, None, Some(line))
+    page_shell_impl(chrome, body, opts, None, None, Some(line), None)
 }
 
 /// Line presentation with the existing Wire/Spark progressive-enhancement contract.
@@ -236,7 +289,7 @@ pub fn wire_line_page_shell(
     wire: WireShellOpts<'_>,
     line: LineShellOpts<'_>,
 ) -> String {
-    page_shell_impl(chrome, body, opts, Some(wire), None, Some(line))
+    page_shell_impl(chrome, body, opts, Some(wire), None, Some(line), None)
 }
 
 fn page_shell_impl(
@@ -246,6 +299,7 @@ fn page_shell_impl(
     wire: Option<WireShellOpts<'_>>,
     profile: Option<Profile>,
     line: Option<LineShellOpts<'_>>,
+    csp_nonce: Option<&str>,
 ) -> String {
     let mut body_attr = String::new();
     if !opts.body_class.is_empty() {
@@ -262,11 +316,12 @@ fn page_shell_impl(
     let main_attr = wire
         .map(|opts| format!(" id=\"{}\"", esc(opts.region_id)))
         .unwrap_or_default();
-    let nonce = line
-        .and_then(|line| line.nonce)
-        .or_else(|| wire.and_then(|wire| wire.runtime.nonce));
-    let style_nonce = line
-        .and(nonce)
+    let nonce = csp_nonce.or_else(|| {
+        line.and_then(|line| line.nonce)
+            .or_else(|| wire.and_then(|wire| wire.runtime.nonce))
+    });
+    let style_nonce = csp_nonce
+        .or_else(|| line.and(nonce))
         .map(|nonce| format!(" nonce=\"{}\"", esc(nonce)))
         .unwrap_or_default();
     let mut runtime_scripts = wire
@@ -301,10 +356,17 @@ fn page_shell_impl(
     } else {
         format!("<footer class=\"site-foot\">{}</footer>", chrome.footer)
     };
-    let tile_style = if chrome.brand.accent.is_empty() {
+    let tile_style = if csp_nonce.is_some() || chrome.brand.accent.is_empty() {
         String::new()
     } else {
         format!(" style=\"--app:{}\"", esc(chrome.brand.accent))
+    };
+    // Brand accent is trusted application CSS, like ShellOpts.extra_css. Move it into the
+    // authorized style element rather than relying on unsafe-inline style attributes.
+    let brand_css = if csp_nonce.is_some() && !chrome.brand.accent.is_empty() {
+        format!(".appbar .app-tile{{--app:{}}}", chrome.brand.accent)
+    } else {
+        String::new()
     };
     // Theme stamping is LIGHT-first: light emits neither the `data-theme` attr nor the
     // `color-scheme` meta, keeping the output byte-identical to the pre-theme era.
@@ -334,7 +396,7 @@ fn page_shell_impl(
             "<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\n",
             "{color_scheme_meta}",
             "<title>{title}</title>\n",
-            "<style{style_nonce}>{css}{line_css}{extra_css}</style>\n",
+            "<style{style_nonce}>{css}{line_css}{extra_css}{brand_css}</style>\n",
             "{head_extra}\n",
             "</head>\n",
             "<body{body_attr}>\n",
@@ -362,6 +424,7 @@ fn page_shell_impl(
         color_scheme_meta = color_scheme_meta,
         title = esc(chrome.title),
         css = APP_CSS,
+        brand_css = brand_css,
         extra_css = opts.extra_css,
         head_extra = opts.head_extra,
         body_attr = body_attr,
@@ -777,6 +840,47 @@ mod tests {
         assert!(legacy.contains("<html lang=\"en\">"));
         assert!(!legacy.contains("<html lang=\"en\" data-ody-design"));
         assert!(!legacy.contains("<script"));
+    }
+
+    #[test]
+    fn strict_csp_authorizes_all_shell_assets_without_inline_style_attributes() {
+        let mut configured_chrome = chrome_with_nav();
+        configured_chrome.brand.accent = "#0062ff";
+        let html = csp_page_shell(
+            configured_chrome,
+            Html::default(),
+            ShellOpts::default(),
+            CspShellOpts::new("response-42")
+                .with_wire(
+                    WireShellOpts::new("content")
+                        .with_motion()
+                        .with_nonce("ignored-wire"),
+                )
+                .with_line(
+                    LineShellOpts::default()
+                        .with_extensions()
+                        .with_nonce("ignored-line"),
+                ),
+        );
+        assert!(html.contains("<style nonce=\"response-42\">"));
+        assert_eq!(html.matches("<script nonce=\"response-42\">").count(), 2);
+        assert!(html.contains(".appbar .app-tile{--app:#0062ff}"));
+        assert!(!html.contains(" style="));
+        assert!(!html.contains("ignored-wire"));
+        assert!(!html.contains("ignored-line"));
+        let standard = csp_page_shell(
+            chrome(),
+            Html::default(),
+            ShellOpts::default(),
+            CspShellOpts::new("standard-nonce"),
+        );
+        assert!(standard.contains("<style nonce=\"standard-nonce\">"));
+        assert!(!standard.contains("<script"));
+        let mut legacy = chrome();
+        legacy.brand.accent = "#0062ff";
+        let legacy = page_shell(legacy, Html::default(), ShellOpts::default());
+        assert!(legacy.contains("style=\"--app:#0062ff\""));
+        assert!(legacy.contains("<style>"));
     }
 
     #[test]

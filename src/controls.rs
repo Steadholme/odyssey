@@ -144,28 +144,41 @@ impl<'a> WireOpts<'a> {
 }
 
 pub fn button(label: &str, v: Variant, o: BtnOpts) -> Html {
-    let classes = btn_classes(v, o);
-    let busy = if o.busy {
-        " aria-busy=\"true\" disabled"
-    } else {
-        ""
-    };
+    button_with(label, v, o, &[])
+}
+
+/// Add native attributes (including ordinary `disabled`) without changing `BtnOpts` literals.
+pub fn button_with(label: &str, v: Variant, o: BtnOpts, attrs: &[(&str, &str)]) -> Html {
+    let disabled = o.busy || attr_pair_value(attrs, "disabled").is_some();
     Html(format!(
-        "<button class=\"{}\" type=\"{}\"{}>{}</button>",
-        classes,
+        "<button class=\"{}\" type=\"{}\"{}{}{}>{}</button>",
+        btn_classes(v, o),
         esc(o.kind),
-        busy,
+        if o.busy { " aria-busy=\"true\"" } else { "" },
+        if disabled { " disabled" } else { "" },
+        render_attrs(attrs, &["class", "type", "disabled", "aria-busy"]),
         esc(label)
     ))
 }
 
+/// A navigation link styled as a button; it retains native link semantics.
 pub fn link_button(href: &str, label: &str, v: Variant, o: BtnOpts) -> Html {
-    link_button_impl(href, label, v, o, "")
+    link_button_with(href, label, v, o, &[])
 }
 
-/// A progressively enhanced button-link backed by Odyssey Wire.
-///
-/// The ordinary `href` remains present, so navigation still works without JavaScript.
+/// Additional link attributes. `disabled` or `busy` removes the activation URL, not just pointer input.
+pub fn link_button_with(
+    href: &str,
+    label: &str,
+    v: Variant,
+    o: BtnOpts,
+    attrs: &[(&str, &str)],
+) -> Html {
+    link_button_impl(href, label, v, o, attrs, "")
+}
+
+/// A progressively enhanced navigation link backed by Odyssey Wire.
+/// The ordinary `href` remains present whenever the link is available, including without JavaScript.
 pub fn link_button_with_wire(
     href: &str,
     label: &str,
@@ -173,28 +186,62 @@ pub fn link_button_with_wire(
     o: BtnOpts,
     wire: WireOpts<'_>,
 ) -> Html {
+    link_button_with_wire_attrs(href, label, v, o, wire, &[])
+}
+
+/// Add caller attributes or ordinary `disabled` to a wired navigation link.
+pub fn link_button_with_wire_attrs(
+    href: &str,
+    label: &str,
+    v: Variant,
+    o: BtnOpts,
+    wire: WireOpts<'_>,
+    attrs: &[(&str, &str)],
+) -> Html {
     link_button_impl(
         href,
         label,
         v,
         o,
+        attrs,
         &render_wire_attrs(wire, WireElement::Link),
     )
 }
 
-fn link_button_impl(href: &str, label: &str, v: Variant, o: BtnOpts, wire_attrs: &str) -> Html {
-    let classes = btn_classes(v, o);
-    let busy = if o.busy {
-        " aria-busy=\"true\" aria-disabled=\"true\""
+fn link_button_impl(
+    href: &str,
+    label: &str,
+    v: Variant,
+    o: BtnOpts,
+    attrs: &[(&str, &str)],
+    wire_attrs: &str,
+) -> Html {
+    let disabled = o.busy || attr_pair_value(attrs, "disabled").is_some();
+    let destination = if disabled {
+        // No href and no Wire action means neither keyboard nor pointer can navigate.
+        String::from(" role=\"link\" aria-disabled=\"true\" tabindex=\"0\"")
     } else {
-        ""
+        format!(" href=\"{}\"", esc(href))
     };
     Html(format!(
-        "<a class=\"{}\" href=\"{}\" role=\"button\"{}{}>{}</a>",
-        classes,
-        esc(href),
-        busy,
-        wire_attrs,
+        "<a class=\"{}\"{}{}{}{}>{}</a>",
+        btn_classes(v, o),
+        destination,
+        if o.busy { " aria-busy=\"true\"" } else { "" },
+        if disabled { "" } else { wire_attrs },
+        render_attrs(
+            attrs,
+            &[
+                "class",
+                "href",
+                "role",
+                "disabled",
+                "aria-disabled",
+                "aria-busy",
+                "tabindex",
+                "data-wire"
+            ]
+        ),
         esc(label)
     ))
 }
@@ -403,7 +450,23 @@ pub fn range_field(
     value: &str,
     out_badge: bool,
 ) -> Html {
-    let id = slug_field_id(name);
+    range_field_with(label, name, min, max, step, value, out_badge, &[])
+}
+
+/// Range attributes follow the same convention as `text_input`; an explicit ID also names the output.
+pub fn range_field_with(
+    label: &str,
+    name: &str,
+    min: &str,
+    max: &str,
+    step: &str,
+    value: &str,
+    out_badge: bool,
+    attrs: &[(&str, &str)],
+) -> Html {
+    let id = attr_pair_value(attrs, "id")
+        .map(str::to_string)
+        .unwrap_or_else(|| slug_field_id(name));
     let output = if out_badge {
         format!(
             "<output class=\"pg__out\" for=\"{}\">{}</output>",
@@ -417,18 +480,12 @@ pub fn range_field(
         concat!(
             "<div class=\"field\"><label for=\"{}\">{}</label>",
             "<div class=\"field__row\">",
-            "<input type=\"range\" id=\"{}\" name=\"{}\" min=\"{}\" max=\"{}\" step=\"{}\" value=\"{}\">",
+            "<input type=\"range\" id=\"{}\" name=\"{}\" min=\"{}\" max=\"{}\" step=\"{}\" value=\"{}\" data-spark-range{}>",
             "{}",
             "</div></div>"
         ),
-        esc(&id),
-        esc(label),
-        esc(&id),
-        esc(name),
-        esc(min),
-        esc(max),
-        esc(step),
-        esc(value),
+        esc(&id), esc(label), esc(&id), esc(name), esc(min), esc(max), esc(step), esc(value),
+        render_attrs(attrs, &["type", "id", "name", "min", "max", "step", "value", "data-spark-range"]),
         output
     ))
 }
@@ -451,6 +508,22 @@ pub fn number_input(name: &str, min: &str, max: &str, value: &str) -> Html {
         esc(min),
         esc(max),
         esc(value)
+    ))
+}
+
+/// Decimal steps and caller attributes are opt-in; the original helper keeps native integer stepping.
+pub fn number_input_with(
+    name: &str,
+    min: &str,
+    max: &str,
+    step: &str,
+    value: &str,
+    attrs: &[(&str, &str)],
+) -> Html {
+    Html(format!(
+        "<input class=\"input\" type=\"number\" name=\"{}\" min=\"{}\" max=\"{}\" step=\"{}\" value=\"{}\"{}>",
+        esc(name), esc(min), esc(max), esc(step), esc(value),
+        render_attrs(attrs, &["class", "type", "name", "min", "max", "step", "value"])
     ))
 }
 
@@ -621,6 +694,87 @@ mod tests {
     }
 
     #[test]
+    fn additive_controls_support_disabled_decimal_steps_and_caller_attrs() {
+        // Original full struct literals continue to compile.
+        let opts = BtnOpts {
+            small: false,
+            large: false,
+            busy: false,
+            kind: "submit",
+        };
+        let disabled = button_with(
+            "Save",
+            Variant::Primary,
+            opts,
+            &[("disabled", ""), ("data-track", "a&b")],
+        );
+        assert!(disabled.as_str().contains(" disabled"));
+        assert!(!disabled.as_str().contains("aria-busy"));
+        assert!(disabled.as_str().contains("data-track=\"a&amp;b\""));
+        let number = number_input_with(
+            "ratio",
+            "0",
+            "1",
+            "0.25",
+            "0.5",
+            &[("required", ""), ("aria-describedby", "ratio-help")],
+        );
+        assert!(number.as_str().contains("step=\"0.25\""));
+        assert!(number.as_str().contains("required=\"\""));
+        assert!(number.as_str().contains("aria-describedby=\"ratio-help\""));
+        let range = range_field_with(
+            "Rate",
+            "rate",
+            "0",
+            "10",
+            "0.5",
+            "2.5",
+            true,
+            &[("id", "custom-rate"), ("disabled", "")],
+        );
+        assert!(range.as_str().contains("id=\"custom-rate\""));
+        assert!(range.as_str().contains("for=\"custom-rate\">2.5</output>"));
+        assert!(range.as_str().contains("data-spark-range disabled=\"\""));
+        assert!(!range.as_str().contains("oninput"));
+    }
+
+    #[test]
+    fn unavailable_navigation_has_link_semantics_but_no_activation_url() {
+        let busy = link_button_with_wire(
+            "/next",
+            "Next",
+            Variant::Primary,
+            BtnOpts {
+                busy: true,
+                ..Default::default()
+            },
+            WireOpts::new("#main"),
+        );
+        assert!(busy
+            .as_str()
+            .contains("role=\"link\" aria-disabled=\"true\""));
+        assert!(busy.as_str().contains("aria-busy=\"true\""));
+        assert!(!busy.as_str().contains("href="));
+        assert!(!busy.as_str().contains("data-wire="));
+        let disabled = link_button_with(
+            "/next",
+            "Next",
+            Variant::Secondary,
+            BtnOpts::default(),
+            &[("disabled", "")],
+        );
+        assert!(!disabled.as_str().contains("href="));
+        let enabled = link_button(
+            "/next?x=1&y=2",
+            "Next",
+            Variant::Secondary,
+            BtnOpts::default(),
+        );
+        assert!(enabled.as_str().contains("href=\"/next?x=1&amp;y=2\""));
+        assert!(!enabled.as_str().contains("role=\"button\""));
+    }
+
+    #[test]
     fn range_field_emits_field_row_and_output_badge() {
         let html = range_field("Rate", "rate", "0", "100", "5", "45", true);
         assert!(html.as_str().contains("<div class=\"field__row\">"));
@@ -777,9 +931,8 @@ mod tests {
         assert!(button
             .as_str()
             .contains("href=\"/services/7?confirm=1&amp;hard=0\""));
-        assert!(button
-            .as_str()
-            .contains("role=\"button\" data-wire=\"get\""));
+        assert!(button.as_str().contains("data-wire=\"get\""));
+        assert!(!button.as_str().contains("role=\"button\""));
         assert!(button.as_str().contains("data-wire-swap=\"inner\""));
         assert!(button.as_str().contains("data-wire-push"));
         assert!(!button.as_str().contains("data-wire-optimistic"));

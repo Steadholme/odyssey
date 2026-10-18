@@ -57,6 +57,15 @@
       if(el.parentNode)el.parentNode.appendChild(c);upd();el.addEventListener('input',upd);
     });
   }
+  function rangeOutput(el){
+    if(!el.matches('input[type="range"][data-spark-range]'))return;
+    var row=el.closest('.field__row');if(!row)return;
+    Array.prototype.forEach.call(row.querySelectorAll('output[for]'),function(out){if(out.htmlFor.value===el.id)out.value=el.value;});
+  }
+  function ranges(root){
+    if(root.matches&&root.matches('input[type="range"][data-spark-range]'))rangeOutput(root);
+    Array.prototype.forEach.call(root.querySelectorAll('input[type="range"][data-spark-range]'),rangeOutput);
+  }
   function reltime(root){
     var now=Math.floor(Date.now()/1000);
     Array.prototype.forEach.call(root.querySelectorAll('[data-spark-reltime][data-ts]'),function(el){
@@ -69,13 +78,14 @@
   function init(root){
     root=root||d;
     Array.prototype.forEach.call((root.matches&&root.matches('[data-spark]'))?[root]:root.querySelectorAll('[data-spark]'),function(r){if(!states.has(r))parseRoot(r);render(r);r.removeAttribute('data-spark-cloak');Array.prototype.forEach.call(r.querySelectorAll('[data-spark-cloak]'),function(e){if(own(e,r))e.removeAttribute('data-spark-cloak');});Array.prototype.forEach.call(r.querySelectorAll('[data-spark-uncloak]'),function(e){if(own(e,r))e.hidden=false;});});
-    charcount(root);reltime(root);clean();
+    charcount(root);ranges(root);reltime(root);clean();
   }
   function rootFor(el){return el&&el.closest&&el.closest('[data-spark]');}
   function delegated(name,e){var el=e.target.closest&&e.target.closest('['+name+']'),r;if(!el)return;r=rootFor(el);if(r)act(r,el,el.getAttribute(name));}
   d.addEventListener('click',function(e){delegated('data-spark-click',e);clean();roots.forEach(function(r){if(!r.hidden&&r.hasAttribute('data-spark-outside')&&!r.contains(e.target))act(r,r,r.getAttribute('data-spark-outside'));});});
-  d.addEventListener('input',function(e){delegated('data-spark-input',e);});
+  d.addEventListener('input',function(e){rangeOutput(e.target);delegated('data-spark-input',e);});
   d.addEventListener('change',function(e){delegated('data-spark-change',e);});
+  d.addEventListener('reset',function(e){w.setTimeout(function(){ranges(e.target);},0);});
   d.addEventListener('keydown',function(e){if(e.key!=='Escape')return;clean();roots.forEach(function(r){if(!r.hidden&&r.hasAttribute('data-spark-esc'))act(r,r,r.getAttribute('data-spark-esc'));});});
   d.addEventListener('odyssey:swap',function(e){init(e.target);});
   function toast(msg,ok){

@@ -92,18 +92,62 @@ pub fn stat_tile(label: &str, value: &str, spark: Option<Html>, sub: Option<&str
     ))
 }
 
+/// Context for an empty state. Omitted copy retains the localized no-data default.
+#[derive(Clone, Debug, Default, PartialEq, Eq)]
+pub struct EmptyStateOpts<'a> {
+    title: Option<&'a str>,
+    message: Option<&'a str>,
+    action: Option<Html>,
+}
+
+impl<'a> EmptyStateOpts<'a> {
+    pub const fn new() -> Self {
+        Self {
+            title: None,
+            message: None,
+            action: None,
+        }
+    }
+    pub const fn with_title(mut self, title: &'a str) -> Self {
+        self.title = Some(title);
+        self
+    }
+    pub const fn with_message(mut self, message: &'a str) -> Self {
+        self.message = Some(message);
+        self
+    }
+    /// Use an ordinary link for navigation, or a native button/form for a retry action.
+    pub fn with_action(mut self, action: Html) -> Self {
+        self.action = Some(action);
+        self
+    }
+}
+
 pub fn empty_state(locale: Locale, icon: &'static str) -> Html {
+    empty_state_with(locale, icon, EmptyStateOpts::new())
+}
+
+pub fn empty_state_with(locale: Locale, icon: &'static str, opts: EmptyStateOpts<'_>) -> Html {
+    let action = opts
+        .action
+        .filter(|html| !html.as_str().is_empty())
+        .map(|action| format!("<div class=\"empty__action\">{action}</div>"))
+        .unwrap_or_default();
     Html(format!(
         concat!(
             "<div class=\"empty\">",
             "<div class=\"empty__ico\">{}</div>",
-            "<h3>{}</h3>",
-            "<p>{}</p>",
+            "<h3>{}</h3><p>{}</p>{}",
             "</div>"
         ),
         icons::icon(icon),
-        esc(t(locale, "empty.no_data.title")),
-        esc(t(locale, "empty.no_data.note"))
+        esc(opts
+            .title
+            .unwrap_or_else(|| t(locale, "empty.no_data.title"))),
+        esc(opts
+            .message
+            .unwrap_or_else(|| t(locale, "empty.no_data.note"))),
+        action
     ))
 }
 
@@ -259,6 +303,31 @@ mod tests {
 
         assert!(html.as_str().contains("暂无数据"));
         assert!(html.as_str().contains("这里还没有内容。"));
+    }
+
+    #[test]
+    fn empty_state_options_keep_localized_defaults_and_escape_context() {
+        assert_eq!(
+            empty_state_with(Locale::Zh, "database", EmptyStateOpts::new()),
+            empty_state(Locale::Zh, "database")
+        );
+        let html = empty_state_with(
+            Locale::En,
+            "search",
+            EmptyStateOpts::new()
+                .with_title("No <matches>")
+                .with_message("Try another & query")
+                .with_action(crate::controls::link_button(
+                    "/search",
+                    "Clear search",
+                    crate::controls::Variant::Secondary,
+                    Default::default(),
+                )),
+        );
+        assert!(html.as_str().contains("No &lt;matches&gt;"));
+        assert!(html.as_str().contains("Try another &amp; query"));
+        assert!(html.as_str().contains("class=\"empty__action\""));
+        assert!(html.as_str().contains("href=\"/search\""));
     }
 
     #[test]
