@@ -8,7 +8,7 @@ if [ "$(id -u)" -ne 0 ]; then
   exit 1
 fi
 
-for command in cargo docker flock getent groupadd id install mktemp node openssl runuser systemctl systemd-tmpfiles useradd; do
+for command in cargo docker flock getent groupadd id install mktemp node npm openssl runuser systemctl systemd-tmpfiles useradd; do
   if ! command -v "$command" >/dev/null 2>&1; then
     echo "required command is missing: $command" >&2
     exit 1
@@ -22,7 +22,6 @@ if ! flock -n 9; then
 fi
 
 ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
-SITEFLOW_ROOT=/root/w33d_infra/siteflow
 RELEASE=1.2.0-canary.1
 LIBEXEC=/usr/local/libexec/odyssey-gate
 BROWSER_RUNTIME=/usr/local/lib/odyssey-browser
@@ -105,10 +104,9 @@ node --check "$LIBEXEC_STAGE/odyssey-gate-browser.mjs"
 
 BROWSER_STAGE=$(mktemp -d /usr/local/lib/.odyssey-browser-stage.XXXXXX)
 chmod 0755 "$BROWSER_STAGE"
-install -d -m 0755 "$BROWSER_STAGE/node_modules"
 install -m 0644 "$ROOT/tools/browser-runtime/package.json" "$BROWSER_STAGE/package.json"
-cp -a "$SITEFLOW_ROOT/node_modules/playwright" "$BROWSER_STAGE/node_modules/playwright"
-cp -a "$SITEFLOW_ROOT/node_modules/playwright-core" "$BROWSER_STAGE/node_modules/playwright-core"
+install -m 0644 "$ROOT/tools/browser-runtime/package-lock.json" "$BROWSER_STAGE/package-lock.json"
+(cd "$BROWSER_STAGE"; umask 022; npm ci --ignore-scripts --engine-strict --no-audit --no-fund)
 node -e "require('node:module').createRequire('$BROWSER_STAGE/package.json')('playwright')"
 
 if [ "$(file_sha256 "$ROOT/tools/odyssey-gate.mjs")" != "$EXPECTED_COLLECTOR_SHA" ] \
