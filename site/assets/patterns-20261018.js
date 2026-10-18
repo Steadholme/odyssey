@@ -61,7 +61,8 @@ let inboxQuery = '';
 let activeNotification = 'n2';
 const selected = new Set();
 let workspaceDraft = {...state.workspace};
-let errors = {};
+let workspaceController = null;
+let composingTarget = null;
 let pendingView = null;
 let lastSettingsField = 'workspace-name';
 let undoOperation = null;
@@ -121,6 +122,7 @@ function route(view, focus = false) {
  window.scrollTo({top:0,behavior:'instant'});
 }
 function renderView() {
+ if(workspaceController){workspaceController.destroy();workspaceController=null;}
  updateShell();
  if (currentView === 'releases') renderRelease();
  if (currentView === 'inbox') renderInbox();
@@ -237,31 +239,22 @@ function mutateNotifications(ids,field,value,title,message) {
  before.forEach(item=>{state.notifications.find(n=>n.id===item.id)[field]=value;});selected.clear();persist();renderInboxBody();focusInboxControl();
  notify(title,message,()=>{before.forEach(item=>{state.notifications.find(n=>n.id===item.id)[field]=item.value;});persist();if(currentView==='inbox'){renderInboxBody();focusInboxControl(before[0]?.id);}updateShell();});
 }
-function validateWorkspace(showAll = true) {
- const e={};
- if(workspaceDraft.name.trim().length<2)e.name='Use at least 2 characters for the workspace name.';
- else if(workspaceDraft.name.trim().length>40)e.name='Keep the workspace name to 40 characters or fewer.';
- if(!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(workspaceDraft.slug)||workspaceDraft.slug.length<3||workspaceDraft.slug.length>32)e.slug='Use 3–32 lowercase letters, numbers, or single hyphens.';
- else if(['admin','api','support'].includes(workspaceDraft.slug))e.slug='This workspace URL is reserved. Choose another one.';
- if(showAll)errors=e;return e;
-}
 function renderSettings() {
- $('#main').innerHTML=`<div class="page-heading"><div><p class="eyebrow">WORKSPACE / SETTINGS</p><h1 id="page-title" tabindex="-1">Make room for your work.</h1><p class="subhead">The details, the rhythm, and the way your workspace feels.</p></div><span class="badge">WORKSPACE ADMIN</span></div><div class="settings-layout"><section class="settings-section"><div class="section-intro"><span class="section-index">01 / IDENTITY</span><h2>Workspace details</h2><p>A clear name and a familiar address for everyone on the team.</p></div><form id="workspace-form" novalidate><label class="field" for="workspace-name">Workspace name<input id="workspace-name" name="workspace-name" autocomplete="organization" value="${escapeHTML(workspaceDraft.name)}" aria-describedby="name-help name-error"><small id="name-help">The name your team sees across the workspace.</small><small class="error" id="name-error" role="alert" hidden></small></label><label class="field" for="workspace-slug">Workspace URL<span class="slug-input"><span>odyssey.demo /</span><input id="workspace-slug" name="workspace-slug" autocomplete="off" spellcheck="false" autocapitalize="none" value="${escapeHTML(workspaceDraft.slug)}" aria-describedby="slug-help slug-error"></span><small id="slug-help">Lowercase letters, numbers, and hyphens. 3–32 characters.</small><small class="error" id="slug-error" role="alert" hidden></small></label><div class="form-actions"><span class="save-status" id="save-status">${icon('check-circle')}All changes saved</span><button type="button" class="button secondary" id="discard-workspace" disabled>Discard</button><button type="submit" class="button primary" id="save-workspace" disabled>Save changes</button></div></form></section><section class="settings-section"><div class="section-intro"><span class="section-index">02 / EXPRESSION</span><h2>Appearance</h2><p>One language, four expressions.<br>Your preference follows every view.</p></div><div><fieldset class="preference-field"><legend>Expression</legend><div class="expression-options">${['line','soft','studio','signal'].map(name=>`<label class="expression-option"><input type="radio" name="expression" value="${name}" ${state.appearance.expression===name?'checked':''}><span class="expression-swatch ${name}"><i></i><span></span></span><b>${capitalize(name)}</b></label>`).join('')}</div></fieldset><div class="appearance-row"><fieldset class="preference-field"><legend>Theme</legend><div class="segmented">${['light','dark'].map(name=>`<label><input type="radio" name="theme" value="${name}" ${state.appearance.theme===name?'checked':''}><span>${capitalize(name)}</span></label>`).join('')}</div></fieldset><fieldset class="preference-field"><legend>Density</legend><div class="segmented">${['comfortable','compact'].map(name=>`<label><input type="radio" name="density" value="${name}" ${state.appearance.density===name?'checked':''}><span>${capitalize(name)}</span></label>`).join('')}</div></fieldset></div><div class="appearance-preview"><span class="preview-mark">${icon('layers')}</span><div><b>Release 54 · checkout-api</b><p id="appearance-description"></p></div><span class="badge ${state.release.approved?'success':'pending'}">${statusLabel()}</span></div><p class="preference-help">Applied immediately. Workspace details stay as you left them.</p></div></section><section class="settings-section"><div class="section-intro"><span class="section-index">03 / RHYTHM</span><h2>Motion & accessibility</h2><p>Feedback when it helps.<br>Quiet when you need it.</p></div><div><div class="switch-row"><div><b id="reduced-label">Reduce motion</b><p>Use immediate state changes instead of movement. Your system’s reduced-motion setting always takes priority.</p></div><label class="switch-label"><input id="reduced-setting" type="checkbox" aria-labelledby="reduced-label" ${state.appearance.reduced?'checked':''}><span class="switch-track" aria-hidden="true"></span></label></div><p class="motion-status" id="motion-status"></p></div></section><div class="settings-footer">${icon('info')}<span>Settings are saved on this device.</span><button class="text-button" id="restore-appearance">Restore Line defaults</button></div></div>`;
- updateWorkspaceForm();
+ $('#main').innerHTML=`<div class="page-heading"><div><p class="eyebrow">WORKSPACE / SETTINGS</p><h1 id="page-title" tabindex="-1">Make room for your work.</h1><p class="subhead">The details, the rhythm, and the way your workspace feels.</p></div><span class="badge">WORKSPACE ADMIN</span></div><div class="settings-layout"><section class="settings-section"><div class="section-intro"><span class="section-index">01 / IDENTITY</span><h2>Workspace details</h2><p>A clear name and a familiar address for everyone on the team.</p><p><a class="button secondary" href="/examples/compositions/workspace-settings.html" target="_blank" rel="noopener">Standalone form ↗</a></p></div><form id="workspace-form" data-ody-composition="workspace-settings" novalidate><label class="field" for="workspace-name">Workspace name<input id="workspace-name" data-ody-workspace-name name="workspace-name" autocomplete="organization" value="${escapeHTML(workspaceDraft.name)}" aria-describedby="name-help name-error"><small id="name-help">The name your team sees across the workspace.</small><small class="error" id="name-error" data-ody-workspace-error="name" role="alert" hidden></small></label><label class="field" for="workspace-slug">Workspace URL<span class="slug-input"><span>odyssey.demo /</span><input id="workspace-slug" data-ody-workspace-slug name="workspace-slug" autocomplete="off" spellcheck="false" autocapitalize="none" value="${escapeHTML(workspaceDraft.slug)}" aria-describedby="slug-help slug-error"></span><small id="slug-help">Lowercase letters, numbers, and hyphens. 3–32 characters.</small><small class="error" id="slug-error" data-ody-workspace-error="slug" role="alert" hidden></small></label><div class="form-actions"><span class="save-status" id="save-status"><span data-ody-workspace-status-icon aria-hidden="true">✓</span><span data-ody-workspace-status>All changes saved</span></span><button type="button" class="button secondary" id="discard-workspace" data-ody-workspace-discard disabled>Discard</button><button type="submit" class="button primary" id="save-workspace" data-ody-workspace-save disabled>Save changes</button></div><p data-ody-workspace-error="save" class="error" role="alert" hidden></p></form></section><section class="settings-section"><div class="section-intro"><span class="section-index">02 / EXPRESSION</span><h2>Appearance</h2><p>One language, four expressions.<br>Your preference follows every view.</p></div><div><fieldset class="preference-field"><legend>Expression</legend><div class="expression-options">${['line','soft','studio','signal'].map(name=>`<label class="expression-option"><input type="radio" name="expression" value="${name}" ${state.appearance.expression===name?'checked':''}><span class="expression-swatch ${name}"><i></i><span></span></span><b>${capitalize(name)}</b></label>`).join('')}</div></fieldset><div class="appearance-row"><fieldset class="preference-field"><legend>Theme</legend><div class="segmented">${['light','dark'].map(name=>`<label><input type="radio" name="theme" value="${name}" ${state.appearance.theme===name?'checked':''}><span>${capitalize(name)}</span></label>`).join('')}</div></fieldset><fieldset class="preference-field"><legend>Density</legend><div class="segmented">${['comfortable','compact'].map(name=>`<label><input type="radio" name="density" value="${name}" ${state.appearance.density===name?'checked':''}><span>${capitalize(name)}</span></label>`).join('')}</div></fieldset></div><div class="appearance-preview"><span class="preview-mark">${icon('layers')}</span><div><b>Release 54 · checkout-api</b><p id="appearance-description"></p></div><span class="badge ${state.release.approved?'success':'pending'}">${statusLabel()}</span></div><p class="preference-help">Applied immediately. Workspace details stay as you left them.</p></div></section><section class="settings-section"><div class="section-intro"><span class="section-index">03 / RHYTHM</span><h2>Motion & accessibility</h2><p>Feedback when it helps.<br>Quiet when you need it.</p></div><div><div class="switch-row"><div><b id="reduced-label">Reduce motion</b><p>Use immediate state changes instead of movement. Your system’s reduced-motion setting always takes priority.</p></div><label class="switch-label"><input id="reduced-setting" type="checkbox" aria-labelledby="reduced-label" ${state.appearance.reduced?'checked':''}><span class="switch-track" aria-hidden="true"></span></label></div><p class="motion-status" id="motion-status"></p></div></section><div class="settings-footer">${icon('info')}<span>Settings are saved on this device.</span><button class="text-button" id="restore-appearance">Restore Line defaults</button></div></div>`;
+ workspaceController=window.OdysseyCompositions.mountWorkspace($('#workspace-form'),{
+  value:state.workspace,draft:workspaceDraft,
+  onChange:next=>{workspaceDraft={...next.draft};updateShell();},
+  onSave:value=>{state.workspace={...value};workspaceDraft={...value};persist();updateShell();notify('Workspace saved',`${state.workspace.name} · ${state.workspace.slug}`);return value;}
+ });
+ $('#workspace-form').addEventListener('ody:workspace-discard',()=>notify('Changes discarded','Your saved workspace details are restored.'));
 }
-function updateWorkspaceForm() {
- if(!$('#workspace-form'))return;
- const dirty=workspaceDirty();
- $('#save-workspace').disabled=!dirty;$('#discard-workspace').disabled=!dirty;
- $('#save-status').classList.toggle('unsaved',dirty);$('#save-status').innerHTML=`${icon(dirty?'dot':'check-circle')}${dirty?'Unsaved changes':'All changes saved'}`;
- for(const key of ['name','slug']){const input=$('#workspace-'+key),error=$('#'+key+'-error');input.setAttribute('aria-invalid',String(!!errors[key]));error.textContent=errors[key]||'';error.hidden=!errors[key];}
- updateShell();
-}
-function discardWorkspace() {workspaceDraft={...state.workspace};errors={};$('#workspace-name').value=workspaceDraft.name;$('#workspace-slug').value=workspaceDraft.slug;updateWorkspaceForm();$('#workspace-name').focus();notify('Changes discarded','Your saved workspace details are restored.');}
 function commandItems() {return $$('[data-command]').filter(button=>!button.hidden);}
 function selectCommand(index){const items=commandItems();commandIndex=items.length?(index+items.length)%items.length:-1;$$('[data-command]').forEach(button=>button.setAttribute('aria-selected','false'));const item=items[commandIndex];if(item){item.setAttribute('aria-selected','true');$('#command-search').setAttribute('aria-activedescendant',item.id);}else $('#command-search').removeAttribute('aria-activedescendant');}
 function filterCommands(){const query=$('#command-search').value.toLowerCase().trim();$$('[data-command]').forEach(button=>button.hidden=!button.textContent.toLowerCase().includes(query));$('#command-empty').hidden=commandItems().length>0;selectCommand(0);}
 
+function isComposing(event){if(composingTarget&&!composingTarget.isConnected)composingTarget=null;return !!composingTarget || event.isComposing || event.keyCode===229;}
+document.addEventListener('compositionstart',event=>{composingTarget=event.target;},true);
+document.addEventListener('compositionend',event=>{if(composingTarget===event.target)composingTarget=null;},true);
 // Input modality is set before click handlers, including synthetic keyboard clicks.
 document.addEventListener('pointerdown',()=>{root.dataset.input='pointer';},true);
 document.addEventListener('keydown',()=>{root.dataset.input='keyboard';},true);
@@ -279,7 +272,7 @@ $$('dialog').forEach(dialog=>{
 $('#leave-keep').addEventListener('click',()=>{$('#leave-dialog').close();pendingView=null;$('#'+lastSettingsField)?.focus();});
 $('#leave-dialog').addEventListener('cancel',()=>{pendingView=null;queueMicrotask(()=>$('#'+lastSettingsField)?.focus());});
 $('#leave-dialog').addEventListener('close',()=>{if(pendingView!==null){pendingView=null;$('#'+lastSettingsField)?.focus();}});
-$('#leave-discard').addEventListener('click',()=>{const next=pendingView;pendingView=null;workspaceDraft={...state.workspace};errors={};$('#leave-dialog').close();route(next,true);});
+$('#leave-discard').addEventListener('click',()=>{const next=pendingView;pendingView=null;workspaceDraft={...state.workspace};$('#leave-dialog').close();route(next,true);});
 $('#schedule-form').addEventListener('submit',event=>{
  event.preventDefault();const value=$('#schedule-time').value,when=new Date(value);const invalid=!value||Number.isNaN(+when)||+when<=Date.now();
  $('#schedule-error').textContent=invalid?'Choose a release time in the future.':'';$('#schedule-error').hidden=!invalid;$('#schedule-time').setAttribute('aria-invalid',String(invalid));
@@ -290,7 +283,7 @@ $('#schedule-time').addEventListener('input',()=>{if($('#schedule-time').getAttr
 $('#toast-dismiss').addEventListener('click',dismissToast);
 $('#toast-undo').addEventListener('click',()=>{if(undoOperation){const undo=undoOperation;undoOperation=null;undo();if(document.activeElement===$('#toast-undo'))$('#page-title').focus({preventScroll:true});notify('Change undone','Your previous state is restored.');}});
 $('#command-search').addEventListener('input',filterCommands);
-$('#command-search').addEventListener('keydown',event=>{if(['ArrowDown','ArrowUp'].includes(event.key)){event.preventDefault();selectCommand(commandIndex+(event.key==='ArrowDown'?1:-1));}if(event.key==='Enter'){event.preventDefault();commandItems()[commandIndex]?.click();}});
+$('#command-search').addEventListener('keydown',event=>{if(isComposing(event))return;if(['ArrowDown','ArrowUp'].includes(event.key)){event.preventDefault();selectCommand(commandIndex+(event.key==='ArrowDown'?1:-1));}if(event.key==='Enter'){event.preventDefault();commandItems()[commandIndex]?.click();}});
 $$('[data-command]').forEach(button=>button.addEventListener('click',()=>{
  const dialog=$('#command-dialog');
  if(button.dataset.command!=='theme')lastDialogFocus.delete(dialog);
@@ -298,6 +291,7 @@ $$('[data-command]').forEach(button=>button.addEventListener('click',()=>{
  if(button.dataset.command==='theme')setAppearance('theme',state.appearance.theme==='light'?'dark':'light');else route(button.dataset.command,true);
 }));
 document.addEventListener('keydown',event=>{
+ if(isComposing(event))return;
  if((event.metaKey||event.ctrlKey)&&event.key.toLowerCase()==='k'){event.preventDefault();if($('#command-dialog').open)$('#command-dialog').close();else if(!document.querySelector('dialog[open]'))openDialog('command-dialog');}
  const tab=event.target.closest('[data-tab]');if(tab&&['ArrowLeft','ArrowRight','Home','End'].includes(event.key)){event.preventDefault();const tabs=['changes','checks','activity'];const index=tabs.indexOf(currentTab);setReleaseTab(event.key==='Home'?'changes':event.key==='End'?'activity':tabs[(index+(event.key==='ArrowRight'?1:2))%3],true);}
 });
@@ -327,7 +321,6 @@ document.addEventListener('click',event=>{
  else if(n.link==='acknowledge'){n.action=false;n.actionLabel='Acknowledged';n.link='acknowledged';n.contextBody='Reminder acknowledged in this demo workspace.';persist();renderInboxBody();$('#notification-action').focus();notify('Reminder acknowledged','This inbox item no longer needs action.');}
  else notify('Already acknowledged','You can keep this update or archive it.');
  }
- if(button.id==='discard-workspace')discardWorkspace();
  if(button.id==='restore-appearance'){state.appearance={...defaults.appearance};applyAppearance();persist();notify('Line defaults restored','Line / Light / Comfortable · system motion preference respected.');}
 });
 document.addEventListener('change',event=>{
@@ -338,13 +331,7 @@ document.addEventListener('change',event=>{
 });
 document.addEventListener('input',event=>{
  if(event.target.id==='inbox-search'){inboxQuery=event.target.value;selected.clear();renderInboxBody();}
- if(event.target.id==='workspace-name'||event.target.id==='workspace-slug'){const key=event.target.id.replace('workspace-','');workspaceDraft[key]=event.target.value;const current=validateWorkspace(false);if(current[key])errors[key]=current[key];else delete errors[key];updateWorkspaceForm();}
 });
 document.addEventListener('focusin',event=>{if(['workspace-name','workspace-slug'].includes(event.target.id))lastSettingsField=event.target.id;});
-document.addEventListener('submit',event=>{
- if(event.target.id!=='workspace-form')return;event.preventDefault();validateWorkspace();updateWorkspaceForm();
- const invalid=Object.keys(errors)[0];if(invalid){$('#workspace-'+invalid).focus();return;}
- state.workspace={name:workspaceDraft.name.trim(),slug:workspaceDraft.slug};workspaceDraft={...state.workspace};persist();$('#workspace-name').value=state.workspace.name;updateWorkspaceForm();notify('Workspace saved',`${state.workspace.name} · ${state.workspace.slug}`);$('#workspace-name').focus();
-});
 window.addEventListener('beforeunload',event=>{if(workspaceDirty()){event.preventDefault();event.returnValue='';}});
 paintIcons();applyAppearance();renderView();

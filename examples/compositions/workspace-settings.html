@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en" data-ody-design="line" data-expression="line" data-theme="light">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Workspace settings composition · Odyssey</title>
+<link rel="stylesheet" href="/1.4.0/odyssey-font.css">
+<link rel="stylesheet" href="/1.4.0/odyssey-line.css">
+<link rel="stylesheet" href="/1.4.0/compositions.css">
+<script src="/1.4.0/compositions.js" defer></script>
+</head>
+<body>
+<main class="ody-composition-workspace">
+<h1>Workspace details</h1>
+<p>Edit, validate, save, or discard. This standalone example applies values locally.</p>
+<form class="ody-composition-workspace" data-ody-composition="workspace-settings" novalidate>
+<label for="team-name">Workspace name
+<input id="team-name" data-ody-workspace-name value="North Studio" autocomplete="organization" aria-describedby="name-help">
+<small id="name-help">The name your team sees.</small>
+<small data-ody-workspace-error="name" hidden></small>
+</label>
+<label for="team-slug">Workspace URL
+<input id="team-slug" data-ody-workspace-slug value="north-studio" autocomplete="off" autocapitalize="none" spellcheck="false" aria-describedby="slug-help">
+<small id="slug-help">3–32 lowercase letters, numbers, or single hyphens.</small>
+<small data-ody-workspace-error="slug" hidden></small>
+</label>
+<div class="ody-composition-actions">
+<span data-ody-workspace-status>All changes saved</span>
+<button type="button" data-ody-workspace-discard>Discard</button>
+<button type="submit" data-ody-workspace-save>Save changes</button>
+</div>
+<p data-ody-workspace-error="save" hidden></p>
+</form>
+</main>
+</body></html>

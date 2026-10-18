@@ -2,7 +2,9 @@ use crate::html::{esc, raw, Html};
 use crate::i18n::{t, Locale};
 use crate::icons;
 use crate::profile::Profile;
-use crate::{dynamic_scripts_with, RuntimeOpts, APP_CSS};
+use crate::{
+    dynamic_scripts_with, RuntimeOpts, APP_CSS, EXPRESSIONS_CSS, EXTENSIONS_CSS, EXTENSIONS_JS,
+};
 
 pub struct Brand {
     pub tile_svg: &'static str,
@@ -104,6 +106,55 @@ impl<'a> Default for WireShellOpts<'a> {
     }
 }
 
+/// Presentation variants of the additive Line root contract.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub enum LineExpression {
+    #[default]
+    Line,
+    Soft,
+    Studio,
+    Signal,
+}
+
+impl LineExpression {
+    pub const fn as_str(self) -> &'static str {
+        match self {
+            Self::Line => "line",
+            Self::Soft => "soft",
+            Self::Studio => "studio",
+            Self::Signal => "signal",
+        }
+    }
+}
+
+/// Line is a separate opt-in: adding it never changes existing `ShellOpts` literals.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct LineShellOpts<'a> {
+    expression: LineExpression,
+    extensions: bool,
+    nonce: Option<&'a str>,
+}
+
+impl<'a> LineShellOpts<'a> {
+    pub const fn new(expression: LineExpression) -> Self {
+        Self {
+            expression,
+            extensions: false,
+            nonce: None,
+        }
+    }
+    /// Include native extension styles and their idempotent enhancer.
+    pub const fn with_extensions(mut self) -> Self {
+        self.extensions = true;
+        self
+    }
+    /// Authorize every inline style/script emitted by this Line shell.
+    pub const fn with_nonce(mut self, nonce: &'a str) -> Self {
+        self.nonce = Some(nonce);
+        self
+    }
+}
+
 pub struct PageHead<'a> {
     pub eyebrow: Option<&'a str>,
     pub glyph: Option<Html>,
@@ -121,7 +172,7 @@ pub struct PageChrome<'a> {
 }
 
 pub fn page_shell(chrome: PageChrome<'_>, body: Html, opts: ShellOpts) -> String {
-    page_shell_impl(chrome, body, opts, None, None)
+    page_shell_impl(chrome, body, opts, None, None, None)
 }
 
 /// Render the standard shell with the Odyssey 1.3 profile root contract.
@@ -136,7 +187,7 @@ pub fn page_shell_with_profile(
     opts: ShellOpts,
     profile: Profile,
 ) -> String {
-    page_shell_impl(chrome, body, opts, None, Some(profile))
+    page_shell_impl(chrome, body, opts, None, Some(profile), None)
 }
 
 /// Render the standard shell with Wire-boosted app navigation and the internal runtime bundle.
@@ -150,7 +201,7 @@ pub fn wire_page_shell(
     opts: ShellOpts,
     wire: WireShellOpts<'_>,
 ) -> String {
-    page_shell_impl(chrome, body, opts, Some(wire), None)
+    page_shell_impl(chrome, body, opts, Some(wire), None, None)
 }
 
 /// Combine Wire navigation with the Odyssey 1.3 profile root contract.
@@ -164,7 +215,28 @@ pub fn wire_page_shell_with_profile(
     wire: WireShellOpts<'_>,
     profile: Profile,
 ) -> String {
-    page_shell_impl(chrome, body, opts, Some(wire), Some(profile))
+    page_shell_impl(chrome, body, opts, Some(wire), Some(profile), None)
+}
+
+/// Static Rust helper shell with an opt-in Line expression and optional extensions.
+pub fn line_page_shell(
+    chrome: PageChrome<'_>,
+    body: Html,
+    opts: ShellOpts,
+    line: LineShellOpts<'_>,
+) -> String {
+    page_shell_impl(chrome, body, opts, None, None, Some(line))
+}
+
+/// Line presentation with the existing Wire/Spark progressive-enhancement contract.
+pub fn wire_line_page_shell(
+    chrome: PageChrome<'_>,
+    body: Html,
+    opts: ShellOpts,
+    wire: WireShellOpts<'_>,
+    line: LineShellOpts<'_>,
+) -> String {
+    page_shell_impl(chrome, body, opts, Some(wire), None, Some(line))
 }
 
 fn page_shell_impl(
@@ -173,6 +245,7 @@ fn page_shell_impl(
     opts: ShellOpts,
     wire: Option<WireShellOpts<'_>>,
     profile: Option<Profile>,
+    line: Option<LineShellOpts<'_>>,
 ) -> String {
     let mut body_attr = String::new();
     if !opts.body_class.is_empty() {
@@ -189,9 +262,40 @@ fn page_shell_impl(
     let main_attr = wire
         .map(|opts| format!(" id=\"{}\"", esc(opts.region_id)))
         .unwrap_or_default();
-    let runtime_scripts = wire
-        .map(|opts| format!("{}\n", dynamic_scripts_with(opts.runtime)))
+    let nonce = line
+        .and_then(|line| line.nonce)
+        .or_else(|| wire.and_then(|wire| wire.runtime.nonce));
+    let style_nonce = line
+        .and(nonce)
+        .map(|nonce| format!(" nonce=\"{}\"", esc(nonce)))
         .unwrap_or_default();
+    let mut runtime_scripts = wire
+        .map(|opts| {
+            let runtime = nonce
+                .map(|nonce| opts.runtime.with_nonce(nonce))
+                .unwrap_or(opts.runtime);
+            format!("{}\n", dynamic_scripts_with(runtime))
+        })
+        .unwrap_or_default();
+    if line.is_some_and(|line| line.extensions) {
+        let script_nonce = nonce
+            .map(|nonce| format!(" nonce=\"{}\"", esc(nonce)))
+            .unwrap_or_default();
+        runtime_scripts.push_str(&format!("<script{script_nonce}>{EXTENSIONS_JS}</script>\n"));
+    }
+    let line_attr = line
+        .map(|line| {
+            format!(
+                " data-ody-design=\"line\" data-expression=\"{}\"",
+                line.expression.as_str()
+            )
+        })
+        .unwrap_or_default();
+    let line_css = match line {
+        Some(line) if line.extensions => EXTENSIONS_CSS,
+        Some(line) if line.expression != LineExpression::Line => EXPRESSIONS_CSS,
+        _ => "",
+    };
     let footer = if chrome.footer.as_str().is_empty() {
         String::new()
     } else {
@@ -204,7 +308,11 @@ fn page_shell_impl(
     };
     // Theme stamping is LIGHT-first: light emits neither the `data-theme` attr nor the
     // `color-scheme` meta, keeping the output byte-identical to the pre-theme era.
-    let theme_attr = crate::theme::html_theme_attr(opts.theme);
+    let theme_attr = if line.is_some() && opts.theme == "light" {
+        " data-theme=\"light\""
+    } else {
+        crate::theme::html_theme_attr(opts.theme)
+    };
     let profile_attr = profile
         .map(|profile| format!(" data-ody-profile=\"{}\"", profile.as_str()))
         .unwrap_or_default();
@@ -220,13 +328,13 @@ fn page_shell_impl(
     format!(
         concat!(
             "<!doctype html>\n",
-            "<html lang=\"{lang}\"{theme_attr}{profile_attr}>\n",
+            "<html lang=\"{lang}\"{theme_attr}{profile_attr}{line_attr}>\n",
             "<head>\n",
             "<meta charset=\"utf-8\">\n",
             "<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\n",
             "{color_scheme_meta}",
             "<title>{title}</title>\n",
-            "<style>{css}{extra_css}</style>\n",
+            "<style{style_nonce}>{css}{line_css}{extra_css}</style>\n",
             "{head_extra}\n",
             "</head>\n",
             "<body{body_attr}>\n",
@@ -248,6 +356,9 @@ fn page_shell_impl(
         lang = opts.locale.bcp47(),
         theme_attr = theme_attr,
         profile_attr = profile_attr,
+        line_attr = line_attr,
+        line_css = line_css,
+        style_nonce = style_nonce,
         color_scheme_meta = color_scheme_meta,
         title = esc(chrome.title),
         css = APP_CSS,
@@ -610,6 +721,62 @@ mod tests {
         let mut chrome = chrome();
         chrome.nav = &NAV;
         chrome
+    }
+
+    #[test]
+    fn line_shell_is_additive_and_applies_nonce_to_every_emitted_asset() {
+        let chrome = || PageChrome {
+            title: "Example",
+            brand: Brand {
+                tile_svg: "",
+                accent: "",
+                name: "Demo",
+                sub: "",
+            },
+            nav: &[],
+            user: UserBox {
+                email: None,
+                logout_url: "/logout",
+            },
+            footer: Html::default(),
+        };
+        let static_page = line_page_shell(
+            chrome(),
+            Html::default(),
+            ShellOpts {
+                locale: Locale::Ja,
+                ..Default::default()
+            },
+            LineShellOpts::new(LineExpression::Soft)
+                .with_extensions()
+                .with_nonce("response<&"),
+        );
+        assert!(static_page.contains("<html lang=\"ja\" data-theme=\"light\" data-ody-design=\"line\" data-expression=\"soft\">"));
+        assert!(static_page.contains("<style nonce=\"response&lt;&amp;\">"));
+        assert!(static_page.contains("<script nonce=\"response&lt;&amp;\">"));
+        assert!(static_page.contains("window.OdysseyExtensions"));
+        assert!(!static_page.contains("odyssey-wire v1"));
+        let dynamic = wire_line_page_shell(
+            chrome(),
+            Html::default(),
+            ShellOpts {
+                theme: "auto",
+                ..Default::default()
+            },
+            WireShellOpts::new("content"),
+            LineShellOpts::default()
+                .with_nonce("nonce")
+                .with_extensions(),
+        );
+        assert!(dynamic.contains("data-theme=\"auto\""));
+        assert!(dynamic.contains("id=\"content\""));
+        assert!(dynamic.contains("data-wire-nav"));
+        assert_eq!(dynamic.matches("<script nonce=\"nonce\">").count(), 2);
+        assert!(dynamic.contains("odyssey-wire v1"));
+        let legacy = page_shell(chrome(), Html::default(), ShellOpts::default());
+        assert!(legacy.contains("<html lang=\"en\">"));
+        assert!(!legacy.contains("<html lang=\"en\" data-ody-design"));
+        assert!(!legacy.contains("<script"));
     }
 
     #[test]

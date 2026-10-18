@@ -1,0 +1,85 @@
+import assert from 'node:assert/strict';
+import { readFile, mkdir } from 'node:fs/promises';
+import { createServer } from 'node:http';
+import { execFileSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
+const { chromium } = await import(process.env.PLAYWRIGHT_MODULE || 'playwright');
+const root=fileURLToPath(new URL('../../',import.meta.url));
+const read=path=>readFile(new URL('../../'+path,import.meta.url),'utf8');
+const line=await read('css/line.css'), expressions=await read('css/expressions.css');
+const app=(await Promise.all(['font','tokens','components','motion','profile','line-font'].map(name=>read('css/'+name+'.css')))).join('\n')+line;
+const publicCSS=await read('dist/odyssey.css'), runtime=await read('dist/odyssey.js');
+const long='启用桌面通知并在每次部署完成后通知所有工作区成员';
+const switchMarkup=(id,checked=false)=>`<label class="ody-switch" id="${id}"><span class="ody-switch__control"><input type="checkbox" ${checked?'checked':''}><span class="ody-switch__track"></span></span><span>${long}</span></label>`;
+const cells='<thead><tr><th>Component</th><th>Production environment</th></tr></thead><tbody><tr><td>Button</td><td>Stable</td></tr></tbody>';
+const tones=['ok','warn','down','info'];
+const fixture=`<!doctype html><html lang="zh-Hans" data-ody-design="line" data-expression="line" data-theme="light"><head><style>${app}\n${publicCSS}\n${line}\n${expressions}</style><style>main{width:320px;max-width:100%;padding:12px}.switches{display:grid;gap:16px}.panel{background:var(--ody-surface)}.charts{display:grid;gap:24px}.charts>div{min-width:0}.table-wrap table{min-width:700px}#control{margin-bottom:10px}</style></head><body><main>
+<div class="switches">${switchMarkup('labelled',true)}${switchMarkup('unchecked')}<label class="ody-switch" id="simple"><input aria-label="Simple switch" type="checkbox" checked><span class="ody-switch__track"></span></label><span class="switch" id="rust-switch"><input aria-label="Rust switch" type="checkbox" role="switch"><i aria-hidden="true"></i></span></div>
+<div class="panel"><input class="ody-input" id="control" aria-label="Control"><input class="input" aria-label="Rust control"><button class="btn btn-primary" aria-busy="true" disabled>Saving</button></div>
+<div class="density"><table class="ody-table" id="root-table">${cells}</table><table class="ody-table" id="own-table" data-density="compact">${cells}</table><table class="ody-table ody-table--compact" id="old-table">${cells}</table><div class="field" id="density-field"><label for="density-input">Field</label><input id="density-input" class="ody-input"></div><ul class="ody-list"><li class="ody-list__item" id="density-list">List row</li></ul><div class="ody-toolbar" id="density-toolbar">Toolbar</div></div>
+<div class="charts"><div class="ody-chart" data-ody-chart="bar" data-values="12,18,8" data-labels="A,B,C"></div><div class="ody-chart" data-ody-chart="line" data-values="12,18,8"></div><div class="ody-chart ody-chart--donut" data-ody-chart="donut" data-values="62,24,14" style="width:140px"></div><span class="ody-chart ody-chart--spark" data-ody-chart="spark" data-values="1,3,2"></span><div class="ody-chart ody-chart--bars"><span style="--value:35%"></span><span style="--value:70%"></span></div></div>
+${tones.map(t=>`<div class="alert alert--${t}" id="rust-${t}">${t}</div><div class="ody-alert ody-alert--${t}" id="public-${t}">${t}</div><span class="pill pill-${t}" id="rust-pill-${t}">${t}</span><span class="ody-pill ody-pill--${t}" id="public-pill-${t}">${t}</span><div class="progress progress--${t}" id="rust-progress-${t}"><span class="progress__bar" style="--w:50%"></span></div><div class="ody-progress ody-progress--${t}" id="public-progress-${t}"><div class="ody-progress__bar" style="width:50%"></div></div>`).join('')}
+<div class="ody-kanban"><div class="ody-kanban__col"><div class="ody-kanban__head">Very long destination column name</div><div class="ody-kanban__list"><div class="ody-kanban__card">One task</div></div></div><div class="ody-kanban__col"><div class="ody-kanban__head">Done</div><div class="ody-kanban__list"></div></div></div><div class="table-wrap" tabindex="0" role="group" aria-label="Wide releases" id="scroll-table"><table>${cells}</table></div></main><script src="/runtime.js"></script></body></html>`;
+const rustStatic=execFileSync('cargo',['run','--quiet','--example','line'],{cwd:root,encoding:'utf8'});
+const rustDynamic=execFileSync('cargo',['run','--quiet','--example','line','--','--dynamic'],{cwd:root,encoding:'utf8'});
+const server=createServer((req,res)=>{if(['/static','/dynamic'].includes(req.url))res.setHeader('Content-Security-Policy',"default-src 'none'; style-src 'nonce-example-response-nonce'; script-src 'nonce-example-response-nonce'; font-src data:; img-src data:; connect-src 'self'");res.setHeader('Content-Type',req.url==='/runtime.js'?'application/javascript':'text/html; charset=utf-8');res.end(req.url==='/runtime.js'?runtime:req.url==='/static'?rustStatic:req.url==='/dynamic'?rustDynamic:fixture)});
+await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));const origin='http://127.0.0.1:'+server.address().port;
+const browser=await chromium.launch({headless:true,executablePath:process.env.CHROMIUM_EXECUTABLE});
+const metrics=[];
+const evidence=process.env.ODYSSEY_SCREENSHOTS;if(evidence)await mkdir(evidence,{recursive:true});
+try {
+ const page=await browser.newPage({viewport:{width:390,height:844},reducedMotion:'reduce'});const errors=[];page.on('pageerror',e=>errors.push(e.message));await page.goto(origin);
+ const switches=await page.locator('#labelled,#unchecked').evaluateAll(nodes=>nodes.map(n=>({height:n.offsetHeight,textHeight:n.lastElementChild.offsetHeight,width:n.offsetWidth,textWidth:n.lastElementChild.offsetWidth})));
+ switches.forEach(s=>{assert.ok(s.height>=s.textHeight);assert.ok(s.textWidth>100);assert.ok(s.height<100)});
+ assert.equal(await page.locator('#simple .ody-switch__track').evaluate(n=>n.offsetWidth),38);
+ for(const chart of await page.locator('[data-ody-chart]').all())assert.equal(await chart.evaluate(n=>n.offsetHeight>=n.querySelector('svg').getBoundingClientRect().height-1),true);
+ assert.equal(await page.locator('.ody-chart--spark').evaluate(n=>n.offsetHeight),28);
+ assert.equal(await page.locator('.ody-chart--bars').evaluate(n=>n.offsetHeight),88);
+ if(evidence){await page.locator('.switches').screenshot({path:evidence+'/line-switches.png'});await page.locator('.charts').screenshot({path:evidence+'/line-charts.png'});}
+ assert.ok(await page.locator('.ody-kanban__actions select').count()>0);
+ assert.ok(await page.locator('.ody-kanban__actions select').first().evaluate(n=>n.offsetWidth<=n.parentElement.offsetWidth));
+ for(const expression of ['line','soft','studio','signal'])for(const theme of ['light','dark']){
+  await page.locator('html').evaluate((n,{expression,theme})=>{n.dataset.expression=expression;n.dataset.theme=theme},{expression,theme});
+  const contrast=await page.locator('#control').evaluate(n=>{function l(s){const c=s.match(/[\d.]+/g).slice(0,3).map(x=>{x=+x/255;return x<=.04045?x/12.92:((x+.055)/1.055)**2.4});return c[0]*.2126+c[1]*.7152+c[2]*.0722}const s=getComputedStyle(n),a=l(s.borderTopColor),b=l(s.backgroundColor);return(Math.max(a,b)+.05)/(Math.min(a,b)+.05)});
+  assert.ok(contrast>=3,expression+' '+theme+' '+contrast);metrics.push({expression,theme,contrast:Number(contrast.toFixed(2))});
+  for(const tone of tones){
+   for(const [prefix,property] of [['','borderLeftColor'],['pill-','color'],['progress-','backgroundColor']]){
+    const result=await page.evaluate(({tone,prefix,property})=>{const get=type=>{const root=document.getElementById(type+'-'+prefix+tone);return getComputedStyle(prefix==='progress-'?root.firstElementChild:root)[property]};return [get('rust'),get('public')]},{tone,prefix,property});assert.equal(...result);
+   }
+  }
+ }
+ await page.emulateMedia({colorScheme:'dark'});
+ for(const expression of ['line','soft','studio','signal']){await page.locator('html').evaluate((n,expression)=>{n.dataset.expression=expression;n.dataset.theme='dark'},expression);const explicit=await page.locator('#control').evaluate(n=>getComputedStyle(n).backgroundColor);await page.locator('html').evaluate(n=>n.dataset.theme='auto');assert.equal(await page.locator('#control').evaluate(n=>getComputedStyle(n).backgroundColor),explicit);}
+ await page.locator('html').evaluate(n=>{n.dataset.expression='line';n.dataset.theme='light';n.dataset.density='compact'});
+ assert.equal(await page.locator('#root-table td').first().evaluate(n=>n.offsetHeight),34);
+ assert.equal(await page.locator('#density-input').evaluate(n=>n.offsetHeight),32);
+ assert.equal(await page.locator('#density-toolbar').evaluate(n=>n.offsetHeight),32);
+ assert.equal(await page.locator('#density-list').evaluate(n=>n.offsetHeight),34);
+ await page.locator('html').evaluate(n=>n.dataset.density='comfortable');
+ assert.equal(await page.locator('#root-table td').first().evaluate(n=>n.offsetHeight),44);
+ for(const id of ['own-table','old-table'])assert.equal(await page.locator('#'+id+' td').first().evaluate(n=>n.offsetHeight),34);
+ await page.locator('#scroll-table').focus();await page.keyboard.press('ArrowRight');await page.waitForFunction(()=>document.querySelector('#scroll-table').scrollLeft>0);
+ assert.ok(await page.locator('#scroll-table').evaluate(n=>n.scrollLeft)>0);assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+ await page.emulateMedia({forcedColors:'active'});
+ for(const id of ['labelled','unchecked','simple']){
+  const track=page.locator('#'+id+' .ody-switch__track');const state=await track.evaluate(n=>({border:getComputedStyle(n).borderTopStyle,bg:getComputedStyle(n).backgroundColor,thumb:getComputedStyle(n,'::before').backgroundColor}));assert.equal(state.border,'solid');assert.notEqual(state.bg,state.thumb);
+ }
+ if(evidence)await page.locator('.switches').screenshot({path:evidence+'/forced-switches.png'});
+ await page.locator('#unchecked input').focus();assert.equal(await page.locator('#unchecked .ody-switch__track').evaluate(n=>getComputedStyle(n).outlineStyle),'solid');
+ await page.locator('#unchecked input').evaluate(n=>n.disabled=true);assert.equal(await page.locator('#unchecked .ody-switch__track').evaluate(n=>getComputedStyle(n).opacity),'1');
+ assert.notEqual(await page.locator('#rust-switch i').evaluate(n=>getComputedStyle(n).backgroundColor),await page.locator('#rust-switch i').evaluate(n=>getComputedStyle(n,'::before').backgroundColor));
+ await page.emulateMedia({forcedColors:'none',reducedMotion:'no-preference'});await page.goto(origin+'/static');
+ assert.equal(await page.locator('html').getAttribute('data-ody-design'),'line');assert.equal(await page.locator('html').getAttribute('lang'),'zh-Hans');
+ assert.equal(await page.locator('[name=csrf_token]').inputValue(),'example-session-csrf');assert.equal(await page.locator('style').evaluate(n=>n.nonce),'example-response-nonce');
+ assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);assert.equal(await page.evaluate(()=>!!window.OdysseyExtensions),true);if(evidence)await page.screenshot({path:evidence+'/rust-line-static.png',fullPage:true});assert.equal(await page.evaluate(()=>!!window.OdysseyWire),false);
+ await page.locator('[data-ody-code-input] input').first().fill('482931');assert.equal(await page.locator('[data-ody-code-input] input').last().inputValue(),'1');
+ const rustOnly=await browser.newPage({reducedMotion:'no-preference'});await rustOnly.setContent(`<html data-ody-design="line"><style>${app}</style><button class="btn btn-primary" aria-busy="true" disabled>Saving</button></html>`);
+ assert.equal(await rustOnly.locator('button').evaluate(n=>n.getAnimations({subtree:true}).some(a=>a.animationName==='odyssey-line-spin')),true);
+ await rustOnly.emulateMedia({reducedMotion:'reduce'});assert.equal(await rustOnly.locator('button').evaluate(n=>n.getAnimations({subtree:true}).length),0);
+ assert.equal(await rustOnly.locator('button').getAttribute('aria-busy'),'true');await rustOnly.close();
+ await page.goto(origin+'/dynamic');assert.equal(await page.evaluate(()=>!!window.OdysseyWire),true);assert.equal(await page.locator('main').getAttribute('id'),'workspace-content');await page.setViewportSize({width:320,height:844});assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+ assert.equal(await page.locator('[name=workspace]').evaluate(n=>n.labels[0].textContent),'工作区名称');assert.equal(await page.locator('[name=workspace]').getAttribute('aria-describedby'),'policy workspace-hint');
+ const touch=await browser.newPage({viewport:{width:320,height:844},isMobile:true,hasTouch:true,reducedMotion:'reduce'});await touch.goto(origin);await touch.locator('html').evaluate(n=>n.dataset.density='compact');assert.ok(await touch.locator('#density-input').evaluate(n=>n.offsetHeight)>=44);assert.ok(await touch.locator('#simple').evaluate(n=>n.offsetHeight)>=44);assert.ok(await touch.locator('.ody-kanban__actions button').first().evaluate(n=>n.offsetHeight)>=44);await touch.close();
+ const nojs=await browser.newPage({javaScriptEnabled:false});await nojs.goto(origin+'/static');assert.equal(await nojs.locator('form').getAttribute('method'),'post');assert.equal(await nojs.locator('[name=workspace]').evaluate(n=>n.labels.length),1);assert.equal(await nojs.locator('[name=csrf_token]').inputValue(),'example-session-csrf');await nojs.close();assert.deepEqual(errors,[]);
+ console.log('PASS Line P1: both switch markups/long labels, SVG ratios, semantic tones, 8 boundary contrasts, density inheritance/legacy modifiers/touch, keyboard table scrolling, forced colors, APP-only busy/reduced motion, static/dynamic Rust shell/locale/CSRF/nonce/extensions.');console.log(JSON.stringify(metrics));
+} finally {await browser.close();await new Promise(resolve=>server.close(resolve));}

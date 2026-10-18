@@ -297,26 +297,82 @@ fn render_wire_attrs(wire: WireOpts<'_>, element: WireElement) -> String {
     out
 }
 
+/// Additive field metadata. Existing control descriptions are retained.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct FieldOpts<'a> {
+    id: Option<&'a str>,
+    hint: Option<&'a str>,
+    error: Option<&'a str>,
+}
+
+impl<'a> FieldOpts<'a> {
+    pub const fn new() -> Self {
+        Self {
+            id: None,
+            hint: None,
+            error: None,
+        }
+    }
+    pub const fn with_id(mut self, id: &'a str) -> Self {
+        self.id = Some(id);
+        self
+    }
+    pub const fn with_hint(mut self, hint: &'a str) -> Self {
+        self.hint = Some(hint);
+        self
+    }
+    pub const fn with_error(mut self, error: &'a str) -> Self {
+        self.error = Some(error);
+        self
+    }
+}
+
 pub fn field(label: &str, control: Html) -> Html {
-    let id = field_control_id(label, control.as_str());
-    let control = with_control_id(control, &id);
-    Html(format!(
-        "<div class=\"field\"><label for=\"{}\">{}</label>{}</div>",
-        esc(&id),
-        esc(label),
-        control
-    ))
+    field_with(label, control, FieldOpts::new())
 }
 
 pub fn field_hint(label: &str, control: Html, hint: &str) -> Html {
-    let id = field_control_id(label, control.as_str());
-    let control = with_control_id(control, &id);
+    field_with(label, control, FieldOpts::new().with_hint(hint))
+}
+
+/// Render a connected label, optional hint and optional validation error.
+/// `with_id` overrides a control ID; otherwise an existing ID or its name is used.
+pub fn field_with(label: &str, mut control: Html, opts: FieldOpts<'_>) -> Html {
+    let id = opts
+        .id
+        .map(|id| esc(id).0)
+        .or_else(|| control_attr(control.as_str(), "id"))
+        .unwrap_or_else(|| esc(&field_control_id(label, control.as_str())).0);
+    control = with_control_attr(control, "id", &id);
+    let mut descriptions = control_attr(control.as_str(), "aria-describedby").unwrap_or_default();
+    let mut notes = String::new();
+    for (suffix, class, message) in [("hint", "hint", opts.hint), ("error", "err", opts.error)] {
+        if let Some(message) = message.filter(|message| !message.is_empty()) {
+            let note_id = format!("{id}-{suffix}");
+            if !descriptions
+                .split_whitespace()
+                .any(|value| value == note_id)
+            {
+                if !descriptions.is_empty() {
+                    descriptions.push(' ');
+                }
+                descriptions.push_str(&note_id);
+            }
+            notes.push_str(&format!(
+                "<div class=\"{class}\" id=\"{note_id}\">{}</div>",
+                esc(message)
+            ));
+        }
+    }
+    if !descriptions.is_empty() {
+        control = with_control_attr(control, "aria-describedby", &descriptions);
+    }
+    if opts.error.is_some_and(|error| !error.is_empty()) {
+        control = with_control_attr(control, "aria-invalid", "true");
+    }
     Html(format!(
-        "<div class=\"field\"><label for=\"{}\">{}</label>{}<div class=\"hint\">{}</div></div>",
-        esc(&id),
-        esc(label),
-        control,
-        esc(hint)
+        "<div class=\"field\"><label for=\"{id}\">{}</label>{control}{notes}</div>",
+        esc(label)
     ))
 }
 
@@ -347,20 +403,27 @@ pub fn range_field(
     value: &str,
     out_badge: bool,
 ) -> Html {
+    let id = slug_field_id(name);
     let output = if out_badge {
-        format!("<output class=\"pg__out\">{}</output>", esc(value))
+        format!(
+            "<output class=\"pg__out\" for=\"{}\">{}</output>",
+            esc(&id),
+            esc(value)
+        )
     } else {
         String::new()
     };
     Html(format!(
         concat!(
-            "<div class=\"field\"><label>{}</label>",
+            "<div class=\"field\"><label for=\"{}\">{}</label>",
             "<div class=\"field__row\">",
-            "<input type=\"range\" name=\"{}\" min=\"{}\" max=\"{}\" step=\"{}\" value=\"{}\">",
+            "<input type=\"range\" id=\"{}\" name=\"{}\" min=\"{}\" max=\"{}\" step=\"{}\" value=\"{}\">",
             "{}",
             "</div></div>"
         ),
+        esc(&id),
         esc(label),
+        esc(&id),
         esc(name),
         esc(min),
         esc(max),
@@ -495,29 +558,30 @@ fn slug_field_id(name: &str) -> String {
     }
 }
 
-fn with_control_id(control: Html, id: &str) -> Html {
-    if control_attr(control.as_str(), "id").is_some() {
-        return control;
-    }
-
+// Values passed here are already escaped, including descriptions read from existing markup.
+fn with_control_attr(control: Html, attr: &str, value: &str) -> Html {
     let mut out = control.0;
-    for tag in ["input", "select", "textarea"] {
-        if insert_id_attr(&mut out, tag, id) {
-            return Html(out);
+    let Some(tag_start) = ["input", "select", "textarea"]
+        .iter()
+        .filter_map(|tag| out.find(&format!("<{tag}")))
+        .min()
+    else {
+        return Html(out);
+    };
+    let Some(end) = out[tag_start..].find('>') else {
+        return Html(out);
+    };
+    let tag_end = tag_start + end;
+    let needle = format!(" {attr}=\"");
+    if let Some(start) = out[tag_start..tag_end].find(&needle) {
+        let start = tag_start + start + needle.len();
+        if let Some(end) = out[start..tag_end].find('"') {
+            out.replace_range(start..start + end, value);
         }
+    } else {
+        out.insert_str(tag_end, &format!(" {attr}=\"{value}\""));
     }
     Html(out)
-}
-
-fn insert_id_attr(out: &mut String, tag: &str, id: &str) -> bool {
-    let Some(tag_start) = out.find(&format!("<{tag}")) else {
-        return false;
-    };
-    let Some(tag_end) = out[tag_start..].find('>') else {
-        return false;
-    };
-    out.insert_str(tag_start + tag_end, &format!(" id=\"{}\"", esc(id).0));
-    true
 }
 
 fn btn_classes(v: Variant, o: BtnOpts) -> String {
@@ -563,7 +627,34 @@ mod tests {
         assert!(html.as_str().contains("type=\"range\""));
         assert!(html
             .as_str()
-            .contains("<output class=\"pg__out\">45</output>"));
+            .contains("<output class=\"pg__out\" for=\"field-rate\">45</output>"));
+    }
+
+    #[test]
+    fn field_metadata_connects_help_error_and_preserves_existing_description() {
+        let html = field_with(
+            "Email",
+            text_input(
+                "email",
+                "bad",
+                &[("id", "mail"), ("aria-describedby", "policy")],
+            ),
+            FieldOpts::new()
+                .with_hint("Use your work email")
+                .with_error("Enter a valid email"),
+        );
+        assert!(html.as_str().contains("for=\"mail\""));
+        assert!(html
+            .as_str()
+            .contains("aria-describedby=\"policy mail-hint mail-error\""));
+        assert!(html.as_str().contains("aria-invalid=\"true\""));
+        assert!(html.as_str().contains("id=\"mail-error\""));
+        let explicit = field_with(
+            "Name",
+            text_input("name", "", &[]),
+            FieldOpts::new().with_id("profile-name"),
+        );
+        assert!(explicit.as_str().contains("id=\"profile-name\""));
     }
 
     #[test]

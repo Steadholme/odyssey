@@ -58,7 +58,9 @@ impl Tone {
             Tone::Ok => " progress--ok",
             Tone::Warn => " progress--warn",
             Tone::Down => " progress--down",
-            Tone::Info | Tone::Accent | Tone::Neutral => "",
+            Tone::Info => " progress--info",
+            Tone::Accent => " progress--accent",
+            Tone::Neutral => " progress--neutral",
         }
     }
 }

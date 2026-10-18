@@ -312,7 +312,7 @@ td.num,th.num { text-align:right; white-space:nowrap; }
 .dot-unknown { background:var(--unknown); }
 
 /* ============ 7 · Table(relay 两份表格样式合并为一;裸 table 即 canonical)===== */
-.table-wrap { background:var(--surface); border:1px solid var(--border); border-top:2px solid var(--frame-rule); border-radius:var(--r); box-shadow:var(--sh-xs); overflow:hidden; }
+.table-wrap { background:var(--surface); border:1px solid var(--border); border-top:2px solid var(--frame-rule); border-radius:var(--r); box-shadow:var(--sh-xs); max-width:100%; min-width:0; overflow-x:auto; }
 table { width:100%; border-collapse:collapse; font-size:var(--fs-body); }
 thead th {
   text-align:left; font-family:var(--mono); font-size:var(--fs-micro); font-weight:var(--fw-semibold);
@@ -660,6 +660,7 @@ details.pop{position:relative;}
 .progress--ok .progress__bar,.progress--ok>span{background:var(--ok);}
 .progress--warn .progress__bar,.progress--warn>span{background:var(--warn);}
 .progress--down .progress__bar,.progress--down>span{background:var(--down);}
+.progress--info .progress__bar,.progress--info>span{background:var(--info);}
 
 /* ============ 30 · Eventline ============ */
 .eventline{margin:0;padding:0;list-style:none;}
@@ -843,6 +844,13 @@ details[open]>.accordion__head .accordion__caret{transform:rotate(180deg);}
 /* High Contrast / forced-colors:材质会被系统抹平,显式恢复结构与焦点。 */
 @media (forced-colors:active){
   body{background-image:none;}
+  .switch i{border:1px solid ButtonText;background:Canvas;forced-color-adjust:none;}
+  .switch i::before{background:ButtonText;width:14px;height:14px;top:3px;left:3px;box-shadow:none;}
+  .switch input:checked+i{background:Highlight;border-color:Highlight;}
+  .switch input:checked+i::before{background:HighlightText;}
+  .switch input:disabled+i{border-color:GrayText;opacity:1;}
+  .switch input:disabled+i::before{background:GrayText;}
+  .switch input:focus-visible+i{outline:2px solid Highlight;outline-offset:2px;box-shadow:none;}
   *:focus-visible{outline:2px solid Highlight;outline-offset:2px;box-shadow:none!important;}
   :is(.appbar,.topbar,.card,.stat,.table-wrap,.modal__card,.drawer__panel,.pop__card){border-color:CanvasText;box-shadow:none;background-image:none;}
   :is(.appnav.is-active,.nav__item.is-active,.tab.is-active,.pill,.badge,.state-badge,.cache-badge){border-color:Highlight;box-shadow:none;}

@@ -40,7 +40,12 @@ pub fn table(locale: Locale, cols: &[Col], rows: Vec<Vec<Html>>) -> Html {
         return empty_state(locale, "database");
     }
 
-    let mut out = String::from("<div class=\"table-wrap\"><table><thead><tr>");
+    let label = cols
+        .iter()
+        .map(|col| col.label)
+        .collect::<Vec<_>>()
+        .join(", ");
+    let mut out = format!("<div class=\"table-wrap\" tabindex=\"0\" role=\"group\" aria-label=\"{}\"><table><thead><tr>", esc(&label));
     for col in cols {
         if col.numeric {
             out.push_str(&format!("<th class=\"num\">{}</th>", esc(col.label)));
@@ -202,6 +207,37 @@ pub fn progress(pct: u8, tone: Tone) -> Html {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn table_scroll_group_is_named_focusable_and_escapes_column_labels() {
+        let html = table(
+            Locale::En,
+            &[Col {
+                label: "Name & region",
+                numeric: false,
+            }],
+            vec![vec![esc("East")]],
+        );
+        assert!(html
+            .as_str()
+            .contains("tabindex=\"0\" role=\"group\" aria-label=\"Name &amp; region\""));
+    }
+
+    #[test]
+    fn progress_retains_all_semantic_tone_classes() {
+        for (tone, class) in [
+            (Tone::Ok, "ok"),
+            (Tone::Warn, "warn"),
+            (Tone::Down, "down"),
+            (Tone::Info, "info"),
+            (Tone::Accent, "accent"),
+            (Tone::Neutral, "neutral"),
+        ] {
+            assert!(progress(50, tone)
+                .as_str()
+                .contains(&format!("progress--{class}")));
+        }
+    }
 
     #[test]
     fn empty_rows_render_empty_state_instead_of_table() {
