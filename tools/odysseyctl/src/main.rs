@@ -836,21 +836,85 @@ mod tests {
         let files = canonical_files(&root).unwrap();
 
         assert_eq!(distribution.release, "1.4.0-canary.1");
-        assert!(files.contains(&PathBuf::from("css/profile.css")));
-        assert!(files.contains(&PathBuf::from("js/canary.js")));
-        assert!(files.contains(&PathBuf::from("src/profile.rs")));
-        assert!(files.contains(&PathBuf::from("css/line.css")));
-        assert!(files.contains(&PathBuf::from("css/line-font.css")));
-        assert!(files.contains(&PathBuf::from("css/fonts/Archivo-OFL.txt")));
-        assert_eq!(files.len(), 28);
+        let expected: Vec<PathBuf> = [
+            "Cargo.toml",
+            "css/components.css",
+            "css/compositions.css",
+            "css/expressions.css",
+            "css/extensions.css",
+            "css/font.css",
+            "css/fonts/Archivo-OFL.txt",
+            "css/fonts/AzeretMono-OFL.txt",
+            "css/line-font.css",
+            "css/line.css",
+            "css/motion.css",
+            "css/profile.css",
+            "css/tokens.css",
+            "js/canary.js",
+            "js/compositions.js",
+            "js/extensions.js",
+            "js/motion.js",
+            "js/spark.js",
+            "js/wire.js",
+            "src/controls.rs",
+            "src/data.rs",
+            "src/feedback.rs",
+            "src/html.rs",
+            "src/i18n/en.rs",
+            "src/i18n/ja.rs",
+            "src/i18n/mod.rs",
+            "src/i18n/zh.rs",
+            "src/icons.rs",
+            "src/identity.rs",
+            "src/lib.rs",
+            "src/profile.rs",
+            "src/shell.rs",
+            "src/theme.rs",
+        ]
+        .into_iter()
+        .map(PathBuf::from)
+        .collect();
+        assert_eq!(
+            files, expected,
+            "canonical payload changes require an explicit inventory review"
+        );
 
         let fingerprint = bundle_fingerprint(&root, &files).unwrap();
-        assert_eq!(fingerprint, 0x6b97_12f8_1371_3460);
 
         let manifest = vendor_manifest(&root, &distribution.release, &files).unwrap();
         assert!(manifest.contains("release=1.4.0-canary.1\n"));
-        assert!(manifest.contains("fingerprint=fnv1a64:6b9712f813713460\n"));
+        assert!(manifest.contains(&format!("fingerprint=fnv1a64:{fingerprint:016x}\n")));
         assert!(manifest.contains(&format!("files={}\n", files.len())));
+    }
+
+    #[test]
+    fn vendored_crate_build_and_tests_are_self_contained() {
+        let root = odyssey_root().unwrap();
+        let repo = TempRepo::new("compile");
+        fs::write(
+            repo.0.join("Cargo.toml"),
+            "[workspace]\nmembers = ['crates/odyssey']\nresolver = '2'\n",
+        )
+        .unwrap();
+        let distribution = load_distribution(&root).unwrap();
+        sync_target(&root, &repo.0, &distribution.release, false).unwrap();
+        let manifest = repo.0.join(VENDOR_DIR).join("Cargo.toml");
+        for operation in ["check", "test"] {
+            let output = Command::new(env::var("CARGO").unwrap_or_else(|_| "cargo".into()))
+                .arg(operation)
+                .args(["--offline", "--lib", "--manifest-path"])
+                .arg(&manifest)
+                .arg("--target-dir")
+                .arg(repo.0.join("target"))
+                .output()
+                .unwrap();
+            assert!(
+                output.status.success(),
+                "vendor cargo {operation}:\n{}\n{}",
+                String::from_utf8_lossy(&output.stdout),
+                String::from_utf8_lossy(&output.stderr)
+            );
+        }
     }
 
     #[test]

@@ -1291,6 +1291,20 @@ mod tests {
     const TEST_HOST: &str = "odyssey.test";
     const TEST_ORIGIN: &str = "https://odyssey.test";
 
+    #[test]
+    fn public_init_composes_extended_forms() {
+        let forms_start = DIST_ODYSSEY_CURRENT_JS
+            .find("=== v1.1 forms-ext ===")
+            .unwrap();
+        let data_start = DIST_ODYSSEY_CURRENT_JS
+            .find("=== v1.1 data-ext ===")
+            .unwrap();
+        let forms = &DIST_ODYSSEY_CURRENT_JS[forms_start..data_start];
+        assert!(forms.contains("var formsInit = API.init;"));
+        assert!(forms.contains("formsInit.call(API, root)"));
+        assert!(forms.contains("API.initExtForms(root || document);"));
+    }
+
     #[tokio::test]
     async fn line_assets_are_live_and_keep_versioned_banks_separate() {
         for (path, mime, expected) in [

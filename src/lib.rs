@@ -272,18 +272,6 @@ mod tests {
     }
 
     #[test]
-    fn public_init_composes_extended_forms() {
-        let js = include_str!("../dist/odyssey.js");
-        let forms_start = js.find("=== v1.1 forms-ext ===").unwrap();
-        let data_start = js.find("=== v1.1 data-ext ===").unwrap();
-        let forms = &js[forms_start..data_start];
-
-        assert!(forms.contains("var formsInit = API.init;"));
-        assert!(forms.contains("formsInit.call(API, root)"));
-        assert!(forms.contains("API.initExtForms(root || document);"));
-    }
-
-    #[test]
     fn app_css_contains_dynamic_visibility_hooks() {
         assert!(APP_CSS.contains("[hidden]{display:none"));
         assert!(APP_CSS.contains("[data-spark-cloak]"));
