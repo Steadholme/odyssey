@@ -50,6 +50,8 @@ node --test tools/tests/core-p2.test.mjs tools/tests/extensions-p2.test.mjs
 node tools/tests/rust-p2-browser.test.mjs
 node tools/tests/workflows-browser.test.mjs
 node tools/tests/data-tools-browser.test.mjs
+node tools/tests/data-tools-motion.test.mjs
+node tools/tests/data-tools-plot.test.mjs
 node tools/tests/states-browser.test.mjs
 node tools/tests/performance-budget.test.mjs
 node tools/browser-runtime/node_modules/playwright/cli.js test --config tools/tests/visual.config.mjs
