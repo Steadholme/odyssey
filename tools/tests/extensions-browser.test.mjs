@@ -20,7 +20,7 @@ try {
   await page.locator('[data-ody-command-input]').fill('no results'); assert.equal(await page.locator('[data-ody-command-empty]').isVisible(),true);
   await page.locator('[data-ody-command-input]').fill('input'); await page.keyboard.press('Enter'); assert.equal(await page.locator('#registry-command').evaluate(n=>n.open),false);
   assert.equal(await page.evaluate(()=>document.activeElement.id),'line-3');
-  await page.locator('#station-OTP input').first().fill('482931'); assert.match(await page.locator('#station-OTP [data-ody-code-help]').textContent(),/complete/);
+  await page.locator('#station-OTP input:not([type="hidden"])').first().fill('482931'); assert.match(await page.locator('#station-OTP [data-ody-code-help]').textContent(),/complete/);
   await page.locator('#station-UPL input[type=file]').setInputFiles({name:'wrong.txt',mimeType:'text/plain',buffer:Buffer.from('test')}); assert.equal(await page.locator('#station-UPL [role=alert]').isVisible(),true);
   await page.locator('#station-UPL input[type=file]').setInputFiles({name:'release.zip',mimeType:'application/zip',buffer:Buffer.from('example')}); assert.match(await page.locator('#station-UPL [data-ody-file-status]').textContent(),/not uploaded/);
   await page.locator('[data-selection-clear]').click(); assert.equal(await page.locator('[data-selection-bar]').isVisible(),false);
@@ -35,7 +35,7 @@ try {
       if (await page.locator('html').getAttribute('data-theme') !== mode) await page.locator('[data-ody-theme-toggle]').click();
       assert.equal(await page.locator('html').getAttribute('data-expression'),expression);
       assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
-      assert.equal(await page.locator('#station-OTP input').first().inputValue(),'4');
+      assert.equal(await page.locator('#station-OTP input:not([type="hidden"])').first().inputValue(),'4');
     }
     if (evidence) await page.locator('#line-3').screenshot({path:evidence+'/registry-'+expression+'-dark.png'});
   }

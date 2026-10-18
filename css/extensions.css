@@ -53,3 +53,16 @@
 [data-ody-design="line"][data-input="keyboard"] .ody-ext-disclosure::details-content,[data-ody-design="line"][data-input="keyboard"] .ody-ext-popover{transition-duration:0ms;transform:none}
 @media(prefers-reduced-motion:reduce){[data-ody-design="line"] .ody-ext-disclosure::details-content,[data-ody-design="line"] .ody-ext-popover{transition-duration:0ms;transform:none}}
 @media(pointer:coarse){[data-ody-design="line"] .ody-ext-side a,[data-ody-design="line"] .ody-ext-tree button{min-height:44px}}
+
+[data-ody-design="line"] .ody-ext-split[data-ody-orientation="horizontal"]{grid-template-columns:minmax(0,1fr);grid-template-rows:var(--explorer) 16px minmax(0,1fr);min-height:0;height:360px}
+[data-ody-design="line"] .ody-ext-split[data-ody-orientation="horizontal"] [data-ody-splitter]{border:6px solid var(--ody-surface);border-inline:0;cursor:row-resize}
+[data-ody-design="line"] .ody-ext-popover{max-height:calc(100dvh - 24px);overflow:auto;overflow-wrap:anywhere}
+[data-ody-design="line"] .ody-ext-file [data-ody-file-clear]{min-height:24px}
+[data-ody-design="line"] .ody-ext-code [aria-invalid="true"],[data-ody-design="line"] .ody-ext-code[aria-invalid="true"] input{border-color:var(--ody-down-ink)}
+[data-ody-design="line"] .ody-ext-code [data-ody-code-error]{color:var(--ody-down-ink)}
+@media(pointer:coarse){[data-ody-design="line"] .ody-ext-selection>label{min-height:44px}[data-ody-design="line"] [data-ody-file-clear],[data-ody-design="line"] [data-ody-split-preset]{min-width:44px;min-height:44px}}
+@media(forced-colors:active){[data-ody-design="line"] [data-ody-splitter]{background:ButtonText}[data-ody-design="line"] .ody-ext-file.dragging{outline-color:Highlight}[data-ody-design="line"] .ody-ext-code [aria-invalid="true"]{border:2px dashed CanvasText}}
+[data-ody-design="line"] [data-ody-split-preset]{max-width:100%;white-space:normal;overflow-wrap:anywhere;min-height:24px;padding:4px;font-size:11px}
+@media(pointer:coarse){[data-ody-design="line"] [data-ody-split-preset]{min-height:44px}}
+[data-ody-design="line"] [data-ody-file-status]{font-size:12px;line-height:1.5}
+@media(max-width:600px){[data-ody-design="line"] [data-ody-file-dropzone]{flex-wrap:wrap}[data-ody-design="line"] [data-ody-file-dropzone]>div:has([data-ody-file-title]){flex-basis:100%}[data-ody-design="line"] [data-ody-file-browse],[data-ody-design="line"] [data-ody-file-clear]{font-size:12px}}

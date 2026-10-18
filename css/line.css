@@ -38,6 +38,13 @@
   --ody-scrim:rgb(17 20 24 / .48);
   color-scheme:light;
 }
+/* Match the nearest language region; Latin faces stay first, Han glyphs follow locale. */
+:root[data-ody-design="line"]:lang(ja), [data-ody-design="line"]:lang(ja), [data-ody-design="line"] [lang]:lang(ja) {
+  --ody-font:"Inter",system-ui,-apple-system,"Segoe UI","Hiragino Sans","Yu Gothic","Meiryo","Noto Sans CJK JP","PingFang SC",sans-serif;
+}
+:root[data-ody-design="line"]:lang(zh), [data-ody-design="line"]:lang(zh), [data-ody-design="line"] [lang]:lang(zh) {
+  --ody-font:"Inter",system-ui,-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei","Noto Sans CJK SC","Hiragino Sans",sans-serif;
+}
 [data-ody-design="line"][data-theme="dark"], [data-theme="dark"] [data-ody-design="line"] {
   --ody-on-line-1:#111418; --ody-on-line-4:#111418; --ody-on-line-6:#111418;
   --ody-bg:#171b17; --ody-bg-2:#22272b; --ody-surface:#171b17; --ody-surface-2:#22272b; --ody-surface-3:#2e3538;

@@ -77,7 +77,7 @@ try {
  assert.equal(await page.locator('html').getAttribute('data-ody-design'),'line');assert.equal(await page.locator('html').getAttribute('lang'),'zh-Hans');
  assert.equal(await page.locator('[name=csrf_token]').inputValue(),'example-session-csrf');assert.equal(await page.locator('style').evaluate(n=>n.nonce),'example-response-nonce');
  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);assert.equal(await page.evaluate(()=>!!window.OdysseyExtensions),true);if(evidence)await page.screenshot({path:evidence+'/rust-line-static.png',fullPage:true});assert.equal(await page.evaluate(()=>!!window.OdysseyWire),false);
- await page.locator('[data-ody-code-input] input').first().fill('482931');assert.equal(await page.locator('[data-ody-code-input] input').last().inputValue(),'1');
+ await page.locator('[data-ody-code-input] input:not([type="hidden"])').first().fill('482931');assert.equal(await page.locator('[data-ody-code-input] input:not([type="hidden"])').last().inputValue(),'1');
  const rustOnly=await browser.newPage({reducedMotion:'no-preference'});await rustOnly.setContent(`<html data-ody-design="line"><style>${app}</style><button class="btn btn-primary" aria-busy="true" disabled>Saving</button></html>`);
  assert.equal(await rustOnly.locator('button').evaluate(n=>n.getAnimations({subtree:true}).some(a=>a.animationName==='odyssey-line-spin')),true);
  await rustOnly.emulateMedia({reducedMotion:'reduce'});assert.equal(await rustOnly.locator('button').evaluate(n=>n.getAnimations({subtree:true}).length),0);
