@@ -13,14 +13,14 @@
 - [x] 33 项分工和共享接口确定；Line 为主线，旧入口与冻结发行保留。
 - [x] 运行时、Line/Rust、可消费组合及必要的旧 guide 邻接修复。
 - [x] 能力目录/Pencil 同步、未冻结发行候选、统一验收与三引擎验证。
-- [ ] 真实 IME / VoiceOver 抽验（临时系统设置许可待用户确认；A11Y-04、ENG-09）。
+- [ ] 真实 IME / VoiceOver 抽验（临时设置已获许可；系统级按键未生效，AppleScript 辅助方式待确认；A11Y-04、ENG-09）。
 - [ ] 完成人工抽验后冻结 1.4.0，再仅切换 OVH Odyssey；独立核对生产安装入口及恢复路径（ENG-04、ENG-05）。
 
 **可用候选**：`http://localhost:18770/`，资产目录 `/tmp/odyssey-1.4.0-candidate.IvwAre`，核心来源 `5112206`；后续 `bc907b2` 增补真实 Forms 跨引擎测试，`5768c80` 仅修候选缓存。显式候选返回 `no-store`；正式冻结构建继续 `immutable`。旧浏览上下文可能已有先前 immutable 缓存，首次验收用新 origin 或隔离上下文，不清用户全局浏览数据。
 
 **已消费的证据**：本地统一 `tools/verify.sh`（Chromium/WebKit）通过；OVH 隔离候选的 Chromium 156.0.8078.4、Firefox 157.0、WebKit 27.2 共九条 modular/complete/真实 Forms 入口通过；[GitHub CI 39130254060](https://github.com/Steadholme/odyssey/actions/runs/39130254060) 在 `bc907b2` 运行同一入口、三引擎全绿。缓存补丁的五项受影响断言及实际 HTTP 响应已通过。26 项候选 a11y 门禁和代表性实际截图已审阅；AX/合成事件不替代真实 VoiceOver/IME。
 
-本地完整日志：`/tmp/odyssey-full-verify-20261018.log`；隔离 Linux 三引擎日志及截图：`/Users/w33d/.codex/visualizations/2026/10/18/01a14cce-8c61-77a1-a455-8844e22e2e39/odyssey-p1/`。源码保存在 `codex/odyssey-p1-20261018`。**尚未冻结 1.4.0，尚未切换生产**。旧 `/dist`、Line/extensions aliases 保持已部署版本字节，其他产品不隐式消费本轮更新。
+本地完整日志：`/tmp/odyssey-full-verify-20261018.log`；隔离 Linux 三引擎日志及截图：`/Users/w33d/.codex/visualizations/2026/10/18/01a14cce-8c61-77a1-a455-8844e22e2e39/odyssey-p1/`。源码保存在 `codex/odyssey-p1-20261018`，最新代码的完整三引擎 CI [39130749486](https://github.com/Steadholme/odyssey/actions/runs/39130749486) 已通过。本轮独立恢复包已就绪：OVH `/srv/ovh-migration/odyssey-line-p1-20261018/`，明确回退到当前生产镜像 `95ce746`；恢复脚本语法、镜像 guard、当前内部与直连 HTTP 健康检查通过，未执行切换/回滚。**尚未冻结 1.4.0，尚未切换生产**。旧 `/dist`、Line/extensions aliases 保持已部署版本字节，其他产品不隐式消费本轮更新。
 
 ### 调查基线和边界
 
@@ -190,7 +190,7 @@
   - 验收：兼容旧签名，提供显式id/describedby/error连接路径，追加而非覆盖调用者描述；读屏能读名称、当前值、帮助和错误。 参考：[表单标签][wai-labels] / [错误通知][wai-notifications]。
 
 - [ ] **A11Y-04 · P1 · 中文/日文 IME 合成期不得执行命令或创建 chip**
-  - 本轮结果：部分完成。`8c8c56b` 已统一 composition/isComposing/229 防护；合成事件与非 IME 键盘回归通过。真实中/日输入法候选确认抽验仍待用户同意临时切换输入法，不能用 ASCII 输入或合成事件算完成。
+  - 本轮结果：部分完成。`8c8c56b` 已统一 composition/isComposing/229 防护；合成事件与非 IME 键盘回归通过。用户已允许临时输入法测试；本机原生控制通道的逐键输入仍未进入真实合成期，系统级辅助方式待确认。不能用 ASCII 输入或合成事件算完成。
   - 状态／依据：**已实测**。js/extensions.js:132–135；dist/odyssey.js:1121–1125,1989–1993；site/assets/patterns-20261018.js:293。isComposing Enter已复现命令执行/关闭及未完成zhong被创建chip。
   - 验收：统一处理composition状态；候选确认不触发业务动作，compositionend后正常提交；合成事件回归加真实IME抽验，保持已有非IME键盘路径。 参考：[UI Events isComposing][uievents-composing]。
 
@@ -317,7 +317,7 @@
   - 依赖：ENG-06、ENG-07。
 
 - [ ] **ENG-09 · P1 · 复用既有 pattern/a11y helper，扩展当前库验收**
-  - 本轮结果：部分完成。`200c8c2` 审阅并纳入既有 helper 及其失败 fixture；本候选 26 项 Axe/真实 Tab/AX/合成 IME/200%/文本间距/forced-colors/无 JS 门禁通过。custom combo/date/tree/modal 的真实 VoiceOver 抽验仍待用户允许临时启用；外部四产品报告不计入本库通过。
+  - 本轮结果：部分完成。`200c8c2` 审阅并纳入既有 helper 及其失败 fixture；本候选 26 项 Axe/真实 Tab/AX/合成 IME/200%/文本间距/forced-colors/无 JS 门禁通过。用户已允许临时启用 VoiceOver；实际启动后，控制通道未能执行 VO 全局命令或取得朗读输出，未计通过，VoiceOver 已恢复关闭。四控件的真实抽验仍待有效系统级按键通道；外部四产品报告不计入本库通过。
   - 状态／依据：**部分/待接纳**。当前测试已有部分键盘、reduced-motion、touch/no-JS；远端另有未跟踪pattern-assertions.mjs、tests及patterns/ACCEPTANCE.md，报告四产品证据，未纳入本基线。
   - 验收：先审阅、核证并版本化现有helper，复用assertSurface(AxeBuilder)/native form/真实Tab；覆盖旧guide、AX关联、IME、200%文本/文本间距、forced-colors，并对custom combo/date/tree/modal做VoiceOver抽验。外部报告不直接算本库通过。 参考：[Text spacing][wcag-spacing] / [Reflow][wcag-reflow]。
   - 依赖：ENG-06、ENG-07、LIB-01。
