@@ -38,24 +38,44 @@ if [ -z "${ODYSSEY_BASE_URL:-}" ]; then
 fi
 node --input-type=module -e 'let ready=false;for(let n=0;n<50;n++){try{const r=await fetch(process.env.ODYSSEY_BASE_URL+"/healthz");if(r.ok){ready=true;break}}catch{}await new Promise(r=>setTimeout(r,100))}if(!ready)throw new Error("candidate server did not become healthy")'
 node tools/tests/library-contracts.test.mjs
-node --test tools/tests/runtime-p1.test.mjs
-node tools/tests/line-browser.test.mjs
-node tools/tests/extensions-browser.test.mjs
-node tools/tests/patterns-browser.test.mjs
-node tools/tests/compositions-browser.test.mjs
-node tools/tests/line-p1.test.mjs
-node tools/tests/carousel-targets.test.mjs
-node tools/tests/library-a11y-p1.test.mjs
-node --test tools/tests/core-p2.test.mjs tools/tests/extensions-p2.test.mjs
-node tools/tests/rust-p2-browser.test.mjs
-node tools/tests/workflows-browser.test.mjs
-node tools/tests/data-tools-browser.test.mjs
-node tools/tests/data-tools-motion.test.mjs
-node tools/tests/data-tools-plot.test.mjs
-node tools/tests/states-browser.test.mjs
-node tools/tests/performance-budget.test.mjs
-node tools/browser-runtime/node_modules/playwright/cli.js test --config tools/tests/visual.config.mjs
-node tools/tests/compatibility-browser.test.mjs
+# The candidate build and inventory above are prerequisites. Each browser suite
+# below is independent: finish all of them, retain every failure, and fail once.
+FAILED_GATES=''
+run_gate() {
+  GATE_NAME=$1
+  shift
+  printf '\n=== %s ===\n' "$GATE_NAME"
+  if "$@"; then
+    printf 'PASS gate: %s\n' "$GATE_NAME"
+  else
+    GATE_STATUS=$?
+    FAILED_GATES="$FAILED_GATES\n- $GATE_NAME (exit $GATE_STATUS)"
+    printf 'FAIL gate: %s (exit %s)\n' "$GATE_NAME" "$GATE_STATUS" >&2
+  fi
+}
+run_gate runtime-p1 node --test tools/tests/runtime-p1.test.mjs
+run_gate line-browser node tools/tests/line-browser.test.mjs
+run_gate extensions-browser node tools/tests/extensions-browser.test.mjs
+run_gate patterns-browser node tools/tests/patterns-browser.test.mjs
+run_gate compositions-browser node tools/tests/compositions-browser.test.mjs
+run_gate line-p1 node tools/tests/line-p1.test.mjs
+run_gate carousel-targets node tools/tests/carousel-targets.test.mjs
+run_gate library-a11y-p1 node tools/tests/library-a11y-p1.test.mjs
+run_gate core-p2 node --test tools/tests/core-p2.test.mjs
+run_gate extensions-p2 node --test tools/tests/extensions-p2.test.mjs
+run_gate rust-p2-browser node tools/tests/rust-p2-browser.test.mjs
+run_gate workflows-browser node tools/tests/workflows-browser.test.mjs
+run_gate data-tools-browser node tools/tests/data-tools-browser.test.mjs
+run_gate data-tools-motion node tools/tests/data-tools-motion.test.mjs
+run_gate data-tools-plot node tools/tests/data-tools-plot.test.mjs
+run_gate states-browser node tools/tests/states-browser.test.mjs
+run_gate performance-budget node tools/tests/performance-budget.test.mjs
+run_gate visual-regression node tools/browser-runtime/node_modules/playwright/cli.js test --config tools/tests/visual.config.mjs
+run_gate compatibility-browser node tools/tests/compatibility-browser.test.mjs
+if [ -n "$FAILED_GATES" ]; then
+  printf '\nOdyssey candidate verification failed:%b\n' "$FAILED_GATES" >&2
+  exit 1
+fi
 if [ "${BROWSERS:-chromium,firefox,webkit}" = 'chromium,firefox,webkit' ]; then
   printf '\nPASS: Odyssey candidate verification, including all three browser engines.\n'
 else
