@@ -1,6 +1,6 @@
 # Odyssey TODO
 
-更新：2026-10-18 · Line 主线 P2 实施
+更新：2026-10-18 · Line 主线 P2 已部署
 
 ## 先修可复用性，再扩大组件数量
 
@@ -19,11 +19,23 @@
 - [x] 数据组合：过滤/视图、Code/Log/Diff、日历/Agenda、资源选择、虚拟化和分析图表入口（p2_data）。
 - [x] 状态矩阵、设计源、目录/契约和站点入口统一（root）。
 - [x] 真正视觉差分、消费预算、MIT/元数据和跨平台构建检查（p2_engineering；项目 owner 已确认 MIT，字体 OFL 保留）。
-- [ ] 整合候选、三引擎/键盘/a11y/动效/窄屏验收，冻结后仅 Odyssey 切换；独立公网复验和本轮回滚基线（p2_engineering + root）。
+- [x] 整合候选、三引擎/键盘/a11y/动效/窄屏验收，冻结后仅 Odyssey 切换；独立公网复验和本轮回滚基线（p2_engineering + root）。
 
-31 项 P2 已完成源码与定向验证；完整三引擎整合门禁、冻结和生产消费仍待最后一项执行。组件/扩展/工作流/数据在 Chromium 与 WebKit 的真实交互与恢复路径通过；Firefox 由同一 CI 入口验证。
+**31 项 P2 全部完成并部署。** [完整 CI 39140867898](https://github.com/Steadholme/odyssey/actions/runs/39140867898) 在 `b6e71fe` 通过 19 项整合门禁及 Rust 1.87 MSRV：Chromium、Firefox、WebKit 的组件、工作流/身份、数据组合、严格 CSP 和消费入口通过；四张 Linux 视觉基线零差分，字节与初始化预算通过。macOS 四张视觉基线也已审阅并直接比对通过。
 
-所有实现保持原调用条件；新增工作流只通过宿主 adapter 消费状态，不在组件库内实现认证、上传存储或业务授权。当前生产仍为下述 1.4.0 基线，新版尚未冻结或切换。
+独立审查发现的任务旧回执污染、稀疏图表孤立观测不可见和状态矩阵消费链接已分别在 `ad97f81`、`20d6d0a`、`31d81c8` 修复；Line 动效复用当前 token，Split 的 ResizeObserver 交付期布局写入及 Firefox OTP 重复事件已在 `b999972`、`69890b1` 修复。对应真实浏览器回归与最终统一门禁通过，未放宽事件次数、屏蔽异常或更新 PNG 掩盖差异。
+
+所有实现保持原调用条件；新增工作流只通过宿主 adapter 消费状态，不在组件库内实现认证、上传存储或业务授权。
+
+### P2 当前生产：1.5.0 / Line
+
+[Odyssey 生产站](https://odyssey.w33d.xyz/) 已使用冻结 commit `85d42fcae5c7edd85142d18df10eaee53ba3d9a4`。27 个发行文件及 metadata 与已验收 `tB4ULx` 候选逐字节相同；目录为 54 个既有站点和 39 个 guide/组合能力，共 93 项。新增入口为 [Workflows](https://odyssey.w33d.xyz/workflows.html)、[Data & content](https://odyssey.w33d.xyz/data-tools.html)、[State atlas](https://odyssey.w33d.xyz/states.html)。MIT 已按项目 owner 决定落地，三套字体继续保留各自 OFL 许可。
+
+**部署与隔离**：生产镜像 `e5ff00abb9f5b29faabcb5f78c3a5a7a335033c03e2b066969d6782822c79f0e`，容器 `3d77e04be5f00ce663e0d290a433083e8e63d0a06638d8977ccad69fd9ea1fac`，healthy、restart 0。正式预览和生产各 91 项 HTTP/发行检查通过；1.1～1.4.0 冻结资产及 compat aliases 保留原字节。134 个非 Odyssey 容器的 ID/image 不变，有效 compose 只有 Odyssey image 一行改变，其他产品未推广。
+
+**独立公网消费**：外部 HTTPS 27 个固定资产逐字节一致且为 immutable；Chromium 的 modular、complete、真实 Forms 三入口通过。State atlas 的 93 项目录、八主题、密度/尺寸、真实 Tab/readonly、弹窗焦点返回、搜索、Axe 和 320px 通过。IAB 实测第 10,000 条记录的选择与离开后恢复，以及任务 queued → running 36% → cancellation requested → 来源确认 cancelled；实际桌面和 320px 截图已审阅。日志与截图：`/Users/w33d/.codex/visualizations/2026/10/18/01a14cce-8c61-77a1-a455-8844e22e2e39/odyssey-p2/production/`。公开消费复验使用相同冻结 payload，不重复运行已有效的全部源验证。
+
+**来源与恢复**：GitHub 保存冻结 commit；OVH 从该 commit 的独立 archive 构建，context 为 `/home/debian/odyssey-p2-release-85d42fc-20261018/`。OVH 旧 Git checkout 的对象写权限拒绝使其 P2 ref 停在 `1eb369d`，未改其权限，也不将该 checkout 作为生产来源。当前恢复包为 `/srv/ovh-migration/odyssey-line-p2-20261018/receipt.json`，独立健康及回滚脚本保留；本轮回退目标为切换前的 1.4.0 镜像 `9e68491`，不是 P1 包中的 `95ce746`。P1 VoiceOver 人工抽验继续按用户原决定延期，不计通过；P3 未推进。
 
 ### P1 已部署基线
 
@@ -34,7 +46,7 @@
 - [ ] VoiceOver 对 custom combo/date/tree/modal 的真实导航抽验；按用户“直接推动生产”决定延期，不阻断本次发布（ENG-09）。
 - [x] 冻结 1.4.0，仅切换 OVH Odyssey；独立公网安装、工作流和视觉验收通过，保留本轮恢复路径（ENG-04、ENG-05）。
 
-**已部署**：[Odyssey 生产站](https://odyssey.w33d.xyz/)，冻结 commit `16797915deaceb90e32ddaeab9608b2f61f559bf`，公开 `/1.4.0/`，Line 为主线。冻结 20 文件与已验收 IvwAre 候选逐字节相同；正式构建返回一年 `immutable`。
+**P1 历史部署**：[Odyssey 生产站](https://odyssey.w33d.xyz/)，冻结 commit `16797915deaceb90e32ddaeab9608b2f61f559bf`，公开 `/1.4.0/`，Line 为主线。冻结 20 文件与已验收 IvwAre 候选逐字节相同；正式构建返回一年 `immutable`。当前生产已升为上节的 1.5.0，1.4.0 继续作为冻结入口及本轮回退基线。
 
 **候选复现入口**：`http://localhost:18770/`，资产目录 `/tmp/odyssey-1.4.0-candidate.IvwAre`，核心来源 `5112206`；后续 `bc907b2` 增补真实 Forms 跨引擎测试，`5768c80` 仅修候选缓存。显式候选返回 `no-store`。旧浏览上下文可能已有先前 immutable 缓存，首次验收用新 origin 或隔离上下文，不清用户全局浏览数据。
 
