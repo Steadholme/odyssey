@@ -1,0 +1,18 @@
+/* Optional, root-scoped composition layout. The host supplies its data and save adapter. */
+.ody-composition-workspace{font:13px/1.6 var(--ody-font,system-ui,sans-serif);color:var(--ody-ink,#111418);max-width:680px;display:grid;gap:20px}
+.ody-composition-workspace [hidden]{display:none!important}
+.ody-composition-workspace label{display:grid;gap:8px;font-size:12px;font-weight:550}
+.ody-composition-workspace :is(input,button){font:inherit;box-sizing:border-box}
+.ody-composition-workspace input{height:44px;width:100%;min-width:0;border:1px solid var(--ody-hairline,#dde2e8);border-radius:var(--ody-r,2px);background:var(--ody-surface,#fff);color:inherit;padding:0 12px}
+.ody-composition-workspace input[aria-invalid=true]{border-color:var(--ody-down-ink,#b72c32)}
+.ody-composition-workspace small{font-size:11px;font-weight:400;color:var(--ody-ink-muted,#5d6878)}
+.ody-composition-workspace [data-ody-workspace-error]{font-size:11px;color:var(--ody-down-ink,#b72c32)}
+.ody-composition-workspace .ody-composition-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.ody-composition-workspace [data-ody-workspace-status]{font-size:11px;color:var(--ody-ink-muted,#5d6878);margin-right:auto}
+form[data-ody-composition="workspace-settings"][data-ody-workspace-dirty=true] [data-ody-workspace-status]{color:var(--ody-accent-ink,#004abf)}
+.ody-composition-workspace button{min-height:44px;padding:0 16px;border:1px solid var(--ody-hairline,#dde2e8);border-radius:var(--ody-r,2px);background:var(--ody-surface,#fff);color:inherit;cursor:pointer}
+.ody-composition-workspace [data-ody-workspace-save]{background:var(--ody-primary-fill,#111418);color:var(--ody-primary-label,#fff);border-color:var(--ody-primary-fill,#111418)}
+.ody-composition-workspace button:disabled{opacity:.45;cursor:not-allowed}
+.ody-composition-workspace :is(input,button):focus-visible{outline:2px solid var(--ody-ring,#0062ff);outline-offset:3px}
+.ody-composition-workspace [data-ody-workspace-error="save"]:focus{outline:2px solid var(--ody-ring,#0062ff);outline-offset:4px}
+@media(max-width:640px){.ody-composition-workspace input{font-size:16px}.ody-composition-workspace [data-ody-workspace-status]{flex-basis:100%}.ody-composition-workspace .ody-composition-actions button{flex:1}}

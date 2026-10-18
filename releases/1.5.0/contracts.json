@@ -1,0 +1,1037 @@
+{
+  "schema": 1,
+  "release": "1.5.0",
+  "lifecycle": {
+    "public": "Odyssey.init(root): root + descendants; safe to repeat; document delegated legacy handlers; wire:after reinitializes target subtree.",
+    "extensions": "OdysseyExtensions.init(root), also called by Odyssey.init when loaded; native elements remain usable without JS.",
+    "rust": "Server-rendered semantic primitives; Wire/Spark are separate opt-in internal runtime. Public enhancer is not implied by APP_CSS.",
+    "composition": "OdysseyCompositions.init(root) or mountWorkspace(form, adapter); state/authorization/source owned by host.",
+    "workflows": "Optional workflows.js: OdysseyWorkflows.init(root, optionsByKind), mountTask/mountAuth/mountWizard/mountQueue/mountAccess; explicit host adapters; controllers expose state and destroy.",
+    "dataTools": "Optional data-tools.js: OdysseyDataTools.init(root), mountFilters/mountText/mountCalendar/mountResources/mountVirtualList/mountPlot; host-owned identity and datasets; explicit state and destroy."
+  },
+  "components": {
+    "card": {
+      "runtime": "css",
+      "canonical": "site/index.html#station-CRD",
+      "rustParity": "helper",
+      "rust": [
+        "card"
+      ],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "panel": {
+      "runtime": "css",
+      "canonical": "site/index.html#station-PNL",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "sheet": {
+      "runtime": "css",
+      "canonical": "site/index.html#station-SHD",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "section-head": {
+      "runtime": "css",
+      "canonical": "site/index.html#station-SHT",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "tile": {
+      "runtime": "css",
+      "canonical": "site/index.html#station-TLE",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "frame": {
+      "runtime": "css",
+      "canonical": "site/index.html#station-FRM",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "divider": {
+      "runtime": "css",
+      "canonical": "site/index.html#station-DVS",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "well": {
+      "runtime": "css",
+      "canonical": "site/index.html#station-WLL",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "avatar": {
+      "runtime": "css",
+      "canonical": "site/index.html#station-AVT",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "split-pane": {
+      "runtime": "extensions",
+      "canonical": "[data-ody-splitpane]",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [
+        "ody:resize {value, min, max, orientation, source}"
+      ],
+      "limits": [],
+      "compatibility": [
+        "old .ody-split remains supported"
+      ],
+      "value": "Bounded first-pane pixels; orientation, preset/input/pointer/keyboard and container resize share one value."
+    },
+    "button": {
+      "runtime": "css",
+      "canonical": "site/index.html#station-BTN",
+      "rustParity": "helper",
+      "rust": [
+        "button"
+      ],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "icon-button": {
+      "runtime": "css",
+      "canonical": "site/index.html#station-IBT",
+      "rustParity": "helper",
+      "rust": [
+        "button"
+      ],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "link": {
+      "runtime": "css",
+      "canonical": "site/index.html#station-LNK",
+      "rustParity": "helper",
+      "rust": [
+        "link_with_wire",
+        "link_button"
+      ],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": [],
+      "stateConditions": {
+        "disabled": "Rust link options remove href and Wire activation; enabled navigation keeps link semantics and destination."
+      }
+    },
+    "switch": {
+      "runtime": "native",
+      "canonical": "site/index.html#station-SWT",
+      "rustParity": "helper",
+      "rust": [
+        "switch"
+      ],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "checkbox": {
+      "runtime": "native",
+      "canonical": "site/index.html#station-CBX",
+      "rustParity": "helper",
+      "rust": [
+        "checkbox_field"
+      ],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "radio": {
+      "runtime": "native",
+      "canonical": "site/index.html#station-RAD",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "segmented": {
+      "runtime": "css",
+      "canonical": "site/index.html#station-SEG",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "keycap": {
+      "runtime": "css",
+      "canonical": "site/index.html#station-KCP",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "fab": {
+      "runtime": "css",
+      "canonical": "site/index.html#station-FAB",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "command": {
+      "runtime": "extensions",
+      "canonical": "dialog[data-ody-command-menu]",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [
+        "ody:command"
+      ],
+      "limits": [],
+      "compatibility": [
+        "old public command palette remains supported"
+      ],
+      "composition": "Enter and global shortcuts do not execute while IME is composing",
+      "status": "Associated polite empty-result status; composition confirmation and cancellation do not execute a command or close the layer."
+    },
+    "selection-toolbar": {
+      "runtime": "extensions",
+      "canonical": "site/index.html#station-TBR",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [
+        "ody:selection-change {value, count, selected}",
+        "ody:change {value, count, selected}"
+      ],
+      "limits": [],
+      "value": "Initial checkbox values, select-all, item changes and Clear share the same selection snapshot."
+    },
+    "field": {
+      "runtime": "css",
+      "canonical": "site/index.html#station-FLD",
+      "rustParity": "helper",
+      "rust": [
+        "field",
+        "field_hint",
+        "field_with"
+      ],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": [],
+      "stateConditions": {
+        "value": "Readonly, invalid and disabled belong to the associated native control; label and hint remain connected."
+      }
+    },
+    "input": {
+      "runtime": "native",
+      "canonical": "site/index.html#station-TXT",
+      "rustParity": "helper",
+      "rust": [
+        "text_input"
+      ],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "textarea": {
+      "runtime": "native",
+      "canonical": "site/index.html#station-TAR",
+      "rustParity": "helper",
+      "rust": [
+        "textarea"
+      ],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "select": {
+      "runtime": "native",
+      "canonical": "site/index.html#station-SEL",
+      "rustParity": "helper",
+      "rust": [
+        "select"
+      ],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "number-input": {
+      "runtime": "native",
+      "canonical": "site/index.html#station-NUM",
+      "rustParity": "helper",
+      "rust": [
+        "number_input"
+      ],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "range": {
+      "runtime": "native",
+      "canonical": "site/index.html#station-RNG",
+      "rustParity": "helper",
+      "rust": [
+        "range_field"
+      ],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "date-input": {
+      "runtime": "native",
+      "canonical": "site/index.html#station-DTP",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "combobox": {
+      "runtime": "public",
+      "canonical": "site/index.html#station-CMB",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "otp": {
+      "runtime": "extensions",
+      "canonical": ".ody-otp or [data-ody-code-input]",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [
+        "ody:change {value, complete}",
+        "ody:code-change {value, complete} (extension)"
+      ],
+      "limits": [],
+      "compatibility": [
+        "Legacy .ody-otp remains public-core; enhanced OTP stays independently usable through OdysseyExtensions."
+      ],
+      "value": "Opt-in data-ody-code-name serializes one complete hidden value; visible digit fields remain unnamed. Native reset restores initial values."
+    },
+    "file-dropzone": {
+      "runtime": "extensions",
+      "canonical": "[data-ody-file-dropzone]",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [
+        "change",
+        "ody:file-selected {file}",
+        "ody:file-change {file, files, valid}"
+      ],
+      "limits": [],
+      "compatibility": [
+        "registry [data-ody-upload] adapter is supported; old .ody-dropzone remains supported"
+      ],
+      "value": "Accepted files enter input.files and native FormData; accept, max bytes, multiple, clear/reselect/reset and status stay synchronized. The host owns upload transport."
+    },
+    "table": {
+      "runtime": "public",
+      "canonical": "site/index.html#station-TBL",
+      "rustParity": "helper",
+      "rust": [
+        "table"
+      ],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "stat": {
+      "runtime": "css",
+      "canonical": "site/index.html#station-STA",
+      "rustParity": "helper",
+      "rust": [
+        "stat_tile"
+      ],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "chart": {
+      "runtime": "css",
+      "canonical": "site/index.html#station-CHT",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": [],
+      "enhancement": {
+        "runtime": "public",
+        "selector": "[data-ody-chart]",
+        "assets": [
+          "odyssey.js"
+        ],
+        "api": [
+          "renderChart(el)",
+          "updateChart(el, {values, labels, name, summary, decorative, type})",
+          "describeChart(el, {name, summary, columns, rows, decorative})"
+        ],
+        "ownership": "replaces only enhancer-owned SVG and description; static station bars remain CSS-only"
+      }
+    },
+    "list": {
+      "runtime": "css",
+      "canonical": "site/index.html#station-LST",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "description-list": {
+      "runtime": "css",
+      "canonical": "site/index.html#station-DSC",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "pager": {
+      "runtime": "css",
+      "canonical": "site/index.html#station-PGR",
+      "rustParity": "helper",
+      "rust": [
+        "pager"
+      ],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "progress": {
+      "runtime": "css",
+      "canonical": "site/index.html#station-PRG",
+      "rustParity": "helper",
+      "rust": [
+        "progress"
+      ],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "tree": {
+      "runtime": "native",
+      "canonical": "registry native details/summary",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": [],
+      "compatibility": [
+        "Registry details keep native disclosure/Tab behavior.",
+        "Legacy .ody-tree uses the complete ARIA Tree keyboard model through public core."
+      ],
+      "enhancement": {
+        "runtime": "public",
+        "selector": ".ody-tree",
+        "events": [
+          "ody:tree-change {row, label}"
+        ],
+        "keyboard": [
+          "ArrowUp",
+          "ArrowDown",
+          "ArrowLeft",
+          "ArrowRight",
+          "Home",
+          "End",
+          "typeahead"
+        ]
+      }
+    },
+    "timeline": {
+      "runtime": "css",
+      "canonical": "site/index.html#station-TIM",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "toast": {
+      "runtime": "css",
+      "canonical": "site/index.html#station-TST",
+      "rustParity": "helper",
+      "rust": [
+        "toast"
+      ],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "alert": {
+      "runtime": "css",
+      "canonical": "site/index.html#station-ALT",
+      "rustParity": "helper",
+      "rust": [
+        "alert"
+      ],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "modal": {
+      "runtime": "public",
+      "canonical": "site/index.html#station-MDL",
+      "rustParity": "helper",
+      "rust": [
+        "modal"
+      ],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "drawer": {
+      "runtime": "public",
+      "canonical": "site/index.html#station-DRW",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "pill": {
+      "runtime": "css",
+      "canonical": "site/index.html#station-PLL",
+      "rustParity": "helper",
+      "rust": [
+        "pill"
+      ],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "skeleton": {
+      "runtime": "css",
+      "canonical": "site/index.html#station-SKL",
+      "rustParity": "helper",
+      "rust": [
+        "skeleton"
+      ],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "empty-state": {
+      "runtime": "css",
+      "canonical": "site/index.html#station-EMP",
+      "rustParity": "helper",
+      "rust": [
+        "empty_state"
+      ],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "popover": {
+      "runtime": "native",
+      "canonical": "site/index.html#station-POV",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "tabs": {
+      "runtime": "public",
+      "canonical": "site/index.html#station-TAB",
+      "rustParity": "helper",
+      "rust": [
+        "tabs"
+      ],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "breadcrumb": {
+      "runtime": "css",
+      "canonical": "site/index.html#station-BRC",
+      "rustParity": "helper",
+      "rust": [
+        "breadcrumb"
+      ],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "menu": {
+      "runtime": "public",
+      "canonical": "site/index.html#station-MNU",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "stepper": {
+      "runtime": "css",
+      "canonical": "site/index.html#station-STP",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "accordion": {
+      "runtime": "native",
+      "canonical": "site/index.html#station-ACD",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "side-navigation": {
+      "runtime": "css",
+      "canonical": "site/index.html#station-SID",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "multiselect": {
+      "runtime": "public",
+      "canonical": "site/forms.html#multiselect",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [
+        "ody:change"
+      ],
+      "limits": [],
+      "value": "event.detail.value: string[] (legacy key retained); selection/removal emits once; keyboard trigger/listbox model"
+    },
+    "tag-input": {
+      "runtime": "public",
+      "canonical": "site/forms.html#taginput",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "date-picker": {
+      "runtime": "public",
+      "canonical": "site/forms.html#datepicker",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "time-picker": {
+      "runtime": "public",
+      "canonical": "site/forms.html#timepicker",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "dual-range": {
+      "runtime": "public",
+      "canonical": "site/forms.html#dualrange",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "file-input": {
+      "runtime": "native",
+      "canonical": "site/forms.html#file",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "rating": {
+      "runtime": "public",
+      "canonical": "site/forms.html#rating",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "color-swatches": {
+      "runtime": "public",
+      "canonical": "site/forms.html#swatches",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "input-group": {
+      "runtime": "css",
+      "canonical": "site/forms.html#input-group",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "data-table": {
+      "runtime": "public",
+      "canonical": "[data-ody-table][data-page-size]",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [
+        "ody:table-change"
+      ],
+      "limits": [],
+      "value": "client filter → sort → page; selected rows retained across views; visible/total/page/selected state comes from adapter"
+    },
+    "calendar": {
+      "runtime": "css",
+      "canonical": "site/data-display.html#calendar",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "kanban": {
+      "runtime": "public",
+      "canonical": "site/data-display.html#kanban",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [
+        "ody:kanban-change"
+      ],
+      "limits": [],
+      "value": "same board can be moved by drag, native destination select or up/down buttons; counts and status follow DOM order"
+    },
+    "comparison-table": {
+      "runtime": "css",
+      "canonical": "site/data-display.html#compare",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "meter": {
+      "runtime": "native",
+      "canonical": "site/data-display.html#meter",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "tooltip": {
+      "runtime": "public",
+      "canonical": "site/overlays.html#tooltip",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": [],
+      "description": "Appends and removes only its own describedby token; pointer can enter and select content; Escape dismisses tooltip before surrounding layers."
+    },
+    "hover-card": {
+      "runtime": "public",
+      "canonical": "site/overlays.html#hovercard",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "notification-center": {
+      "runtime": "public",
+      "canonical": "site/feedback.html#notif",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "context-menu": {
+      "runtime": "public",
+      "canonical": "site/feedback.html#context-menu",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "bottom-sheet": {
+      "runtime": "public",
+      "canonical": "site/feedback.html#bottom-sheet",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "carousel": {
+      "runtime": "public",
+      "canonical": "site/feedback.html#carousel",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "loading-overlay": {
+      "runtime": "css",
+      "canonical": "site/feedback.html#loading-overlay",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "confirm": {
+      "runtime": "public",
+      "canonical": "site/feedback.html#confirm",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": [],
+      "focus": "Unique title/description; danger starts on Cancel; confirm/cancel/Escape/close restore valid trigger focus."
+    },
+    "inline-editable": {
+      "runtime": "public",
+      "canonical": "site/feedback.html#inline-editable",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "stack": {
+      "runtime": "css",
+      "canonical": "site/layout.html#stack",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "cluster": {
+      "runtime": "css",
+      "canonical": "site/layout.html#cluster",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "grid": {
+      "runtime": "css",
+      "canonical": "site/layout.html#grid",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "aspect-box": {
+      "runtime": "css",
+      "canonical": "site/layout.html#aspect",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [],
+      "limits": []
+    },
+    "workspace-settings": {
+      "runtime": "composition",
+      "canonical": "form[data-ody-composition=\"workspace-settings\"]",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns business data, network, permissions and persistence",
+      "events": [
+        "ody:workspace-change",
+        "ody:workspace-save",
+        "ody:workspace-error"
+      ],
+      "limits": [],
+      "value": "{value,draft,onChange,onSave}; saved changes only after onSave resolves; failed draft retained; no adapter means local apply"
+    },
+    "task-workflow": {
+      "runtime": "composition",
+      "canonical": "site/workflows.html#task-title",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns data, persistence, permissions and confirmed source outcomes",
+      "events": [
+        "ody:workflow-task"
+      ],
+      "limits": [
+        "Host adapter owns confirmed outcomes, permission checks and persistence."
+      ],
+      "api": "OdysseyWorkflows.mountTask(root, {adapter, ...options})",
+      "terminal": "Success requires the matching source operation identity and a receipt; cancellation stays pending until confirmed; unknown-result is recoverable with the same identity."
+    },
+    "auth-flow": {
+      "runtime": "composition",
+      "canonical": "site/workflows.html#auth-title",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns data, persistence, permissions and confirmed source outcomes",
+      "events": [
+        "ody:workflow-auth"
+      ],
+      "limits": [
+        "Host adapter owns confirmed outcomes, permission checks and persistence."
+      ],
+      "api": "OdysseyWorkflows.mountAuth(root, {adapter, ...options})"
+    },
+    "form-wizard": {
+      "runtime": "composition",
+      "canonical": "site/workflows.html#wizard-title",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns data, persistence, permissions and confirmed source outcomes",
+      "events": [
+        "ody:workflow-wizard"
+      ],
+      "limits": [
+        "Host adapter owns confirmed outcomes, permission checks and persistence."
+      ],
+      "api": "OdysseyWorkflows.mountWizard(root, {adapter, ...options})"
+    },
+    "file-queue": {
+      "runtime": "composition",
+      "canonical": "site/workflows.html#queue-title",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns data, persistence, permissions and confirmed source outcomes",
+      "events": [
+        "ody:workflow-queue"
+      ],
+      "limits": [
+        "Host adapter owns confirmed outcomes, permission checks and persistence."
+      ],
+      "api": "OdysseyWorkflows.mountQueue(root, {adapter, ...options})",
+      "identity": "Each file attempt has its own identity; late cancelled/retried outcomes cannot complete another attempt."
+    },
+    "access-preferences": {
+      "runtime": "composition",
+      "canonical": "site/workflows.html#access-title",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns data, persistence, permissions and confirmed source outcomes",
+      "events": [
+        "ody:workflow-access"
+      ],
+      "limits": [
+        "Host adapter owns confirmed outcomes, permission checks and persistence."
+      ],
+      "api": "OdysseyWorkflows.mountAccess(root, {adapter, ...options})"
+    },
+    "saved-views": {
+      "runtime": "composition",
+      "canonical": "site/data-tools.html#queries",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns data, persistence, permissions and confirmed source outcomes",
+      "events": [],
+      "limits": [
+        "Optional module; host owns data and persistence."
+      ],
+      "api": "OdysseyDataTools.mountFilters(root, options)"
+    },
+    "code-log-diff": {
+      "runtime": "composition",
+      "canonical": "site/data-tools.html#source",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns data, persistence, permissions and confirmed source outcomes",
+      "events": [],
+      "limits": [
+        "Optional module; host owns data and persistence."
+      ],
+      "api": "OdysseyDataTools.mountText(root, options)"
+    },
+    "calendar-agenda": {
+      "runtime": "composition",
+      "canonical": "site/data-tools.html#schedule",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns data, persistence, permissions and confirmed source outcomes",
+      "events": [],
+      "limits": [
+        "Optional module; host owns data and persistence."
+      ],
+      "api": "OdysseyDataTools.mountCalendar(root, options)",
+      "value": "Calendar dates use YYYY-MM-DD date-only identity; timed agenda entries retain the host-provided timezone."
+    },
+    "resource-picker": {
+      "runtime": "composition",
+      "canonical": "site/data-tools.html#resources",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns data, persistence, permissions and confirmed source outcomes",
+      "events": [],
+      "limits": [
+        "Optional module; host owns data and persistence."
+      ],
+      "api": "OdysseyDataTools.mountResources(root, options)"
+    },
+    "virtual-collection": {
+      "runtime": "composition",
+      "canonical": "site/data-tools.html#scale",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns data, persistence, permissions and confirmed source outcomes",
+      "events": [],
+      "limits": [
+        "Optional module; host owns data and persistence."
+      ],
+      "api": "OdysseyDataTools.mountVirtualList(root, options)",
+      "semantics": "list, read-only table/grid, or host-flattened tree with total/index metadata; variable-height measurements, retained focus and selection, snapshot restore; not an editable TreeGrid."
+    },
+    "analysis-chart": {
+      "runtime": "composition",
+      "canonical": "site/data-tools.html#analysis",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns data, persistence, permissions and confirmed source outcomes",
+      "events": [],
+      "limits": [
+        "Optional module; host owns data and persistence."
+      ],
+      "api": "OdysseyDataTools.mountPlot(root, options)",
+      "renderer": "Default lightweight SVG; optional host renderer; Odyssey.describeChart supplies the named summary and complete multi-series alternative table."
+    }
+  }
+}

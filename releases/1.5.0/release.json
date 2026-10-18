@@ -1,0 +1,270 @@
+{
+  "schema": "odyssey.public-release.v1",
+  "release": "1.5.0",
+  "baseUrl": "/1.5.0/",
+  "identities": {
+    "cargo": "0.1.0",
+    "internalRust": "1.5.0-canary.1",
+    "publicAssets": "1.5.0",
+    "design": "line",
+    "shellContract": "1.3"
+  },
+  "license": {
+    "spdx": "MIT",
+    "notice": "LICENSE.txt",
+    "fonts": [
+      "Inter-OFL.txt",
+      "Archivo-OFL.txt",
+      "AzeretMono-OFL.txt"
+    ]
+  },
+  "toolchain": {
+    "rustVersion": "1.87",
+    "node": ">=22.12.0",
+    "shell": "POSIX sh; no GNU sed dependency"
+  },
+  "modules": {
+    "core": {
+      "files": [
+        "odyssey.css",
+        "odyssey.js"
+      ],
+      "requires": []
+    },
+    "line": {
+      "files": [
+        "odyssey-line.css"
+      ],
+      "requires": [
+        "core"
+      ]
+    },
+    "fonts": {
+      "files": [
+        "odyssey-font.css",
+        "odyssey-line-font.css"
+      ],
+      "requires": []
+    },
+    "extensions": {
+      "files": [
+        "odyssey-extensions.css",
+        "odyssey-extensions.js"
+      ],
+      "requires": [
+        "core"
+      ]
+    },
+    "compositions": {
+      "files": [
+        "compositions.css",
+        "compositions.js"
+      ],
+      "requires": [
+        "core",
+        "extensions"
+      ]
+    },
+    "workflows": {
+      "files": [
+        "workflows.css",
+        "workflows.js"
+      ],
+      "requires": [
+        "core",
+        "extensions"
+      ]
+    },
+    "dataTools": {
+      "files": [
+        "data-tools.css",
+        "data-tools.js"
+      ],
+      "requires": [
+        "core"
+      ]
+    },
+    "complete": {
+      "files": [
+        "odyssey-complete.css",
+        "odyssey-complete.js"
+      ],
+      "requires": [],
+      "optional": [
+        "workflows",
+        "dataTools"
+      ]
+    }
+  },
+  "runtimeBoundary": {
+    "public": "network-free",
+    "internalOnly": [
+      "Wire",
+      "Spark",
+      "Motion"
+    ],
+    "compositions": "host-owned state, persistence and transport"
+  },
+  "promotion": {
+    "approval": "manual after this candidate passes tools/verify.sh",
+    "inheritsCanaryEvidence": false
+  },
+  "files": [
+    {
+      "path": "odyssey.css",
+      "url": "/1.5.0/odyssey.css",
+      "bytes": 169296,
+      "source": "dist/odyssey.css"
+    },
+    {
+      "path": "odyssey.js",
+      "url": "/1.5.0/odyssey.js",
+      "bytes": 151493,
+      "source": "dist/odyssey.js"
+    },
+    {
+      "path": "odyssey-font.css",
+      "url": "/1.5.0/odyssey-font.css",
+      "bytes": 65478,
+      "source": "dist/odyssey-font.css"
+    },
+    {
+      "path": "odyssey-line.css",
+      "url": "/1.5.0/odyssey-line.css",
+      "bytes": 26801,
+      "source": "css/line.css"
+    },
+    {
+      "path": "odyssey-line-font.css",
+      "url": "/1.5.0/odyssey-line-font.css",
+      "bytes": 82365,
+      "source": "css/line-font.css"
+    },
+    {
+      "path": "odyssey-expressions.css",
+      "url": "/1.5.0/odyssey-expressions.css",
+      "bytes": 7455,
+      "source": "css/expressions.css"
+    },
+    {
+      "path": "odyssey-extensions.css",
+      "url": "/1.5.0/odyssey-extensions.css",
+      "bytes": 9606,
+      "source": "css/extensions.css"
+    },
+    {
+      "path": "odyssey-extensions.js",
+      "url": "/1.5.0/odyssey-extensions.js",
+      "bytes": 28410,
+      "source": "js/extensions.js"
+    },
+    {
+      "path": "compositions.css",
+      "url": "/1.5.0/compositions.css",
+      "bytes": 2270,
+      "source": "css/compositions.css"
+    },
+    {
+      "path": "compositions.js",
+      "url": "/1.5.0/compositions.js",
+      "bytes": 8909,
+      "source": "js/compositions.js"
+    },
+    {
+      "path": "capabilities.json",
+      "url": "/1.5.0/capabilities.json",
+      "bytes": 81087,
+      "source": "library/capabilities.json"
+    },
+    {
+      "path": "capabilities.schema.json",
+      "url": "/1.5.0/capabilities.schema.json",
+      "bytes": 2275,
+      "source": "library/capabilities.schema.json"
+    },
+    {
+      "path": "contracts.json",
+      "url": "/1.5.0/contracts.json",
+      "bytes": 34764,
+      "source": "library/contracts.json"
+    },
+    {
+      "path": "tokens.json",
+      "url": "/1.5.0/tokens.json",
+      "bytes": 168388,
+      "source": "design/tokens.json"
+    },
+    {
+      "path": "design-map.json",
+      "url": "/1.5.0/design-map.json",
+      "bytes": 18467,
+      "source": "design/design-map.json"
+    },
+    {
+      "path": "Inter-OFL.txt",
+      "url": "/1.5.0/Inter-OFL.txt",
+      "bytes": 4380,
+      "source": "css/fonts/Inter-OFL.txt"
+    },
+    {
+      "path": "Archivo-OFL.txt",
+      "url": "/1.5.0/Archivo-OFL.txt",
+      "bytes": 4387,
+      "source": "css/fonts/Archivo-OFL.txt"
+    },
+    {
+      "path": "AzeretMono-OFL.txt",
+      "url": "/1.5.0/AzeretMono-OFL.txt",
+      "bytes": 4383,
+      "source": "css/fonts/AzeretMono-OFL.txt"
+    },
+    {
+      "path": "LICENSE.txt",
+      "url": "/1.5.0/LICENSE.txt",
+      "bytes": 1077,
+      "source": "LICENSE"
+    },
+    {
+      "path": "workflows.css",
+      "url": "/1.5.0/workflows.css",
+      "bytes": 8471,
+      "source": "css/workflows.css"
+    },
+    {
+      "path": "workflows.js",
+      "url": "/1.5.0/workflows.js",
+      "bytes": 34097,
+      "source": "js/workflows.js"
+    },
+    {
+      "path": "data-tools.css",
+      "url": "/1.5.0/data-tools.css",
+      "bytes": 13116,
+      "source": "css/data-tools.css"
+    },
+    {
+      "path": "data-tools.js",
+      "url": "/1.5.0/data-tools.js",
+      "bytes": 50269,
+      "source": "js/data-tools.js"
+    },
+    {
+      "path": "state-matrix.json",
+      "url": "/1.5.0/state-matrix.json",
+      "bytes": 1505,
+      "source": "design/state-matrix.json"
+    },
+    {
+      "path": "odyssey-complete.css",
+      "url": "/1.5.0/odyssey-complete.css",
+      "bytes": 363507,
+      "source": "generated composition"
+    },
+    {
+      "path": "odyssey-complete.js",
+      "url": "/1.5.0/odyssey-complete.js",
+      "bytes": 188905,
+      "source": "generated composition"
+    }
+  ]
+}

@@ -81,6 +81,8 @@ Safari + 原有 SCIM.ITABC 真实输入法抽验通过：Tag 的候选确认不�
 
 `tools/verify.sh` 同时运行 P2 core/extensions、Rust strict-CSP、workflows、data-tools、state atlas、字节/初始化预算和视觉差分。默认明确选择三个引擎；`BROWSERS=chromium,webkit` 只作为 macOS 宿主上的定向证据。最低 Rust 1.87 有独立 CI 检查，生产构建仍固定 Rust 1.96；构建入口采用 POSIX sh 与 Node >=22.12，不要求 GNU sed。
 
+本轮最终来源 `b6e71fe` 的 [统一 CI 39140867898](https://github.com/Steadholme/odyssey/actions/runs/39140867898) 已全绿：19/19 独立 gate 与 Rust 1.87 MSRV 均通过。固定官方 Playwright 1.64.1 noble 容器中的 Chromium 156.0.8078.4、Firefox 157.0、WebKit 27.2 覆盖 core/extensions、strict CSP、工作流及回执身份、数据/运动/稀疏图、真实 Forms 和 modular/complete 安装；state atlas 的八主题、93 项库存及 320px 也通过。常规 Linux PNG 四项零差分，冻结 27 文件与已审阅候选逐字节相同。macOS Firefox 宿主限制及 VoiceOver 延期仍按上述范围保留。
+
 ### 审阅视觉差异，再更新基线
 
 在已启动候选服务的同一平台执行：

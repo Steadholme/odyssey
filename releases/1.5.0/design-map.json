@@ -1,0 +1,811 @@
+{
+  "schema": 1,
+  "pencilDocumentId": "4263dd2a-531c-44c2-924c-40891369c7f4",
+  "sourceOwnership": {
+    "visualRoles": "Pencil variables exported via MCP into design/tokens.json; CSS role adaptations reviewed by Line owner",
+    "behavior": "library/contracts.json and implementation; Pencil is not a runtime behavior authority",
+    "legacyVariables": "unmapped tokens remain archived, not injected into production CSS"
+  },
+  "themes": {
+    "expression": [
+      "line",
+      "soft",
+      "studio",
+      "signal"
+    ],
+    "mode": [
+      "light",
+      "dark"
+    ]
+  },
+  "tokenBindings": [
+    {
+      "pencilVariable": "ex-canvas",
+      "cssProperty": "--ody-bg",
+      "sources": [
+        "css/line.css",
+        "css/expressions.css"
+      ],
+      "documentation": "site/tokens.html#sync",
+      "consumers": []
+    },
+    {
+      "pencilVariable": "ex-surface",
+      "cssProperty": "--ody-surface",
+      "sources": [
+        "css/line.css",
+        "css/expressions.css"
+      ],
+      "documentation": "site/tokens.html#sync",
+      "consumers": []
+    },
+    {
+      "pencilVariable": "ex-tint",
+      "cssProperty": "--ody-surface-2",
+      "sources": [
+        "css/line.css",
+        "css/expressions.css"
+      ],
+      "documentation": "site/tokens.html#sync",
+      "consumers": []
+    },
+    {
+      "pencilVariable": "ex-ink",
+      "cssProperty": "--ody-ink",
+      "sources": [
+        "css/line.css",
+        "css/expressions.css"
+      ],
+      "documentation": "site/tokens.html#sync",
+      "consumers": []
+    },
+    {
+      "pencilVariable": "ex-muted",
+      "cssProperty": "--ody-ink-muted",
+      "sources": [
+        "css/line.css",
+        "css/expressions.css"
+      ],
+      "documentation": "site/tokens.html#sync",
+      "consumers": []
+    },
+    {
+      "pencilVariable": "ex-hair",
+      "cssProperty": "--ody-hairline",
+      "sources": [
+        "css/line.css",
+        "css/expressions.css"
+      ],
+      "documentation": "site/tokens.html#sync",
+      "consumers": []
+    },
+    {
+      "pencilVariable": "ex-rule",
+      "cssProperty": "--ody-rule",
+      "sources": [
+        "css/line.css",
+        "css/expressions.css"
+      ],
+      "documentation": "site/tokens.html#sync",
+      "consumers": []
+    },
+    {
+      "pencilVariable": "ex-accent",
+      "cssProperty": "--ody-accent",
+      "sources": [
+        "css/line.css",
+        "css/expressions.css"
+      ],
+      "documentation": "site/tokens.html#sync",
+      "consumers": []
+    },
+    {
+      "pencilVariable": "ex-primary",
+      "cssProperty": "--ody-primary-fill",
+      "sources": [
+        "css/line.css",
+        "css/expressions.css"
+      ],
+      "documentation": "site/tokens.html#sync",
+      "consumers": []
+    },
+    {
+      "pencilVariable": "ex-on-primary",
+      "cssProperty": "--ody-primary-label",
+      "sources": [
+        "css/line.css",
+        "css/expressions.css"
+      ],
+      "documentation": "site/tokens.html#sync",
+      "consumers": []
+    },
+    {
+      "pencilVariable": "ex-link",
+      "cssProperty": "--ody-accent-ink",
+      "sources": [
+        "css/line.css",
+        "css/expressions.css"
+      ],
+      "documentation": "site/tokens.html#sync",
+      "consumers": []
+    },
+    {
+      "pencilVariable": "ex-control-border",
+      "cssProperty": "--ody-control-border",
+      "sources": [
+        "css/line.css",
+        "css/expressions.css"
+      ],
+      "documentation": "site/tokens.html#sync",
+      "consumers": [
+        "ody.input",
+        "ody.select",
+        "ody.textarea"
+      ]
+    },
+    {
+      "pencilVariable": "ex-radius",
+      "cssProperty": "--ody-r",
+      "sources": [
+        "css/line.css",
+        "css/expressions.css"
+      ],
+      "documentation": "site/tokens.html#sync",
+      "consumers": []
+    },
+    {
+      "pencilVariable": "ex-row",
+      "cssProperty": "--ody-tap",
+      "sources": [
+        "css/line.css",
+        "css/expressions.css"
+      ],
+      "documentation": "site/tokens.html#sync",
+      "consumers": []
+    },
+    {
+      "pencilVariable": "ex-head",
+      "cssProperty": "--ody-font-display",
+      "sources": [
+        "css/line.css",
+        "css/expressions.css"
+      ],
+      "documentation": "site/tokens.html#sync",
+      "consumers": []
+    },
+    {
+      "pencilVariable": "ex-duration-press",
+      "cssProperty": "--ody-dur-1",
+      "sources": [
+        "css/line.css",
+        "css/expressions.css"
+      ],
+      "documentation": "site/tokens.html#sync",
+      "consumers": []
+    },
+    {
+      "pencilVariable": "ex-duration-ui",
+      "cssProperty": "--ody-dur-2",
+      "sources": [
+        "css/line.css",
+        "css/expressions.css"
+      ],
+      "documentation": "site/tokens.html#sync",
+      "consumers": []
+    },
+    {
+      "pencilVariable": "ex-duration-layer",
+      "cssProperty": "--ody-dur-3",
+      "sources": [
+        "css/line.css",
+        "css/expressions.css"
+      ],
+      "documentation": "site/tokens.html#sync",
+      "consumers": []
+    },
+    {
+      "pencilVariable": "ex-success",
+      "cssProperty": "--ody-ok-ink",
+      "sources": [
+        "css/line.css",
+        "css/expressions.css"
+      ],
+      "documentation": "site/tokens.html#sync",
+      "consumers": []
+    },
+    {
+      "pencilVariable": "ex-warn",
+      "cssProperty": "--ody-warn-ink",
+      "sources": [
+        "css/line.css",
+        "css/expressions.css"
+      ],
+      "documentation": "site/tokens.html#sync",
+      "consumers": []
+    },
+    {
+      "pencilVariable": "line-1",
+      "cssProperty": "--ody-line-1",
+      "sources": [
+        "css/line.css",
+        "css/expressions.css"
+      ],
+      "documentation": "site/tokens.html#sync",
+      "consumers": []
+    },
+    {
+      "pencilVariable": "line-2",
+      "cssProperty": "--ody-line-2",
+      "sources": [
+        "css/line.css",
+        "css/expressions.css"
+      ],
+      "documentation": "site/tokens.html#sync",
+      "consumers": []
+    },
+    {
+      "pencilVariable": "line-3",
+      "cssProperty": "--ody-line-3",
+      "sources": [
+        "css/line.css",
+        "css/expressions.css"
+      ],
+      "documentation": "site/tokens.html#sync",
+      "consumers": []
+    },
+    {
+      "pencilVariable": "line-4",
+      "cssProperty": "--ody-line-4",
+      "sources": [
+        "css/line.css",
+        "css/expressions.css"
+      ],
+      "documentation": "site/tokens.html#sync",
+      "consumers": []
+    },
+    {
+      "pencilVariable": "line-5",
+      "cssProperty": "--ody-line-5",
+      "sources": [
+        "css/line.css",
+        "css/expressions.css"
+      ],
+      "documentation": "site/tokens.html#sync",
+      "consumers": []
+    },
+    {
+      "pencilVariable": "line-6",
+      "cssProperty": "--ody-line-6",
+      "sources": [
+        "css/line.css",
+        "css/expressions.css"
+      ],
+      "documentation": "site/tokens.html#sync",
+      "consumers": []
+    },
+    {
+      "pencilVariable": "space-1",
+      "cssProperty": "--ody-space-1",
+      "sources": [
+        "css/line.css",
+        "css/expressions.css"
+      ],
+      "documentation": "site/tokens.html#sync",
+      "consumers": []
+    },
+    {
+      "pencilVariable": "space-2",
+      "cssProperty": "--ody-space-2",
+      "sources": [
+        "css/line.css",
+        "css/expressions.css"
+      ],
+      "documentation": "site/tokens.html#sync",
+      "consumers": []
+    },
+    {
+      "pencilVariable": "space-3",
+      "cssProperty": "--ody-space-3",
+      "sources": [
+        "css/line.css",
+        "css/expressions.css"
+      ],
+      "documentation": "site/tokens.html#sync",
+      "consumers": []
+    },
+    {
+      "pencilVariable": "space-4",
+      "cssProperty": "--ody-space-4",
+      "sources": [
+        "css/line.css",
+        "css/expressions.css"
+      ],
+      "documentation": "site/tokens.html#sync",
+      "consumers": []
+    },
+    {
+      "pencilVariable": "space-5",
+      "cssProperty": "--ody-space-5",
+      "sources": [
+        "css/line.css",
+        "css/expressions.css"
+      ],
+      "documentation": "site/tokens.html#sync",
+      "consumers": []
+    },
+    {
+      "pencilVariable": "space-6",
+      "cssProperty": "--ody-space-6",
+      "sources": [
+        "css/line.css",
+        "css/expressions.css"
+      ],
+      "documentation": "site/tokens.html#sync",
+      "consumers": []
+    },
+    {
+      "pencilVariable": "space-7",
+      "cssProperty": "--ody-space-7",
+      "sources": [
+        "css/line.css",
+        "css/expressions.css"
+      ],
+      "documentation": "site/tokens.html#sync",
+      "consumers": []
+    },
+    {
+      "pencilVariable": "space-8",
+      "cssProperty": "--ody-space-8",
+      "sources": [
+        "css/line.css",
+        "css/expressions.css"
+      ],
+      "documentation": "site/tokens.html#sync",
+      "consumers": []
+    },
+    {
+      "pencilVariable": "radius-0",
+      "cssProperty": "--ody-radius-0",
+      "sources": [
+        "css/line.css",
+        "css/expressions.css"
+      ],
+      "documentation": "site/tokens.html#sync",
+      "consumers": []
+    },
+    {
+      "pencilVariable": "radius-1",
+      "cssProperty": "--ody-radius-1",
+      "sources": [
+        "css/line.css",
+        "css/expressions.css"
+      ],
+      "documentation": "site/tokens.html#sync",
+      "consumers": []
+    },
+    {
+      "pencilVariable": "radius-2",
+      "cssProperty": "--ody-radius-2",
+      "sources": [
+        "css/line.css",
+        "css/expressions.css"
+      ],
+      "documentation": "site/tokens.html#sync",
+      "consumers": []
+    },
+    {
+      "pencilVariable": "radius-pill",
+      "cssProperty": "--ody-radius-pill",
+      "sources": [
+        "css/line.css",
+        "css/expressions.css"
+      ],
+      "documentation": "site/tokens.html#sync",
+      "consumers": []
+    },
+    {
+      "pencilVariable": "text-display",
+      "cssProperty": "--ody-text-display",
+      "sources": [
+        "css/line.css",
+        "css/expressions.css"
+      ],
+      "documentation": "site/tokens.html#sync",
+      "consumers": []
+    },
+    {
+      "pencilVariable": "text-title",
+      "cssProperty": "--ody-text-title",
+      "sources": [
+        "css/line.css",
+        "css/expressions.css"
+      ],
+      "documentation": "site/tokens.html#sync",
+      "consumers": []
+    },
+    {
+      "pencilVariable": "text-head",
+      "cssProperty": "--ody-text-head",
+      "sources": [
+        "css/line.css",
+        "css/expressions.css"
+      ],
+      "documentation": "site/tokens.html#sync",
+      "consumers": []
+    },
+    {
+      "pencilVariable": "text-sub",
+      "cssProperty": "--ody-text-sub",
+      "sources": [
+        "css/line.css",
+        "css/expressions.css"
+      ],
+      "documentation": "site/tokens.html#sync",
+      "consumers": []
+    },
+    {
+      "pencilVariable": "text-body",
+      "cssProperty": "--ody-text-body",
+      "sources": [
+        "css/line.css",
+        "css/expressions.css"
+      ],
+      "documentation": "site/tokens.html#sync",
+      "consumers": []
+    },
+    {
+      "pencilVariable": "text-small",
+      "cssProperty": "--ody-text-small",
+      "sources": [
+        "css/line.css",
+        "css/expressions.css"
+      ],
+      "documentation": "site/tokens.html#sync",
+      "consumers": []
+    },
+    {
+      "pencilVariable": "text-micro",
+      "cssProperty": "--ody-text-micro",
+      "sources": [
+        "css/line.css",
+        "css/expressions.css"
+      ],
+      "documentation": "site/tokens.html#sync",
+      "consumers": []
+    },
+    {
+      "pencilVariable": "stroke-1",
+      "cssProperty": "--ody-stroke-1",
+      "sources": [
+        "css/line.css",
+        "css/expressions.css"
+      ],
+      "documentation": "site/tokens.html#sync",
+      "consumers": []
+    },
+    {
+      "pencilVariable": "stroke-2",
+      "cssProperty": "--ody-stroke-2",
+      "sources": [
+        "css/line.css",
+        "css/expressions.css"
+      ],
+      "documentation": "site/tokens.html#sync",
+      "consumers": []
+    },
+    {
+      "pencilVariable": "stroke-3",
+      "cssProperty": "--ody-stroke-3",
+      "sources": [
+        "css/line.css",
+        "css/expressions.css"
+      ],
+      "documentation": "site/tokens.html#sync",
+      "consumers": []
+    }
+  ],
+  "components": [
+    {
+      "station": "CRD",
+      "pencilNodeId": "e96p5",
+      "name": "Specimen · CRD"
+    },
+    {
+      "station": "PNL",
+      "pencilNodeId": "J5fzP",
+      "name": "Specimen · PNL"
+    },
+    {
+      "station": "SHD",
+      "pencilNodeId": "CZg7N",
+      "name": "Specimen · SHD"
+    },
+    {
+      "station": "SHT",
+      "pencilNodeId": "QsHp7",
+      "name": "Specimen · SHT"
+    },
+    {
+      "station": "TLE",
+      "pencilNodeId": "MLzN3",
+      "name": "Specimen · TLE"
+    },
+    {
+      "station": "FRM",
+      "pencilNodeId": "TqGga",
+      "name": "Specimen · FRM"
+    },
+    {
+      "station": "DVS",
+      "pencilNodeId": "CC8f4",
+      "name": "Specimen · DVS"
+    },
+    {
+      "station": "WLL",
+      "pencilNodeId": "bXNgK",
+      "name": "Specimen · WLL"
+    },
+    {
+      "station": "BTN",
+      "pencilNodeId": "J3RrTZ",
+      "name": "Specimen · BTN"
+    },
+    {
+      "station": "IBT",
+      "pencilNodeId": "PjkgA",
+      "name": "Specimen · IBT"
+    },
+    {
+      "station": "LNK",
+      "pencilNodeId": "ViEaW",
+      "name": "Specimen · LNK"
+    },
+    {
+      "station": "SWT",
+      "pencilNodeId": "jGP7M",
+      "name": "Specimen · SWT"
+    },
+    {
+      "station": "CBX",
+      "pencilNodeId": "k118X",
+      "name": "Specimen · CBX"
+    },
+    {
+      "station": "RAD",
+      "pencilNodeId": "k6Y0K",
+      "name": "Specimen · RAD"
+    },
+    {
+      "station": "SEG",
+      "pencilNodeId": "n6uroX",
+      "name": "Specimen · SEG"
+    },
+    {
+      "station": "KCP",
+      "pencilNodeId": "L8uGf",
+      "name": "Specimen · KCP"
+    },
+    {
+      "station": "FAB",
+      "pencilNodeId": "tYnex",
+      "name": "Specimen · FAB"
+    },
+    {
+      "station": "FLD",
+      "pencilNodeId": "eEuvy",
+      "name": "Specimen · FLD"
+    },
+    {
+      "station": "TXT",
+      "pencilNodeId": "OZkDs",
+      "name": "Specimen · TXT"
+    },
+    {
+      "station": "TAR",
+      "pencilNodeId": "rKn5E",
+      "name": "Specimen · TAR"
+    },
+    {
+      "station": "SEL",
+      "pencilNodeId": "lpLNO",
+      "name": "Specimen · SEL"
+    },
+    {
+      "station": "NUM",
+      "pencilNodeId": "fcImO",
+      "name": "Specimen · NUM"
+    },
+    {
+      "station": "RNG",
+      "pencilNodeId": "XfYKj",
+      "name": "Specimen · RNG"
+    },
+    {
+      "station": "DTP",
+      "pencilNodeId": "oA5Fs",
+      "name": "Specimen · DTP"
+    },
+    {
+      "station": "CMB",
+      "pencilNodeId": "BXNLL",
+      "name": "Specimen · CMB"
+    },
+    {
+      "station": "TBL",
+      "pencilNodeId": "A7JFDA",
+      "name": "Specimen · TBL"
+    },
+    {
+      "station": "STA",
+      "pencilNodeId": "zTElH",
+      "name": "Specimen · STA"
+    },
+    {
+      "station": "CHT",
+      "pencilNodeId": "VEo80",
+      "name": "Specimen · CHT"
+    },
+    {
+      "station": "LST",
+      "pencilNodeId": "J2o67",
+      "name": "Specimen · LST"
+    },
+    {
+      "station": "DSC",
+      "pencilNodeId": "Ckrvs",
+      "name": "Specimen · DSC"
+    },
+    {
+      "station": "PGR",
+      "pencilNodeId": "XJc19",
+      "name": "Specimen · PGR"
+    },
+    {
+      "station": "PRG",
+      "pencilNodeId": "gT72p",
+      "name": "Specimen · PRG"
+    },
+    {
+      "station": "TST",
+      "pencilNodeId": "sgXyx",
+      "name": "Specimen · TST"
+    },
+    {
+      "station": "ALT",
+      "pencilNodeId": "lYmXf",
+      "name": "Specimen · ALT"
+    },
+    {
+      "station": "MDL",
+      "pencilNodeId": "qWyiA",
+      "name": "Specimen · MDL"
+    },
+    {
+      "station": "DRW",
+      "pencilNodeId": "g8CGP",
+      "name": "Specimen · DRW"
+    },
+    {
+      "station": "PLL",
+      "pencilNodeId": "AFQXt",
+      "name": "Specimen · PLL"
+    },
+    {
+      "station": "SKL",
+      "pencilNodeId": "n5S1q",
+      "name": "Specimen · SKL"
+    },
+    {
+      "station": "TAB",
+      "pencilNodeId": "tuW5o",
+      "name": "Specimen · TAB"
+    },
+    {
+      "station": "BRC",
+      "pencilNodeId": "ZJjVJ",
+      "name": "Specimen · BRC"
+    },
+    {
+      "station": "MNU",
+      "pencilNodeId": "CHJu8",
+      "name": "Specimen · MNU"
+    },
+    {
+      "station": "STP",
+      "pencilNodeId": "kYbox",
+      "name": "Specimen · STP"
+    },
+    {
+      "station": "AVT",
+      "pencilNodeId": "gwS7d",
+      "name": "Extension · AVT / Avatar"
+    },
+    {
+      "station": "SPL",
+      "pencilNodeId": "DMGin",
+      "name": "Extension · SPL / SplitPane"
+    },
+    {
+      "station": "CMD",
+      "pencilNodeId": "F2ShvU",
+      "name": "Extension · CMD / CommandMenu"
+    },
+    {
+      "station": "TBR",
+      "pencilNodeId": "qEzmC",
+      "name": "Extension · TBR / SelectionToolbar"
+    },
+    {
+      "station": "OTP",
+      "pencilNodeId": "tPuFK",
+      "name": "Extension · OTP / CodeInput"
+    },
+    {
+      "station": "UPL",
+      "pencilNodeId": "yhY4f",
+      "name": "Extension · UPL / FileDropzone"
+    },
+    {
+      "station": "TRE",
+      "pencilNodeId": "gO4Wm",
+      "name": "Extension · TRE / Tree"
+    },
+    {
+      "station": "TIM",
+      "pencilNodeId": "zoOnF",
+      "name": "Extension · TIM / ActivityTimeline"
+    },
+    {
+      "station": "EMP",
+      "pencilNodeId": "sKhZ3",
+      "name": "Extension · EMP / EmptyState"
+    },
+    {
+      "station": "POV",
+      "pencilNodeId": "kAUZa",
+      "name": "Extension · POV / Popover"
+    },
+    {
+      "station": "ACD",
+      "pencilNodeId": "NYLTa",
+      "name": "Extension · ACD / Accordion"
+    },
+    {
+      "station": "SID",
+      "pencilNodeId": "R3cpV",
+      "name": "Extension · SID / SideNavigation"
+    }
+  ],
+  "inputNodes": [
+    {
+      "id": "bqZFr",
+      "property": "stroke",
+      "variable": "ex-control-border"
+    },
+    {
+      "id": "ZTxby",
+      "property": "stroke",
+      "variable": "ex-control-border"
+    },
+    {
+      "id": "EeVvI",
+      "property": "stroke",
+      "variable": "ex-control-border"
+    },
+    {
+      "id": "n8Xy4G",
+      "property": "stroke",
+      "variable": "ex-control-border"
+    }
+  ],
+  "stateMatrix": {
+    "source": "design/state-matrix.json",
+    "guide": "site/states.html",
+    "coreNodeId": "u1nI1",
+    "expandedNodeId": "vwF4F",
+    "geometrySources": [
+      "css/line.css",
+      "css/expressions.css"
+    ]
+  }
+}

@@ -34,7 +34,7 @@
 3. 删除/改名公开 class、data 属性、事件字段、helper 入口，或改变既有数据含义和默认行为，属于 breaking change，应进入新的 major 公开版本；新增可选能力进入 minor，兼容修复进入 patch。
 4. 弃用先在能力目录和迁移说明标注替代入口，旧入口至少保留整个当前 major；不能只删文档后静默删除实现。Rust API 变更按其独立 Cargo 版本声明，并继续保留旧调用路径。
 
-## 1.5.0 P2 候选（2026-10-18）
+## 1.5.0 P2 发布验证（2026-10-18）
 
 新增能力使用独立的 `/1.5.0/`，旧 `/1.4.0/` 二十文件继续原字节和 immutable 响应。Line 为主线，只有 Odyssey 的新页面选择本轮资产；Rust vendor 的新 canary 身份不会自动同步或部署其他消费者。
 
@@ -45,6 +45,10 @@
 实际字节与动态初始化预算在 `tools/tests/performance-budgets.json`；runner 测 core、字体、Line、extensions、compositions、可选模块与 complete 的原始/gzip 字节，并测 100 控件子树首次及重复初始化。超出预算会失败，不能用增大阈值替代来源审阅。
 
 视觉门禁采用现有 Playwright 的真正 PNG 差分：固定数据、内嵌字体、关闭运动，四个状态分别为 Line/light/960px、Line/dark/320px、Soft/light/960px、Signal/dark/浮层。macOS 与 Linux 各持自己的四张基线，不混用宿主光栅结果；差异输出 actual/expected/diff，审阅入口见 `BROWSER_SUPPORT.md`。
+
+来源 `b6e71fe53f7e84daf4ce92c5c4d2bb9889c0d68f` 的 [GitHub CI 39140867898](https://github.com/Steadholme/odyssey/actions/runs/39140867898) 已通过 Rust/helper/server/目录前置、19 项独立浏览器及预算门禁和 Rust 1.87 MSRV。Linux Chromium 156.0.8078.4、Firefox 157.0、WebKit 27.2 的关键路径全部通过；四张已接受 Linux PNG 常规比对零差分，没有重录基线。100 控件首次/重复初始化中位数为 0.7/0.6ms。
+
+本轮冻结的 27 个文件与已接受 `tB4ULx` 候选逐文件、逐字节一致，包括 `release.json`。旧 1.1、1.2、1.3、1.4.0 和 compat 快照未改写。仅 Odyssey 可晋级；恢复包 `/srv/ovh-migration/odyssey-line-p2-20261018/` 保留实际冻结 commit、镜像、容器、健康及切换 receipt，回退基线是本轮原生产 1.4.0 的 `9e68491` 镜像。
 
 ## 1.4.0 本轮发布决定（2026-10-18）
 
