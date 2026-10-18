@@ -1177,7 +1177,7 @@
     var initial=attr(otp,'data-value') || ''; if(mode!=='text')initial=initial.replace(/[^0-9]/g,'');
     otpCells(otp).forEach(function(cell,index){cell.value=cell.defaultValue=initial[index]||'';cell.addEventListener('focus',function(){cell.select();});});
     var form=otpCells(otp)[0].form;
-    if(form)form.addEventListener('reset',function(){setTimeout(function(){otpSync(otp,true);},0);});
+    if(form)form.addEventListener('reset',function(event){setTimeout(function(){if(!event.defaultPrevented)otpSync(otp,true);},0);});
     otpSync(otp,false);
   }
   function otpCells(otp) { return $$('.ody-otp__cell', otp); }

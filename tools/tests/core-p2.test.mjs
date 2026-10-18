@@ -133,6 +133,15 @@ for (const engine of (process.env.BROWSERS || 'chromium').split(',')) describe(`
     await page.keyboard.press('Escape');
     assert.equal(await page.evaluate(()=>{Odyssey.i18n.register('ja',{'host.example':'{name}の準備完了'});return Odyssey.i18n.t('host.example',{name:'Odyssey'},document.querySelector('[lang="ja-JP"]'));}),lang==='ja-JP'?'Odysseyの準備完了':'host.example');
   });
+  test('ACT-05 bridge: a host-cancelled native reset preserves value, error and event count',async t=>{
+    const page=await fixture(t,'<form id="form"><div class="ody-otp" data-ody-otp data-name="code" data-value="1234" data-len="4" id="otp"></div></form>');
+    await page.locator('#otp .ody-otp__cell').first().fill('4829');
+    await page.evaluate(()=>{const node=document.querySelector('#otp');node.setAttribute('aria-invalid','true');node._changes=[];node.addEventListener('ody:change',event=>node._changes.push(event.detail));});
+    await page.locator('#form').evaluate(form=>{form.addEventListener('reset',event=>event.preventDefault());form.reset();return new Promise(resolve=>setTimeout(resolve,0));});
+    assert.equal(await page.locator('#otp').getAttribute('aria-invalid'),'true');
+    assert.deepEqual(await page.locator('#otp').evaluate(node=>node._changes),[]);
+    assert.equal(await page.locator('#form').evaluate(form=>new FormData(form).get('code')),'4829');
+  });
   test('Line core is usable at 320px and tooltips wrap long text in reduced motion',async t=>{
     const page=await fixture(t,`<button id="tip" data-ody-tooltip="${'long-label-'.repeat(30)}">Help</button><div class="ody-chart" id="chart" data-ody-chart="bar" data-values="3,6" data-label="Requests" data-labels="A,B"></div>${tree}`);
     await page.setViewportSize({width:320,height:844});await page.locator('#tip').focus();const tip=page.getByRole('tooltip');const box=await tip.boundingBox();assert.ok(box.x>=0&&box.x+box.width<=320);
