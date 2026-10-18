@@ -16,7 +16,7 @@ const stations = [...index.matchAll(/data-station="([A-Z]+)"/g)].map(match => ma
 assert.equal(stations.length, 54);
 assert.deepEqual(manifest.components.filter(c => c.station).map(c => c.station), stations);
 const rust = (await Promise.all(['src/controls.rs','src/data.rs','src/feedback.rs','src/shell.rs'].map(read))).join('\n');
-const release = await json('releases/1.4.0/release.json');
+const release = await json((process.env.ODYSSEY_PUBLIC_RELEASE_DIR || 'releases/1.4.0') + '/release.json');
 const assets = new Set((Array.isArray(release.files) ? release.files.map(f => typeof f === 'string' ? f : f.path) : Object.keys(release.files || release.assets || {})).map(path => path.split('/').pop()));
 for (const component of manifest.components) {
   for (const key of ['html','guide']) {

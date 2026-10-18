@@ -622,27 +622,105 @@
     },
     "line-1": {
       "type": "color",
-      "value": "#0062FF"
+      "value": [
+        {
+          "value": "#0062FF",
+          "theme": {
+            "mode": "light"
+          }
+        },
+        {
+          "value": "#3B82F6",
+          "theme": {
+            "mode": "dark"
+          }
+        }
+      ]
     },
     "line-2": {
       "type": "color",
-      "value": "#10B981"
+      "value": [
+        {
+          "value": "#10B981",
+          "theme": {
+            "mode": "light"
+          }
+        },
+        {
+          "value": "#34D399",
+          "theme": {
+            "mode": "dark"
+          }
+        }
+      ]
     },
     "line-3": {
       "type": "color",
-      "value": "#F59E0B"
+      "value": [
+        {
+          "value": "#F59E0B",
+          "theme": {
+            "mode": "light"
+          }
+        },
+        {
+          "value": "#FBBF24",
+          "theme": {
+            "mode": "dark"
+          }
+        }
+      ]
     },
     "line-4": {
       "type": "color",
-      "value": "#7C3AED"
+      "value": [
+        {
+          "value": "#7C3AED",
+          "theme": {
+            "mode": "light"
+          }
+        },
+        {
+          "value": "#A78BFA",
+          "theme": {
+            "mode": "dark"
+          }
+        }
+      ]
     },
     "line-5": {
       "type": "color",
-      "value": "#E5484D"
+      "value": [
+        {
+          "value": "#E5484D",
+          "theme": {
+            "mode": "light"
+          }
+        },
+        {
+          "value": "#F87171",
+          "theme": {
+            "mode": "dark"
+          }
+        }
+      ]
     },
     "line-6": {
       "type": "color",
-      "value": "#64748B"
+      "value": [
+        {
+          "value": "#64748B",
+          "theme": {
+            "mode": "light"
+          }
+        },
+        {
+          "value": "#94A3B8",
+          "theme": {
+            "mode": "dark"
+          }
+        }
+      ]
     },
     "space-1": {
       "type": "number",
