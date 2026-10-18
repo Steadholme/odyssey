@@ -148,6 +148,118 @@ async function verifyEntry(browser, name, entry) {
   }
 }
 
+async function verifyFormsGuide(browser, name) {
+  const context = await browser.newContext({ viewport: { width: 1280, height: 1000 }, reducedMotion: 'reduce' });
+  const page = await context.newPage();
+  const errors = [];
+  page.on('pageerror', error => errors.push(error.message));
+  page.on('response', response => {
+    if (response.status() >= 400) errors.push(`${response.status()} ${response.url()}`);
+  });
+  page.on('requestfailed', request => errors.push(`${request.failure()?.errorText} ${request.url()}`));
+  try {
+    const response = await page.goto(`${base}/forms.html`);
+    assert.equal(response.status(), 200);
+    await page.evaluate(() => document.fonts.ready);
+    assert.equal(await page.evaluate(() => window.Odyssey.version), '1.4.0');
+
+    const combo = page.getByRole('combobox', { name: '框架', exact: true });
+    const options = page.locator('.ody-combobox__list').first();
+    assert.equal(await combo.getAttribute('aria-controls'), await options.getAttribute('id'));
+    await combo.fill('Svelte');
+    await combo.press('ArrowDown');
+    assert.equal(await combo.getAttribute('aria-expanded'), 'true');
+    const activeOption = await combo.getAttribute('aria-activedescendant');
+    assert.ok(activeOption);
+    assert.equal(await options.getByRole('option', { name: 'Svelte', exact: true }).getAttribute('id'), activeOption);
+    await combo.press('Enter');
+    assert.equal(await combo.inputValue(), 'Svelte');
+    assert.equal(await combo.getAttribute('aria-expanded'), 'false');
+    assert.equal(await combo.getAttribute('aria-activedescendant'), null);
+    assert.equal(await options.getByRole('option', { name: 'Svelte', exact: true, includeHidden: true }).getAttribute('aria-selected'), 'true');
+    assert.equal(await combo.evaluate(node => node === document.activeElement), true);
+
+    const multiselect = page.locator('[data-ody-multiselect]').first();
+    const multi = multiselect.getByRole('combobox', { name: '技术栈', exact: true });
+    const choices = multiselect.locator('[role="listbox"]');
+    assert.equal(await multi.getAttribute('aria-controls'), await choices.getAttribute('id'));
+    assert.equal(await choices.getAttribute('aria-multiselectable'), 'true');
+    assert.deepEqual(await multiselect.evaluate(node => Odyssey.multiselectValue(node)), ['TypeScript', 'Rust']);
+    await multi.focus();
+    await page.keyboard.press('Enter');
+    assert.equal(await multi.getAttribute('aria-expanded'), 'true');
+    await page.keyboard.press('End');
+    const zigId = await choices.getByRole('option', { name: 'Zig', exact: true }).getAttribute('id');
+    assert.equal(await multi.getAttribute('aria-activedescendant'), zigId);
+    await page.keyboard.press('Space');
+    assert.equal(await choices.locator(`[id="${zigId}"]`).getAttribute('aria-selected'), 'true');
+    assert.deepEqual(await multiselect.evaluate(node => Odyssey.multiselectValue(node)), ['TypeScript', 'Rust', 'Zig']);
+    await page.keyboard.press('Escape');
+    assert.equal(await multi.getAttribute('aria-expanded'), 'false');
+    assert.equal(await multi.getAttribute('aria-activedescendant'), null);
+    assert.equal(await multi.evaluate(node => node === document.activeElement), true);
+
+    const date = page.locator('.ody-datepicker__input');
+    const calendar = page.locator('.ody-datepicker__panel');
+    assert.equal(await date.getAttribute('role'), 'combobox');
+    assert.equal(await date.getAttribute('aria-haspopup'), 'dialog');
+    assert.equal(await date.getAttribute('aria-controls'), await calendar.getAttribute('id'));
+    assert.equal(await date.inputValue(), '2026-07-05');
+    await date.press('Enter');
+    assert.equal(await date.getAttribute('aria-expanded'), 'true');
+    assert.equal(await calendar.getAttribute('role'), 'dialog');
+    const titleId = await calendar.getAttribute('aria-labelledby');
+    assert.ok(titleId);
+    assert.match(await page.locator(`[id="${titleId}"]`).textContent(), /2026/);
+    const selectedDay = calendar.locator('[data-date="2026-07-05"]');
+    assert.equal(await selectedDay.getAttribute('role'), 'gridcell');
+    assert.equal(await selectedDay.getAttribute('aria-selected'), 'true');
+    assert.match(await selectedDay.getAttribute('aria-label'), /2026/);
+    assert.equal(await selectedDay.evaluate(node => node === document.activeElement), true);
+    await page.keyboard.press('ArrowRight');
+    assert.equal(await page.evaluate(() => document.activeElement.dataset.date), '2026-07-06');
+    if (evidence) await calendar.screenshot({ path: `${evidence}/${name}-forms-datepicker.png`, animations: 'disabled' });
+    await page.keyboard.press('Enter');
+    assert.equal(await date.inputValue(), '2026-07-06');
+    assert.equal(await date.getAttribute('aria-expanded'), 'false');
+    assert.equal(await date.evaluate(node => node === document.activeElement), true);
+
+    const dropzone = page.locator('[data-ody-dropzone]').first();
+    // The real guide omits a host form/name. Add only those consumer-owned
+    // submission details; keep its initialized control and file list intact.
+    await dropzone.evaluate(zone => {
+      const host = zone.parentElement, form = document.createElement('form');
+      host.before(form);
+      form.append(host);
+      zone.querySelector('input[type="file"]').name = 'attachments';
+    });
+    assert.equal(await page.evaluate(() => typeof DataTransfer), 'function', `${name}: native DataTransfer is required`);
+    const file = { name: 'guide-contract.txt', type: 'text/plain', content: 'Odyssey guide drop contract' };
+    assert.equal(await dropzone.evaluate((zone, file) => {
+      const transfer = new DataTransfer();
+      transfer.items.add(new File([file.content], file.name, { type: file.type }));
+      const event = new DragEvent('drop', { bubbles: true, cancelable: true, dataTransfer: transfer });
+      zone.dispatchEvent(event);
+      return event.defaultPrevented;
+    }, file), true);
+    const submission = await dropzone.locator('input[type="file"]').evaluate(async input => {
+      const describe = async file => ({ name: file.name, type: file.type, size: file.size, content: await file.text() });
+      return {
+        nativeFiles: await Promise.all(Array.from(input.files, describe)),
+        formFiles: await Promise.all(new FormData(input.form).getAll('attachments').map(describe)),
+      };
+    });
+    const expectedFile = { name: file.name, type: file.type, size: file.content.length, content: file.content };
+    assert.deepEqual(submission.nativeFiles, [expectedFile]);
+    assert.deepEqual(submission.formFiles, [expectedFile]);
+    assert.equal(await page.locator('[data-ody-dropzone-files] .ody-dropzone__file-name').textContent(), file.name);
+    assert.deepEqual(errors, []);
+    console.log(`PASS ${name} forms guide: real /forms.html, combobox/multiselect/date keyboard values and AX state, drop → input.files → native FormData (name/type/size/content).`);
+  } finally {
+    await context.close();
+  }
+}
+
 const failures = [];
 for (const name of engines) {
   let browser;
@@ -162,6 +274,12 @@ for (const name of engines) {
         console.error(`FAIL ${name}/${entry}: ${error.stack}`);
       }
     }
+    try {
+      await verifyFormsGuide(browser, name);
+    } catch (error) {
+      failures.push(new Error(`${name}/forms-guide: ${error.message}`, { cause: error }));
+      console.error(`FAIL ${name}/forms-guide: ${error.stack}`);
+    }
   } catch (error) {
     failures.push(new Error(`${name}: ${error.message}`, { cause: error }));
     console.error(`FAIL ${name}: ${error.stack}`);
@@ -170,4 +288,4 @@ for (const name of engines) {
   }
 }
 if (failures.length) throw new AggregateError(failures, 'Browser compatibility failed');
-console.log(`PASS ${engines.join(',')} against ${base}${release}; modular and complete entry points.`);
+console.log(`PASS ${engines.join(',')} against ${base}${release}; modular/complete entry points and the real Forms guide.`);
