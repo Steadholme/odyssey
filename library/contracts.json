@@ -1,11 +1,13 @@
 {
   "schema": 1,
-  "release": "1.4.0",
+  "release": "1.5.0",
   "lifecycle": {
     "public": "Odyssey.init(root): root + descendants; safe to repeat; document delegated legacy handlers; wire:after reinitializes target subtree.",
     "extensions": "OdysseyExtensions.init(root), also called by Odyssey.init when loaded; native elements remain usable without JS.",
     "rust": "Server-rendered semantic primitives; Wire/Spark are separate opt-in internal runtime. Public enhancer is not implied by APP_CSS.",
-    "composition": "OdysseyCompositions.init(root) or mountWorkspace(form, adapter); state/authorization/source owned by host."
+    "composition": "OdysseyCompositions.init(root) or mountWorkspace(form, adapter); state/authorization/source owned by host.",
+    "workflows": "Optional workflows.js: OdysseyWorkflows.init(root, optionsByKind), mountTask/mountAuth/mountWizard/mountQueue/mountAccess; explicit host adapters; controllers expose state and destroy.",
+    "dataTools": "Optional data-tools.js: OdysseyDataTools.init(root), mountFilters/mountText/mountCalendar/mountResources/mountVirtualList/mountPlot; host-owned identity and datasets; explicit state and destroy."
   },
   "components": {
     "card": {
@@ -865,6 +867,127 @@
       ],
       "limits": [],
       "value": "{value,draft,onChange,onSave}; saved changes only after onSave resolves; failed draft retained; no adapter means local apply"
+    },
+    "task-workflow": {
+      "runtime": "composition",
+      "canonical": "site/workflows.html#task-title",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns data, persistence, permissions and confirmed source outcomes",
+      "events": [],
+      "limits": [
+        "Host adapter is required for business actions; demonstration data stays local."
+      ]
+    },
+    "auth-flow": {
+      "runtime": "composition",
+      "canonical": "site/workflows.html#auth-title",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns data, persistence, permissions and confirmed source outcomes",
+      "events": [],
+      "limits": [
+        "Host adapter is required for business actions; demonstration data stays local."
+      ]
+    },
+    "form-wizard": {
+      "runtime": "composition",
+      "canonical": "site/workflows.html#wizard-title",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns data, persistence, permissions and confirmed source outcomes",
+      "events": [],
+      "limits": [
+        "Host adapter is required for business actions; demonstration data stays local."
+      ]
+    },
+    "file-queue": {
+      "runtime": "composition",
+      "canonical": "site/workflows.html#queue-title",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns data, persistence, permissions and confirmed source outcomes",
+      "events": [],
+      "limits": [
+        "Host adapter is required for business actions; demonstration data stays local."
+      ]
+    },
+    "access-preferences": {
+      "runtime": "composition",
+      "canonical": "site/workflows.html#access-title",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns data, persistence, permissions and confirmed source outcomes",
+      "events": [],
+      "limits": [
+        "Host adapter is required for business actions; demonstration data stays local."
+      ]
+    },
+    "saved-views": {
+      "runtime": "composition",
+      "canonical": "site/data-tools.html#queries",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns data, persistence, permissions and confirmed source outcomes",
+      "events": [],
+      "limits": [
+        "Host adapter is required for business actions; demonstration data stays local."
+      ]
+    },
+    "code-log-diff": {
+      "runtime": "composition",
+      "canonical": "site/data-tools.html#source",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns data, persistence, permissions and confirmed source outcomes",
+      "events": [],
+      "limits": [
+        "Host adapter is required for business actions; demonstration data stays local."
+      ]
+    },
+    "calendar-agenda": {
+      "runtime": "composition",
+      "canonical": "site/data-tools.html#schedule",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns data, persistence, permissions and confirmed source outcomes",
+      "events": [],
+      "limits": [
+        "Host adapter is required for business actions; demonstration data stays local."
+      ]
+    },
+    "resource-picker": {
+      "runtime": "composition",
+      "canonical": "site/data-tools.html#resources",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns data, persistence, permissions and confirmed source outcomes",
+      "events": [],
+      "limits": [
+        "Host adapter is required for business actions; demonstration data stays local."
+      ]
+    },
+    "virtual-collection": {
+      "runtime": "composition",
+      "canonical": "site/data-tools.html#scale",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns data, persistence, permissions and confirmed source outcomes",
+      "events": [],
+      "limits": [
+        "Host adapter is required for business actions; demonstration data stays local."
+      ]
+    },
+    "analysis-chart": {
+      "runtime": "composition",
+      "canonical": "site/data-tools.html#analysis",
+      "rustParity": "html-only-intentional",
+      "rust": [],
+      "adapter": "host owns data, persistence, permissions and confirmed source outcomes",
+      "events": [],
+      "limits": [
+        "Host adapter is required for business actions; demonstration data stays local."
+      ]
     }
   }
 }

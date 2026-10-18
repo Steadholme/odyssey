@@ -797,5 +797,15 @@
       "property": "stroke",
       "variable": "ex-control-border"
     }
-  ]
+  ],
+  "stateMatrix": {
+    "source": "design/state-matrix.json",
+    "guide": "site/states.html",
+    "coreNodeId": "u1nI1",
+    "expandedNodeId": "vwF4F",
+    "geometrySources": [
+      "css/line.css",
+      "css/expressions.css"
+    ]
+  }
 }

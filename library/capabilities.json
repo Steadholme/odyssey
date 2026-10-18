@@ -1,9 +1,9 @@
 {
   "$schema": "./capabilities.schema.json",
   "schema": 1,
-  "release": "1.4.0",
+  "release": "1.5.0",
   "expression": "line",
-  "assetBase": "/1.4.0/",
+  "assetBase": "/1.5.0/",
   "components": [
     {
       "id": "ody.card",
@@ -25,7 +25,8 @@
         "js": []
       },
       "states": [
-        "default"
+        "default",
+        "long-content"
       ],
       "design": {
         "nodeId": "e96p5"
@@ -57,7 +58,8 @@
         "js": []
       },
       "states": [
-        "default"
+        "default",
+        "long-content"
       ],
       "design": {
         "nodeId": "J5fzP"
@@ -89,7 +91,8 @@
         "js": []
       },
       "states": [
-        "default"
+        "default",
+        "long-content"
       ],
       "design": {
         "nodeId": "CZg7N"
@@ -121,7 +124,8 @@
         "js": []
       },
       "states": [
-        "default"
+        "default",
+        "long-content"
       ],
       "design": {
         "nodeId": "QsHp7"
@@ -153,7 +157,8 @@
         "js": []
       },
       "states": [
-        "default"
+        "default",
+        "long-content"
       ],
       "design": {
         "nodeId": "MLzN3"
@@ -185,7 +190,8 @@
         "js": []
       },
       "states": [
-        "default"
+        "default",
+        "long-content"
       ],
       "design": {
         "nodeId": "TqGga"
@@ -249,7 +255,8 @@
         "js": []
       },
       "states": [
-        "default"
+        "default",
+        "long-content"
       ],
       "design": {
         "nodeId": "bXNgK"
@@ -282,7 +289,8 @@
         "js": []
       },
       "states": [
-        "default"
+        "default",
+        "long-content"
       ],
       "design": {
         "nodeId": "gwS7d"
@@ -320,7 +328,8 @@
       "states": [
         "default",
         "focus",
-        "disabled"
+        "active",
+        "long-content"
       ],
       "design": {
         "nodeId": "DMGin"
@@ -360,7 +369,13 @@
         "js": []
       },
       "states": [
-        "default"
+        "default",
+        "hover",
+        "focus",
+        "active",
+        "disabled",
+        "busy",
+        "long-content"
       ],
       "design": {
         "nodeId": "J3RrTZ"
@@ -394,7 +409,13 @@
         "js": []
       },
       "states": [
-        "default"
+        "default",
+        "hover",
+        "focus",
+        "active",
+        "disabled",
+        "busy",
+        "long-content"
       ],
       "design": {
         "nodeId": "PjkgA"
@@ -429,7 +450,13 @@
         "js": []
       },
       "states": [
-        "default"
+        "default",
+        "hover",
+        "focus",
+        "active",
+        "disabled",
+        "busy",
+        "long-content"
       ],
       "design": {
         "nodeId": "ViEaW"
@@ -464,8 +491,12 @@
       },
       "states": [
         "default",
+        "hover",
         "focus",
-        "disabled"
+        "active",
+        "selected",
+        "disabled",
+        "long-content"
       ],
       "design": {
         "nodeId": "jGP7M"
@@ -500,8 +531,12 @@
       },
       "states": [
         "default",
+        "hover",
         "focus",
-        "disabled"
+        "active",
+        "selected",
+        "disabled",
+        "long-content"
       ],
       "design": {
         "nodeId": "k118X"
@@ -534,8 +569,12 @@
       },
       "states": [
         "default",
+        "hover",
         "focus",
-        "disabled"
+        "active",
+        "selected",
+        "disabled",
+        "long-content"
       ],
       "design": {
         "nodeId": "k6Y0K"
@@ -567,7 +606,13 @@
         "js": []
       },
       "states": [
-        "default"
+        "default",
+        "hover",
+        "focus",
+        "active",
+        "selected",
+        "disabled",
+        "long-content"
       ],
       "design": {
         "nodeId": "n6uroX"
@@ -631,7 +676,13 @@
         "js": []
       },
       "states": [
-        "default"
+        "default",
+        "hover",
+        "focus",
+        "active",
+        "disabled",
+        "busy",
+        "long-content"
       ],
       "design": {
         "nodeId": "tYnex"
@@ -669,7 +720,9 @@
       "states": [
         "default",
         "focus",
-        "disabled"
+        "selected",
+        "empty",
+        "long-content"
       ],
       "design": {
         "nodeId": "F2ShvU"
@@ -713,7 +766,9 @@
       "states": [
         "default",
         "focus",
-        "disabled"
+        "selected",
+        "empty",
+        "long-content"
       ],
       "design": {
         "nodeId": "qEzmC"
@@ -751,7 +806,14 @@
         "js": []
       },
       "states": [
-        "default"
+        "default",
+        "hover",
+        "focus",
+        "disabled",
+        "readonly",
+        "invalid",
+        "empty",
+        "long-content"
       ],
       "design": {
         "nodeId": "eEuvy"
@@ -786,8 +848,13 @@
       },
       "states": [
         "default",
+        "hover",
         "focus",
-        "disabled"
+        "disabled",
+        "readonly",
+        "invalid",
+        "empty",
+        "long-content"
       ],
       "design": {
         "nodeId": "OZkDs"
@@ -822,8 +889,13 @@
       },
       "states": [
         "default",
+        "hover",
         "focus",
-        "disabled"
+        "disabled",
+        "readonly",
+        "invalid",
+        "empty",
+        "long-content"
       ],
       "design": {
         "nodeId": "rKn5E"
@@ -858,8 +930,12 @@
       },
       "states": [
         "default",
+        "hover",
         "focus",
-        "disabled"
+        "disabled",
+        "invalid",
+        "empty",
+        "long-content"
       ],
       "design": {
         "nodeId": "lpLNO"
@@ -894,8 +970,13 @@
       },
       "states": [
         "default",
+        "hover",
         "focus",
-        "disabled"
+        "disabled",
+        "readonly",
+        "invalid",
+        "empty",
+        "long-content"
       ],
       "design": {
         "nodeId": "fcImO"
@@ -930,7 +1011,9 @@
       },
       "states": [
         "default",
+        "hover",
         "focus",
+        "active",
         "disabled"
       ],
       "design": {
@@ -966,8 +1049,13 @@
       },
       "states": [
         "default",
+        "hover",
         "focus",
-        "disabled"
+        "disabled",
+        "readonly",
+        "invalid",
+        "empty",
+        "long-content"
       ],
       "design": {
         "nodeId": "oA5Fs"
@@ -1002,8 +1090,12 @@
       },
       "states": [
         "default",
+        "hover",
         "focus",
-        "disabled"
+        "disabled",
+        "invalid",
+        "empty",
+        "long-content"
       ],
       "design": {
         "nodeId": "BXNLL"
@@ -1045,7 +1137,9 @@
       "states": [
         "default",
         "focus",
-        "disabled"
+        "disabled",
+        "invalid",
+        "empty"
       ],
       "design": {
         "nodeId": "tPuFK"
@@ -1088,8 +1182,12 @@
       },
       "states": [
         "default",
+        "hover",
         "focus",
-        "disabled"
+        "disabled",
+        "invalid",
+        "empty",
+        "long-content"
       ],
       "design": {
         "nodeId": "yhY4f"
@@ -1133,7 +1231,9 @@
       "states": [
         "default",
         "focus",
-        "disabled"
+        "selected",
+        "empty",
+        "long-content"
       ],
       "design": {
         "nodeId": "A7JFDA"
@@ -1171,7 +1271,8 @@
         "js": []
       },
       "states": [
-        "default"
+        "default",
+        "long-content"
       ],
       "design": {
         "nodeId": "zTElH"
@@ -1203,7 +1304,9 @@
         "js": []
       },
       "states": [
-        "default"
+        "default",
+        "empty",
+        "long-content"
       ],
       "design": {
         "nodeId": "VEo80"
@@ -1237,7 +1340,11 @@
         "js": []
       },
       "states": [
-        "default"
+        "default",
+        "focus",
+        "selected",
+        "empty",
+        "long-content"
       ],
       "design": {
         "nodeId": "J2o67"
@@ -1269,7 +1376,8 @@
         "js": []
       },
       "states": [
-        "default"
+        "default",
+        "long-content"
       ],
       "design": {
         "nodeId": "Ckrvs"
@@ -1303,7 +1411,13 @@
         "js": []
       },
       "states": [
-        "default"
+        "default",
+        "hover",
+        "focus",
+        "active",
+        "selected",
+        "disabled",
+        "long-content"
       ],
       "design": {
         "nodeId": "XJc19"
@@ -1372,7 +1486,10 @@
       "states": [
         "default",
         "focus",
-        "disabled"
+        "selected",
+        "disabled",
+        "empty",
+        "long-content"
       ],
       "design": {
         "nodeId": "gO4Wm"
@@ -1407,7 +1524,8 @@
         "js": []
       },
       "states": [
-        "default"
+        "default",
+        "long-content"
       ],
       "design": {
         "nodeId": "zoOnF"
@@ -1441,7 +1559,8 @@
         "js": []
       },
       "states": [
-        "default"
+        "default",
+        "long-content"
       ],
       "design": {
         "nodeId": "sgXyx"
@@ -1475,7 +1594,8 @@
         "js": []
       },
       "states": [
-        "default"
+        "default",
+        "long-content"
       ],
       "design": {
         "nodeId": "lYmXf"
@@ -1513,7 +1633,7 @@
       "states": [
         "default",
         "focus",
-        "disabled"
+        "long-content"
       ],
       "design": {
         "nodeId": "qWyiA"
@@ -1553,7 +1673,7 @@
       "states": [
         "default",
         "focus",
-        "disabled"
+        "long-content"
       ],
       "design": {
         "nodeId": "g8CGP"
@@ -1591,7 +1711,8 @@
         "js": []
       },
       "states": [
-        "default"
+        "default",
+        "long-content"
       ],
       "design": {
         "nodeId": "AFQXt"
@@ -1660,7 +1781,9 @@
         "js": []
       },
       "states": [
-        "default"
+        "default",
+        "empty",
+        "long-content"
       ],
       "design": {
         "nodeId": "sKhZ3"
@@ -1697,7 +1820,7 @@
       "states": [
         "default",
         "focus",
-        "disabled"
+        "long-content"
       ],
       "design": {
         "nodeId": "kAUZa"
@@ -1736,8 +1859,12 @@
       },
       "states": [
         "default",
+        "hover",
         "focus",
-        "disabled"
+        "active",
+        "selected",
+        "disabled",
+        "long-content"
       ],
       "design": {
         "nodeId": "tuW5o"
@@ -1771,7 +1898,8 @@
         "js": []
       },
       "states": [
-        "default"
+        "default",
+        "long-content"
       ],
       "design": {
         "nodeId": "ZJjVJ"
@@ -1807,7 +1935,7 @@
       "states": [
         "default",
         "focus",
-        "disabled"
+        "long-content"
       ],
       "design": {
         "nodeId": "CHJu8"
@@ -1843,7 +1971,8 @@
         "js": []
       },
       "states": [
-        "default"
+        "default",
+        "long-content"
       ],
       "design": {
         "nodeId": "kYbox"
@@ -1877,8 +2006,12 @@
       },
       "states": [
         "default",
+        "hover",
         "focus",
-        "disabled"
+        "active",
+        "selected",
+        "disabled",
+        "long-content"
       ],
       "design": {
         "nodeId": "NYLTa"
@@ -1911,7 +2044,13 @@
         "js": []
       },
       "states": [
-        "default"
+        "default",
+        "hover",
+        "focus",
+        "active",
+        "selected",
+        "disabled",
+        "long-content"
       ],
       "design": {
         "nodeId": "R3cpV"
@@ -1946,10 +2085,12 @@
       },
       "states": [
         "default",
-        "open",
-        "selected",
+        "hover",
+        "focus",
+        "disabled",
+        "invalid",
         "empty",
-        "focus"
+        "long-content"
       ],
       "design": null,
       "tests": [
@@ -1982,8 +2123,12 @@
       },
       "states": [
         "default",
-        "composing",
-        "selected"
+        "hover",
+        "focus",
+        "disabled",
+        "invalid",
+        "empty",
+        "long-content"
       ],
       "design": null,
       "tests": [
@@ -2016,10 +2161,12 @@
       },
       "states": [
         "default",
-        "open",
-        "selected",
+        "hover",
+        "focus",
+        "disabled",
         "invalid",
-        "constrained"
+        "empty",
+        "long-content"
       ],
       "design": null,
       "tests": [
@@ -2052,9 +2199,12 @@
       },
       "states": [
         "default",
-        "open",
-        "selected",
-        "constrained"
+        "hover",
+        "focus",
+        "disabled",
+        "invalid",
+        "empty",
+        "long-content"
       ],
       "design": null,
       "tests": [
@@ -2087,7 +2237,10 @@
       },
       "states": [
         "default",
-        "focus"
+        "hover",
+        "focus",
+        "active",
+        "disabled"
       ],
       "design": null,
       "tests": [
@@ -2118,7 +2271,12 @@
       },
       "states": [
         "default",
-        "selected"
+        "hover",
+        "focus",
+        "disabled",
+        "invalid",
+        "empty",
+        "long-content"
       ],
       "design": null,
       "tests": [
@@ -2151,7 +2309,12 @@
       },
       "states": [
         "default",
-        "selected"
+        "hover",
+        "focus",
+        "active",
+        "selected",
+        "disabled",
+        "long-content"
       ],
       "design": null,
       "tests": [
@@ -2184,7 +2347,12 @@
       },
       "states": [
         "default",
-        "selected"
+        "hover",
+        "focus",
+        "active",
+        "selected",
+        "disabled",
+        "long-content"
       ],
       "design": null,
       "tests": [
@@ -2214,7 +2382,8 @@
         "js": []
       },
       "states": [
-        "default"
+        "default",
+        "long-content"
       ],
       "design": null,
       "tests": [
@@ -2247,11 +2416,10 @@
       },
       "states": [
         "default",
-        "filtered",
-        "sorted",
-        "paged",
+        "focus",
         "selected",
-        "empty"
+        "empty",
+        "long-content"
       ],
       "design": null,
       "tests": [
@@ -2283,7 +2451,8 @@
         "js": []
       },
       "states": [
-        "default"
+        "default",
+        "long-content"
       ],
       "design": null,
       "tests": [
@@ -2318,8 +2487,10 @@
       },
       "states": [
         "default",
-        "moving",
-        "moved"
+        "focus",
+        "selected",
+        "empty",
+        "long-content"
       ],
       "design": null,
       "tests": [
@@ -2349,7 +2520,8 @@
         "js": []
       },
       "states": [
-        "default"
+        "default",
+        "long-content"
       ],
       "design": null,
       "tests": [
@@ -2412,7 +2584,7 @@
       },
       "states": [
         "default",
-        "open"
+        "long-content"
       ],
       "design": null,
       "tests": [
@@ -2447,7 +2619,7 @@
       },
       "states": [
         "default",
-        "open"
+        "long-content"
       ],
       "design": null,
       "tests": [
@@ -2482,8 +2654,7 @@
       },
       "states": [
         "default",
-        "open",
-        "unread"
+        "long-content"
       ],
       "design": null,
       "tests": [
@@ -2516,7 +2687,8 @@
       },
       "states": [
         "default",
-        "open"
+        "focus",
+        "long-content"
       ],
       "design": null,
       "tests": [
@@ -2549,7 +2721,8 @@
       },
       "states": [
         "default",
-        "open"
+        "focus",
+        "long-content"
       ],
       "design": null,
       "tests": [
@@ -2582,7 +2755,12 @@
       },
       "states": [
         "default",
-        "selected"
+        "hover",
+        "focus",
+        "active",
+        "selected",
+        "disabled",
+        "long-content"
       ],
       "design": null,
       "tests": [
@@ -2612,7 +2790,8 @@
         "js": []
       },
       "states": [
-        "busy"
+        "default",
+        "long-content"
       ],
       "design": null,
       "tests": [
@@ -2645,7 +2824,8 @@
       },
       "states": [
         "default",
-        "open"
+        "focus",
+        "long-content"
       ],
       "design": null,
       "tests": [
@@ -2680,7 +2860,11 @@
       },
       "states": [
         "default",
-        "editing"
+        "focus",
+        "readonly",
+        "invalid",
+        "empty",
+        "long-content"
       ],
       "design": null,
       "tests": [
@@ -2710,7 +2894,8 @@
         "js": []
       },
       "states": [
-        "default"
+        "default",
+        "long-content"
       ],
       "design": null,
       "tests": [
@@ -2740,7 +2925,8 @@
         "js": []
       },
       "states": [
-        "default"
+        "default",
+        "long-content"
       ],
       "design": null,
       "tests": [
@@ -2770,7 +2956,8 @@
         "js": []
       },
       "states": [
-        "default"
+        "default",
+        "long-content"
       ],
       "design": null,
       "tests": [
@@ -2800,7 +2987,8 @@
         "js": []
       },
       "states": [
-        "default"
+        "default",
+        "long-content"
       ],
       "design": null,
       "tests": [
@@ -2830,11 +3018,12 @@
         ]
       },
       "states": [
-        "saved",
-        "dirty",
+        "default",
+        "focus",
+        "readonly",
         "invalid",
-        "saving",
-        "error"
+        "busy",
+        "long-content"
       ],
       "design": {
         "nodeId": "mRPZV"
@@ -2847,6 +3036,459 @@
       ],
       "contract": "library/contracts.json#/components/workspace-settings",
       "openTodo": []
+    },
+    {
+      "id": "ody.task-workflow",
+      "name": "Task workflow 任务与恢复",
+      "station": null,
+      "maturity": "preview",
+      "runtime": "composition",
+      "html": "site/workflows.html#task-title",
+      "guide": "site/workflows.html#task-title",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css",
+          "workflows.css",
+          "odyssey-extensions.css"
+        ],
+        "js": [
+          "odyssey.js",
+          "workflows.js",
+          "odyssey-extensions.js"
+        ]
+      },
+      "states": [
+        "default",
+        "focus",
+        "busy",
+        "empty",
+        "long-content"
+      ],
+      "design": null,
+      "tests": [
+        {
+          "path": "tools/tests/workflows-browser.test.mjs",
+          "coverage": "interaction-contract"
+        }
+      ],
+      "contract": "library/contracts.json#/components/task-workflow",
+      "openTodo": [
+        "PAT-01"
+      ]
+    },
+    {
+      "id": "ody.auth-flow",
+      "name": "Authentication 登录与恢复",
+      "station": null,
+      "maturity": "preview",
+      "runtime": "composition",
+      "html": "site/workflows.html#auth-title",
+      "guide": "site/workflows.html#auth-title",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css",
+          "workflows.css",
+          "odyssey-extensions.css"
+        ],
+        "js": [
+          "odyssey.js",
+          "workflows.js",
+          "odyssey-extensions.js"
+        ]
+      },
+      "states": [
+        "default",
+        "focus",
+        "invalid",
+        "busy",
+        "long-content"
+      ],
+      "design": null,
+      "tests": [
+        {
+          "path": "tools/tests/workflows-browser.test.mjs",
+          "coverage": "interaction-contract"
+        }
+      ],
+      "contract": "library/contracts.json#/components/auth-flow",
+      "openTodo": [
+        "PAT-02"
+      ]
+    },
+    {
+      "id": "ody.form-wizard",
+      "name": "Form wizard 分步表单",
+      "station": null,
+      "maturity": "preview",
+      "runtime": "composition",
+      "html": "site/workflows.html#wizard-title",
+      "guide": "site/workflows.html#wizard-title",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css",
+          "workflows.css",
+          "odyssey-extensions.css"
+        ],
+        "js": [
+          "odyssey.js",
+          "workflows.js",
+          "odyssey-extensions.js"
+        ]
+      },
+      "states": [
+        "default",
+        "focus",
+        "selected",
+        "invalid",
+        "busy",
+        "long-content"
+      ],
+      "design": null,
+      "tests": [
+        {
+          "path": "tools/tests/workflows-browser.test.mjs",
+          "coverage": "interaction-contract"
+        }
+      ],
+      "contract": "library/contracts.json#/components/form-wizard",
+      "openTodo": [
+        "PAT-03"
+      ]
+    },
+    {
+      "id": "ody.file-queue",
+      "name": "File queue 文件任务队列",
+      "station": null,
+      "maturity": "preview",
+      "runtime": "composition",
+      "html": "site/workflows.html#queue-title",
+      "guide": "site/workflows.html#queue-title",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css",
+          "workflows.css",
+          "odyssey-extensions.css"
+        ],
+        "js": [
+          "odyssey.js",
+          "workflows.js",
+          "odyssey-extensions.js"
+        ]
+      },
+      "states": [
+        "default",
+        "focus",
+        "busy",
+        "empty",
+        "long-content"
+      ],
+      "design": null,
+      "tests": [
+        {
+          "path": "tools/tests/workflows-browser.test.mjs",
+          "coverage": "interaction-contract"
+        }
+      ],
+      "contract": "library/contracts.json#/components/file-queue",
+      "openTodo": [
+        "PAT-05"
+      ]
+    },
+    {
+      "id": "ody.access-preferences",
+      "name": "Members & preferences 成员与偏好",
+      "station": null,
+      "maturity": "preview",
+      "runtime": "composition",
+      "html": "site/workflows.html#access-title",
+      "guide": "site/workflows.html#access-title",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css",
+          "workflows.css",
+          "odyssey-extensions.css"
+        ],
+        "js": [
+          "odyssey.js",
+          "workflows.js",
+          "odyssey-extensions.js"
+        ]
+      },
+      "states": [
+        "default",
+        "focus",
+        "selected",
+        "readonly",
+        "invalid",
+        "busy",
+        "long-content"
+      ],
+      "design": null,
+      "tests": [
+        {
+          "path": "tools/tests/workflows-browser.test.mjs",
+          "coverage": "interaction-contract"
+        }
+      ],
+      "contract": "library/contracts.json#/components/access-preferences",
+      "openTodo": [
+        "PAT-09"
+      ]
+    },
+    {
+      "id": "ody.saved-views",
+      "name": "Saved views 过滤与视图",
+      "station": null,
+      "maturity": "preview",
+      "runtime": "composition",
+      "html": "site/data-tools.html#queries",
+      "guide": "site/data-tools.html#queries",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css",
+          "data-tools.css"
+        ],
+        "js": [
+          "odyssey.js",
+          "data-tools.js"
+        ]
+      },
+      "states": [
+        "default",
+        "focus",
+        "selected",
+        "empty",
+        "long-content"
+      ],
+      "design": null,
+      "tests": [
+        {
+          "path": "tools/tests/data-tools-browser.test.mjs",
+          "coverage": "interaction-contract"
+        }
+      ],
+      "contract": "library/contracts.json#/components/saved-views",
+      "openTodo": [
+        "PAT-04"
+      ]
+    },
+    {
+      "id": "ody.code-log-diff",
+      "name": "Code / Log / Diff 代码与日志",
+      "station": null,
+      "maturity": "preview",
+      "runtime": "composition",
+      "html": "site/data-tools.html#source",
+      "guide": "site/data-tools.html#source",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css",
+          "data-tools.css"
+        ],
+        "js": [
+          "odyssey.js",
+          "data-tools.js"
+        ]
+      },
+      "states": [
+        "default",
+        "focus",
+        "empty",
+        "long-content"
+      ],
+      "design": null,
+      "tests": [
+        {
+          "path": "tools/tests/data-tools-browser.test.mjs",
+          "coverage": "interaction-contract"
+        }
+      ],
+      "contract": "library/contracts.json#/components/code-log-diff",
+      "openTodo": [
+        "PAT-06"
+      ]
+    },
+    {
+      "id": "ody.calendar-agenda",
+      "name": "Calendar & agenda 事件日历",
+      "station": null,
+      "maturity": "preview",
+      "runtime": "composition",
+      "html": "site/data-tools.html#schedule",
+      "guide": "site/data-tools.html#schedule",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css",
+          "data-tools.css"
+        ],
+        "js": [
+          "odyssey.js",
+          "data-tools.js"
+        ]
+      },
+      "states": [
+        "default",
+        "focus",
+        "selected",
+        "disabled",
+        "empty",
+        "long-content"
+      ],
+      "design": null,
+      "tests": [
+        {
+          "path": "tools/tests/data-tools-browser.test.mjs",
+          "coverage": "interaction-contract"
+        }
+      ],
+      "contract": "library/contracts.json#/components/calendar-agenda",
+      "openTodo": [
+        "PAT-08"
+      ]
+    },
+    {
+      "id": "ody.resource-picker",
+      "name": "Resource picker 资源与版本",
+      "station": null,
+      "maturity": "preview",
+      "runtime": "composition",
+      "html": "site/data-tools.html#resources",
+      "guide": "site/data-tools.html#resources",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css",
+          "data-tools.css"
+        ],
+        "js": [
+          "odyssey.js",
+          "data-tools.js"
+        ]
+      },
+      "states": [
+        "default",
+        "focus",
+        "selected",
+        "empty",
+        "long-content"
+      ],
+      "design": null,
+      "tests": [
+        {
+          "path": "tools/tests/data-tools-browser.test.mjs",
+          "coverage": "interaction-contract"
+        }
+      ],
+      "contract": "library/contracts.json#/components/resource-picker",
+      "openTodo": [
+        "PAT-10"
+      ]
+    },
+    {
+      "id": "ody.virtual-collection",
+      "name": "Virtual collection 大型集合",
+      "station": null,
+      "maturity": "preview",
+      "runtime": "composition",
+      "html": "site/data-tools.html#scale",
+      "guide": "site/data-tools.html#scale",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css",
+          "data-tools.css"
+        ],
+        "js": [
+          "odyssey.js",
+          "data-tools.js"
+        ]
+      },
+      "states": [
+        "default",
+        "focus",
+        "selected",
+        "empty",
+        "long-content"
+      ],
+      "design": null,
+      "tests": [
+        {
+          "path": "tools/tests/data-tools-browser.test.mjs",
+          "coverage": "interaction-contract"
+        }
+      ],
+      "contract": "library/contracts.json#/components/virtual-collection",
+      "openTodo": [
+        "EXT-01"
+      ]
+    },
+    {
+      "id": "ody.analysis-chart",
+      "name": "Analysis chart 分析图表",
+      "station": null,
+      "maturity": "preview",
+      "runtime": "composition",
+      "html": "site/data-tools.html#analysis",
+      "guide": "site/data-tools.html#analysis",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css",
+          "data-tools.css"
+        ],
+        "js": [
+          "odyssey.js",
+          "data-tools.js"
+        ]
+      },
+      "states": [
+        "default",
+        "focus",
+        "selected",
+        "empty",
+        "long-content"
+      ],
+      "design": null,
+      "tests": [
+        {
+          "path": "tools/tests/data-tools-browser.test.mjs",
+          "coverage": "interaction-contract"
+        }
+      ],
+      "contract": "library/contracts.json#/components/analysis-chart",
+      "openTodo": [
+        "EXT-03"
+      ]
     }
   ]
 }

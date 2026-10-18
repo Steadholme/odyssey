@@ -1,0 +1,68 @@
+{
+  "schema": 1,
+  "release": "1.5.0",
+  "capabilities": "capabilities.json#/components",
+  "states": {
+    "default": "Initial component presentation",
+    "hover": "Fine-pointer hover; never a required action",
+    "focus": "Visible keyboard focus",
+    "active": "Pointer or key activation feedback",
+    "selected": "Chosen value, checked state or current item",
+    "disabled": "Unavailable control",
+    "readonly": "Readable value that cannot be edited",
+    "invalid": "Field error with a connected explanation",
+    "busy": "Pending source-confirmed action",
+    "empty": "No value, no result or no item",
+    "long-content": "Long labels, values or descriptions"
+  },
+  "geometry": {
+    "scope": "[data-ody-design=\"line\"]",
+    "control": {
+      "small": 32,
+      "comfortable": 40,
+      "large": 48,
+      "compact": 32,
+      "coarsePointerMin": 44
+    },
+    "row": {
+      "comfortable": 44,
+      "compact": 34
+    },
+    "space": [
+      4,
+      8,
+      12,
+      16,
+      24,
+      32,
+      48,
+      64
+    ],
+    "focus": {
+      "width": 2,
+      "offset": 0
+    }
+  },
+  "themes": {
+    "expression": [
+      "line",
+      "soft",
+      "studio",
+      "signal"
+    ],
+    "mode": [
+      "light",
+      "dark"
+    ]
+  },
+  "dimensionsSource": [
+    "css/line.css",
+    "css/expressions.css"
+  ],
+  "examples": "site/states.html",
+  "pencil": {
+    "documentId": "4263dd2a-531c-44c2-924c-40891369c7f4",
+    "coreMatrixNode": "u1nI1",
+    "expandedMatrixNode": "vwF4F"
+  }
+}

@@ -228,6 +228,18 @@
 &lt;/script&gt;</code></pre></div>
     </div>
 
+    <h2 id="assemblies">把组件接成工作流</h2>
+    <p>登录、分步表单、文件队列、资源选择与大集合使用可选模块，不必让普通按钮页面加载它们。先引入同版本的完整基础组，再选择所需模块：</p>
+    <div class="doc-code doc-code--stand"><pre><code>&lt;!-- 登录、任务、分步表单、文件队列与成员偏好 --&gt;
+&lt;link rel="stylesheet" href="/1.5.0/workflows.css"&gt;
+&lt;script src="/1.5.0/workflows.js" defer&gt;&lt;/script&gt;
+
+&lt;!-- 过滤视图、Code/Log/Diff、日历、资源与规模数据 --&gt;
+&lt;link rel="stylesheet" href="/1.5.0/data-tools.css"&gt;
+&lt;script src="/1.5.0/data-tools.js" defer&gt;&lt;/script&gt;</code></pre></div>
+    <p><a href="workflows.html">工作流示例</a>与<a href="data-tools.html">数据工具示例</a>提供独立消费入口、挂载 API 和宿主 adapter。确认状态、权限、持久化和网络由宿主提供；组件保留草稿、焦点与恢复动作。选择 <code>lang="en"</code>、<code>zh</code> 或 <code>ja</code> 获取动态控件文案；自定义文案可注册到 <code>Odyssey.i18n</code>，用户输入不会被翻译。</p>
+    <p>尺寸、密度、长文本和适用状态见<a href="states.html">状态图谱</a>。Rust 项目可选严格 CSP shell；现有 shell 调用方式保持可用，示例见 <a href="/docs/rust-line.md">Rust Line 指南</a>。</p>
+
     <h2 id="delivery">CDN 与自托管</h2>
     <p>两种方式固定同一个 <code>1.4.0</code> 发行组，产物相同且自包含：</p>
     <ol>
