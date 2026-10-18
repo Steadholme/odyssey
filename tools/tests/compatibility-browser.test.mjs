@@ -123,10 +123,12 @@ async function verifyEntry(browser, name, entry) {
     await page.evaluate(() => window.Odyssey.setTheme('light'));
     await fitsViewport(page);
     await page.locator('#popover-open').click();
-    const popover = await page.locator('#popover').evaluate(node => {
+    // Native top-layer bounds are positioned in the opening rAF. Inspect the
+    // rendered frame, not the previous viewport's pre-paint inline position.
+    const popover = await page.locator('#popover').evaluate(node => new Promise(resolve => requestAnimationFrame(() => {
       const style = getComputedStyle(node), bounds = node.getBoundingClientRect();
-      return { open: node.matches(':popover-open'), duration: style.transitionDuration, transform: style.transform, identityTransform: style.transform === 'none' || new DOMMatrix(style.transform).isIdentity, left: bounds.left, right: bounds.right, viewport: innerWidth };
-    });
+      resolve({ open: node.matches(':popover-open'), duration: style.transitionDuration, transform: style.transform, identityTransform: style.transform === 'none' || new DOMMatrix(style.transform).isIdentity, left: bounds.left, right: bounds.right, viewport: innerWidth });
+    })));
     assert.equal(popover.open, true);
     assert.ok(popover.duration.split(',').every(value => parseFloat(value) === 0), JSON.stringify(popover));
     assert.equal(popover.identityTransform, true, JSON.stringify(popover));
