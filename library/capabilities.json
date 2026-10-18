@@ -1,0 +1,2852 @@
+{
+  "$schema": "./capabilities.schema.json",
+  "schema": 1,
+  "release": "1.4.0",
+  "expression": "line",
+  "assetBase": "/1.4.0/",
+  "components": [
+    {
+      "id": "ody.card",
+      "name": "Card",
+      "station": "CRD",
+      "maturity": "supported",
+      "runtime": "css",
+      "html": "site/index.html#station-CRD",
+      "guide": "site/layout.html",
+      "rust": [
+        "card"
+      ],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default"
+      ],
+      "design": {
+        "nodeId": "e96p5"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        }
+      ],
+      "contract": "library/contracts.json#card",
+      "openTodo": []
+    },
+    {
+      "id": "ody.panel",
+      "name": "Panel",
+      "station": "PNL",
+      "maturity": "supported",
+      "runtime": "css",
+      "html": "site/index.html#station-PNL",
+      "guide": "site/layout.html",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default"
+      ],
+      "design": {
+        "nodeId": "J5fzP"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        }
+      ],
+      "contract": "library/contracts.json#panel",
+      "openTodo": []
+    },
+    {
+      "id": "ody.sheet",
+      "name": "Sheet",
+      "station": "SHD",
+      "maturity": "supported",
+      "runtime": "css",
+      "html": "site/index.html#station-SHD",
+      "guide": "site/layout.html",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default"
+      ],
+      "design": {
+        "nodeId": "CZg7N"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        }
+      ],
+      "contract": "library/contracts.json#sheet",
+      "openTodo": []
+    },
+    {
+      "id": "ody.section-head",
+      "name": "Section head",
+      "station": "SHT",
+      "maturity": "supported",
+      "runtime": "css",
+      "html": "site/index.html#station-SHT",
+      "guide": "site/layout.html",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default"
+      ],
+      "design": {
+        "nodeId": "QsHp7"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        }
+      ],
+      "contract": "library/contracts.json#section-head",
+      "openTodo": []
+    },
+    {
+      "id": "ody.tile",
+      "name": "Tile",
+      "station": "TLE",
+      "maturity": "supported",
+      "runtime": "css",
+      "html": "site/index.html#station-TLE",
+      "guide": "site/data-display.html",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default"
+      ],
+      "design": {
+        "nodeId": "MLzN3"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        }
+      ],
+      "contract": "library/contracts.json#tile",
+      "openTodo": []
+    },
+    {
+      "id": "ody.frame",
+      "name": "Frame",
+      "station": "FRM",
+      "maturity": "supported",
+      "runtime": "css",
+      "html": "site/index.html#station-FRM",
+      "guide": "site/layout.html",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default"
+      ],
+      "design": {
+        "nodeId": "TqGga"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        }
+      ],
+      "contract": "library/contracts.json#frame",
+      "openTodo": []
+    },
+    {
+      "id": "ody.divider",
+      "name": "Divider",
+      "station": "DVS",
+      "maturity": "supported",
+      "runtime": "css",
+      "html": "site/index.html#station-DVS",
+      "guide": "site/layout.html",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default"
+      ],
+      "design": {
+        "nodeId": "CC8f4"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        }
+      ],
+      "contract": "library/contracts.json#divider",
+      "openTodo": []
+    },
+    {
+      "id": "ody.well",
+      "name": "Wall",
+      "station": "WLL",
+      "maturity": "supported",
+      "runtime": "css",
+      "html": "site/index.html#station-WLL",
+      "guide": "site/layout.html",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default"
+      ],
+      "design": {
+        "nodeId": "bXNgK"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        }
+      ],
+      "contract": "library/contracts.json#well",
+      "openTodo": []
+    },
+    {
+      "id": "ody.avatar",
+      "name": "Avatar",
+      "station": "AVT",
+      "maturity": "supported",
+      "runtime": "css",
+      "html": "site/index.html#station-AVT",
+      "guide": "site/studio.html",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css",
+          "odyssey-extensions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default"
+      ],
+      "design": {
+        "nodeId": "gwS7d"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        }
+      ],
+      "contract": "library/contracts.json#avatar",
+      "openTodo": []
+    },
+    {
+      "id": "ody.split-pane",
+      "name": "Split pane",
+      "station": "SPL",
+      "maturity": "supported",
+      "runtime": "extensions",
+      "html": "site/index.html#station-SPL",
+      "guide": "site/studio.html",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css",
+          "odyssey-extensions.css"
+        ],
+        "js": [
+          "odyssey.js",
+          "odyssey-extensions.js"
+        ]
+      },
+      "states": [
+        "default",
+        "focus",
+        "disabled"
+      ],
+      "design": {
+        "nodeId": "DMGin"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        },
+        {
+          "path": "tools/tests/runtime-p1.test.mjs",
+          "coverage": "interaction-contract"
+        }
+      ],
+      "contract": "library/contracts.json#split-pane",
+      "openTodo": [
+        "ACT-07"
+      ]
+    },
+    {
+      "id": "ody.button",
+      "name": "Button",
+      "station": "BTN",
+      "maturity": "supported",
+      "runtime": "css",
+      "html": "site/index.html#station-BTN",
+      "guide": "site/actions.html",
+      "rust": [
+        "button"
+      ],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default"
+      ],
+      "design": {
+        "nodeId": "J3RrTZ"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        }
+      ],
+      "contract": "library/contracts.json#button",
+      "openTodo": []
+    },
+    {
+      "id": "ody.icon-button",
+      "name": "IconButton",
+      "station": "IBT",
+      "maturity": "supported",
+      "runtime": "css",
+      "html": "site/index.html#station-IBT",
+      "guide": "site/actions.html",
+      "rust": [
+        "button"
+      ],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default"
+      ],
+      "design": {
+        "nodeId": "PjkgA"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        }
+      ],
+      "contract": "library/contracts.json#icon-button",
+      "openTodo": []
+    },
+    {
+      "id": "ody.link",
+      "name": "Link",
+      "station": "LNK",
+      "maturity": "supported",
+      "runtime": "css",
+      "html": "site/index.html#station-LNK",
+      "guide": "site/actions.html",
+      "rust": [
+        "link_with_wire",
+        "link_button"
+      ],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default"
+      ],
+      "design": {
+        "nodeId": "ViEaW"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        }
+      ],
+      "contract": "library/contracts.json#link",
+      "openTodo": []
+    },
+    {
+      "id": "ody.switch",
+      "name": "Switch",
+      "station": "SWT",
+      "maturity": "supported",
+      "runtime": "native",
+      "html": "site/index.html#station-SWT",
+      "guide": "site/forms.html",
+      "rust": [
+        "switch"
+      ],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default",
+        "focus",
+        "disabled"
+      ],
+      "design": {
+        "nodeId": "jGP7M"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        }
+      ],
+      "contract": "library/contracts.json#switch",
+      "openTodo": []
+    },
+    {
+      "id": "ody.checkbox",
+      "name": "Checkbox",
+      "station": "CBX",
+      "maturity": "supported",
+      "runtime": "native",
+      "html": "site/index.html#station-CBX",
+      "guide": "site/forms.html",
+      "rust": [
+        "checkbox_field"
+      ],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default",
+        "focus",
+        "disabled"
+      ],
+      "design": {
+        "nodeId": "k118X"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        }
+      ],
+      "contract": "library/contracts.json#checkbox",
+      "openTodo": []
+    },
+    {
+      "id": "ody.radio",
+      "name": "Radio",
+      "station": "RAD",
+      "maturity": "supported",
+      "runtime": "native",
+      "html": "site/index.html#station-RAD",
+      "guide": "site/forms.html",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default",
+        "focus",
+        "disabled"
+      ],
+      "design": {
+        "nodeId": "k6Y0K"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        }
+      ],
+      "contract": "library/contracts.json#radio",
+      "openTodo": []
+    },
+    {
+      "id": "ody.segmented",
+      "name": "Segment",
+      "station": "SEG",
+      "maturity": "supported",
+      "runtime": "css",
+      "html": "site/index.html#station-SEG",
+      "guide": "site/forms.html",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default"
+      ],
+      "design": {
+        "nodeId": "n6uroX"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        }
+      ],
+      "contract": "library/contracts.json#segmented",
+      "openTodo": []
+    },
+    {
+      "id": "ody.keycap",
+      "name": "Keycap",
+      "station": "KCP",
+      "maturity": "supported",
+      "runtime": "css",
+      "html": "site/index.html#station-KCP",
+      "guide": "site/typography.html",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default"
+      ],
+      "design": {
+        "nodeId": "L8uGf"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        }
+      ],
+      "contract": "library/contracts.json#keycap",
+      "openTodo": []
+    },
+    {
+      "id": "ody.fab",
+      "name": "Fab",
+      "station": "FAB",
+      "maturity": "supported",
+      "runtime": "css",
+      "html": "site/index.html#station-FAB",
+      "guide": "site/actions.html",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default"
+      ],
+      "design": {
+        "nodeId": "tYnex"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        }
+      ],
+      "contract": "library/contracts.json#fab",
+      "openTodo": []
+    },
+    {
+      "id": "ody.command",
+      "name": "Command menu",
+      "station": "CMD",
+      "maturity": "supported",
+      "runtime": "extensions",
+      "html": "site/index.html#station-CMD",
+      "guide": "site/studio.html",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css",
+          "odyssey-extensions.css"
+        ],
+        "js": [
+          "odyssey.js",
+          "odyssey-extensions.js"
+        ]
+      },
+      "states": [
+        "default",
+        "focus",
+        "disabled"
+      ],
+      "design": {
+        "nodeId": "F2ShvU"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        },
+        {
+          "path": "tools/tests/runtime-p1.test.mjs",
+          "coverage": "interaction-contract"
+        }
+      ],
+      "contract": "library/contracts.json#command",
+      "openTodo": [
+        "A11Y-10"
+      ]
+    },
+    {
+      "id": "ody.selection-toolbar",
+      "name": "Selection toolbar",
+      "station": "TBR",
+      "maturity": "supported",
+      "runtime": "extensions",
+      "html": "site/index.html#station-TBR",
+      "guide": "site/studio.html",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css",
+          "odyssey-extensions.css"
+        ],
+        "js": [
+          "odyssey.js",
+          "odyssey-extensions.js"
+        ]
+      },
+      "states": [
+        "default",
+        "focus",
+        "disabled"
+      ],
+      "design": {
+        "nodeId": "qEzmC"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        }
+      ],
+      "contract": "library/contracts.json#selection-toolbar",
+      "openTodo": [
+        "ACT-04"
+      ]
+    },
+    {
+      "id": "ody.field",
+      "name": "Field",
+      "station": "FLD",
+      "maturity": "supported",
+      "runtime": "css",
+      "html": "site/index.html#station-FLD",
+      "guide": "site/forms.html",
+      "rust": [
+        "field",
+        "field_hint",
+        "field_with"
+      ],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default"
+      ],
+      "design": {
+        "nodeId": "eEuvy"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        }
+      ],
+      "contract": "library/contracts.json#field",
+      "openTodo": []
+    },
+    {
+      "id": "ody.input",
+      "name": "TextInput",
+      "station": "TXT",
+      "maturity": "supported",
+      "runtime": "native",
+      "html": "site/index.html#station-TXT",
+      "guide": "site/forms.html",
+      "rust": [
+        "text_input"
+      ],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default",
+        "focus",
+        "disabled"
+      ],
+      "design": {
+        "nodeId": "OZkDs"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        }
+      ],
+      "contract": "library/contracts.json#input",
+      "openTodo": []
+    },
+    {
+      "id": "ody.textarea",
+      "name": "Textarea",
+      "station": "TAR",
+      "maturity": "supported",
+      "runtime": "native",
+      "html": "site/index.html#station-TAR",
+      "guide": "site/forms.html",
+      "rust": [
+        "textarea"
+      ],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default",
+        "focus",
+        "disabled"
+      ],
+      "design": {
+        "nodeId": "rKn5E"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        }
+      ],
+      "contract": "library/contracts.json#textarea",
+      "openTodo": []
+    },
+    {
+      "id": "ody.select",
+      "name": "Select",
+      "station": "SEL",
+      "maturity": "supported",
+      "runtime": "native",
+      "html": "site/index.html#station-SEL",
+      "guide": "site/forms.html",
+      "rust": [
+        "select"
+      ],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default",
+        "focus",
+        "disabled"
+      ],
+      "design": {
+        "nodeId": "lpLNO"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        }
+      ],
+      "contract": "library/contracts.json#select",
+      "openTodo": []
+    },
+    {
+      "id": "ody.number-input",
+      "name": "NumberInput",
+      "station": "NUM",
+      "maturity": "supported",
+      "runtime": "native",
+      "html": "site/index.html#station-NUM",
+      "guide": "site/forms.html",
+      "rust": [
+        "number_input"
+      ],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default",
+        "focus",
+        "disabled"
+      ],
+      "design": {
+        "nodeId": "fcImO"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        }
+      ],
+      "contract": "library/contracts.json#number-input",
+      "openTodo": []
+    },
+    {
+      "id": "ody.range",
+      "name": "Range",
+      "station": "RNG",
+      "maturity": "supported",
+      "runtime": "native",
+      "html": "site/index.html#station-RNG",
+      "guide": "site/forms.html",
+      "rust": [
+        "range_field"
+      ],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default",
+        "focus",
+        "disabled"
+      ],
+      "design": {
+        "nodeId": "XfYKj"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        }
+      ],
+      "contract": "library/contracts.json#range",
+      "openTodo": [
+        "ACT-11"
+      ]
+    },
+    {
+      "id": "ody.date-input",
+      "name": "DatePicker",
+      "station": "DTP",
+      "maturity": "supported",
+      "runtime": "native",
+      "html": "site/index.html#station-DTP",
+      "guide": "site/forms.html",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default",
+        "focus",
+        "disabled"
+      ],
+      "design": {
+        "nodeId": "oA5Fs"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        }
+      ],
+      "contract": "library/contracts.json#date-input",
+      "openTodo": []
+    },
+    {
+      "id": "ody.combobox",
+      "name": "Combobox",
+      "station": "CMB",
+      "maturity": "supported",
+      "runtime": "public",
+      "html": "site/index.html#station-CMB",
+      "guide": "site/forms.html",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": [
+          "odyssey.js"
+        ]
+      },
+      "states": [
+        "default",
+        "focus",
+        "disabled"
+      ],
+      "design": {
+        "nodeId": "BXNLL"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        },
+        {
+          "path": "tools/tests/runtime-p1.test.mjs",
+          "coverage": "interaction-contract"
+        }
+      ],
+      "contract": "library/contracts.json#combobox",
+      "openTodo": []
+    },
+    {
+      "id": "ody.otp",
+      "name": "Code input",
+      "station": "OTP",
+      "maturity": "supported",
+      "runtime": "extensions",
+      "html": "site/index.html#station-OTP",
+      "guide": "site/studio.html",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css",
+          "odyssey-extensions.css"
+        ],
+        "js": [
+          "odyssey.js",
+          "odyssey-extensions.js"
+        ]
+      },
+      "states": [
+        "default",
+        "focus",
+        "disabled"
+      ],
+      "design": {
+        "nodeId": "tPuFK"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        },
+        {
+          "path": "tools/tests/runtime-p1.test.mjs",
+          "coverage": "interaction-contract"
+        }
+      ],
+      "contract": "library/contracts.json#otp",
+      "openTodo": [
+        "ACT-05"
+      ]
+    },
+    {
+      "id": "ody.file-dropzone",
+      "name": "File dropzone",
+      "station": "UPL",
+      "maturity": "supported",
+      "runtime": "extensions",
+      "html": "site/index.html#station-UPL",
+      "guide": "site/studio.html",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css",
+          "odyssey-extensions.css"
+        ],
+        "js": [
+          "odyssey.js",
+          "odyssey-extensions.js"
+        ]
+      },
+      "states": [
+        "default",
+        "focus",
+        "disabled"
+      ],
+      "design": {
+        "nodeId": "yhY4f"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        },
+        {
+          "path": "tools/tests/runtime-p1.test.mjs",
+          "coverage": "interaction-contract"
+        }
+      ],
+      "contract": "library/contracts.json#file-dropzone",
+      "openTodo": [
+        "ACT-06"
+      ]
+    },
+    {
+      "id": "ody.table",
+      "name": "Table",
+      "station": "TBL",
+      "maturity": "supported",
+      "runtime": "public",
+      "html": "site/index.html#station-TBL",
+      "guide": "site/data-display.html",
+      "rust": [
+        "table"
+      ],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": [
+          "odyssey.js"
+        ]
+      },
+      "states": [
+        "default",
+        "focus",
+        "disabled"
+      ],
+      "design": {
+        "nodeId": "A7JFDA"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        },
+        {
+          "path": "tools/tests/runtime-p1.test.mjs",
+          "coverage": "interaction-contract"
+        }
+      ],
+      "contract": "library/contracts.json#table",
+      "openTodo": []
+    },
+    {
+      "id": "ody.stat",
+      "name": "Stat",
+      "station": "STA",
+      "maturity": "supported",
+      "runtime": "css",
+      "html": "site/index.html#station-STA",
+      "guide": "site/data-display.html",
+      "rust": [
+        "stat_tile"
+      ],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default"
+      ],
+      "design": {
+        "nodeId": "zTElH"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        }
+      ],
+      "contract": "library/contracts.json#stat",
+      "openTodo": []
+    },
+    {
+      "id": "ody.chart",
+      "name": "Chart",
+      "station": "CHT",
+      "maturity": "supported",
+      "runtime": "css",
+      "html": "site/index.html#station-CHT",
+      "guide": "site/data-display.html",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default"
+      ],
+      "design": {
+        "nodeId": "VEo80"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        }
+      ],
+      "contract": "library/contracts.json#chart",
+      "openTodo": [
+        "ACT-10"
+      ]
+    },
+    {
+      "id": "ody.list",
+      "name": "List",
+      "station": "LST",
+      "maturity": "supported",
+      "runtime": "css",
+      "html": "site/index.html#station-LST",
+      "guide": "site/data-display.html",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default"
+      ],
+      "design": {
+        "nodeId": "J2o67"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        }
+      ],
+      "contract": "library/contracts.json#list",
+      "openTodo": []
+    },
+    {
+      "id": "ody.description-list",
+      "name": "DescList",
+      "station": "DSC",
+      "maturity": "supported",
+      "runtime": "css",
+      "html": "site/index.html#station-DSC",
+      "guide": "site/data-display.html",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default"
+      ],
+      "design": {
+        "nodeId": "Ckrvs"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        }
+      ],
+      "contract": "library/contracts.json#description-list",
+      "openTodo": []
+    },
+    {
+      "id": "ody.pager",
+      "name": "Pager",
+      "station": "PGR",
+      "maturity": "supported",
+      "runtime": "css",
+      "html": "site/index.html#station-PGR",
+      "guide": "site/navigation.html",
+      "rust": [
+        "pager"
+      ],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default"
+      ],
+      "design": {
+        "nodeId": "XJc19"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        }
+      ],
+      "contract": "library/contracts.json#pager",
+      "openTodo": []
+    },
+    {
+      "id": "ody.progress",
+      "name": "Progress",
+      "station": "PRG",
+      "maturity": "supported",
+      "runtime": "css",
+      "html": "site/index.html#station-PRG",
+      "guide": "site/data-display.html",
+      "rust": [
+        "progress"
+      ],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default"
+      ],
+      "design": {
+        "nodeId": "gT72p"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        }
+      ],
+      "contract": "library/contracts.json#progress",
+      "openTodo": []
+    },
+    {
+      "id": "ody.tree",
+      "name": "Tree",
+      "station": "TRE",
+      "maturity": "supported",
+      "runtime": "native",
+      "html": "site/index.html#station-TRE",
+      "guide": "site/studio.html",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css",
+          "odyssey-extensions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default",
+        "focus",
+        "disabled"
+      ],
+      "design": {
+        "nodeId": "gO4Wm"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        }
+      ],
+      "contract": "library/contracts.json#tree",
+      "openTodo": [
+        "ACT-14"
+      ]
+    },
+    {
+      "id": "ody.timeline",
+      "name": "Activity timeline",
+      "station": "TIM",
+      "maturity": "supported",
+      "runtime": "css",
+      "html": "site/index.html#station-TIM",
+      "guide": "site/studio.html",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css",
+          "odyssey-extensions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default"
+      ],
+      "design": {
+        "nodeId": "zoOnF"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        }
+      ],
+      "contract": "library/contracts.json#timeline",
+      "openTodo": []
+    },
+    {
+      "id": "ody.toast",
+      "name": "Toast",
+      "station": "TST",
+      "maturity": "supported",
+      "runtime": "css",
+      "html": "site/index.html#station-TST",
+      "guide": "site/feedback.html",
+      "rust": [
+        "toast"
+      ],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default"
+      ],
+      "design": {
+        "nodeId": "sgXyx"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        }
+      ],
+      "contract": "library/contracts.json#toast",
+      "openTodo": []
+    },
+    {
+      "id": "ody.alert",
+      "name": "Alert",
+      "station": "ALT",
+      "maturity": "supported",
+      "runtime": "css",
+      "html": "site/index.html#station-ALT",
+      "guide": "site/feedback.html",
+      "rust": [
+        "alert"
+      ],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default"
+      ],
+      "design": {
+        "nodeId": "lYmXf"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        }
+      ],
+      "contract": "library/contracts.json#alert",
+      "openTodo": []
+    },
+    {
+      "id": "ody.modal",
+      "name": "Modal",
+      "station": "MDL",
+      "maturity": "supported",
+      "runtime": "public",
+      "html": "site/index.html#station-MDL",
+      "guide": "site/overlays.html",
+      "rust": [
+        "modal"
+      ],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": [
+          "odyssey.js"
+        ]
+      },
+      "states": [
+        "default",
+        "focus",
+        "disabled"
+      ],
+      "design": {
+        "nodeId": "qWyiA"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        },
+        {
+          "path": "tools/tests/runtime-p1.test.mjs",
+          "coverage": "interaction-contract"
+        }
+      ],
+      "contract": "library/contracts.json#modal",
+      "openTodo": []
+    },
+    {
+      "id": "ody.drawer",
+      "name": "Drawer",
+      "station": "DRW",
+      "maturity": "supported",
+      "runtime": "public",
+      "html": "site/index.html#station-DRW",
+      "guide": "site/overlays.html",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": [
+          "odyssey.js"
+        ]
+      },
+      "states": [
+        "default",
+        "focus",
+        "disabled"
+      ],
+      "design": {
+        "nodeId": "g8CGP"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        },
+        {
+          "path": "tools/tests/runtime-p1.test.mjs",
+          "coverage": "interaction-contract"
+        }
+      ],
+      "contract": "library/contracts.json#drawer",
+      "openTodo": []
+    },
+    {
+      "id": "ody.pill",
+      "name": "Pill",
+      "station": "PLL",
+      "maturity": "supported",
+      "runtime": "css",
+      "html": "site/index.html#station-PLL",
+      "guide": "site/feedback.html",
+      "rust": [
+        "pill"
+      ],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default"
+      ],
+      "design": {
+        "nodeId": "AFQXt"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        }
+      ],
+      "contract": "library/contracts.json#pill",
+      "openTodo": []
+    },
+    {
+      "id": "ody.skeleton",
+      "name": "Skeleton",
+      "station": "SKL",
+      "maturity": "supported",
+      "runtime": "css",
+      "html": "site/index.html#station-SKL",
+      "guide": "site/feedback.html",
+      "rust": [
+        "skeleton"
+      ],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default"
+      ],
+      "design": {
+        "nodeId": "n5S1q"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        }
+      ],
+      "contract": "library/contracts.json#skeleton",
+      "openTodo": []
+    },
+    {
+      "id": "ody.empty-state",
+      "name": "Empty state",
+      "station": "EMP",
+      "maturity": "supported",
+      "runtime": "css",
+      "html": "site/index.html#station-EMP",
+      "guide": "site/studio.html",
+      "rust": [
+        "empty_state"
+      ],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css",
+          "odyssey-extensions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default"
+      ],
+      "design": {
+        "nodeId": "sKhZ3"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        }
+      ],
+      "contract": "library/contracts.json#empty-state",
+      "openTodo": [
+        "ACT-12"
+      ]
+    },
+    {
+      "id": "ody.popover",
+      "name": "Popover",
+      "station": "POV",
+      "maturity": "supported",
+      "runtime": "native",
+      "html": "site/index.html#station-POV",
+      "guide": "site/studio.html",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css",
+          "odyssey-extensions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default",
+        "focus",
+        "disabled"
+      ],
+      "design": {
+        "nodeId": "kAUZa"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        }
+      ],
+      "contract": "library/contracts.json#popover",
+      "openTodo": [
+        "ACT-08"
+      ]
+    },
+    {
+      "id": "ody.tabs",
+      "name": "Tabs",
+      "station": "TAB",
+      "maturity": "supported",
+      "runtime": "public",
+      "html": "site/index.html#station-TAB",
+      "guide": "site/navigation.html",
+      "rust": [
+        "tabs"
+      ],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": [
+          "odyssey.js"
+        ]
+      },
+      "states": [
+        "default",
+        "focus",
+        "disabled"
+      ],
+      "design": {
+        "nodeId": "tuW5o"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        }
+      ],
+      "contract": "library/contracts.json#tabs",
+      "openTodo": []
+    },
+    {
+      "id": "ody.breadcrumb",
+      "name": "Breadcrumb",
+      "station": "BRC",
+      "maturity": "supported",
+      "runtime": "css",
+      "html": "site/index.html#station-BRC",
+      "guide": "site/navigation.html",
+      "rust": [
+        "breadcrumb"
+      ],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default"
+      ],
+      "design": {
+        "nodeId": "ZJjVJ"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        }
+      ],
+      "contract": "library/contracts.json#breadcrumb",
+      "openTodo": []
+    },
+    {
+      "id": "ody.menu",
+      "name": "Menu",
+      "station": "MNU",
+      "maturity": "supported",
+      "runtime": "public",
+      "html": "site/index.html#station-MNU",
+      "guide": "site/actions.html",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": [
+          "odyssey.js"
+        ]
+      },
+      "states": [
+        "default",
+        "focus",
+        "disabled"
+      ],
+      "design": {
+        "nodeId": "CHJu8"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        },
+        {
+          "path": "tools/tests/runtime-p1.test.mjs",
+          "coverage": "interaction-contract"
+        }
+      ],
+      "contract": "library/contracts.json#menu",
+      "openTodo": []
+    },
+    {
+      "id": "ody.stepper",
+      "name": "Stepper",
+      "station": "STP",
+      "maturity": "supported",
+      "runtime": "css",
+      "html": "site/index.html#station-STP",
+      "guide": "site/navigation.html",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default"
+      ],
+      "design": {
+        "nodeId": "kYbox"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        }
+      ],
+      "contract": "library/contracts.json#stepper",
+      "openTodo": []
+    },
+    {
+      "id": "ody.accordion",
+      "name": "Accordion",
+      "station": "ACD",
+      "maturity": "supported",
+      "runtime": "native",
+      "html": "site/index.html#station-ACD",
+      "guide": "site/studio.html",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css",
+          "odyssey-extensions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default",
+        "focus",
+        "disabled"
+      ],
+      "design": {
+        "nodeId": "NYLTa"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        }
+      ],
+      "contract": "library/contracts.json#accordion",
+      "openTodo": []
+    },
+    {
+      "id": "ody.side-navigation",
+      "name": "Side navigation",
+      "station": "SID",
+      "maturity": "supported",
+      "runtime": "css",
+      "html": "site/index.html#station-SID",
+      "guide": "site/studio.html",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css",
+          "odyssey-extensions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default"
+      ],
+      "design": {
+        "nodeId": "R3cpV"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/line-browser.test.mjs",
+          "coverage": "specimen-smoke"
+        }
+      ],
+      "contract": "library/contracts.json#side-navigation",
+      "openTodo": []
+    },
+    {
+      "id": "ody.multiselect",
+      "name": "Multi-select 多选",
+      "station": null,
+      "maturity": "supported",
+      "runtime": "public",
+      "html": "site/forms.html#multiselect",
+      "guide": "site/forms.html#multiselect",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": [
+          "odyssey.js"
+        ]
+      },
+      "states": [
+        "default",
+        "open",
+        "selected",
+        "empty",
+        "focus"
+      ],
+      "design": null,
+      "tests": [
+        {
+          "path": "tools/tests/runtime-p1.test.mjs",
+          "coverage": "interaction-contract"
+        }
+      ],
+      "contract": "library/contracts.json#multiselect",
+      "openTodo": []
+    },
+    {
+      "id": "ody.tag-input",
+      "name": "Tag input 标签输入",
+      "station": null,
+      "maturity": "supported",
+      "runtime": "public",
+      "html": "site/forms.html#taginput",
+      "guide": "site/forms.html#taginput",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": [
+          "odyssey.js"
+        ]
+      },
+      "states": [
+        "default",
+        "composing",
+        "selected"
+      ],
+      "design": null,
+      "tests": [
+        {
+          "path": "tools/tests/runtime-p1.test.mjs",
+          "coverage": "interaction-contract"
+        }
+      ],
+      "contract": "library/contracts.json#tag-input",
+      "openTodo": []
+    },
+    {
+      "id": "ody.date-picker",
+      "name": "Date picker 日期选择",
+      "station": null,
+      "maturity": "supported",
+      "runtime": "public",
+      "html": "site/forms.html#datepicker",
+      "guide": "site/forms.html#datepicker",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": [
+          "odyssey.js"
+        ]
+      },
+      "states": [
+        "default",
+        "open",
+        "selected",
+        "invalid",
+        "constrained"
+      ],
+      "design": null,
+      "tests": [
+        {
+          "path": "tools/tests/runtime-p1.test.mjs",
+          "coverage": "interaction-contract"
+        }
+      ],
+      "contract": "library/contracts.json#date-picker",
+      "openTodo": []
+    },
+    {
+      "id": "ody.time-picker",
+      "name": "Time picker 时间选择",
+      "station": null,
+      "maturity": "supported",
+      "runtime": "public",
+      "html": "site/forms.html#timepicker",
+      "guide": "site/forms.html#timepicker",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": [
+          "odyssey.js"
+        ]
+      },
+      "states": [
+        "default",
+        "open",
+        "selected",
+        "constrained"
+      ],
+      "design": null,
+      "tests": [
+        {
+          "path": "tools/tests/runtime-p1.test.mjs",
+          "coverage": "interaction-contract"
+        }
+      ],
+      "contract": "library/contracts.json#time-picker",
+      "openTodo": []
+    },
+    {
+      "id": "ody.dual-range",
+      "name": "Dual-range 双滑块",
+      "station": null,
+      "maturity": "supported",
+      "runtime": "public",
+      "html": "site/forms.html#dualrange",
+      "guide": "site/forms.html#dualrange",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": [
+          "odyssey.js"
+        ]
+      },
+      "states": [
+        "default",
+        "focus"
+      ],
+      "design": null,
+      "tests": [
+        {
+          "path": "tools/tests/library-contracts.test.mjs",
+          "coverage": "inventory"
+        }
+      ],
+      "contract": "library/contracts.json#dual-range",
+      "openTodo": []
+    },
+    {
+      "id": "ody.file-input",
+      "name": "File input 原生文件",
+      "station": null,
+      "maturity": "supported",
+      "runtime": "native",
+      "html": "site/forms.html#file",
+      "guide": "site/forms.html#file",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default",
+        "selected"
+      ],
+      "design": null,
+      "tests": [
+        {
+          "path": "tools/tests/library-contracts.test.mjs",
+          "coverage": "inventory"
+        }
+      ],
+      "contract": "library/contracts.json#file-input",
+      "openTodo": []
+    },
+    {
+      "id": "ody.rating",
+      "name": "Rating 星级评分",
+      "station": null,
+      "maturity": "supported",
+      "runtime": "public",
+      "html": "site/forms.html#rating",
+      "guide": "site/forms.html#rating",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": [
+          "odyssey.js"
+        ]
+      },
+      "states": [
+        "default",
+        "selected"
+      ],
+      "design": null,
+      "tests": [
+        {
+          "path": "tools/tests/library-contracts.test.mjs",
+          "coverage": "inventory"
+        }
+      ],
+      "contract": "library/contracts.json#rating",
+      "openTodo": []
+    },
+    {
+      "id": "ody.color-swatches",
+      "name": "Color swatches 色板",
+      "station": null,
+      "maturity": "supported",
+      "runtime": "public",
+      "html": "site/forms.html#swatches",
+      "guide": "site/forms.html#swatches",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": [
+          "odyssey.js"
+        ]
+      },
+      "states": [
+        "default",
+        "selected"
+      ],
+      "design": null,
+      "tests": [
+        {
+          "path": "tools/tests/library-contracts.test.mjs",
+          "coverage": "inventory"
+        }
+      ],
+      "contract": "library/contracts.json#color-swatches",
+      "openTodo": []
+    },
+    {
+      "id": "ody.input-group",
+      "name": "Input group 前后缀",
+      "station": null,
+      "maturity": "supported",
+      "runtime": "css",
+      "html": "site/forms.html#input-group",
+      "guide": "site/forms.html#input-group",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default"
+      ],
+      "design": null,
+      "tests": [
+        {
+          "path": "tools/tests/library-contracts.test.mjs",
+          "coverage": "inventory"
+        }
+      ],
+      "contract": "library/contracts.json#input-group",
+      "openTodo": []
+    },
+    {
+      "id": "ody.data-table",
+      "name": "Data table 数据流程",
+      "station": null,
+      "maturity": "supported",
+      "runtime": "public",
+      "html": "site/data-display.html#table-advanced",
+      "guide": "site/data-display.html#table-advanced",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": [
+          "odyssey.js"
+        ]
+      },
+      "states": [
+        "default",
+        "filtered",
+        "sorted",
+        "paged",
+        "selected",
+        "empty"
+      ],
+      "design": null,
+      "tests": [
+        {
+          "path": "tools/tests/runtime-p1.test.mjs",
+          "coverage": "interaction-contract"
+        }
+      ],
+      "contract": "library/contracts.json#data-table",
+      "openTodo": [
+        "EXT-01"
+      ]
+    },
+    {
+      "id": "ody.calendar",
+      "name": "Calendar 月网格",
+      "station": null,
+      "maturity": "preview",
+      "runtime": "css",
+      "html": "site/data-display.html#calendar",
+      "guide": "site/data-display.html#calendar",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default"
+      ],
+      "design": null,
+      "tests": [
+        {
+          "path": "tools/tests/library-contracts.test.mjs",
+          "coverage": "inventory"
+        }
+      ],
+      "contract": "library/contracts.json#calendar",
+      "openTodo": [
+        "PAT-08"
+      ]
+    },
+    {
+      "id": "ody.kanban",
+      "name": "Kanban 看板",
+      "station": null,
+      "maturity": "supported",
+      "runtime": "public",
+      "html": "site/data-display.html#kanban",
+      "guide": "site/data-display.html#kanban",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": [
+          "odyssey.js"
+        ]
+      },
+      "states": [
+        "default",
+        "moving",
+        "moved"
+      ],
+      "design": null,
+      "tests": [
+        {
+          "path": "tools/tests/runtime-p1.test.mjs",
+          "coverage": "interaction-contract"
+        }
+      ],
+      "contract": "library/contracts.json#kanban",
+      "openTodo": []
+    },
+    {
+      "id": "ody.comparison-table",
+      "name": "Comparison table 特性对比",
+      "station": null,
+      "maturity": "supported",
+      "runtime": "css",
+      "html": "site/data-display.html#compare",
+      "guide": "site/data-display.html#compare",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default"
+      ],
+      "design": null,
+      "tests": [
+        {
+          "path": "tools/tests/library-contracts.test.mjs",
+          "coverage": "inventory"
+        }
+      ],
+      "contract": "library/contracts.json#comparison-table",
+      "openTodo": []
+    },
+    {
+      "id": "ody.meter",
+      "name": "Meter 度量条",
+      "station": null,
+      "maturity": "supported",
+      "runtime": "native",
+      "html": "site/data-display.html#meter",
+      "guide": "site/data-display.html#meter",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default"
+      ],
+      "design": null,
+      "tests": [
+        {
+          "path": "tools/tests/library-contracts.test.mjs",
+          "coverage": "inventory"
+        }
+      ],
+      "contract": "library/contracts.json#meter",
+      "openTodo": []
+    },
+    {
+      "id": "ody.tooltip",
+      "name": "Tooltip 工具提示",
+      "station": null,
+      "maturity": "supported",
+      "runtime": "public",
+      "html": "site/overlays.html#tooltip",
+      "guide": "site/overlays.html#tooltip",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": [
+          "odyssey.js"
+        ]
+      },
+      "states": [
+        "default",
+        "open"
+      ],
+      "design": null,
+      "tests": [
+        {
+          "path": "tools/tests/library-contracts.test.mjs",
+          "coverage": "inventory"
+        }
+      ],
+      "contract": "library/contracts.json#tooltip",
+      "openTodo": [
+        "A11Y-08"
+      ]
+    },
+    {
+      "id": "ody.hover-card",
+      "name": "Hover card 悬浮信息",
+      "station": null,
+      "maturity": "supported",
+      "runtime": "public",
+      "html": "site/overlays.html#hovercard",
+      "guide": "site/overlays.html#hovercard",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": [
+          "odyssey.js"
+        ]
+      },
+      "states": [
+        "default",
+        "open"
+      ],
+      "design": null,
+      "tests": [
+        {
+          "path": "tools/tests/library-contracts.test.mjs",
+          "coverage": "inventory"
+        }
+      ],
+      "contract": "library/contracts.json#hover-card",
+      "openTodo": [
+        "ACT-08"
+      ]
+    },
+    {
+      "id": "ody.notification-center",
+      "name": "Notification center 通知",
+      "station": null,
+      "maturity": "supported",
+      "runtime": "public",
+      "html": "site/feedback.html#notif",
+      "guide": "site/feedback.html#notif",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": [
+          "odyssey.js"
+        ]
+      },
+      "states": [
+        "default",
+        "open",
+        "unread"
+      ],
+      "design": null,
+      "tests": [
+        {
+          "path": "tools/tests/library-contracts.test.mjs",
+          "coverage": "inventory"
+        }
+      ],
+      "contract": "library/contracts.json#notification-center",
+      "openTodo": []
+    },
+    {
+      "id": "ody.context-menu",
+      "name": "Context menu 上下文菜单",
+      "station": null,
+      "maturity": "supported",
+      "runtime": "public",
+      "html": "site/feedback.html#context-menu",
+      "guide": "site/feedback.html#context-menu",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": [
+          "odyssey.js"
+        ]
+      },
+      "states": [
+        "default",
+        "open"
+      ],
+      "design": null,
+      "tests": [
+        {
+          "path": "tools/tests/library-contracts.test.mjs",
+          "coverage": "inventory"
+        }
+      ],
+      "contract": "library/contracts.json#context-menu",
+      "openTodo": []
+    },
+    {
+      "id": "ody.bottom-sheet",
+      "name": "Bottom sheet 底部面板",
+      "station": null,
+      "maturity": "supported",
+      "runtime": "public",
+      "html": "site/feedback.html#bottom-sheet",
+      "guide": "site/feedback.html#bottom-sheet",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": [
+          "odyssey.js"
+        ]
+      },
+      "states": [
+        "default",
+        "open"
+      ],
+      "design": null,
+      "tests": [
+        {
+          "path": "tools/tests/library-contracts.test.mjs",
+          "coverage": "inventory"
+        }
+      ],
+      "contract": "library/contracts.json#bottom-sheet",
+      "openTodo": []
+    },
+    {
+      "id": "ody.carousel",
+      "name": "Carousel 轮播",
+      "station": null,
+      "maturity": "supported",
+      "runtime": "public",
+      "html": "site/feedback.html#carousel",
+      "guide": "site/feedback.html#carousel",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": [
+          "odyssey.js"
+        ]
+      },
+      "states": [
+        "default",
+        "selected"
+      ],
+      "design": null,
+      "tests": [
+        {
+          "path": "tools/tests/library-contracts.test.mjs",
+          "coverage": "inventory"
+        }
+      ],
+      "contract": "library/contracts.json#carousel",
+      "openTodo": []
+    },
+    {
+      "id": "ody.loading-overlay",
+      "name": "Loading overlay 加载层",
+      "station": null,
+      "maturity": "supported",
+      "runtime": "css",
+      "html": "site/feedback.html#loading-overlay",
+      "guide": "site/feedback.html#loading-overlay",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "busy"
+      ],
+      "design": null,
+      "tests": [
+        {
+          "path": "tools/tests/library-contracts.test.mjs",
+          "coverage": "inventory"
+        }
+      ],
+      "contract": "library/contracts.json#loading-overlay",
+      "openTodo": []
+    },
+    {
+      "id": "ody.confirm",
+      "name": "Confirm 确认弹窗",
+      "station": null,
+      "maturity": "supported",
+      "runtime": "public",
+      "html": "site/feedback.html#confirm",
+      "guide": "site/feedback.html#confirm",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": [
+          "odyssey.js"
+        ]
+      },
+      "states": [
+        "default",
+        "open"
+      ],
+      "design": null,
+      "tests": [
+        {
+          "path": "tools/tests/library-contracts.test.mjs",
+          "coverage": "inventory"
+        }
+      ],
+      "contract": "library/contracts.json#confirm",
+      "openTodo": [
+        "A11Y-07"
+      ]
+    },
+    {
+      "id": "ody.inline-editable",
+      "name": "Inline editable 行内编辑",
+      "station": null,
+      "maturity": "supported",
+      "runtime": "public",
+      "html": "site/feedback.html#inline-editable",
+      "guide": "site/feedback.html#inline-editable",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": [
+          "odyssey.js"
+        ]
+      },
+      "states": [
+        "default",
+        "editing"
+      ],
+      "design": null,
+      "tests": [
+        {
+          "path": "tools/tests/library-contracts.test.mjs",
+          "coverage": "inventory"
+        }
+      ],
+      "contract": "library/contracts.json#inline-editable",
+      "openTodo": []
+    },
+    {
+      "id": "ody.stack",
+      "name": "Stack 纵向布局",
+      "station": null,
+      "maturity": "supported",
+      "runtime": "css",
+      "html": "site/layout.html#stack",
+      "guide": "site/layout.html#stack",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default"
+      ],
+      "design": null,
+      "tests": [
+        {
+          "path": "tools/tests/library-contracts.test.mjs",
+          "coverage": "inventory"
+        }
+      ],
+      "contract": "library/contracts.json#stack",
+      "openTodo": []
+    },
+    {
+      "id": "ody.cluster",
+      "name": "Cluster 自动换行",
+      "station": null,
+      "maturity": "supported",
+      "runtime": "css",
+      "html": "site/layout.html#cluster",
+      "guide": "site/layout.html#cluster",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default"
+      ],
+      "design": null,
+      "tests": [
+        {
+          "path": "tools/tests/library-contracts.test.mjs",
+          "coverage": "inventory"
+        }
+      ],
+      "contract": "library/contracts.json#cluster",
+      "openTodo": []
+    },
+    {
+      "id": "ody.grid",
+      "name": "Grid 网格",
+      "station": null,
+      "maturity": "supported",
+      "runtime": "css",
+      "html": "site/layout.html#grid",
+      "guide": "site/layout.html#grid",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default"
+      ],
+      "design": null,
+      "tests": [
+        {
+          "path": "tools/tests/library-contracts.test.mjs",
+          "coverage": "inventory"
+        }
+      ],
+      "contract": "library/contracts.json#grid",
+      "openTodo": []
+    },
+    {
+      "id": "ody.aspect-box",
+      "name": "Aspect box 比例容器",
+      "station": null,
+      "maturity": "supported",
+      "runtime": "css",
+      "html": "site/layout.html#aspect",
+      "guide": "site/layout.html#aspect",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey.css",
+          "odyssey-line.css",
+          "odyssey-expressions.css"
+        ],
+        "js": []
+      },
+      "states": [
+        "default"
+      ],
+      "design": null,
+      "tests": [
+        {
+          "path": "tools/tests/library-contracts.test.mjs",
+          "coverage": "inventory"
+        }
+      ],
+      "contract": "library/contracts.json#aspect-box",
+      "openTodo": []
+    },
+    {
+      "id": "ody.workspace-settings",
+      "name": "Workspace settings 工作区设置",
+      "station": null,
+      "maturity": "preview",
+      "runtime": "composition",
+      "html": "examples/compositions/workspace-settings.html",
+      "guide": "examples/compositions/README.md",
+      "rust": [],
+      "assets": {
+        "css": [
+          "odyssey-complete.css"
+        ],
+        "js": [
+          "odyssey-complete.js"
+        ]
+      },
+      "states": [
+        "saved",
+        "dirty",
+        "invalid",
+        "saving",
+        "error"
+      ],
+      "design": {
+        "nodeId": "mRPZV"
+      },
+      "tests": [
+        {
+          "path": "tools/tests/compositions-browser.test.mjs",
+          "coverage": "interaction-contract"
+        }
+      ],
+      "contract": "library/contracts.json#workspace-settings",
+      "openTodo": []
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "file": {
+    "name": "contract.zip",
+    "type": "application/zip",
+    "content": "Odyssey local fixture",
+    "field": "attachment",
+    "variants": [
+      {"name": "public", "markup": "<label class=\"ody-dropzone\" data-ody-dropzone>Choose archive<input type=\"file\" name=\"attachment\" accept=\".zip\"><span class=\"ody-dropzone__files\" data-ody-dropzone-files></span></label>"},
+      {"name": "extension", "markup": "<section data-ody-file-dropzone><input data-ody-file-input type=\"file\" name=\"attachment\" accept=\".zip\" aria-label=\"Choose archive\"><button type=\"button\" data-ody-file-browse>Browse</button><p data-ody-file-title>Choose archive</p><p data-ody-file-status>Not selected</p><p data-ody-file-error hidden></p></section>"}
+    ]
+  }
+}

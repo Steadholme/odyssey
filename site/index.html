@@ -8,6 +8,7 @@
 <script src="dist/odyssey.js" defer></script><script src="assets/line-site.js" defer></script>
 <link rel="stylesheet" href="assets/extensions.css">
 <script src="assets/extensions.js" defer></script>
+<link rel="stylesheet" href="assets/capability-catalog.css"><script src="assets/capability-catalog.js" defer></script>
 </head>
 
 <body class="ody-scope line-site"><a class="line-skip" href="#network">Skip to components</a>
@@ -636,7 +637,7 @@
 </h4><span class="line-meta">ODY-028</span>
 </header>
 <div class="line-specimen">
-<div class="ody-chart" role="img" aria-label="Seven days: 35, 52, 44, 72, 58, 88, 76"><span style="--value:35%"></span><span style="--value:52%"></span><span style="--value:44%"></span><span style="--value:72%"></span><span style="--value:58%"></span><span style="--value:88%"></span><span style="--value:76%"></span>
+<div class="ody-chart ody-chart--bars" role="img" aria-label="Seven days: 35, 52, 44, 72, 58, 88, 76"><span style="--value:35%"></span><span style="--value:52%"></span><span style="--value:44%"></span><span style="--value:72%"></span><span style="--value:58%"></span><span style="--value:88%"></span><span style="--value:76%"></span>
 </div>
 </div>
 <footer><span>7 bars · 1 series</span><a href="data-display.html" aria-label="Chart guide">↗</a>
@@ -644,7 +645,7 @@
 <details>
 <summary>HTML source
 </summary>
-<pre><code>&lt;div class=&quot;ody-chart&quot; role=&quot;img&quot; aria-label=&quot;Seven days: 35, 52, 44, 72, 58, 88, 76&quot;&gt;&lt;span style=&quot;--value:35%&quot;&gt;&lt;/span&gt;&lt;span style=&quot;--value:52%&quot;&gt;&lt;/span&gt;&lt;span style=&quot;--value:44%&quot;&gt;&lt;/span&gt;&lt;span style=&quot;--value:72%&quot;&gt;&lt;/span&gt;&lt;span style=&quot;--value:58%&quot;&gt;&lt;/span&gt;&lt;span style=&quot;--value:88%&quot;&gt;&lt;/span&gt;&lt;span style=&quot;--value:76%&quot;&gt;&lt;/span&gt;&lt;/div&gt;</code>
+<pre><code>&lt;div class=&quot;ody-chart ody-chart--bars&quot; role=&quot;img&quot; aria-label=&quot;Seven days: 35, 52, 44, 72, 58, 88, 76&quot;&gt;&lt;span style=&quot;--value:35%&quot;&gt;&lt;/span&gt;&lt;span style=&quot;--value:52%&quot;&gt;&lt;/span&gt;&lt;span style=&quot;--value:44%&quot;&gt;&lt;/span&gt;&lt;span style=&quot;--value:72%&quot;&gt;&lt;/span&gt;&lt;span style=&quot;--value:58%&quot;&gt;&lt;/span&gt;&lt;span style=&quot;--value:88%&quot;&gt;&lt;/span&gt;&lt;span style=&quot;--value:76%&quot;&gt;&lt;/span&gt;&lt;/div&gt;</code>
 </pre><button type="button" class="ody-btn ody-btn--secondary ody-btn--sm" data-line-copy>Copy source</button>
 </details>
 </article>
@@ -943,6 +944,38 @@ Odyssey.toast({ title: &#x27;Saved to the registry&#x27;, tone: &#x27;ok&#x27;, 
 </p>
 </section>
 
+<section id="capability-catalog" class="line-section" aria-labelledby="capability-title">
+<div class="line-section__meta"><span>BEYOND THE 54 STATIONS</span><span id="capability-count" role="status">GUIDE CAPABILITIES</span></div>
+<div class="line-section__heading"><h2 id="capability-title">Further along the line.</h2><p>Advanced inputs, application patterns and layout primitives already in Odyssey. Search above to find them alongside the station atlas.</p></div>
+<ul class="line-capabilities"><li data-capability data-search="ody.multiselect Multi-select 多选"><a href="forms.html#multiselect"><strong>Multi-select 多选</strong><span>public · supported</span></a></li>
+<li data-capability data-search="ody.tag-input Tag input 标签输入"><a href="forms.html#taginput"><strong>Tag input 标签输入</strong><span>public · supported</span></a></li>
+<li data-capability data-search="ody.date-picker Date picker 日期选择"><a href="forms.html#datepicker"><strong>Date picker 日期选择</strong><span>public · supported</span></a></li>
+<li data-capability data-search="ody.time-picker Time picker 时间选择"><a href="forms.html#timepicker"><strong>Time picker 时间选择</strong><span>public · supported</span></a></li>
+<li data-capability data-search="ody.dual-range Dual-range 双滑块"><a href="forms.html#dualrange"><strong>Dual-range 双滑块</strong><span>public · supported</span></a></li>
+<li data-capability data-search="ody.file-input File input 原生文件"><a href="forms.html#file"><strong>File input 原生文件</strong><span>native · supported</span></a></li>
+<li data-capability data-search="ody.rating Rating 星级评分"><a href="forms.html#rating"><strong>Rating 星级评分</strong><span>public · supported</span></a></li>
+<li data-capability data-search="ody.color-swatches Color swatches 色板"><a href="forms.html#swatches"><strong>Color swatches 色板</strong><span>public · supported</span></a></li>
+<li data-capability data-search="ody.input-group Input group 前后缀"><a href="forms.html#input-group"><strong>Input group 前后缀</strong><span>css · supported</span></a></li>
+<li data-capability data-search="ody.data-table Data table 数据流程"><a href="data-display.html#table-advanced"><strong>Data table 数据流程</strong><span>public · supported</span></a></li>
+<li data-capability data-search="ody.calendar Calendar 月网格"><a href="data-display.html#calendar"><strong>Calendar 月网格</strong><span>css · preview</span></a></li>
+<li data-capability data-search="ody.kanban Kanban 看板"><a href="data-display.html#kanban"><strong>Kanban 看板</strong><span>public · supported</span></a></li>
+<li data-capability data-search="ody.comparison-table Comparison table 特性对比"><a href="data-display.html#compare"><strong>Comparison table 特性对比</strong><span>css · supported</span></a></li>
+<li data-capability data-search="ody.meter Meter 度量条"><a href="data-display.html#meter"><strong>Meter 度量条</strong><span>native · supported</span></a></li>
+<li data-capability data-search="ody.tooltip Tooltip 工具提示"><a href="overlays.html#tooltip"><strong>Tooltip 工具提示</strong><span>public · supported</span></a></li>
+<li data-capability data-search="ody.hover-card Hover card 悬浮信息"><a href="overlays.html#hovercard"><strong>Hover card 悬浮信息</strong><span>public · supported</span></a></li>
+<li data-capability data-search="ody.notification-center Notification center 通知"><a href="feedback.html#notif"><strong>Notification center 通知</strong><span>public · supported</span></a></li>
+<li data-capability data-search="ody.context-menu Context menu 上下文菜单"><a href="feedback.html#context-menu"><strong>Context menu 上下文菜单</strong><span>public · supported</span></a></li>
+<li data-capability data-search="ody.bottom-sheet Bottom sheet 底部面板"><a href="feedback.html#bottom-sheet"><strong>Bottom sheet 底部面板</strong><span>public · supported</span></a></li>
+<li data-capability data-search="ody.carousel Carousel 轮播"><a href="feedback.html#carousel"><strong>Carousel 轮播</strong><span>public · supported</span></a></li>
+<li data-capability data-search="ody.loading-overlay Loading overlay 加载层"><a href="feedback.html#loading-overlay"><strong>Loading overlay 加载层</strong><span>css · supported</span></a></li>
+<li data-capability data-search="ody.confirm Confirm 确认弹窗"><a href="feedback.html#confirm"><strong>Confirm 确认弹窗</strong><span>public · supported</span></a></li>
+<li data-capability data-search="ody.inline-editable Inline editable 行内编辑"><a href="feedback.html#inline-editable"><strong>Inline editable 行内编辑</strong><span>public · supported</span></a></li>
+<li data-capability data-search="ody.stack Stack 纵向布局"><a href="layout.html#stack"><strong>Stack 纵向布局</strong><span>css · supported</span></a></li>
+<li data-capability data-search="ody.cluster Cluster 自动换行"><a href="layout.html#cluster"><strong>Cluster 自动换行</strong><span>css · supported</span></a></li>
+<li data-capability data-search="ody.grid Grid 网格"><a href="layout.html#grid"><strong>Grid 网格</strong><span>css · supported</span></a></li>
+<li data-capability data-search="ody.aspect-box Aspect box 比例容器"><a href="layout.html#aspect"><strong>Aspect box 比例容器</strong><span>css · supported</span></a></li>
+<li data-capability data-search="ody.workspace-settings Workspace settings 工作区设置"><a href="/examples/compositions/workspace-settings.html"><strong>Workspace settings 工作区设置</strong><span>composition · preview</span></a></li>
+</ul><p><a class="ody-link" href="/library/capabilities.json">Component manifest ↗</a> · <a class="ody-link" href="getting-started.html#contracts">Runtime contracts ↗</a></p></section>
 <section class="line-section" id="foundations">
 <div class="line-section__meta"><span>02 / FOUNDATIONS</span><span>THE LANGUAGE, IN NUMBERS</span>
 </div>
