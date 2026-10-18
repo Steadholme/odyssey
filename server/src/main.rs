@@ -93,6 +93,9 @@ const SITE_LINE_JS: &str = include_str!("../../site/assets/line-site.js");
 const SITE_STUDIO: &str = include_str!("../../site/studio.html");
 const SITE_STUDIO_CSS: &str = include_str!("../../site/assets/studio.css");
 const SITE_STUDIO_JS: &str = include_str!("../../site/assets/studio.js");
+const SITE_PATTERNS: &str = include_str!("../../site/patterns.html");
+const SITE_PATTERNS_CSS: &str = include_str!("../../site/assets/patterns-20261018.css");
+const SITE_PATTERNS_JS: &str = include_str!("../../site/assets/patterns-20261018.js");
 
 const BRAND_TILE: &str = r#"<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/><path d="m12 7 3 5-3 5-3-5Z"/></svg>"#;
 const ICON_ATLAS: &str = r#"<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M4.5 9h15M4.5 15h15M12 4c2 2.2 3 4.9 3 8s-1 5.8-3 8c-2-2.2-3-4.9-3-8s1-5.8 3-8Z"/></svg>"#;
@@ -1052,6 +1055,19 @@ fn route_static(path: &str) -> Response {
         "/layout.html" => site_html(SITE_LAYOUT),
         "/overlays.html" => site_html(SITE_OVERLAYS),
         "/studio" | "/studio.html" => site_html(SITE_STUDIO),
+        "/patterns" | "/patterns.html" => site_html(SITE_PATTERNS),
+        "/assets/patterns-20261018.css" => static_response(
+            StatusCode::OK,
+            CONTENT_TYPE_CSS,
+            Some(CACHE_DOCS),
+            SITE_PATTERNS_CSS,
+        ),
+        "/assets/patterns-20261018.js" => static_response(
+            StatusCode::OK,
+            CONTENT_TYPE_JS,
+            Some(CACHE_DOCS),
+            SITE_PATTERNS_JS,
+        ),
         "/assets/extensions.css" => static_response(
             StatusCode::OK,
             CONTENT_TYPE_CSS,
@@ -1338,6 +1354,57 @@ mod tests {
         assert!(!SITE_STUDIO.contains("127.0.0.1"));
         assert!(SITE_STUDIO.contains("assets/extensions.js"));
         assert!(SITE_STUDIO.contains("id=\"motion\""));
+    }
+
+    #[tokio::test]
+    async fn patterns_routes_embed_the_demo_and_assets_without_changing_studio() {
+        let app = build_router(AppState::for_test());
+        for path in [
+            "/patterns",
+            "/patterns.html",
+            "/patterns?view=releases",
+            "/patterns.html?view=inbox",
+            "/patterns?view=settings",
+        ] {
+            let response = app
+                .clone()
+                .oneshot(Request::builder().uri(path).body(Body::empty()).unwrap())
+                .await
+                .unwrap();
+            assert_eq!(response.status(), StatusCode::OK);
+            assert_eq!(header(&response, header::CONTENT_TYPE), CONTENT_TYPE_HTML);
+            assert_eq!(header(&response, header::CACHE_CONTROL), CACHE_DOCS);
+            let body = response.into_body().collect().await.unwrap().to_bytes();
+            assert_eq!(body.as_ref(), SITE_PATTERNS.as_bytes());
+        }
+        for (path, mime, expected) in [
+            (
+                "/assets/patterns-20261018.css",
+                CONTENT_TYPE_CSS,
+                SITE_PATTERNS_CSS,
+            ),
+            (
+                "/assets/patterns-20261018.js",
+                CONTENT_TYPE_JS,
+                SITE_PATTERNS_JS,
+            ),
+        ] {
+            let response = route_static(path);
+            assert_eq!(response.status(), StatusCode::OK);
+            assert_eq!(header(&response, header::CONTENT_TYPE), mime);
+            assert_eq!(header(&response, header::CACHE_CONTROL), CACHE_DOCS);
+            let body = response.into_body().collect().await.unwrap().to_bytes();
+            assert_eq!(body.as_ref(), expected.as_bytes());
+        }
+        assert!(SITE_PATTERNS.contains("data-expression=\"line\""));
+        assert!(SITE_PATTERNS.contains("Demo workspace"));
+        assert!(SITE_PATTERNS.contains("/assets/extensions.css"));
+        assert!(SITE_PATTERNS.contains("/studio.html"));
+        assert!(SITE_INDEX.contains("href=\"patterns.html\""));
+        assert!(SITE_STUDIO.contains("href=\"patterns.html\""));
+        assert!(SITE_STUDIO.contains("id=\"motion\""));
+        assert!(!SITE_PATTERNS.contains("127.0.0.1"));
+        assert!(!SITE_PATTERNS_JS.contains("fetch("));
     }
 
     #[tokio::test]

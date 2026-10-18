@@ -12,7 +12,7 @@
 .line-meta { font:400 10px/1.5 var(--ody-mono); letter-spacing:.1em; color:var(--ody-ink-muted); }
 .line-top { display:flex; align-items:center; gap:24px; min-height:56px; padding:0 56px; border-bottom:1px solid var(--ody-rule); }
 .line-wordmark { color:var(--ody-ink); font:700 12px/1 var(--ody-font-display); letter-spacing:.14em; }
-.line-top nav { display:flex; align-items:center; gap:28px; margin-left:auto; }
+.line-top nav { display:flex; flex-wrap:wrap; align-items:center; gap:28px; margin-left:auto; }
 .line-top nav a { color:var(--ody-ink-2); font-size:12px; padding-block:16px; }
 .line-top nav a:hover { color:var(--ody-accent-ink); }
 .line-theme { background:none; border:0; border-left:1px solid var(--ody-hairline); min-height:40px; padding-left:24px; color:var(--ody-ink-2); font:11px var(--ody-mono); cursor:pointer; }
@@ -188,3 +188,5 @@
 @media (pointer:coarse) {
   .line-top a,.line-theme,.line-station summary,.line-station > footer a { min-height:44px; display:inline-flex; align-items:center; }
 }
+/* Keep the return path from Patterns readable on narrow phones. */
+@media(max-width:390px){.line-cover h1{font-size:clamp(44px,14vw,54px);letter-spacing:-1.7px}}
